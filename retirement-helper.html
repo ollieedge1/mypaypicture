@@ -1,0 +1,1286 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>My Retirement Helper — Clarity in later life</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy:       #0f1f38;
+    --stone:      #6b7280;
+    --stone-mid:  #9ca3af;
+    --stone-light:#d1d5db;
+    --stone-pale: #f3f4f6;
+    --warm:       #78716c;
+    --warm-light: #a8a29e;
+    --cream:      #f7f5f2;
+    --white:      #ffffff;
+    --slate:      #4a5568;
+    --slate-light:#718096;
+    --green:      #2d6a4f;
+    --green-light:#40916c;
+    --amber:      #b45309;
+    --red:        #b91c1c;
+    --border:     rgba(107,114,128,0.2);
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'DM Sans', sans-serif; background: var(--cream); color: var(--navy); min-height: 100vh; }
+
+  /* HEADER */
+  header { background: var(--navy); padding: 1.5rem 2rem; display: flex; align-items: center; justify-content: space-between; }
+
+  /* APP SWITCHER */
+  .app-switcher { position: relative; }
+  .switcher-trigger { display: flex; align-items: center; gap: 0.5rem; cursor: pointer; padding: 0.4rem 0.75rem; border-radius: 8px; border: 1px solid rgba(255,255,255,0.15); transition: background 0.2s; user-select: none; }
+  .switcher-trigger:hover { background: rgba(255,255,255,0.07); }
+  .switcher-trigger .app-name { font-family: 'Playfair Display', serif; font-size: 1.1rem; color: var(--stone-light); }
+  .switcher-trigger .app-name span { color: var(--white); font-weight: 300; }
+  .switcher-trigger .chevron { color: rgba(255,255,255,0.4); font-size: 0.7rem; transition: transform 0.2s; }
+  .app-switcher.open .chevron { transform: rotate(180deg); }
+  .switcher-dropdown { display: none; position: absolute; top: calc(100% + 8px); left: 0; background: #1a2f4e; border: 1px solid rgba(255,255,255,0.1); border-radius: 10px; overflow: hidden; min-width: 240px; box-shadow: 0 8px 24px rgba(0,0,0,0.3); z-index: 100; }
+  .app-switcher.open .switcher-dropdown { display: block; }
+  .switcher-item { display: flex; align-items: center; gap: 0.75rem; padding: 0.85rem 1rem; cursor: pointer; transition: background 0.15s; border-bottom: 1px solid rgba(255,255,255,0.06); }
+  .switcher-item:last-child { border-bottom: none; }
+  .switcher-item:hover { background: rgba(255,255,255,0.06); }
+  .switcher-item.current { background: rgba(107,114,128,0.15); }
+  .switcher-item-icon { width: 32px; height: 32px; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 1rem; flex-shrink: 0; }
+  .switcher-item-text .item-name { font-family: 'Playfair Display', serif; font-size: 0.9rem; color: white; }
+  .switcher-item-text .item-desc { font-size: 0.72rem; color: rgba(255,255,255,0.4); margin-top: 0.1rem; }
+  .switcher-item.current .item-name { color: var(--stone-light); }
+  .disclaimer-badge { font-size: 0.7rem; color: rgba(255,255,255,0.4); border: 1px solid rgba(255,255,255,0.15); padding: 0.3rem 0.7rem; border-radius: 20px; letter-spacing: 0.05em; text-transform: uppercase; }
+
+  /* HERO */
+  .hero { background: var(--navy); padding: 3rem 2rem 4rem; text-align: center; position: relative; overflow: hidden; }
+  .hero::before { content: ''; position: absolute; top: -80px; right: -80px; width: 320px; height: 320px; border-radius: 50%; background: radial-gradient(circle, rgba(156,163,175,0.1) 0%, transparent 70%); pointer-events: none; }
+  .hero h1 { font-family: 'Playfair Display', serif; font-size: clamp(1.9rem, 5vw, 3rem); color: var(--white); line-height: 1.15; max-width: 560px; margin: 0 auto 1rem; }
+  .hero h1 em { font-style: italic; color: var(--stone-light); }
+  .hero p { color: rgba(255,255,255,0.5); font-size: 1rem; max-width: 440px; margin: 0 auto; line-height: 1.7; }
+
+  /* CONTAINER */
+  .container { max-width: 860px; margin: 0 auto; padding: 2.5rem 1.5rem 4rem; }
+
+  /* STEPS NAV */
+  .steps-nav { display: flex; border-radius: 12px 12px 0 0; overflow: hidden; border: 1px solid var(--border); border-bottom: none; background: white; }
+  .step-tab { flex: 1; padding: 0.85rem 0.4rem; text-align: center; font-size: 0.68rem; font-weight: 500; letter-spacing: 0.04em; text-transform: uppercase; color: var(--slate-light); cursor: pointer; transition: all 0.2s; border-right: 1px solid var(--border); }
+  .step-tab:last-child { border-right: none; }
+  .step-tab.active { background: var(--navy); color: var(--stone-light); }
+  .step-tab.completed { color: var(--green-light); }
+  .step-tab .step-num { display: block; font-family: 'Playfair Display', serif; font-size: 1.15rem; font-weight: 700; margin-bottom: 0.15rem; color: inherit; }
+  .step-tab.completed .step-num::after { content: ' ✓'; font-size: 0.85rem; }
+
+  /* CARD */
+  .card { background: white; border-radius: 0 0 16px 16px; padding: 2rem; border: 1px solid var(--border); border-top: none; box-shadow: 0 4px 24px rgba(15,31,56,0.06); display: none; animation: fadeIn 0.3s ease; }
+  .card.active { display: block; }
+  @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+  .card-title { font-family: 'Playfair Display', serif; font-size: 1.5rem; color: var(--navy); margin-bottom: 0.4rem; }
+  .card-subtitle { color: var(--slate); font-size: 0.9rem; margin-bottom: 2rem; line-height: 1.65; max-width: 560px; }
+
+  /* FORM */
+  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 1.25rem; }
+  @media (max-width: 560px) { .two-col { grid-template-columns: 1fr; } }
+  .field-group { margin-bottom: 1.5rem; }
+  .field-group:last-child { margin-bottom: 0; }
+  label { display: block; font-size: 0.85rem; font-weight: 500; color: var(--navy); margin-bottom: 0.5rem; }
+  .input-wrap { position: relative; }
+  .input-prefix { position: absolute; left: 14px; top: 50%; transform: translateY(-50%); color: var(--slate-light); font-size: 0.95rem; pointer-events: none; }
+  .input-suffix { position: absolute; right: 14px; top: 50%; transform: translateY(-50%); color: var(--slate-light); font-size: 0.9rem; pointer-events: none; }
+  input[type="number"], select { width: 100%; padding: 0.75rem 1rem 0.75rem 2rem; border: 1.5px solid #ddd; border-radius: 8px; font-family: 'DM Sans', sans-serif; font-size: 1rem; color: var(--navy); background: white; transition: border-color 0.2s; appearance: none; }
+  input[type="number"]:focus, select:focus { outline: none; border-color: var(--stone); box-shadow: 0 0 0 3px rgba(107,114,128,0.1); }
+  input.no-prefix { padding-left: 1rem; }
+  input.has-suffix { padding-right: 2.5rem; }
+  .hint { font-size: 0.78rem; color: var(--slate-light); margin-top: 0.4rem; line-height: 1.45; }
+
+  /* RADIO */
+  .radio-group { display: flex; gap: 0.75rem; flex-wrap: wrap; }
+  .radio-btn { flex: 1; min-width: 100px; padding: 0.7rem 0.75rem; border: 1.5px solid #ddd; border-radius: 8px; text-align: center; cursor: pointer; font-size: 0.85rem; font-weight: 500; transition: all 0.2s; color: var(--slate); line-height: 1.3; }
+  .radio-btn:hover { border-color: var(--stone); }
+  .radio-btn.selected { border-color: var(--stone); background: var(--stone-pale); color: var(--navy); }
+
+  /* RANGE */
+  .range-wrap { margin-top: 0.4rem; }
+  input[type="range"] { width: 100%; accent-color: var(--stone); height: 4px; cursor: pointer; }
+  .range-labels { display: flex; justify-content: space-between; font-size: 0.72rem; color: var(--slate-light); margin-top: 0.25rem; }
+
+  /* RESULT BOXES */
+  .results-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 0.85rem; margin: 1.5rem 0; }
+  .result-box { background: var(--navy); border-radius: 12px; padding: 1.1rem; text-align: center; }
+  .result-box.stone { background: linear-gradient(135deg, var(--stone) 0%, var(--warm) 100%); }
+  .result-box.highlight { background: linear-gradient(135deg, #374151 0%, var(--navy) 100%); border: 1px solid var(--stone-light); }
+  .result-box.good { background: linear-gradient(135deg, var(--green) 0%, var(--green-light) 100%); }
+  .result-box.warn { background: linear-gradient(135deg, #92400e 0%, var(--amber) 100%); }
+  .result-box.danger { background: linear-gradient(135deg, #991b1b 0%, var(--red) 100%); }
+  .result-box .r-label { font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.07em; color: rgba(255,255,255,0.55); margin-bottom: 0.4rem; }
+  .result-box .r-amount { font-family: 'Playfair Display', serif; font-size: 1.65rem; font-weight: 700; color: white; line-height: 1; }
+  .result-box .r-sub { font-size: 0.68rem; color: rgba(255,255,255,0.4); margin-top: 0.25rem; }
+
+  /* INCOME BREAKDOWN */
+  .income-bar-section { margin: 1.5rem 0; }
+  .income-bar-row { margin-bottom: 0.85rem; }
+  .income-bar-label { display: flex; justify-content: space-between; font-size: 0.8rem; margin-bottom: 0.3rem; }
+  .income-bar-label span:first-child { color: var(--slate); font-weight: 500; }
+  .income-bar-label span:last-child { color: var(--navy); font-weight: 600; font-family: 'Playfair Display', serif; }
+  .income-bar-track { height: 8px; background: var(--stone-pale); border-radius: 4px; overflow: hidden; }
+  .income-bar-fill { height: 100%; border-radius: 4px; transition: width 0.6s cubic-bezier(0.34,1.56,0.64,1); }
+
+  /* COMPARISON TABLE */
+  .compare-table { width: 100%; border-collapse: collapse; font-size: 0.85rem; margin: 1rem 0; }
+  .compare-table th { padding: 0.6rem 0.85rem; text-align: left; font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.06em; color: var(--slate-light); border-bottom: 2px solid var(--border); }
+  .compare-table th.col-a { color: var(--stone); }
+  .compare-table th.col-b { color: var(--green); }
+  .compare-table td { padding: 0.7rem 0.85rem; border-bottom: 1px solid rgba(0,0,0,0.05); color: var(--slate); vertical-align: top; line-height: 1.5; }
+  .compare-table tr:last-child td { border-bottom: none; }
+  .compare-table td:first-child { font-weight: 500; color: var(--navy); font-size: 0.82rem; }
+  .compare-table td.pro { color: var(--green); font-weight: 500; }
+  .compare-table td.con { color: var(--red); }
+  .compare-table td.neutral { color: var(--slate); }
+
+  /* SUSTAINABILITY VISUAL */
+  .sustainability-track { position: relative; height: 12px; border-radius: 6px; overflow: hidden; background: var(--stone-pale); margin: 1rem 0 0.5rem; }
+  .sustainability-fill { height: 100%; border-radius: 6px; transition: width 0.6s ease; }
+  .sustainability-labels { display: flex; justify-content: space-between; font-size: 0.72rem; color: var(--slate-light); }
+
+  /* GUIDANCE */
+  .guidance-box { border-left: 3px solid var(--stone); background: var(--stone-pale); border-radius: 0 8px 8px 0; padding: 1rem 1.25rem; margin: 1rem 0; }
+  .guidance-box h4 { font-size: 0.85rem; font-weight: 600; color: var(--navy); margin-bottom: 0.4rem; }
+  .guidance-box p, .guidance-box li { font-size: 0.84rem; color: var(--slate); line-height: 1.65; }
+  .guidance-box ul { padding-left: 1.1rem; margin-top: 0.3rem; }
+  .guidance-box li { margin-bottom: 0.2rem; }
+
+  .alert-box { border-left: 3px solid var(--green-light); background: rgba(64,145,108,0.06); border-radius: 0 8px 8px 0; padding: 0.9rem 1.1rem; margin: 0.75rem 0; }
+  .alert-box.warning { border-left-color: var(--amber); background: #fffbeb; }
+  .alert-box.danger { border-left-color: var(--red); background: #fef2f2; }
+  .alert-box h4 { font-size: 0.83rem; font-weight: 600; color: var(--navy); margin-bottom: 0.3rem; }
+  .alert-box p { font-size: 0.83rem; color: var(--slate); line-height: 1.6; }
+
+  /* SUMMARY PANEL */
+  .summary-panel { background: var(--navy); border-radius: 12px; padding: 1.5rem; margin-top: 1.5rem; }
+  .summary-title { font-family: 'Playfair Display', serif; color: var(--stone-light); font-size: 1rem; margin-bottom: 1rem; }
+  .summary-row { display: flex; justify-content: space-between; padding: 0.45rem 0; border-bottom: 1px solid rgba(255,255,255,0.07); font-size: 0.85rem; }
+  .summary-row:last-child { border-bottom: none; }
+  .summary-row .s-label { color: rgba(255,255,255,0.5); }
+  .summary-row .s-val { color: white; font-weight: 500; }
+  .summary-row .s-val.stone { color: var(--stone-light); font-weight: 600; }
+  .summary-row .s-val.good { color: #6ee7b7; }
+  .summary-row .s-val.warn { color: #fbbf24; }
+
+
+
+  /* CUSTOMISE SECTIONS */
+  .customise-section { border: 1.5px solid var(--border); border-radius: 10px; margin-bottom: 0.75rem; overflow: hidden; }
+  .customise-header { display: flex; align-items: center; justify-content: space-between; padding: 0.85rem 1rem; cursor: pointer; background: var(--stone-pale); transition: background 0.15s; gap: 0.75rem; }
+  .customise-header:hover { background: #eaecef; }
+  .customise-header-left { display: flex; align-items: center; gap: 0.75rem; flex: 1; min-width: 0; }
+  .customise-icon { font-size: 1.2rem; flex-shrink: 0; }
+  .customise-title { font-size: 0.85rem; font-weight: 600; color: var(--navy); }
+  .customise-sub { font-size: 0.72rem; color: var(--slate-light); margin-top: 0.1rem; }
+  .customise-toggle { font-size: 0.72rem; font-weight: 600; color: var(--stone); white-space: nowrap; flex-shrink: 0; border: 1px solid var(--border); padding: 0.2rem 0.55rem; border-radius: 20px; }
+  .customise-body { padding: 1rem; border-top: 1px solid var(--border); background: white; }
+
+  /* PHASES & EVENTS */
+  .phase-row, .event-row { display: grid; gap: 0.5rem; align-items: end; margin-bottom: 0.75rem; }
+  .phase-row { grid-template-columns: 1fr 1fr 1.4fr auto; }
+  .event-row { grid-template-columns: 1fr 1.4fr 1.4fr auto; }
+  @media (max-width: 560px) { .phase-row, .event-row { grid-template-columns: 1fr 1fr; } }
+  .phase-ages label, .phase-amount label, .event-col label { font-size: 0.75rem; }
+  .phase-remove, .event-remove { width: 28px; height: 28px; border-radius: 50%; border: 1px solid #ddd; background: white; color: var(--slate-light); cursor: pointer; font-size: 0.8rem; display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-bottom: 2px; transition: all 0.15s; }
+  .phase-remove:hover, .event-remove:hover { border-color: var(--red); color: var(--red); }
+  .btn-add-phase { font-size: 0.78rem; color: var(--stone); background: var(--stone-pale); border: 1.5px dashed var(--stone-light); border-radius: 8px; padding: 0.5rem 1rem; cursor: pointer; width: 100%; margin-top: 0.25rem; transition: all 0.15s; }
+  .btn-add-phase:hover { background: #eaecef; border-color: var(--stone); }
+
+  /* POT CHART */
+  .pot-chart { margin: 1.5rem 0; background: var(--navy); border-radius: 12px; padding: 1.25rem; }
+  .pot-chart-title { font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.07em; color: rgba(255,255,255,0.4); margin-bottom: 1rem; }
+  .pot-chart-canvas { width: 100%; height: 180px; position: relative; }
+  canvas.pot-canvas { width: 100% !important; display: block; }
+  .pot-chart-legend { display: flex; gap: 1.25rem; margin-top: 0.75rem; flex-wrap: wrap; }
+  .pot-chart-legend-item { display: flex; align-items: center; gap: 0.35rem; font-size: 0.72rem; color: rgba(255,255,255,0.5); }
+  .legend-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+  .event-marker-label { font-size: 0.65rem; color: rgba(255,255,255,0.5); }
+
+  /* PREFERENCE SELECTOR */
+  .pref-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 0.75rem; margin: 1rem 0 1.5rem; }
+  @media (max-width: 560px) { .pref-grid { grid-template-columns: 1fr; } }
+  .pref-card { border: 1.5px solid #ddd; border-radius: 10px; padding: 1rem; cursor: pointer; transition: all 0.2s; text-align: center; background: white; }
+  .pref-card:hover { border-color: var(--stone); }
+  .pref-card.selected { border-color: var(--stone); background: var(--stone-pale); }
+  .pref-card .pref-icon { font-size: 1.5rem; margin-bottom: 0.4rem; }
+  .pref-card .pref-label { font-size: 0.82rem; font-weight: 600; color: var(--navy); margin-bottom: 0.2rem; }
+  .pref-card .pref-desc { font-size: 0.72rem; color: var(--slate-light); line-height: 1.4; }
+  .pref-card.selected .pref-desc { color: var(--slate); }
+
+  /* NEXT STEPS CHECKLIST */
+  .next-steps { margin-top: 1.5rem; }
+  .next-steps-title { font-family: 'Playfair Display', serif; font-size: 1.1rem; color: var(--navy); margin-bottom: 1rem; }
+  .ns-item { display: flex; align-items: flex-start; gap: 0.85rem; padding: 0.85rem 0; border-bottom: 1px solid rgba(0,0,0,0.06); }
+  .ns-item:last-child { border-bottom: none; }
+  .ns-num { width: 26px; height: 26px; border-radius: 50%; background: var(--navy); color: var(--stone-light); font-family: 'Playfair Display', serif; font-size: 0.85rem; font-weight: 700; display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-top: 1px; }
+  .ns-body { flex: 1; }
+  .ns-body strong { display: block; font-size: 0.88rem; color: var(--navy); margin-bottom: 0.2rem; }
+  .ns-body p { font-size: 0.8rem; color: var(--slate); line-height: 1.6; }
+  .ns-body a { color: var(--stone); text-decoration: underline; }
+
+  hr { border: none; border-top: 1px solid rgba(0,0,0,0.08); margin: 1.5rem 0; }
+
+  /* BUTTONS */
+  .btn-primary { background: var(--stone); color: white; border: none; padding: 0.85rem 2rem; border-radius: 8px; font-family: 'DM Sans', sans-serif; font-size: 0.95rem; font-weight: 600; cursor: pointer; transition: all 0.2s; }
+  .btn-primary:hover { background: var(--warm); transform: translateY(-1px); box-shadow: 0 4px 12px rgba(107,114,128,0.3); }
+  .btn-secondary { background: transparent; color: var(--slate); border: 1.5px solid #ddd; padding: 0.85rem 1.5rem; border-radius: 8px; font-family: 'DM Sans', sans-serif; font-size: 0.9rem; font-weight: 500; cursor: pointer; transition: all 0.2s; }
+  .btn-secondary:hover { border-color: var(--navy); color: var(--navy); }
+  .btn-row { display: flex; gap: 0.75rem; margin-top: 2rem; justify-content: flex-end; flex-wrap: wrap; }
+
+  @media (max-width: 600px) {
+    .hero { padding: 2rem 1.25rem 3rem; }
+    .card { padding: 1.5rem 1.25rem; }
+    .step-tab { font-size: 0.6rem; padding: 0.7rem 0.2rem; }
+    .btn-row { justify-content: stretch; }
+    .btn-primary, .btn-secondary { flex: 1; text-align: center; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="app-switcher" id="appSwitcher">
+    <div class="switcher-trigger" onclick="toggleSwitcher()">
+      <div class="app-name">MyRetirement<span>Helper</span></div>
+      <div class="chevron">▼</div>
+    </div>
+    <div class="switcher-dropdown">
+      <div class="switcher-item" onclick="window.location.href='index.html'">
+        <div class="switcher-item-icon" style="background:rgba(255,255,255,0.06);">🏠</div>
+        <div class="switcher-item-text"><div class="item-name" style="color:rgba(255,255,255,0.4);font-size:0.8rem;">← Suite Home</div></div>
+      </div>
+      <div class="switcher-item current">
+        <div class="switcher-item-icon" style="background:rgba(107,114,128,0.15);">🌅</div>
+        <div class="switcher-item-text"><div class="item-name">MyRetirementHelper</div><div class="item-desc">Clarity in later life.</div></div>
+      </div>
+      <div class="switcher-item" onclick="window.location.href='pay-optimiser.html'">
+        <div class="switcher-item-icon" style="background:rgba(13,148,136,0.15);">📈</div>
+        <div class="switcher-item-text"><div class="item-name">MyPayOptimiser</div><div class="item-desc">Make every pound work harder.</div></div>
+      </div>
+      <div class="switcher-item" onclick="window.location.href='pension-reclaim.html'">
+        <div class="switcher-item-icon" style="background:rgba(201,168,76,0.15);">💰</div>
+        <div class="switcher-item-text"><div class="item-name">MyPensionReclaim</div><div class="item-desc">Missed salary sacrifice? Get it back.</div></div>
+      </div>
+      <div class="switcher-item" onclick="window.location.href='pension-topup.html'">
+        <div class="switcher-item-icon" style="background:rgba(237,172,0,0.15);">➕</div>
+        <div class="switcher-item-text"><div class="item-name">MyPensionTop-Up</div><div class="item-desc">Make AVCs and claim relief.</div></div>
+      </div>
+      <div class="switcher-item" onclick="window.location.href='family-benefits.html'">
+        <div class="switcher-item-icon" style="background:rgba(155,35,53,0.15);">👨‍👩‍👧</div>
+        <div class="switcher-item-text"><div class="item-name">MyFamily&Benefits</div><div class="item-desc">Child Benefit & TFC optimiser.</div></div>
+      </div>
+    </div>
+  </div>
+  <div class="disclaimer-badge">Not financial advice</div>
+</header>
+
+<div class="hero">
+  <h1>Your retirement,<br><em>simply understood.</em></h1>
+  <p>Bring together your income sources, understand your options, and see clearly how long your money could last.</p>
+</div>
+
+<div class="container">
+
+  <div class="steps-nav">
+    <div class="step-tab active" onclick="goTo(1)" id="tab1"><span class="step-num">1</span>Your Income</div>
+    <div class="step-tab" onclick="goTo(2)" id="tab2"><span class="step-num">2</span>Full Picture</div>
+    <div class="step-tab" onclick="goTo(3)" id="tab3"><span class="step-num">3</span>Drawdown vs Annuity</div>
+    <div class="step-tab" onclick="goTo(4)" id="tab4"><span class="step-num">4</span>Tax & Withdrawals</div>
+    <div class="step-tab" onclick="goTo(5)" id="tab5"><span class="step-num">5</span>Sustainability</div>
+  </div>
+
+  <!-- STEP 1: INCOME INPUTS -->
+  <div class="card active" id="step1">
+    <div class="card-title">Your retirement income</div>
+    <p class="card-subtitle">Tell us about your income sources and pot size. We'll build a clear picture of your retirement finances.</p>
+
+    <div class="two-col">
+      <div class="field-group">
+        <label>Your age</label>
+        <div class="input-wrap">
+          <input type="number" id="age" placeholder="e.g. 65" min="55" max="90" class="no-prefix">
+        </div>
+      </div>
+      <div class="field-group">
+        <label>National Insurance qualifying years</label>
+        <div class="input-wrap">
+          <input type="number" id="niYears" placeholder="e.g. 30" min="0" max="35" class="no-prefix">
+        </div>
+        <p class="hint">You need 35 years for the full State Pension. Check via your personal tax account on gov.uk.</p>
+      </div>
+    </div>
+
+    <div class="field-group">
+      <label>State Pension — have you claimed it yet?</label>
+      <div class="radio-group">
+        <div class="radio-btn selected" id="sp_yes" onclick="selectSP('yes')">Yes, I receive it</div>
+        <div class="radio-btn" id="sp_no" onclick="selectSP('no')">Not yet / before retirement</div>
+      </div>
+    </div>
+
+    <div id="spAmountWrap">
+      <div class="field-group">
+        <label>State Pension received (annual)</label>
+        <div class="input-wrap">
+          <span class="input-prefix">£</span>
+          <input type="number" id="statePension" placeholder="e.g. 11500" min="0">
+        </div>
+        <p class="hint">The full new State Pension is £11,502/year (2024/25). Enter your actual amount if different.</p>
+      </div>
+    </div>
+
+    <hr>
+
+    <div class="two-col">
+      <div class="field-group">
+        <label>Pension pot value</label>
+        <div class="input-wrap">
+          <span class="input-prefix">£</span>
+          <input type="number" id="potValue" placeholder="e.g. 250000" min="0">
+        </div>
+        <p class="hint">Total value of your defined contribution pension(s).</p>
+      </div>
+      <div class="field-group">
+        <label>Defined benefit / final salary pension (annual)</label>
+        <div class="input-wrap">
+          <span class="input-prefix">£</span>
+          <input type="number" id="dbPension" placeholder="e.g. 8000" min="0">
+        </div>
+        <p class="hint">Leave blank if you don't have one.</p>
+      </div>
+    </div>
+
+    <div class="two-col">
+      <div class="field-group">
+        <label>Other income (annual)</label>
+        <div class="input-wrap">
+          <span class="input-prefix">£</span>
+          <input type="number" id="otherIncome" placeholder="e.g. 5000" min="0">
+        </div>
+        <p class="hint">Rental income, part-time work, savings interest etc.</p>
+      </div>
+      <div class="field-group">
+        <label>Annual spending target</label>
+        <div class="input-wrap">
+          <span class="input-prefix">£</span>
+          <input type="number" id="spending" placeholder="e.g. 30000" min="0">
+        </div>
+        <p class="hint">How much you want to spend per year in retirement.</p>
+      </div>
+    </div>
+
+    <div class="btn-row">
+      <button class="btn-primary" onclick="goTo(2)">See my full picture →</button>
+    </div>
+  </div>
+
+  <!-- STEP 2: FULL PICTURE -->
+  <div class="card" id="step2">
+    <div class="card-title">Your retirement income picture</div>
+    <p class="card-subtitle">Here's a clear view of all your income sources and how they compare to your spending target.</p>
+
+    <div class="results-grid" id="pictureGrid"></div>
+
+    <div class="income-bar-section" id="incomeBars"></div>
+
+    <div id="pictureStatus"></div>
+
+    <div class="summary-panel" id="pictureSummary"></div>
+
+    <div class="btn-row">
+      <button class="btn-secondary" onclick="goTo(1)">← Back</button>
+      <button class="btn-primary" onclick="goTo(3)">Drawdown vs annuity →</button>
+    </div>
+  </div>
+
+  <!-- STEP 3: DRAWDOWN VS ANNUITY -->
+  <div class="card" id="step3">
+    <div class="card-title">Drawdown vs annuity</div>
+    <p class="card-subtitle">Two ways to turn your pension pot into income. Neither is right for everyone — here's what matters for your situation.</p>
+
+    <div class="field-group">
+      <label>What annual income do you want from your pot?</label>
+      <div class="input-wrap">
+        <span class="input-prefix">£</span>
+        <input type="number" id="desiredIncome" placeholder="e.g. 15000" min="0" oninput="renderStep3()">
+      </div>
+    </div>
+
+    <div class="field-group">
+      <label>Assumed annuity rate</label>
+      <div class="range-wrap">
+        <input type="range" id="annuityRate" min="3" max="8" step="0.1" value="5" oninput="renderStep3()">
+        <div class="range-labels">
+          <span>3%</span>
+          <span id="annuityRateLabel" style="color:var(--stone); font-weight:600;">5.0%</span>
+          <span>8%</span>
+        </div>
+      </div>
+      <p class="hint">Typical rates for a 65-year-old are currently around 5–6%. Rates vary by age, health, and provider.</p>
+    </div>
+
+    <div id="comparisonContent"></div>
+
+
+    <hr>
+
+    <div>
+      <div style="font-size:0.85rem; font-weight:600; color:var(--navy); margin-bottom:0.25rem;">What are you leaning towards?</div>
+      <p style="font-size:0.8rem; color:var(--slate-light); margin-bottom:0.75rem; line-height:1.5;">Select an option and we'll show you the practical next steps to implement it.</p>
+      <div class="pref-grid">
+        <div class="pref-card" id="pref_annuity" onclick="selectPref('annuity')">
+          <div class="pref-icon">🔒</div>
+          <div class="pref-label">Annuity</div>
+          <div class="pref-desc">I want guaranteed income for life</div>
+        </div>
+        <div class="pref-card" id="pref_drawdown" onclick="selectPref('drawdown')">
+          <div class="pref-icon">📊</div>
+          <div class="pref-label">Drawdown</div>
+          <div class="pref-desc">I want flexibility and control</div>
+        </div>
+        <div class="pref-card" id="pref_blend" onclick="selectPref('blend')">
+          <div class="pref-icon">⚖️</div>
+          <div class="pref-label">Both</div>
+          <div class="pref-desc">Security for essentials, flexibility for the rest</div>
+        </div>
+      </div>
+      <div id="nextStepsContent"></div>
+    </div>
+
+    <div class="btn-row">
+      <button class="btn-secondary" onclick="goTo(2)">← Back</button>
+      <button class="btn-primary" onclick="goTo(4)">Tax & withdrawals →</button>
+    </div>
+  </div>
+
+  <!-- STEP 4: TAX & WITHDRAWALS -->
+  <div class="card" id="step4">
+    <div class="card-title">Tax-efficient withdrawals</div>
+    <p class="card-subtitle">How you take money from your pension matters. This shows the tax picture for different withdrawal levels.</p>
+
+    <div class="field-group">
+      <label>Annual withdrawal from pension pot</label>
+      <div class="range-wrap">
+        <input type="range" id="withdrawalSlider" min="0" max="80000" step="500" value="15000" oninput="renderStep4()">
+        <div class="range-labels">
+          <span>£0</span>
+          <span id="withdrawalLabel" style="color:var(--stone); font-weight:600;">£15,000/yr</span>
+          <span>£80,000</span>
+        </div>
+      </div>
+    </div>
+
+    <div id="taxContent"></div>
+
+    <div class="guidance-box">
+      <h4>The 25% tax-free lump sum</h4>
+      <p>Up to 25% of your pension pot can be taken tax-free (capped at £268,275 lifetime). You don\'t have to take it all at once — with flexi-access drawdown, 25% of each withdrawal can be tax-free, with the rest taxed as income.</p>
+    </div>
+
+    <div class="btn-row">
+      <button class="btn-secondary" onclick="goTo(3)">← Back</button>
+      <button class="btn-primary" onclick="goTo(5)">How long will it last? →</button>
+    </div>
+  </div>
+
+  <!-- STEP 5: SUSTAINABILITY -->
+  <div class="card" id="step5">
+    <div class="card-title">How long will your money last?</div>
+    <p class="card-subtitle">Model your pot with different spending phases, one-off events, inflation, and care costs. All figures are illustrative.</p>
+
+    <div class="two-col">
+      <div class="field-group">
+        <label>Base annual withdrawal from pot</label>
+        <div class="input-wrap">
+          <span class="input-prefix">£</span>
+          <input type="number" id="annualWithdrawal" placeholder="e.g. 15000" min="0" oninput="renderStep5()">
+        </div>
+        <p class="hint">Your default spending from the pot before any adjustments below.</p>
+      </div>
+      <div class="field-group">
+        <label>Assumed annual growth rate</label>
+        <div class="input-wrap">
+          <input type="number" id="growthRate" value="4" min="0" max="10" class="has-suffix no-prefix" oninput="renderStep5()">
+          <span class="input-suffix">%</span>
+        </div>
+        <p class="hint">Typical balanced portfolio: 3–5%.</p>
+      </div>
+    </div>
+
+    <!-- INFLATION -->
+    <div class="customise-section">
+      <div class="customise-header" onclick="toggleSection('inflationSection')">
+        <div class="customise-header-left">
+          <span class="customise-icon">📈</span>
+          <div>
+            <div class="customise-title">Inflation adjustment</div>
+            <div class="customise-sub">Increase withdrawals each year to maintain purchasing power</div>
+          </div>
+        </div>
+        <div class="customise-toggle" id="inflationSection_toggle">+ Add</div>
+      </div>
+      <div class="customise-body" id="inflationSection" style="display:none;">
+        <div class="field-group" style="margin-bottom:0;">
+          <label>Annual inflation rate</label>
+          <div class="input-wrap">
+            <input type="number" id="inflationRate" value="2.5" min="0" max="10" class="has-suffix no-prefix" oninput="renderStep5()">
+            <span class="input-suffix">%</span>
+          </div>
+          <p class="hint">ONS long-run target is 2%. Recent years have been higher. This increases your withdrawal each year to keep pace.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- SPENDING PHASES -->
+    <div class="customise-section">
+      <div class="customise-header" onclick="toggleSection('phasesSection')">
+        <div class="customise-header-left">
+          <span class="customise-icon">🗓️</span>
+          <div>
+            <div class="customise-title">Spending phases</div>
+            <div class="customise-sub">Different spending levels at different life stages</div>
+          </div>
+        </div>
+        <div class="customise-toggle" id="phasesSection_toggle">+ Add</div>
+      </div>
+      <div class="customise-body" id="phasesSection" style="display:none;">
+        <p class="hint" style="margin-bottom:0.75rem;">Define up to three spending phases. Leave blank to use the base withdrawal for that period. Common pattern: higher in early retirement (travel, active), lower in middle years, higher again in later years (care).</p>
+        <div id="phasesList">
+          <div class="phase-row">
+            <div class="phase-ages">
+              <label>Age from</label>
+              <div class="input-wrap"><input type="number" class="phase-from no-prefix" placeholder="65" min="50" max="99" oninput="renderStep5()"></div>
+            </div>
+            <div class="phase-ages">
+              <label>Age to</label>
+              <div class="input-wrap"><input type="number" class="phase-to no-prefix" placeholder="74" min="50" max="99" oninput="renderStep5()"></div>
+            </div>
+            <div class="phase-amount">
+              <label>Withdrawal/yr</label>
+              <div class="input-wrap"><span class="input-prefix">£</span><input type="number" class="phase-amount-input" placeholder="e.g. 22000" min="0" oninput="renderStep5()"></div>
+            </div>
+            <button class="phase-remove" onclick="removePhase(this)">✕</button>
+          </div>
+        </div>
+        <button class="btn-add-phase" onclick="addPhase()">+ Add another phase</button>
+      </div>
+    </div>
+
+    <!-- ONE-OFF EVENTS -->
+    <div class="customise-section">
+      <div class="customise-header" onclick="toggleSection('eventsSection')">
+        <div class="customise-header-left">
+          <span class="customise-icon">⚡</span>
+          <div>
+            <div class="customise-title">One-off events</div>
+            <div class="customise-sub">Large expenses or windfalls at specific ages</div>
+          </div>
+        </div>
+        <div class="customise-toggle" id="eventsSection_toggle">+ Add</div>
+      </div>
+      <div class="customise-body" id="eventsSection" style="display:none;">
+        <p class="hint" style="margin-bottom:0.75rem;">Add any significant one-off amounts — home renovations, gifting to children, inheritances, care fees lump sums, holidays of a lifetime. Positive = windfall (adds to pot), negative = expense (reduces pot).</p>
+        <div id="eventsList"></div>
+        <button class="btn-add-phase" onclick="addEvent()">+ Add an event</button>
+      </div>
+    </div>
+
+    <!-- CARE COSTS -->
+    <div class="customise-section">
+      <div class="customise-header" onclick="toggleSection('careSection')">
+        <div class="customise-header-left">
+          <span class="customise-icon">🏥</span>
+          <div>
+            <div class="customise-title">Care cost modelling</div>
+            <div class="customise-sub">Model the potential impact of later-life care needs</div>
+          </div>
+        </div>
+        <div class="customise-toggle" id="careSection_toggle">+ Add</div>
+      </div>
+      <div class="customise-body" id="careSection" style="display:none;">
+        <div class="two-col">
+          <div class="field-group">
+            <label>Age care costs begin</label>
+            <div class="input-wrap"><input type="number" id="careAge" placeholder="e.g. 82" min="60" max="99" class="no-prefix" oninput="renderStep5()"></div>
+          </div>
+          <div class="field-group">
+            <label>Additional annual care cost</label>
+            <div class="input-wrap"><span class="input-prefix">£</span><input type="number" id="careCost" placeholder="e.g. 30000" min="0" oninput="renderStep5()"></div>
+          </div>
+        </div>
+        <p class="hint">Average residential care in the UK costs £35,000–£55,000/year. Home care is typically lower. This is added on top of your base withdrawal from the care age onwards.</p>
+        <div class="alert-box warning" style="margin-top:0.75rem;">
+          <h4>Care cost cap (from October 2025)</h4>
+          <p>The government's planned care cost cap of £86,000 has been delayed. Currently there is no cap on personal care costs. Local authority support is means-tested — assets above £23,250 must be self-funded in England.</p>
+        </div>
+      </div>
+    </div>
+
+    <div id="sustainContent" style="margin-top:1.5rem;"></div>
+
+    <div class="guidance-box" style="margin-top:1rem;">
+      <h4>Important caveats</h4>
+      <p>These projections use simplified assumptions. Investment returns vary year to year, inflation fluctuates, and life is unpredictable. Use this as a directional guide, not a plan. Review regularly with a financial adviser.</p>
+    </div>
+
+    <div class="summary-panel" id="finalSummary"></div>
+
+    <div class="btn-row">
+      <button class="btn-secondary" onclick="goTo(4)">← Back</button>
+      <button class="btn-primary" onclick="window.open('https://www.moneyhelper.org.uk/en/pensions-and-retirement','_blank')">MoneyHelper guidance ↗</button>
+    </div>
+  </div>
+
+</div>
+
+<footer style="background:var(--navy); border-top:3px solid var(--stone); padding:2rem 1.5rem;">
+  <div style="max-width:860px; margin:0 auto; display:flex; gap:1.25rem; align-items:flex-start;">
+    <div style="font-size:1.5rem; line-height:1; flex-shrink:0;">⚠️</div>
+    <div>
+      <div style="font-family:'Playfair Display',serif; color:var(--stone-light); font-size:0.95rem; margin-bottom:0.4rem;">Important — Not Financial or Tax Advice</div>
+      <p style="color:rgba(255,255,255,0.5); font-size:0.8rem; line-height:1.7; margin:0;">
+        This tool provides illustrative scenarios only and does not constitute financial, tax, or legal advice. All figures are estimates based on 2024/25 UK rates. Retirement decisions are complex and personal — always consult a qualified financial adviser before making decisions about your pension. No data is stored.
+      </p>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // ── SWITCHER ───────────────────────────────────────────────────────────────
+  function toggleSwitcher() { document.getElementById('appSwitcher').classList.toggle('open'); }
+  document.addEventListener('click', e => {
+    if (!document.getElementById('appSwitcher').contains(e.target))
+      document.getElementById('appSwitcher').classList.remove('open');
+  });
+
+  // ── HELPERS ────────────────────────────────────────────────────────────────
+  const fmt  = n => '£' + Math.round(n).toLocaleString('en-GB');
+  const fmtK = n => n >= 1000000 ? '£' + (n/1000000).toFixed(2) + 'M' : n >= 1000 ? '£' + Math.round(n/1000) + 'k' : fmt(n);
+
+  // ── STATE PENSION ──────────────────────────────────────────────────────────
+  const FULL_SP = 11502; // 2024/25
+  let spMode = 'yes';
+
+  function selectSP(v) {
+    spMode = v;
+    document.getElementById('sp_yes').classList.toggle('selected', v === 'yes');
+    document.getElementById('sp_no').classList.toggle('selected', v === 'no');
+    document.getElementById('spAmountWrap').style.display = v === 'yes' ? 'block' : 'none';
+    if (v === 'no') {
+      const ni = parseFloat(document.getElementById('niYears').value) || 0;
+      document.getElementById('statePension').value = Math.round(FULL_SP * Math.min(ni, 35) / 35);
+    }
+  }
+
+  document.getElementById('niYears').addEventListener('input', () => {
+    if (spMode === 'no') {
+      const ni = parseFloat(document.getElementById('niYears').value) || 0;
+      document.getElementById('statePension').value = Math.round(FULL_SP * Math.min(ni, 35) / 35);
+    }
+  });
+
+  // ── READ INPUTS ────────────────────────────────────────────────────────────
+  function getInputs() {
+    return {
+      age:         parseFloat(document.getElementById('age').value) || 65,
+      niYears:     parseFloat(document.getElementById('niYears').value) || 0,
+      statePension:parseFloat(document.getElementById('statePension').value) || 0,
+      pot:         parseFloat(document.getElementById('potValue').value) || 0,
+      db:          parseFloat(document.getElementById('dbPension').value) || 0,
+      other:       parseFloat(document.getElementById('otherIncome').value) || 0,
+      spending:    parseFloat(document.getElementById('spending').value) || 0,
+    };
+  }
+
+  // ── STEP 2: FULL PICTURE ───────────────────────────────────────────────────
+  function renderStep2() {
+    const d = getInputs();
+    const guaranteed = d.statePension + d.db + d.other;
+    // Sustainable withdrawal from pot (4% rule illustration)
+    const potIncome  = d.pot * 0.04;
+    const totalIncome = guaranteed + potIncome;
+    const gap = d.spending - totalIncome;
+    const surplus = -gap;
+
+    document.getElementById('pictureGrid').innerHTML = `
+      <div class="result-box stone">
+        <div class="r-label">State Pension</div>
+        <div class="r-amount">${fmt(d.statePension)}</div>
+        <div class="r-sub">per year</div>
+      </div>
+      <div class="result-box">
+        <div class="r-label">Guaranteed income</div>
+        <div class="r-amount">${fmt(guaranteed)}</div>
+        <div class="r-sub">SP + DB + other</div>
+      </div>
+      <div class="result-box">
+        <div class="r-label">Pot income (4% rule)</div>
+        <div class="r-amount">${fmtK(potIncome)}</div>
+        <div class="r-sub">illustrative</div>
+      </div>
+      <div class="result-box ${surplus >= 0 ? 'good' : 'danger'}">
+        <div class="r-label">${surplus >= 0 ? 'Annual surplus' : 'Annual shortfall'}</div>
+        <div class="r-amount">${fmtK(Math.abs(surplus))}</div>
+        <div class="r-sub">vs spending target</div>
+      </div>`;
+
+    const maxIncome = Math.max(totalIncome, d.spending, 1);
+    const bars = [
+      { label: 'State Pension',        val: d.statePension, color: '#6b7280' },
+      { label: 'DB / final salary',    val: d.db,           color: '#78716c' },
+      { label: 'Other income',         val: d.other,        color: '#9ca3af' },
+      { label: 'Pot income (4% rule)', val: potIncome,      color: '#374151' },
+      { label: 'Spending target',      val: d.spending,     color: '#b91c1c', dashed: true },
+    ].filter(b => b.val > 0);
+
+    document.getElementById('incomeBars').innerHTML = '<div style="font-size:0.75rem; font-weight:600; text-transform:uppercase; letter-spacing:0.07em; color:var(--slate-light); margin-bottom:0.85rem;">Income sources</div>' +
+      bars.map(b => `
+        <div class="income-bar-row">
+          <div class="income-bar-label">
+            <span>${b.label}</span>
+            <span>${fmt(b.val)}/yr</span>
+          </div>
+          <div class="income-bar-track">
+            <div class="income-bar-fill" style="width:${Math.min(100,(b.val/maxIncome)*100)}%; background:${b.color}; ${b.dashed ? 'opacity:0.5;' : ''}"></div>
+          </div>
+        </div>`).join('');
+
+    const statusHtml = surplus >= 0
+      ? `<div class="alert-box"><h4>✓ Your income covers your spending target</h4><p>Based on illustrative figures, your retirement income of ${fmt(totalIncome)}/year exceeds your ${fmt(d.spending)}/year target by ${fmt(surplus)}. The pot income figure uses the 4% rule as a rough guide — actual results depend on investment returns and how long you draw down.</p></div>`
+      : `<div class="alert-box warning"><h4>Your income may fall short of your target</h4><p>There's an illustrative gap of ${fmt(Math.abs(surplus))}/year between your projected income of ${fmt(totalIncome)} and your spending target of ${fmt(d.spending)}. This could be bridged by drawing more from your pot, reducing spending, or deferring retirement. See the sustainability check on step 5.</p></div>`;
+
+    document.getElementById('pictureStatus').innerHTML = statusHtml;
+
+    document.getElementById('pictureSummary').innerHTML = `
+      <div class="summary-title">Your income summary</div>
+      <div class="summary-row"><span class="s-label">State Pension</span><span class="s-val">${fmt(d.statePension)}/yr</span></div>
+      <div class="summary-row"><span class="s-label">DB / final salary pension</span><span class="s-val">${d.db ? fmt(d.db) + '/yr' : '—'}</span></div>
+      <div class="summary-row"><span class="s-label">Other income</span><span class="s-val">${d.other ? fmt(d.other) + '/yr' : '—'}</span></div>
+      <div class="summary-row"><span class="s-label">Guaranteed annual income</span><span class="s-val stone">${fmt(guaranteed)}/yr</span></div>
+      <div class="summary-row"><span class="s-label">Pension pot</span><span class="s-val">${fmt(d.pot)}</span></div>
+      <div class="summary-row"><span class="s-label">Pot income (4% illustrative)</span><span class="s-val">${fmt(potIncome)}/yr</span></div>
+      <div class="summary-row"><span class="s-label">Spending target</span><span class="s-val">${fmt(d.spending)}/yr</span></div>
+      <div class="summary-row"><span class="s-label">${surplus >= 0 ? 'Illustrative surplus' : 'Illustrative shortfall'}</span><span class="s-val ${surplus >= 0 ? 'good' : 'warn'}">${surplus >= 0 ? '+' : '−'}${fmt(Math.abs(surplus))}/yr</span></div>`;
+  }
+
+  // ── STEP 3: DRAWDOWN VS ANNUITY ────────────────────────────────────────────
+  function renderStep3() {
+    const d = getInputs();
+    const pot = d.pot;
+    const desired = parseFloat(document.getElementById('desiredIncome').value) || 0;
+    const rate = parseFloat(document.getElementById('annuityRate').value) || 5;
+    document.getElementById('annuityRateLabel').textContent = rate.toFixed(1) + '%';
+
+    const annuityIncome = pot * rate / 100;
+    const drawdownRate  = pot > 0 ? (desired / pot * 100) : 0;
+
+    document.getElementById('comparisonContent').innerHTML = `
+      <div class="results-grid" style="margin-bottom:1.5rem;">
+        <div class="result-box stone">
+          <div class="r-label">Annuity income</div>
+          <div class="r-amount">${fmt(annuityIncome)}</div>
+          <div class="r-sub">per year, guaranteed for life</div>
+        </div>
+        <div class="result-box highlight">
+          <div class="r-label">Drawdown target</div>
+          <div class="r-amount">${fmt(desired)}</div>
+          <div class="r-sub">${drawdownRate.toFixed(1)}% of pot per year</div>
+        </div>
+      </div>
+      <table class="compare-table">
+        <thead>
+          <tr>
+            <th>Factor</th>
+            <th class="col-a">Annuity</th>
+            <th class="col-b">Drawdown</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Income certainty</td>
+            <td class="pro">✓ Guaranteed for life</td>
+            <td class="neutral">Varies with markets</td>
+          </tr>
+          <tr>
+            <td>Longevity risk</td>
+            <td class="pro">✓ None — insured</td>
+            <td class="con">Pot could run out</td>
+          </tr>
+          <tr>
+            <td>Flexibility</td>
+            <td class="con">✗ Fixed once purchased</td>
+            <td class="pro">✓ Adjust any time</td>
+          </tr>
+          <tr>
+            <td>Inheritance</td>
+            <td class="con">✗ Usually nothing on death</td>
+            <td class="pro">✓ Remaining pot passes on</td>
+          </tr>
+          <tr>
+            <td>Investment risk</td>
+            <td class="pro">✓ None</td>
+            <td class="neutral">You bear the risk</td>
+          </tr>
+          <tr>
+            <td>Inflation protection</td>
+            <td class="neutral">Optional (costs more)</td>
+            <td class="pro">✓ Can adjust withdrawals</td>
+          </tr>
+          <tr>
+            <td>Tax-free cash</td>
+            <td class="neutral">Normally taken before</td>
+            <td class="pro">✓ 25% of each withdrawal</td>
+          </tr>
+          <tr>
+            <td>Best suited for</td>
+            <td class="neutral">Those wanting certainty, limited savings elsewhere</td>
+            <td class="neutral">Those with other income, comfortable with risk</td>
+          </tr>
+        </tbody>
+      </table>
+      ${drawdownRate > 6 ? `<div class="alert-box warning"><h4>High drawdown rate</h4><p>Drawing ${drawdownRate.toFixed(1)}% of your pot annually is above the commonly cited 4% sustainable withdrawal rate. This could deplete your pot faster than expected, especially if returns disappoint. See step 5 for a sustainability check.</p></div>` : ''}
+      <div class="guidance-box">
+        <h4>Can I mix both?</h4>
+        <p>Yes — many people use an annuity to cover essential costs (alongside State Pension) and keep the rest in drawdown for flexibility. This blended approach can give you both security and adaptability.</p>
+      </div>`;
+  }
+
+  // ── STEP 4: TAX & WITHDRAWALS ─────────────────────────────────────────────
+  function renderStep4() {
+    const d = getInputs();
+    const withdrawal = parseFloat(document.getElementById('withdrawalSlider').value) || 0;
+    document.getElementById('withdrawalLabel').textContent = fmt(withdrawal) + '/yr';
+
+    const PA = 12570, BRT = 50270;
+    // 25% of each withdrawal is tax-free
+    const taxFreeElement = withdrawal * 0.25;
+    const taxableElement = withdrawal * 0.75;
+    const otherIncome = d.statePension + d.db + d.other;
+    const totalTaxable = Math.max(0, otherIncome + taxableElement - PA);
+    let tax = 0, rem = totalTaxable;
+    const basic = Math.min(rem, BRT - PA); tax += Math.max(0, basic) * 0.20; rem -= basic;
+    if (rem > 0) tax += Math.min(rem, 75000) * 0.40;
+
+    const effectiveRate = withdrawal > 0 ? (tax / withdrawal * 100) : 0;
+    const netWithdrawal = withdrawal - tax;
+    const totalNetIncome = netWithdrawal + otherIncome;
+
+    document.getElementById('taxContent').innerHTML = `
+      <div class="results-grid">
+        <div class="result-box">
+          <div class="r-label">Gross withdrawal</div>
+          <div class="r-amount">${fmt(withdrawal)}</div>
+          <div class="r-sub">from pension pot</div>
+        </div>
+        <div class="result-box stone">
+          <div class="r-label">Tax-free element</div>
+          <div class="r-amount">${fmt(taxFreeElement)}</div>
+          <div class="r-sub">25% of withdrawal</div>
+        </div>
+        <div class="result-box">
+          <div class="r-label">Estimated tax</div>
+          <div class="r-amount">${fmt(tax)}</div>
+          <div class="r-sub">${effectiveRate.toFixed(1)}% effective rate</div>
+        </div>
+        <div class="result-box ${netWithdrawal + otherIncome >= d.spending ? 'good' : 'warn'}">
+          <div class="r-label">Total net income</div>
+          <div class="r-amount">${fmt(totalNetIncome)}</div>
+          <div class="r-sub">after estimated tax</div>
+        </div>
+      </div>
+      <div class="guidance-box">
+        <h4>Your personal allowance in retirement</h4>
+        <p>Your Personal Allowance of £12,570 applies to all income including State Pension and pension withdrawals. If your State Pension alone (${fmt(d.statePension)}) uses ${fmt(Math.min(d.statePension, PA))} of your allowance, you only have ${fmt(Math.max(0, PA - d.statePension))} of allowance remaining for other income before tax kicks in.</p>
+      </div>
+      ${otherIncome + taxableElement > BRT ? `<div class="alert-box warning"><h4>Higher rate tax territory</h4><p>At this withdrawal level, your combined taxable income of ${fmt(otherIncome + taxableElement)} exceeds the £50,270 higher rate threshold. Consider spreading withdrawals across tax years to stay in the basic rate band.</p></div>` : ''}
+      <div class="guidance-box">
+        <h4>Spreading withdrawals across tax years</h4>
+        <ul>
+          <li>Keep total taxable income below £50,270 to avoid higher rate tax (40%)</li>
+          <li>Using your ISA or savings in high-income years reduces pension withdrawals needed</li>
+          <li>Delaying State Pension deferral increases it by ~5.8% per year and shifts the tax timing</li>
+          <li>Consider your spouse or partner's allowances if applicable</li>
+        </ul>
+      </div>`;
+  }
+
+  // ── STEP 5: SUSTAINABILITY (enhanced) ────────────────────────────────────
+  let potChart = null;
+
+  function toggleSection(id) {
+    const body = document.getElementById(id);
+    const toggle = document.getElementById(id + '_toggle');
+    const open = body.style.display === 'none';
+    body.style.display = open ? 'block' : 'none';
+    toggle.textContent = open ? '− Hide' : '+ Add';
+    renderStep5();
+  }
+
+  function addPhase() {
+    const list = document.getElementById('phasesList');
+    const div = document.createElement('div');
+    div.className = 'phase-row';
+    div.innerHTML = `
+      <div class="phase-ages"><label>Age from</label><div class="input-wrap"><input type="number" class="phase-from no-prefix" placeholder="65" min="50" max="99" oninput="renderStep5()"></div></div>
+      <div class="phase-ages"><label>Age to</label><div class="input-wrap"><input type="number" class="phase-to no-prefix" placeholder="74" min="50" max="99" oninput="renderStep5()"></div></div>
+      <div class="phase-amount"><label>Withdrawal/yr</label><div class="input-wrap"><span class="input-prefix">£</span><input type="number" class="phase-amount-input" placeholder="e.g. 22000" min="0" oninput="renderStep5()"></div></div>
+      <button class="phase-remove" onclick="removePhase(this)">✕</button>`;
+    list.appendChild(div);
+  }
+
+  function removePhase(btn) { btn.closest('.phase-row').remove(); renderStep5(); }
+
+  function addEvent() {
+    const list = document.getElementById('eventsList');
+    const div = document.createElement('div');
+    div.className = 'event-row';
+    div.innerHTML = `
+      <div class="event-col"><label>Age</label><div class="input-wrap"><input type="number" class="event-age no-prefix" placeholder="70" min="50" max="99" oninput="renderStep5()"></div></div>
+      <div class="event-col"><label>Description</label><div class="input-wrap"><input type="text" class="event-desc no-prefix" placeholder="e.g. Inheritance" style="padding-left:0.75rem;" oninput="renderStep5()"></div></div>
+      <div class="event-col"><label>Amount (+/−)</label><div class="input-wrap"><span class="input-prefix">£</span><input type="number" class="event-amount" placeholder="e.g. 50000" oninput="renderStep5()"></div></div>
+      <button class="event-remove" onclick="removeEvent(this)">✕</button>`;
+    list.appendChild(div);
+    renderStep5();
+  }
+
+  function removeEvent(btn) { btn.closest('.event-row').remove(); renderStep5(); }
+
+  function getPhases() {
+    return Array.from(document.querySelectorAll('.phase-row')).map(row => ({
+      from: parseInt(row.querySelector('.phase-from').value) || 0,
+      to:   parseInt(row.querySelector('.phase-to').value) || 0,
+      amt:  parseFloat(row.querySelector('.phase-amount-input').value) || 0,
+    })).filter(p => p.from && p.to && p.amt);
+  }
+
+  function getEvents() {
+    return Array.from(document.querySelectorAll('.event-row')).map(row => ({
+      age:  parseInt(row.querySelector('.event-age').value) || 0,
+      desc: row.querySelector('.event-desc').value || 'Event',
+      amt:  parseFloat(row.querySelector('.event-amount').value) || 0,
+    })).filter(e => e.age && e.amt);
+  }
+
+  function renderStep5() {
+    const d = getInputs();
+    const baseWithdrawal = parseFloat(document.getElementById('annualWithdrawal').value) || 0;
+    const growth = (parseFloat(document.getElementById('growthRate').value) || 4) / 100;
+    const inflationOn = document.getElementById('inflationSection').style.display !== 'none';
+    const inflation = inflationOn ? (parseFloat(document.getElementById('inflationRate').value) || 2.5) / 100 : 0;
+    const careOn = document.getElementById('careSection').style.display !== 'none';
+    const careAge = careOn ? (parseInt(document.getElementById('careAge').value) || 999) : 999;
+    const careCost = careOn ? (parseFloat(document.getElementById('careCost').value) || 0) : 0;
+    const phases = document.getElementById('phasesSection').style.display !== 'none' ? getPhases() : [];
+    const events = document.getElementById('eventsSection').style.display !== 'none' ? getEvents() : [];
+
+    let pot = d.pot;
+    const retirementAge = d.age || 65;
+    if (!baseWithdrawal || !pot) { document.getElementById('sustainContent').innerHTML = ''; return; }
+
+    // Run simulation year by year
+    const MAX_YEARS = 50;
+    const potByYear = [pot];
+    const withdrawalByYear = [];
+    let yearsLast = 0;
+    let currentWithdrawal = baseWithdrawal;
+
+    for (let y = 0; y < MAX_YEARS; y++) {
+      const age = retirementAge + y;
+
+      // Inflation ratchet
+      if (y > 0) currentWithdrawal *= (1 + inflation);
+
+      // Spending phase override
+      const phase = phases.find(p => age >= p.from && age <= p.to);
+      let yearWithdrawal = phase ? phase.amt * Math.pow(1 + inflation, y) : currentWithdrawal;
+
+      // Care costs
+      if (age >= careAge) yearWithdrawal += careCost;
+
+      // One-off events this year
+      const yearEvents = events.filter(e => e.age === age);
+      const netEvent = yearEvents.reduce((sum, e) => sum + e.amt, 0);
+
+      withdrawalByYear.push({ age, withdrawal: yearWithdrawal, events: yearEvents });
+
+      if (pot <= 0) break;
+      pot = (pot - yearWithdrawal + netEvent) * (1 + growth);
+      if (pot < 0) pot = 0;
+      potByYear.push(pot);
+      if (pot > 0) yearsLast = y + 1;
+    }
+
+    const ageWhenGone = retirementAge + yearsLast;
+    const lifeExpectancy = 85;
+    const comfortable = yearsLast >= (lifeExpectancy - retirementAge + 10);
+    const atRisk = yearsLast < (lifeExpectancy - retirementAge);
+    const fillColor = comfortable ? '#40916c' : atRisk ? '#b91c1c' : '#b45309';
+    const fillPct = Math.min(100, (yearsLast / 40) * 100);
+
+    const m10 = potByYear[Math.min(10, potByYear.length - 1)] || 0;
+    const m20 = potByYear[Math.min(20, potByYear.length - 1)] || 0;
+
+    document.getElementById('sustainContent').innerHTML = `
+      <div class="results-grid">
+        <div class="result-box ${comfortable ? 'good' : atRisk ? 'danger' : 'warn'}">
+          <div class="r-label">Pot lasts</div>
+          <div class="r-amount">${yearsLast >= MAX_YEARS ? MAX_YEARS + '+ yrs' : yearsLast + ' yrs'}</div>
+          <div class="r-sub">with all adjustments</div>
+        </div>
+        <div class="result-box">
+          <div class="r-label">Pot runs out at age</div>
+          <div class="r-amount">${yearsLast >= MAX_YEARS ? (retirementAge + MAX_YEARS) + '+' : ageWhenGone}</div>
+          <div class="r-sub">illustrative</div>
+        </div>
+        <div class="result-box stone">
+          <div class="r-label">Pot in 10 years</div>
+          <div class="r-amount">${fmtK(m10)}</div>
+          <div class="r-sub">age ${retirementAge + 10}</div>
+        </div>
+        <div class="result-box">
+          <div class="r-label">Pot in 20 years</div>
+          <div class="r-amount">${fmtK(m20)}</div>
+          <div class="r-sub">age ${retirementAge + 20}</div>
+        </div>
+      </div>
+      <div class="pot-chart">
+        <div class="pot-chart-title">Illustrative pot value over time</div>
+        <canvas class="pot-canvas" id="potCanvas" height="160"></canvas>
+        <div class="pot-chart-legend">
+          <div class="pot-chart-legend-item"><div class="legend-dot" style="background:#d1d5db;"></div> Pot value</div>
+          ${events.length > 0 ? '<div class="pot-chart-legend-item"><div class="legend-dot" style="background:#fbbf24;"></div> One-off events</div>' : ''}
+          ${careOn && careCost > 0 ? '<div class="pot-chart-legend-item"><div class="legend-dot" style="background:#f87171;"></div> Care costs begin</div>' : ''}
+        </div>
+      </div>
+      <div style="margin:1rem 0;">
+        <div style="display:flex; justify-content:space-between; font-size:0.8rem; margin-bottom:0.4rem;">
+          <span style="color:var(--slate); font-weight:500;">Sustainability indicator</span>
+          <span style="color:${fillColor}; font-weight:600; font-family:'Playfair Display',serif;">${yearsLast >= MAX_YEARS ? 'Very strong' : comfortable ? 'Strong' : atRisk ? 'At risk' : 'Moderate'}</span>
+        </div>
+        <div class="sustainability-track"><div class="sustainability-fill" style="width:${fillPct}%; background:${fillColor};"></div></div>
+        <div class="sustainability-labels"><span>0 years</span><span>20 years</span><span>40+ years</span></div>
+      </div>
+      ${atRisk ? `<div class="alert-box danger"><h4>Your pot may not last your lifetime</h4><p>With your current settings, the pot could run out around age ${ageWhenGone}. Try reducing withdrawals, adjusting growth assumptions, or considering an annuity for part of your pot.</p></div>` : ''}
+      ${comfortable ? `<div class="alert-box"><h4>✓ Your pot appears sustainable</h4><p>Your pot could last ${yearsLast >= MAX_YEARS ? 'over ' + MAX_YEARS + ' years' : yearsLast + ' years'} — well beyond typical life expectancy. You may have flexibility to spend more or gift more to family.</p></div>` : ''}`;
+
+    // Draw chart
+    setTimeout(() => {
+      const canvas = document.getElementById('potCanvas');
+      if (!canvas) return;
+      const dpr = window.devicePixelRatio || 1;
+      const W = canvas.offsetWidth; const H = 160;
+      canvas.width = W * dpr; canvas.height = H * dpr;
+      const ctx = canvas.getContext('2d');
+      ctx.scale(dpr, dpr);
+      const pad = { t: 10, r: 15, b: 30, l: 55 };
+      const cW = W - pad.l - pad.r, cH = H - pad.t - pad.b;
+      const maxPot = Math.max(...potByYear, 1);
+      const years = potByYear.length;
+      const xPos = i => pad.l + (i / (years - 1)) * cW;
+      const yPos = v => pad.t + cH - (v / maxPot) * cH;
+
+      // Grid
+      ctx.strokeStyle = 'rgba(255,255,255,0.07)'; ctx.lineWidth = 1;
+      for (let g = 0; g <= 4; g++) {
+        const y = pad.t + (g / 4) * cH;
+        ctx.beginPath(); ctx.moveTo(pad.l, y); ctx.lineTo(pad.l + cW, y); ctx.stroke();
+        const val = maxPot * (1 - g / 4);
+        ctx.fillStyle = 'rgba(255,255,255,0.3)'; ctx.font = '9px DM Sans, sans-serif'; ctx.textAlign = 'right';
+        ctx.fillText(val >= 1000000 ? (val/1000000).toFixed(1)+'M' : val >= 1000 ? Math.round(val/1000)+'k' : Math.round(val), pad.l - 4, y + 3);
+      }
+      // X labels
+      ctx.fillStyle = 'rgba(255,255,255,0.25)'; ctx.font = '9px DM Sans, sans-serif'; ctx.textAlign = 'center';
+      [0, Math.floor((years-1)/3), Math.floor(2*(years-1)/3), years-1].forEach(i => {
+        ctx.fillText('Age ' + (retirementAge + i), xPos(i), H - pad.b + 14);
+      });
+      // Area fill
+      const grad = ctx.createLinearGradient(0, pad.t, 0, pad.t + cH);
+      grad.addColorStop(0, 'rgba(209,213,219,0.2)'); grad.addColorStop(1, 'rgba(209,213,219,0.02)');
+      ctx.beginPath();
+      potByYear.forEach((v, i) => i === 0 ? ctx.moveTo(xPos(i), yPos(v)) : ctx.lineTo(xPos(i), yPos(v)));
+      ctx.lineTo(xPos(years - 1), yPos(0)); ctx.lineTo(xPos(0), yPos(0)); ctx.closePath();
+      ctx.fillStyle = grad; ctx.fill();
+      // Line
+      ctx.beginPath(); ctx.strokeStyle = '#d1d5db'; ctx.lineWidth = 2;
+      potByYear.forEach((v, i) => i === 0 ? ctx.moveTo(xPos(i), yPos(v)) : ctx.lineTo(xPos(i), yPos(v)));
+      ctx.stroke();
+      // Event markers
+      events.forEach(e => {
+        const i = e.age - retirementAge;
+        if (i >= 0 && i < potByYear.length) {
+          ctx.beginPath(); ctx.arc(xPos(i), yPos(potByYear[i]), 5, 0, Math.PI * 2);
+          ctx.fillStyle = e.amt > 0 ? '#6ee7b7' : '#fca5a5'; ctx.fill();
+        }
+      });
+      // Care age marker
+      if (careOn && careCost > 0) {
+        const ci = careAge - retirementAge;
+        if (ci > 0 && ci < years) {
+          ctx.strokeStyle = '#f87171'; ctx.lineWidth = 1.5; ctx.setLineDash([3,3]);
+          ctx.beginPath(); ctx.moveTo(xPos(ci), pad.t); ctx.lineTo(xPos(ci), pad.t + cH); ctx.stroke();
+          ctx.setLineDash([]);
+        }
+      }
+    }, 50);
+
+    document.getElementById('finalSummary').innerHTML = `
+      <div class="summary-title">Your retirement at a glance</div>
+      <div class="summary-row"><span class="s-label">Current age</span><span class="s-val">${retirementAge}</span></div>
+      <div class="summary-row"><span class="s-label">Pension pot</span><span class="s-val">${fmt(d.pot)}</span></div>
+      <div class="summary-row"><span class="s-label">Guaranteed annual income</span><span class="s-val">${fmt(d.statePension + d.db + d.other)}/yr</span></div>
+      <div class="summary-row"><span class="s-label">Base annual withdrawal</span><span class="s-val">${fmt(baseWithdrawal)}/yr</span></div>
+      <div class="summary-row"><span class="s-label">Inflation adjustment</span><span class="s-val">${inflationOn ? (inflation*100).toFixed(1) + '%/yr' : 'Off'}</span></div>
+      <div class="summary-row"><span class="s-label">Spending phases</span><span class="s-val">${phases.length > 0 ? phases.length + ' phase' + (phases.length > 1 ? 's' : '') : 'None'}</span></div>
+      <div class="summary-row"><span class="s-label">One-off events</span><span class="s-val">${events.length > 0 ? events.length + ' event' + (events.length > 1 ? 's' : '') : 'None'}</span></div>
+      <div class="summary-row"><span class="s-label">Care costs modelled</span><span class="s-val">${careOn && careCost > 0 ? fmt(careCost) + '/yr from age ' + careAge : 'None'}</span></div>
+      <div class="summary-row"><span class="s-label">Pot sustainability</span><span class="s-val ${comfortable ? 'good' : atRisk ? 'warn' : 'stone'}">${yearsLast >= MAX_YEARS ? MAX_YEARS + '+ years' : yearsLast + ' years'}</span></div>`;
+  }
+
+
+  // ── PREFERENCE & NEXT STEPS ───────────────────────────────────────────────
+  let currentPref = null;
+
+  const NEXT_STEPS = {
+    annuity: {
+      title: 'How to purchase an annuity',
+      items: [
+        {
+          title: 'Get a State Pension forecast',
+          body: 'Before buying an annuity, confirm your State Pension amount via your personal tax account at <a href="https://www.gov.uk/check-state-pension" target="_blank">gov.uk/check-state-pension</a>. This tells you exactly what guaranteed income you already have.'
+        },
+        {
+          title: 'Shop around — don\'t just use your existing provider',
+          body: 'You have the right to an Open Market Option — this means you can buy an annuity from any provider, not just your pension company. Rates vary significantly, so comparing quotes can make a meaningful difference to your lifetime income.'
+        },
+        {
+          title: 'Declare any health conditions',
+          body: 'If you have a serious health condition or lifestyle factors (smoking, obesity, high blood pressure), you may qualify for an "enhanced" or "impaired life" annuity paying significantly more. Always disclose fully.'
+        },
+        {
+          title: 'Decide your annuity options before buying',
+          body: 'Key decisions include: single or joint life (does it continue to a spouse?), inflation-linking (level or increasing?), guarantee period (minimum payout even if you die early), and value protection. These cannot be changed once purchased.'
+        },
+        {
+          title: 'Use a whole-of-market broker or adviser',
+          body: 'The Pension Advisory Service at <a href="https://www.moneyhelper.org.uk" target="_blank">MoneyHelper.org.uk</a> offers free guidance. A regulated financial adviser can compare the full market and help you avoid mistakes. Buying an annuity is irreversible — take the time to get it right.'
+        },
+        {
+          title: 'Consider Pension Wise before deciding',
+          body: 'Anyone over 50 with a defined contribution pension is entitled to a free, impartial guidance session from <a href="https://www.moneyhelper.org.uk/en/pensions-and-retirement/pension-wise" target="_blank">Pension Wise</a>. They can explain your options without pressure to buy anything.'
+        }
+      ]
+    },
+    drawdown: {
+      title: 'How to set up flexible drawdown',
+      items: [
+        {
+          title: 'Book a Pension Wise appointment first',
+          body: 'Before touching your pension, book a free guidance session at <a href="https://www.moneyhelper.org.uk/en/pensions-and-retirement/pension-wise" target="_blank">MoneyHelper.org.uk</a>. It\'s free, impartial, and available to anyone over 50. They\'ll walk through all your options without selling anything.'
+        },
+        {
+          title: 'Check whether your pension scheme offers drawdown',
+          body: 'Contact your pension provider and ask if your scheme supports flexi-access drawdown. Many workplace pensions don\'t offer it directly — you may need to transfer to a drawdown-compatible provider. Ask about any transfer charges before doing so.'
+        },
+        {
+          title: 'Decide how much to take tax-free',
+          body: 'You can take up to 25% of your pot tax-free (capped at £268,275). You don\'t have to take it all at once — with drawdown, 25% of each withdrawal is tax-free. Consider whether a lump sum now or phased tax-free income suits you better.'
+        },
+        {
+          title: 'Set a sustainable withdrawal rate',
+          body: 'Use step 5 of this tool to model how long your pot could last at different withdrawal rates. A common starting point is 3–4% of the pot per year, but your right rate depends on your other income, spending needs, and investment approach.'
+        },
+        {
+          title: 'Choose your investment strategy',
+          body: 'In drawdown, your pot stays invested. You\'ll need to decide how it\'s invested — typically a mix of equities, bonds, and cash. Most providers offer ready-made portfolios. As you age, gradually reducing investment risk is common practice.'
+        },
+        {
+          title: 'Review annually with a financial adviser',
+          body: 'Drawdown needs ongoing management — checking your withdrawal rate is still sustainable, reviewing investment performance, and adjusting as your circumstances change. An annual review with a regulated adviser is strongly recommended.'
+        }
+      ]
+    },
+    blend: {
+      title: 'How to blend annuity and drawdown',
+      items: [
+        {
+          title: 'Map your essential vs flexible spending',
+          body: 'Start by listing your non-negotiable monthly outgoings — housing costs, utilities, food, insurance. The goal is to cover these with guaranteed income (State Pension + annuity), leaving discretionary spending to drawdown.'
+        },
+        {
+          title: 'Calculate the annuity you need for your essential floor',
+          body: 'Subtract your guaranteed income (State Pension, DB pension) from your essential spending. The gap is the minimum income you need the annuity to cover. Use an annuity calculator to see how much of your pot this would require.'
+        },
+        {
+          title: 'Keep the remainder in drawdown',
+          body: 'The rest of your pot goes into flexible drawdown for holidays, home improvements, gifts, and unexpected expenses. This part stays invested and can be passed on to beneficiaries.'
+        },
+        {
+          title: 'Don\'t annuitise everything at once',
+          body: 'Some people buy annuities in tranches as they age — a portion at 65, more at 75, more at 80. Annuity rates generally improve with age, and your needs change over time. A phased approach gives you flexibility and potentially better rates later.'
+        },
+        {
+          title: 'Get regulated advice for the blend decision',
+          body: 'The decision about how much to annuitise is one of the most consequential financial decisions you\'ll make — and it\'s irreversible for the annuity portion. A whole-of-market financial adviser can model both sides and find the right balance for your situation.'
+        },
+        {
+          title: 'Use Pension Wise as your starting point',
+          body: '<a href="https://www.moneyhelper.org.uk/en/pensions-and-retirement/pension-wise" target="_blank">Pension Wise</a> offers free impartial guidance for anyone over 50. They can explain the blended approach without any obligation. It\'s a valuable first step before engaging paid advice.'
+        }
+      ]
+    }
+  };
+
+  function selectPref(pref) {
+    currentPref = pref;
+    ['annuity','drawdown','blend'].forEach(p =>
+      document.getElementById('pref_' + p).classList.toggle('selected', p === pref)
+    );
+    const data = NEXT_STEPS[pref];
+    document.getElementById('nextStepsContent').innerHTML = `
+      <div class="next-steps">
+        <div class="next-steps-title">${data.title}</div>
+        ${data.items.map((item, i) => `
+          <div class="ns-item">
+            <div class="ns-num">${i + 1}</div>
+            <div class="ns-body">
+              <strong>${item.title}</strong>
+              <p>${item.body}</p>
+            </div>
+          </div>`).join('')}
+        <div class="alert-box" style="margin-top:1rem;">
+          <h4>Always seek regulated financial advice</h4>
+          <p>The guidance above is illustrative and general. Retirement decisions are personal and complex. A regulated financial adviser can model your full situation and help you avoid costly mistakes. Find one at <a href="https://www.unbiased.co.uk" target="_blank" style="color:var(--green);">unbiased.co.uk</a> or <a href="https://www.vouchedfor.co.uk" target="_blank" style="color:var(--green);">vouchedfor.co.uk</a>.</p>
+        </div>
+      </div>`;
+  }
+
+  // ── NAVIGATION ─────────────────────────────────────────────────────────────
+  function goTo(step) {
+    if (step > 1) {
+      if (!document.getElementById('potValue').value && !document.getElementById('statePension').value) {
+        document.getElementById('potValue').focus(); return;
+      }
+    }
+    for (let i = 1; i <= 5; i++) {
+      document.getElementById('step' + i).classList.toggle('active', i === step);
+      const tab = document.getElementById('tab' + i);
+      tab.classList.toggle('active', i === step);
+      if (i < step) tab.classList.add('completed');
+      else if (i > step) tab.classList.remove('completed');
+    }
+    if (step === 2) renderStep2();
+    if (step === 3) { renderStep2(); renderStep3(); }
+    if (step === 4) renderStep4();
+    if (step === 5) renderStep5();
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  // Wire live inputs
+  document.getElementById('annuityRate').addEventListener('input', renderStep3);
+  document.getElementById('withdrawalSlider').addEventListener('input', renderStep4);
+</script>
+</body>
+</html>

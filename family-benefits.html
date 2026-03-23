@@ -1,0 +1,691 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>My Family & Benefits Optimiser</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy: #0f1f38;
+    --rose: #9b2335;
+    --rose-light: #c0392b;
+    --rose-pale: #fdf2f2;
+    --cream: #f7f3ec;
+    --slate: #4a5568;
+    --slate-light: #718096;
+    --green-light: #40916c;
+    --white: #ffffff;
+    --border: rgba(155,35,53,0.2);
+    --red: #c0392b;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'DM Sans', sans-serif; background: var(--cream); color: var(--navy); min-height: 100vh; }
+
+  /* HEADER */
+  header { background: var(--navy); padding: 1.5rem 2rem; display: flex; align-items: center; justify-content: space-between; }
+
+  /* APP SWITCHER */
+  .app-switcher { position: relative; }
+  .switcher-trigger { display: flex; align-items: center; gap: 0.5rem; cursor: pointer; padding: 0.4rem 0.75rem; border-radius: 8px; border: 1px solid rgba(255,255,255,0.15); transition: background 0.2s; user-select: none; }
+  .switcher-trigger:hover { background: rgba(255,255,255,0.07); }
+  .switcher-trigger .app-name { font-family: 'Playfair Display', serif; font-size: 1.1rem; color: var(--rose-light); }
+  .switcher-trigger .app-name span { color: var(--white); font-weight: 300; }
+  .switcher-trigger .chevron { color: rgba(255,255,255,0.4); font-size: 0.7rem; transition: transform 0.2s; }
+  .app-switcher.open .chevron { transform: rotate(180deg); }
+  .switcher-dropdown { display: none; position: absolute; top: calc(100% + 8px); left: 0; background: #1a2f4e; border: 1px solid rgba(255,255,255,0.1); border-radius: 10px; overflow: hidden; min-width: 240px; box-shadow: 0 8px 24px rgba(0,0,0,0.3); z-index: 100; }
+  .app-switcher.open .switcher-dropdown { display: block; }
+  .switcher-item { display: flex; align-items: center; gap: 0.75rem; padding: 0.85rem 1rem; cursor: pointer; transition: background 0.15s; border-bottom: 1px solid rgba(255,255,255,0.06); }
+  .switcher-item:last-child { border-bottom: none; }
+  .switcher-item:hover { background: rgba(255,255,255,0.06); }
+  .switcher-item.current { background: rgba(155,35,53,0.1); }
+  .switcher-item-icon { width: 32px; height: 32px; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 1rem; flex-shrink: 0; }
+  .switcher-item-text .item-name { font-family: 'Playfair Display', serif; font-size: 0.9rem; color: white; }
+  .switcher-item-text .item-desc { font-size: 0.72rem; color: rgba(255,255,255,0.4); margin-top: 0.1rem; }
+  .switcher-item.current .item-name { color: var(--rose-light); }
+
+  .disclaimer-badge { font-size: 0.7rem; color: rgba(255,255,255,0.4); border: 1px solid rgba(255,255,255,0.15); padding: 0.3rem 0.7rem; border-radius: 20px; letter-spacing: 0.05em; text-transform: uppercase; }
+
+  /* HERO */
+  .hero { background: var(--navy); padding: 3rem 2rem 4rem; text-align: center; position: relative; overflow: hidden; }
+  .hero::before { content: ''; position: absolute; top: -80px; right: -80px; width: 300px; height: 300px; border-radius: 50%; background: radial-gradient(circle, rgba(155,35,53,0.12) 0%, transparent 70%); pointer-events: none; }
+  .hero h1 { font-family: 'Playfair Display', serif; font-size: clamp(1.9rem, 5vw, 3rem); color: var(--white); line-height: 1.15; max-width: 580px; margin: 0 auto 1rem; }
+  .hero h1 em { font-style: italic; color: var(--rose-light); }
+  .hero p { color: rgba(255,255,255,0.55); font-size: 1rem; max-width: 460px; margin: 0 auto; line-height: 1.65; }
+
+  /* CONTAINER */
+  .container { max-width: 860px; margin: 0 auto; padding: 2.5rem 1.5rem 4rem; }
+
+  /* STEPS NAV */
+  .steps-nav { display: flex; border-radius: 12px 12px 0 0; overflow: hidden; border: 1px solid var(--border); border-bottom: none; background: white; }
+  .step-tab { flex: 1; padding: 0.9rem 0.5rem; text-align: center; font-size: 0.73rem; font-weight: 500; letter-spacing: 0.04em; text-transform: uppercase; color: var(--slate-light); cursor: pointer; transition: all 0.2s; border-right: 1px solid var(--border); }
+  .step-tab:last-child { border-right: none; }
+  .step-tab.active { background: var(--navy); color: var(--rose-light); }
+  .step-tab.completed { color: var(--green-light); }
+  .step-tab .step-num { display: block; font-family: 'Playfair Display', serif; font-size: 1.2rem; font-weight: 700; margin-bottom: 0.2rem; color: inherit; }
+  .step-tab.completed .step-num::after { content: ' ✓'; font-size: 0.9rem; }
+
+  /* CARD */
+  .card { background: white; border-radius: 0 0 16px 16px; padding: 2rem; border: 1px solid var(--border); border-top: none; box-shadow: 0 4px 24px rgba(15,31,56,0.06); display: none; animation: fadeIn 0.3s ease; }
+  .card.active { display: block; }
+  @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+  .card-title { font-family: 'Playfair Display', serif; font-size: 1.5rem; color: var(--navy); margin-bottom: 0.4rem; }
+  .card-subtitle { color: var(--slate); font-size: 0.9rem; margin-bottom: 2rem; line-height: 1.6; }
+
+  /* FORM */
+  .field-group { margin-bottom: 1.5rem; }
+  .field-group:last-child { margin-bottom: 0; }
+  label { display: block; font-size: 0.85rem; font-weight: 500; color: var(--navy); margin-bottom: 0.5rem; }
+  .input-wrap { position: relative; }
+  .input-prefix { position: absolute; left: 14px; top: 50%; transform: translateY(-50%); color: var(--slate); font-size: 1rem; pointer-events: none; }
+  input[type="number"] { width: 100%; padding: 0.75rem 1rem 0.75rem 2rem; border: 1.5px solid #ddd; border-radius: 8px; font-family: 'DM Sans', sans-serif; font-size: 1rem; color: var(--navy); background: white; transition: border-color 0.2s; appearance: none; -webkit-appearance: none; }
+  input[type="number"]:focus { outline: none; border-color: var(--rose); box-shadow: 0 0 0 3px rgba(155,35,53,0.1); }
+  input.no-prefix { padding-left: 1rem; }
+  .hint { font-size: 0.78rem; color: var(--slate-light); margin-top: 0.4rem; line-height: 1.4; }
+
+  /* COUNTER */
+  .counter-wrap { display: flex; align-items: center; gap: 0.75rem; }
+  .counter-btn { width: 36px; height: 36px; border-radius: 50%; border: 1.5px solid #ddd; background: var(--cream); color: var(--navy); font-size: 1.2rem; cursor: pointer; display: flex; align-items: center; justify-content: center; flex-shrink: 0; transition: all 0.15s; line-height: 1; }
+  .counter-btn:hover { border-color: var(--rose); color: var(--rose); }
+  .counter-display { font-family: 'Playfair Display', serif; font-size: 1.8rem; font-weight: 700; color: var(--navy); min-width: 2rem; text-align: center; }
+  .counter-label { font-size: 0.8rem; color: var(--slate-light); }
+
+  /* RADIO */
+  .radio-group { display: flex; gap: 0.75rem; flex-wrap: wrap; }
+  .radio-btn { flex: 1; min-width: 120px; padding: 0.7rem 1rem; border: 1.5px solid #ddd; border-radius: 8px; text-align: center; cursor: pointer; font-size: 0.88rem; font-weight: 500; transition: all 0.2s; color: var(--slate); }
+  .radio-btn:hover { border-color: var(--rose); }
+  .radio-btn.selected { border-color: var(--rose); background: var(--rose-pale); color: var(--navy); }
+
+  /* TOOLTIPS */
+  .tooltip-trigger { display: inline-flex; align-items: center; gap: 0.3rem; font-size: 0.72rem; color: var(--rose); cursor: pointer; margin-top: 0.35rem; font-weight: 500; user-select: none; width: fit-content; }
+  .tooltip-trigger .tt-icon { width: 16px; height: 16px; border-radius: 50%; background: var(--rose); color: white; font-size: 0.6rem; font-weight: 700; display: inline-flex; align-items: center; justify-content: center; flex-shrink: 0; }
+  .tooltip-body { display: none; background: var(--navy); border-radius: 10px; padding: 0.9rem 1rem; margin-top: 0.5rem; animation: fadeIn 0.2s ease; }
+  .tooltip-body.open { display: block; }
+  .tooltip-body p { font-size: 0.78rem; color: rgba(255,255,255,0.7); line-height: 1.65; }
+  .tooltip-body p strong { color: var(--rose-light); font-weight: 500; }
+  .tooltip-body p + p { margin-top: 0.5rem; }
+  .tt-rates { display: flex; flex-direction: column; gap: 0.4rem; margin-top: 0.6rem; }
+  .tt-rate-row { display: flex; justify-content: space-between; align-items: center; font-size: 0.75rem; padding: 0.35rem 0; border-bottom: 1px solid rgba(255,255,255,0.07); }
+  .tt-rate-row:last-child { border-bottom: none; }
+  .tt-rate-row .tt-rate-label { color: rgba(255,255,255,0.5); }
+  .tt-rate-row .tt-rate-val { color: var(--rose-light); font-weight: 600; font-family: 'Playfair Display', serif; }
+
+  /* AGE PILLS */
+  .age-pill { display: flex; align-items: center; gap: 0.4rem; background: var(--cream); border: 1.5px solid #ddd; border-radius: 8px; padding: 0.35rem 0.6rem; font-size: 0.78rem; }
+  .age-pill label { color: var(--slate); font-size: 0.75rem; margin: 0; font-weight: 400; }
+  .age-pill input[type="number"] { width: 52px; padding: 0.2rem 0.3rem 0.2rem 0.4rem; font-size: 0.82rem; border: none; background: transparent; text-align: center; box-shadow: none; }
+  .age-pill input[type="number"]:focus { outline: none; box-shadow: none; border: none; }
+  #childAges { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 0.25rem; }
+
+  /* RESULTS */
+  .results-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 1rem; margin: 1.5rem 0; }
+  .result-box { background: var(--navy); border-radius: 12px; padding: 1.25rem; text-align: center; }
+  .result-box.highlight { background: linear-gradient(135deg, var(--rose) 0%, var(--rose-light) 100%); }
+  .result-box.safe-box { background: linear-gradient(135deg, #2d6a4f 0%, var(--green-light) 100%); }
+  .result-box .r-label { font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.07em; color: rgba(255,255,255,0.6); margin-bottom: 0.5rem; }
+  .result-box .r-amount { font-family: 'Playfair Display', serif; font-size: 1.8rem; font-weight: 700; color: white; line-height: 1; }
+  .result-box .r-sub { font-size: 0.72rem; color: rgba(255,255,255,0.45); margin-top: 0.3rem; }
+
+  /* STATUS */
+  .status-card { border-radius: 12px; padding: 1.25rem; margin-bottom: 1rem; }
+  .status-card.losing { background: #fef2f2; border: 1.5px solid #fecaca; }
+  .status-card.partial { background: #fffbeb; border: 1.5px solid #fde68a; }
+  .status-card.safe { background: #f0fdf4; border: 1.5px solid #bbf7d0; }
+  .status-headline { font-family: 'Playfair Display', serif; font-size: 1.3rem; font-weight: 700; line-height: 1.2; margin-bottom: 0.4rem; }
+  .status-card.losing .status-headline { color: var(--rose); }
+  .status-card.partial .status-headline { color: #92400e; }
+  .status-card.safe .status-headline { color: #2d6a4f; }
+  .status-sub { font-size: 0.83rem; color: var(--slate); line-height: 1.6; }
+
+  /* THRESHOLD VISUAL */
+  .threshold-visual { background: white; border-radius: 12px; border: 1px solid var(--border); padding: 1.25rem; margin-bottom: 1rem; }
+  .threshold-track { position: relative; height: 10px; border-radius: 5px; overflow: hidden; display: flex; margin: 1.25rem 0 0.5rem; }
+  .zone-green { background: var(--green-light); flex: 60; }
+  .zone-amber { background: #f59e0b; flex: 20; }
+  .zone-red { background: var(--rose-light); flex: 20; }
+  .threshold-marker { position: absolute; top: -6px; width: 2px; height: 22px; background: var(--navy); border-radius: 2px; transform: translateX(-50%); }
+  .threshold-marker::after { content: attr(data-label); position: absolute; top: 24px; left: 50%; transform: translateX(-50%); font-size: 0.62rem; color: var(--slate-light); white-space: nowrap; font-weight: 500; }
+  .income-marker { position: absolute; top: -10px; transform: translateX(-50%); z-index: 2; }
+  .income-marker-dot { width: 14px; height: 14px; border-radius: 50%; background: var(--navy); border: 2.5px solid white; box-shadow: 0 2px 6px rgba(0,0,0,0.2); margin: 0 auto; }
+  .income-marker-label { position: absolute; bottom: 22px; left: 50%; transform: translateX(-50%); font-size: 0.65rem; font-weight: 600; color: var(--navy); white-space: nowrap; background: white; padding: 0.1rem 0.3rem; border-radius: 4px; border: 1px solid var(--border); }
+  .zone-labels { display: flex; justify-content: space-between; margin-top: 1.25rem; gap: 0.5rem; }
+  .zone-tag { font-size: 0.65rem; text-align: center; flex: 1; padding: 0.25rem 0.4rem; border-radius: 4px; font-weight: 500; line-height: 1.3; }
+  .zone-tag.green { background: #d8f3dc; color: #2d6a4f; }
+  .zone-tag.amber { background: #fef3c7; color: #92400e; }
+  .zone-tag.red { background: #fde8e8; color: var(--rose); }
+
+  /* GUIDANCE */
+  .guidance-box { border-left: 3px solid var(--rose); background: var(--rose-pale); border-radius: 0 8px 8px 0; padding: 1rem 1.25rem; margin: 1rem 0; }
+  .guidance-box h4 { font-size: 0.85rem; font-weight: 600; color: var(--navy); margin-bottom: 0.4rem; }
+  .guidance-box p, .guidance-box li { font-size: 0.85rem; color: var(--slate); line-height: 1.6; }
+  .guidance-box ul { padding-left: 1.1rem; }
+
+  .alert-box { border-left: 3px solid var(--green-light); background: rgba(64,145,108,0.06); border-radius: 0 8px 8px 0; padding: 1rem 1.25rem; margin: 1rem 0; }
+  .alert-box.warning { border-left-color: #f59e0b; background: #fffbeb; }
+  .alert-box h4 { font-size: 0.85rem; font-weight: 600; color: var(--navy); margin-bottom: 0.35rem; }
+  .alert-box p { font-size: 0.85rem; color: var(--slate); line-height: 1.6; }
+
+  /* OPTIMISE PANEL */
+  .optimise-panel { background: var(--navy); border-radius: 12px; padding: 1.5rem; margin-top: 1.5rem; }
+  .optimise-title { font-family: 'Playfair Display', serif; font-size: 1.1rem; color: white; margin-bottom: 0.3rem; }
+  .optimise-sub { font-size: 0.78rem; color: rgba(255,255,255,0.45); margin-bottom: 1.1rem; line-height: 1.5; }
+  .slider-field { margin-bottom: 1rem; }
+  .slider-field label { display: flex; justify-content: space-between; font-size: 0.78rem; color: rgba(255,255,255,0.65); margin-bottom: 0.5rem; }
+  .slider-field label strong { color: var(--rose-light); font-family: 'Playfair Display', serif; font-size: 1rem; }
+  input[type="range"] { width: 100%; accent-color: var(--rose-light); height: 4px; cursor: pointer; }
+  .slider-range-labels { display: flex; justify-content: space-between; font-size: 0.65rem; color: rgba(255,255,255,0.3); margin-top: 0.2rem; }
+  .optimise-result { background: rgba(255,255,255,0.06); border-radius: 10px; padding: 1rem; margin-top: 0.75rem; }
+  .or-row { display: flex; justify-content: space-between; align-items: baseline; padding: 0.35rem 0; border-bottom: 1px solid rgba(255,255,255,0.06); font-size: 0.82rem; }
+  .or-row:last-child { border-bottom: none; }
+  .or-row .or-label { color: rgba(255,255,255,0.5); }
+  .or-row .or-val { color: white; font-weight: 500; font-family: 'Playfair Display', serif; font-size: 1rem; }
+  .or-row .or-val.green { color: #52b788; }
+  .or-row .or-val.amber { color: #fbbf24; }
+  .illustrative-note { background: rgba(255,255,255,0.04); border-left: 2px solid rgba(255,255,255,0.12); border-radius: 0 6px 6px 0; padding: 0.6rem 0.75rem; margin-top: 0.75rem; font-size: 0.72rem; color: rgba(255,255,255,0.3); line-height: 1.5; }
+
+  /* EMPTY STATE */
+  .empty-state { text-align: center; padding: 3rem 1rem; color: var(--slate-light); }
+  .empty-state .es-icon { font-size: 2.5rem; margin-bottom: 0.75rem; }
+  .empty-state p { font-size: 0.85rem; line-height: 1.6; }
+
+  /* BUTTONS */
+  .btn-primary { background: var(--rose); color: white; border: none; padding: 0.85rem 2rem; border-radius: 8px; font-family: 'DM Sans', sans-serif; font-size: 0.95rem; font-weight: 600; cursor: pointer; transition: all 0.2s; }
+  .btn-primary:hover { background: var(--rose-light); transform: translateY(-1px); box-shadow: 0 4px 12px rgba(155,35,53,0.3); }
+  .btn-secondary { background: transparent; color: var(--slate); border: 1.5px solid #ddd; padding: 0.85rem 1.5rem; border-radius: 8px; font-family: 'DM Sans', sans-serif; font-size: 0.9rem; font-weight: 500; cursor: pointer; transition: all 0.2s; }
+  .btn-secondary:hover { border-color: var(--navy); color: var(--navy); }
+  .btn-row { display: flex; gap: 0.75rem; margin-top: 2rem; justify-content: flex-end; flex-wrap: wrap; }
+
+  hr { border: none; border-top: 1px solid rgba(0,0,0,0.08); margin: 1.5rem 0; }
+  .hidden { display: none; }
+
+  @media (max-width: 600px) {
+    .hero { padding: 2rem 1.25rem 3rem; }
+    .card { padding: 1.5rem 1.25rem; }
+    .step-tab { font-size: 0.65rem; padding: 0.75rem 0.2rem; }
+    .btn-row { justify-content: stretch; }
+    .btn-primary, .btn-secondary { flex: 1; text-align: center; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="app-switcher" id="appSwitcher">
+    <div class="switcher-trigger" onclick="toggleSwitcher()">
+      <div class="app-name">MyFamily<span>&amp;Benefits</span></div>
+      <div class="chevron">▼</div>
+    </div>
+    <div class="switcher-dropdown">
+      <div class="switcher-item" onclick="window.location.href='index.html'">
+        <div class="switcher-item-icon" style="background:rgba(255,255,255,0.06);">🏠</div>
+        <div class="switcher-item-text"><div class="item-name" style="color:rgba(255,255,255,0.4); font-size:0.8rem;">← Suite Home</div></div>
+      </div>
+      <div class="switcher-item" onclick="window.location.href='pay-optimiser.html'">
+        <div class="switcher-item-icon" style="background:rgba(13,148,136,0.15);">📈</div>
+        <div class="switcher-item-text"><div class="item-name">MyPayOptimiser</div><div class="item-desc">Make every pound work harder.</div></div>
+      </div>
+      <div class="switcher-item" onclick="window.location.href='pension-reclaim.html'">
+        <div class="switcher-item-icon" style="background:rgba(201,168,76,0.15);">💰</div>
+        <div class="switcher-item-text"><div class="item-name">MyPensionReclaim</div><div class="item-desc">Missed salary sacrifice? Get it back.</div></div>
+      </div>
+      <div class="switcher-item" onclick="window.location.href='pension-topup.html'">
+        <div class="switcher-item-icon" style="background:rgba(237,172,0,0.15);">➕</div>
+        <div class="switcher-item-text"><div class="item-name">MyPensionTop-Up</div><div class="item-desc">Make AVCs and claim your tax relief.</div></div>
+      </div>
+      <div class="switcher-item current">
+        <div class="switcher-item-icon" style="background:rgba(155,35,53,0.15);">👨‍👩‍👧</div>
+        <div class="switcher-item-text"><div class="item-name">MyFamily&amp;Benefits</div><div class="item-desc">Child Benefit & TFC optimiser.</div></div>
+      </div>
+      <div class="switcher-item" onclick="window.location.href='retirement-helper.html'">
+        <div class="switcher-item-icon" style="background:rgba(107,114,128,0.15);">🌅</div>
+        <div class="switcher-item-text"><div class="item-name">MyRetirementHelper</div><div class="item-desc">Clarity in later life.</div></div>
+      </div>
+    </div>
+  </div>
+  <div class="disclaimer-badge">Not financial advice</div>
+</header>
+
+<div class="hero">
+  <h1>Are you losing<br><em>Child Benefit</em><br>you're entitled to?</h1>
+  <p>See exactly how much you're losing and whether pension contributions could restore it.</p>
+</div>
+
+<div class="container">
+
+  <div class="steps-nav">
+    <div class="step-tab active" onclick="goTo(1)" id="tab1"><span class="step-num">1</span>Household</div>
+    <div class="step-tab" onclick="goTo(2)" id="tab2"><span class="step-num">2</span>Your Position</div>
+    <div class="step-tab" onclick="goTo(3)" id="tab3"><span class="step-num">3</span>Optimise</div>
+  </div>
+
+  <!-- STEP 1 -->
+  <div class="card active" id="step1">
+    <div class="card-title">Your household</div>
+    <p class="card-subtitle">Enter your details to see your Child Benefit position and what you could be missing out on.</p>
+
+    <div class="field-group">
+      <label>Your salary (highest earner)</label>
+      <div class="input-wrap">
+        <span class="input-prefix">£</span>
+        <input type="number" id="salary" placeholder="e.g. 65000" min="0">
+      </div>
+      <p class="hint">The Child Benefit charge is based on the highest earner's adjusted net income.</p>
+      <div class="tooltip-trigger" data-show-label="What is the High Income charge?" onclick="toggleTooltip('tt-salary')">
+        <span class="tt-icon">i</span><span class="tt-label">What is the High Income charge?</span>
+      </div>
+      <div class="tooltip-body" id="tt-salary">
+        <p>If the highest earner in your household has an <strong>adjusted net income above £60,000</strong>, HMRC charges a tax called the High Income Child Benefit Charge (HICBC). It gradually claws back Child Benefit between £60,000 and £80,000 — above £80,000 it's fully withdrawn. Pension contributions reduce your adjusted net income, which can reduce or eliminate the charge.</p>
+      </div>
+    </div>
+
+    <div class="field-group">
+      <label>Partner salary <span style="color:var(--slate-light); font-weight:400;">(optional)</span></label>
+      <div class="input-wrap">
+        <span class="input-prefix">£</span>
+        <input type="number" id="partnerSalary" placeholder="e.g. 35000" min="0">
+      </div>
+    </div>
+
+    <div class="field-group">
+      <label>Number of children</label>
+      <div class="tooltip-trigger" data-show-label="What are the current rates?" onclick="toggleTooltip('tt-children')" style="margin-bottom:0.6rem;">
+        <span class="tt-icon">i</span><span class="tt-label">What are the current Child Benefit rates?</span>
+      </div>
+      <div class="tooltip-body" id="tt-children" style="margin-bottom:0.75rem;">
+        <p>Child Benefit is paid to one parent or guardian for children under 16 (or under 20 in approved education). From April 2024:</p>
+        <div class="tt-rates">
+          <div class="tt-rate-row"><span class="tt-rate-label">First child</span><span class="tt-rate-val">£25.60/wk · £1,331/yr</span></div>
+          <div class="tt-rate-row"><span class="tt-rate-label">Each additional child</span><span class="tt-rate-val">£16.95/wk · £881/yr</span></div>
+          <div class="tt-rate-row"><span class="tt-rate-label">2 children</span><span class="tt-rate-val">£2,212/yr</span></div>
+          <div class="tt-rate-row"><span class="tt-rate-label">3 children</span><span class="tt-rate-val">£3,093/yr</span></div>
+        </div>
+      </div>
+      <div class="counter-wrap">
+        <button class="counter-btn" onclick="adjustChildren(-1)">−</button>
+        <div>
+          <div class="counter-display" id="childCount">1</div>
+          <div class="counter-label">child</div>
+        </div>
+        <button class="counter-btn" onclick="adjustChildren(1)">+</button>
+      </div>
+    </div>
+
+    <div class="field-group">
+      <label>Current pension contributions (annual)</label>
+      <div class="input-wrap">
+        <span class="input-prefix">£</span>
+        <input type="number" id="pensionContribs" placeholder="e.g. 3000" min="0">
+      </div>
+      <p class="hint">Include salary sacrifice contributions — these reduce your adjusted net income.</p>
+      <div class="tooltip-trigger" data-show-label="How do pension contributions help?" onclick="toggleTooltip('tt-pension')">
+        <span class="tt-icon">i</span><span class="tt-label">How do pension contributions help?</span>
+      </div>
+      <div class="tooltip-body" id="tt-pension">
+        <p>Salary sacrifice pension contributions reduce your <strong>adjusted net income</strong> — the figure HMRC uses to calculate both the High Income Child Benefit Charge and Tax-Free Childcare eligibility. Increasing contributions could reduce or eliminate the charge without losing the money — it goes into your pension instead.</p>
+      </div>
+    </div>
+
+    <div class="field-group">
+      <label>Annual childcare costs <span style="color:var(--slate-light); font-weight:400;">(optional)</span></label>
+      <div class="input-wrap">
+        <span class="input-prefix">£</span>
+        <input type="number" id="childcareCosts" placeholder="e.g. 12000" min="0">
+      </div>
+      <p class="hint">Paid to registered providers — nursery, childminder, after-school clubs.</p>
+      <div class="tooltip-trigger" data-show-label="What is Tax-Free Childcare?" onclick="toggleTooltip('tt-tfc')">
+        <span class="tt-icon">i</span><span class="tt-label">What is Tax-Free Childcare?</span>
+      </div>
+      <div class="tooltip-body" id="tt-tfc">
+        <p>Tax-Free Childcare (TFC) is a separate government scheme. For every <strong>£8 you pay</strong> into a TFC account, the government adds <strong>£2</strong> — up to £500 per child per quarter (£2,000/year per child). It applies to children under 11 in registered childcare.</p>
+        <p>Either parent earning over <strong>£100,000</strong> makes the household ineligible. Pension contributions can reduce income below this threshold and restore entitlement.</p>
+      </div>
+    </div>
+
+    <div class="field-group">
+      <label>Ages of children in childcare <span style="color:var(--slate-light); font-weight:400;">(optional)</span></label>
+      <div id="childAges"></div>
+      <p class="hint">TFC applies to children under 11. Used to calculate eligible children.</p>
+    </div>
+
+    <div class="field-group" style="margin-bottom:0;">
+      <label>Are both parents working?</label>
+      <div class="radio-group">
+        <div class="radio-btn selected" id="both_yes" onclick="selectBothWorking(true)">Yes</div>
+        <div class="radio-btn" id="both_no" onclick="selectBothWorking(false)">No / Single parent</div>
+      </div>
+    </div>
+
+    <div class="btn-row">
+      <button class="btn-primary" onclick="goTo(2)">See my position →</button>
+    </div>
+  </div>
+
+  <!-- STEP 2 -->
+  <div class="card" id="step2">
+    <div class="card-title">Your benefit position</div>
+    <p class="card-subtitle">Here's how your household income compares to the thresholds and what you're currently entitled to.</p>
+
+    <div class="threshold-visual">
+      <div style="font-size:0.8rem; font-weight:500; color:var(--navy); margin-bottom:0.2rem;">Adjusted net income vs thresholds</div>
+      <div style="font-size:0.72rem; color:var(--slate-light);">Highest earner after pension contributions</div>
+      <div class="threshold-track" id="thresholdTrack">
+        <div class="zone-green"></div>
+        <div class="zone-amber"></div>
+        <div class="zone-red"></div>
+        <div class="threshold-marker" id="marker50k" style="left:60%" data-label="£60,000"></div>
+        <div class="threshold-marker" id="marker60k" style="left:80%" data-label="£80,000"></div>
+        <div class="income-marker" id="incomeMarker">
+          <div class="income-marker-label" id="incomeMarkerLabel"></div>
+          <div class="income-marker-dot"></div>
+        </div>
+      </div>
+      <div class="zone-labels">
+        <div class="zone-tag green">Full benefit<br>Under £60k</div>
+        <div class="zone-tag amber">Taper zone<br>£60k–£80k</div>
+        <div class="zone-tag red">Benefit lost<br>Over £80k</div>
+      </div>
+    </div>
+
+    <div class="status-card" id="statusCard">
+      <div class="status-headline" id="statusHeadline"></div>
+      <div class="status-sub" id="statusSub"></div>
+    </div>
+
+    <div id="tfcWarning" class="hidden status-card losing">
+      <div class="status-headline" style="font-size:1.1rem;" id="tfcWarningText"></div>
+      <div class="status-sub" id="tfcWarningSub"></div>
+    </div>
+
+    <div class="results-grid">
+      <div class="result-box">
+        <div class="r-label">Child Benefit entitlement</div>
+        <div class="r-amount" id="fullEntitlement">—</div>
+        <div class="r-sub">per year</div>
+      </div>
+      <div class="result-box highlight">
+        <div class="r-label">Currently losing</div>
+        <div class="r-amount" id="amountLost">—</div>
+        <div class="r-sub">per year</div>
+      </div>
+      <div class="result-box">
+        <div class="r-label">TFC top-up</div>
+        <div class="r-amount" id="tfcTopup">—</div>
+        <div class="r-sub">govt adds per year</div>
+      </div>
+      <div class="result-box" id="adjIncomeBox">
+        <div class="r-label">Adjusted income</div>
+        <div class="r-amount" id="adjustedIncome">—</div>
+        <div class="r-sub">highest earner</div>
+      </div>
+      <div class="result-box hidden" id="tfcRiskBox">
+        <div class="r-label">TFC at risk</div>
+        <div class="r-amount" id="tfcAtRisk" style="color:#fca5a5;">—</div>
+        <div class="r-sub">income near £100k cliff</div>
+      </div>
+    </div>
+
+    <div class="guidance-box">
+      <h4>How the 2024 thresholds work</h4>
+      <p>From April 2024 the taper thresholds changed: the charge now starts at £60,000 (previously £50,000) and Child Benefit is fully withdrawn at £80,000 (previously £60,000). Between these figures, you lose 1% of the benefit for every £200 of income above £60,000.</p>
+    </div>
+
+    <div class="btn-row">
+      <button class="btn-secondary" onclick="goTo(1)">← Back</button>
+      <button class="btn-primary" id="optimiseBtn" onclick="goTo(3)">See how to recover it →</button>
+    </div>
+  </div>
+
+  <!-- STEP 3 -->
+  <div class="card" id="step3">
+    <div class="card-title">Illustrative optimisation</div>
+    <p class="card-subtitle">Model how increasing pension contributions could reduce your adjusted net income and restore benefits.</p>
+
+    <div class="optimise-panel">
+      <div class="optimise-title">Could pension contributions help?</div>
+      <div class="optimise-sub">This is an illustrative scenario. Move the slider to model the effect of additional salary sacrifice contributions on your benefits and tax position.</div>
+      <div class="slider-field">
+        <label>Additional pension contribution <strong id="sliderValDisplay">£0/yr</strong></label>
+        <input type="range" id="pensionSlider" min="0" max="30000" step="100" value="0" oninput="updateSlider()">
+        <div class="slider-range-labels"><span>£0</span><span id="sliderMax">£30,000</span></div>
+      </div>
+      <div class="optimise-result" id="optimiseResult">
+        <div style="text-align:center; color:rgba(255,255,255,0.3); font-size:0.8rem; padding:0.5rem;">Move the slider to model a scenario</div>
+      </div>
+      <div class="illustrative-note">
+        Illustrative scenario only. Actual results depend on your full tax position, pension scheme rules, and other income. This does not constitute financial advice.
+      </div>
+    </div>
+
+    <hr>
+
+    <div class="alert-box warning">
+      <h4>Next steps</h4>
+      <p>If you think you could benefit from increasing pension contributions, speak to your employer's HR team about salary sacrifice, or consult a qualified financial adviser who can model your full tax position accurately.</p>
+    </div>
+
+    <div class="btn-row">
+      <button class="btn-secondary" onclick="goTo(2)">← Back</button>
+    </div>
+  </div>
+
+</div>
+
+<footer style="background: var(--navy); border-top: 3px solid var(--rose); padding: 2rem 1.5rem;">
+  <div style="max-width: 860px; margin: 0 auto; display: flex; gap: 1.25rem; align-items: flex-start;">
+    <div style="font-size: 1.5rem; line-height:1; flex-shrink:0;">⚠️</div>
+    <div>
+      <div style="font-family: 'Playfair Display', serif; color: var(--rose-light); font-size: 0.95rem; margin-bottom: 0.4rem;">Important — Not Financial or Tax Advice</div>
+      <p style="color: rgba(255,255,255,0.55); font-size: 0.8rem; line-height: 1.7; margin:0;">
+        This tool provides illustrative scenarios only and does not constitute financial, tax, or legal advice. Calculations are estimates based on 2024/25 UK rates. Tax rules are subject to change. Always verify with <a href="https://www.gov.uk/contact-hmrc" target="_blank" style="color:var(--rose-light); text-decoration:none;">HMRC</a> or a qualified adviser. No data is stored — all calculations run locally.
+      </p>
+    </div>
+  </div>
+</footer>
+
+<script>
+  function toggleSwitcher() {
+    document.getElementById('appSwitcher').classList.toggle('open');
+  }
+  document.addEventListener('click', function(e) {
+    if (!document.getElementById('appSwitcher').contains(e.target)) {
+      document.getElementById('appSwitcher').classList.remove('open');
+    }
+  });
+
+  function toggleTooltip(id) {
+    const body = document.getElementById(id);
+    body.classList.toggle('open');
+    const trigger = body.previousElementSibling;
+    const label = trigger.querySelector('.tt-label');
+    if (label) label.textContent = body.classList.contains('open') ? 'Hide' : trigger.dataset.showLabel;
+  }
+
+  // 2024/25 rates
+  const CB_FIRST_CHILD = 25.60 * 52;
+  const CB_ADDITIONAL  = 16.95 * 52;
+  const TAPER_START = 60000;
+  const TAPER_END   = 80000;
+  const TFC_MAX_PER_CHILD = 2000;
+  const TFC_INCOME_LIMIT = 100000;
+
+  let children = 1;
+  let bothWorking = true;
+  let childAges = [];
+
+  const fmt = n => '£' + Math.round(n).toLocaleString('en-GB');
+  const fmtK = n => n >= 1000 ? '£' + (n/1000).toFixed(0) + 'k' : fmt(n);
+
+  function adjustChildren(delta) {
+    children = Math.max(0, Math.min(10, children + delta));
+    document.getElementById('childCount').textContent = children;
+    document.getElementById('childCount').nextElementSibling.textContent = children === 1 ? 'child' : 'children';
+    renderChildAges();
+  }
+
+  function renderChildAges() {
+    const wrap = document.getElementById('childAges');
+    const existing = childAges.slice();
+    childAges = Array.from({length: children}, (_, i) => existing[i] !== undefined ? existing[i] : '');
+    wrap.innerHTML = childAges.map((age, i) => `
+      <div class="age-pill">
+        <label>Child ${i+1}</label>
+        <input type="number" min="0" max="17" placeholder="age" value="${age}"
+          oninput="childAges[${i}]=parseInt(this.value)||0;">
+      </div>`).join('');
+  }
+
+  function selectBothWorking(val) {
+    bothWorking = val;
+    document.getElementById('both_yes').classList.toggle('selected', val);
+    document.getElementById('both_no').classList.toggle('selected', !val);
+  }
+
+  function calcChildBenefit(n) {
+    if (n === 0) return 0;
+    return CB_FIRST_CHILD + (n - 1) * CB_ADDITIONAL;
+  }
+
+  function calcCharge(adj, fullBenefit) {
+    if (adj <= TAPER_START) return 0;
+    if (adj >= TAPER_END) return fullBenefit;
+    return Math.round(fullBenefit * (adj - TAPER_START) / (TAPER_END - TAPER_START) * 100) / 100;
+  }
+
+  function calcTFC(adj, costs) {
+    if (!bothWorking) return { eligible: false, reason: 'Both parents need to be working to qualify for Tax-Free Childcare.' };
+    if (adj > TFC_INCOME_LIMIT) return { eligible: false, reason: `Your adjusted net income of ${fmt(adj)} exceeds £100,000. Either parent earning over £100,000 makes the household ineligible for Tax-Free Childcare.` };
+    if (!costs) return { eligible: true, topup: 0 };
+    const eligible = childAges.length > 0 && childAges.some(a => a !== '') ? childAges.filter(a => a !== '' && a < 11).length : children;
+    return { eligible: true, topup: Math.min(eligible * TFC_MAX_PER_CHILD, costs * 0.2), eligibleChildren: eligible };
+  }
+
+  function updateThresholdVisual(adj) {
+    const pct = Math.min(98, Math.max(2, (adj / 100000) * 100));
+    document.getElementById('incomeMarker').style.left = pct + '%';
+    document.getElementById('incomeMarkerLabel').textContent = fmtK(adj);
+  }
+
+  function runCalc() {
+    const salary = parseFloat(document.getElementById('salary').value) || 0;
+    const pension = parseFloat(document.getElementById('pensionContribs').value) || 0;
+    const costs = parseFloat(document.getElementById('childcareCosts').value) || 0;
+    if (!salary) return null;
+    const adj = Math.max(0, salary - pension);
+    const fullBenefit = calcChildBenefit(children);
+    const charge = calcCharge(adj, fullBenefit);
+    const tfc = calcTFC(adj, costs);
+    return { salary, pension, costs, adj, fullBenefit, charge, lost: charge, received: fullBenefit - charge, tfc };
+  }
+
+  function renderStep2() {
+    const r = runCalc();
+    if (!r) return;
+
+    updateThresholdVisual(r.adj);
+
+    const statusCard = document.getElementById('statusCard');
+    const headline = document.getElementById('statusHeadline');
+    const sub = document.getElementById('statusSub');
+
+    if (r.adj <= TAPER_START) {
+      statusCard.className = 'status-card safe';
+      headline.textContent = 'You\'re receiving your full Child Benefit';
+      sub.textContent = `Your adjusted net income of ${fmt(r.adj)} is below the £60,000 threshold. You receive the full ${fmt(r.fullBenefit)}/year.`;
+    } else if (r.adj < TAPER_END) {
+      statusCard.className = 'status-card partial';
+      headline.textContent = `You are currently losing ${fmt(r.lost)}/year in Child Benefit`;
+      sub.textContent = `Your adjusted net income of ${fmt(r.adj)} falls in the taper zone. You receive ${fmt(r.received)}/year but ${fmt(r.lost)}/year is being clawed back.`;
+    } else {
+      statusCard.className = 'status-card losing';
+      headline.textContent = `You are losing all ${fmt(r.fullBenefit)}/year in Child Benefit`;
+      sub.textContent = `Your adjusted net income of ${fmt(r.adj)} exceeds £80,000 so your Child Benefit is fully withdrawn.`;
+    }
+
+    const tfcWarn = document.getElementById('tfcWarning');
+    if (!r.tfc.eligible) {
+      tfcWarn.classList.remove('hidden');
+      document.getElementById('tfcWarningText').textContent = 'Tax-Free Childcare — not currently eligible';
+      document.getElementById('tfcWarningSub').textContent = r.tfc.reason;
+    } else { tfcWarn.classList.add('hidden'); }
+
+    document.getElementById('fullEntitlement').textContent = fmt(r.fullBenefit);
+    document.getElementById('amountLost').textContent = fmt(r.lost);
+    document.getElementById('tfcTopup').textContent = r.tfc.eligible && r.tfc.topup > 0 ? fmt(r.tfc.topup) : '—';
+    document.getElementById('adjustedIncome').textContent = fmtK(r.adj);
+
+    const nearCliff = r.tfc.eligible && r.adj > 90000 && r.costs > 0;
+    document.getElementById('tfcRiskBox').classList.toggle('hidden', !nearCliff);
+    document.getElementById('adjIncomeBox').classList.toggle('hidden', nearCliff);
+    if (nearCliff) document.getElementById('tfcAtRisk').textContent = fmt(r.tfc.topup);
+
+    const canOptimise = r.lost > 0 || (r.tfc.eligible && r.adj > 90000);
+    document.getElementById('optimiseBtn').textContent = canOptimise ? 'See how to recover it →' : 'See optimisation →';
+
+    // Set slider max
+    const needed = Math.max(0, r.adj - TAPER_START, r.adj > TFC_INCOME_LIMIT ? r.adj - TFC_INCOME_LIMIT + 1 : 0);
+    const max = Math.min(60000, Math.ceil(needed * 1.5 / 1000) * 1000 + 5000);
+    const slider = document.getElementById('pensionSlider');
+    slider.max = max;
+    slider.value = 0;
+    document.getElementById('sliderMax').textContent = fmt(max);
+    updateSlider();
+  }
+
+  function updateSlider() {
+    const r = runCalc();
+    if (!r) return;
+    const extra = parseFloat(document.getElementById('pensionSlider').value) || 0;
+    document.getElementById('sliderValDisplay').textContent = fmt(extra) + '/yr';
+
+    const newAdj = Math.max(0, r.adj - extra);
+    const newCharge = calcCharge(newAdj, r.fullBenefit);
+    const cbRecovered = Math.max(0, r.charge - newCharge);
+    const newTFC = calcTFC(newAdj, r.costs);
+    const tfcRecovered = Math.max(0, (newTFC.topup || 0) - (r.tfc.topup || 0));
+    const tfcRestored = !r.tfc.eligible && newTFC.eligible;
+    const marginalRate = r.salary > 125140 ? 0.45 : r.salary > 80000 ? 0.40 : 0.20;
+    const taxSaving = extra * marginalRate;
+    const niSaving = extra * 0.08;
+    const netImpact = cbRecovered + tfcRecovered + taxSaving + niSaving - extra;
+
+    const result = document.getElementById('optimiseResult');
+    if (extra === 0) {
+      result.innerHTML = `<div style="text-align:center; color:rgba(255,255,255,0.3); font-size:0.8rem; padding:0.5rem;">Move the slider to model a scenario</div>`;
+      return;
+    }
+
+    result.innerHTML = `
+      <div class="or-row"><span class="or-label">New adjusted income</span><span class="or-val">${fmt(newAdj)}</span></div>
+      <div class="or-row"><span class="or-label">Child Benefit recovered</span><span class="or-val ${cbRecovered > 0 ? 'green' : ''}">${cbRecovered > 0 ? '+' + fmt(cbRecovered) + '/yr' : '—'}</span></div>
+      ${r.costs > 0 ? `<div class="or-row"><span class="or-label">Tax-Free Childcare ${tfcRestored ? 'restored' : 'change'}</span><span class="or-val ${tfcRecovered > 0 || tfcRestored ? 'green' : ''}">${tfcRestored ? '✓ Now eligible · +' + fmt(newTFC.topup||0) + '/yr' : tfcRecovered > 0 ? '+' + fmt(tfcRecovered) + '/yr' : '—'}</span></div>` : ''}
+      <div class="or-row"><span class="or-label">Approx income tax saving</span><span class="or-val green">+${fmt(taxSaving)}/yr</span></div>
+      <div class="or-row"><span class="or-label">Approx NI saving (salary sacrifice)</span><span class="or-val green">+${fmt(niSaving)}/yr</span></div>
+      <div class="or-row"><span class="or-label">Additional pension contribution</span><span class="or-val amber">−${fmt(extra)}/yr</span></div>
+      <div class="or-row" style="margin-top:0.25rem; padding-top:0.5rem; border-top:1px solid rgba(255,255,255,0.1);">
+        <span class="or-label" style="font-weight:600; color:rgba(255,255,255,0.75);">Illustrative net impact</span>
+        <span class="or-val ${netImpact >= 0 ? 'green' : 'amber'}" style="font-size:1.2rem;">${netImpact >= 0 ? '+' : ''}${fmt(netImpact)}/yr</span>
+      </div>`;
+  }
+
+  function goTo(step) {
+    if (step > 1) {
+      const salary = parseFloat(document.getElementById('salary').value) || 0;
+      if (!salary) { document.getElementById('salary').focus(); return; }
+    }
+    for (let i = 1; i <= 3; i++) {
+      document.getElementById('step' + i).classList.toggle('active', i === step);
+      const tab = document.getElementById('tab' + i);
+      tab.classList.toggle('active', i === step);
+      if (i < step) tab.classList.add('completed');
+      else if (i > step) tab.classList.remove('completed');
+    }
+    if (step === 2) renderStep2();
+    if (step === 3) { renderStep2(); updateSlider(); }
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  renderChildAges();
+</script>
+</body>
+</html>

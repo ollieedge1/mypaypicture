@@ -1,0 +1,1645 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PayOptimiser — Make every pound work harder</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy: #0f1f38;
+    --teal: #0d9488;
+    --teal-light: #2dd4bf;
+    --teal-pale: #f0fdfa;
+    --cream: #f4f7f6;
+    --slate: #4a5568;
+    --slate-light: #718096;
+    --white: #ffffff;
+    --border: rgba(13,148,136,0.2);
+    --red: #e53e3e;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--cream);
+    color: var(--navy);
+    min-height: 100vh;
+  }
+
+  /* HEADER */
+  header {
+    background: var(--navy);
+    padding: 1.5rem 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .logo {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.4rem;
+    color: var(--teal-light);
+    letter-spacing: 0.02em;
+  }
+
+  .logo span { color: var(--white); font-weight: 300; }
+
+  .logo-suite {
+    font-size: 0.7rem;
+    color: rgba(255,255,255,0.35);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin-top: 0.15rem;
+  }
+
+  .disclaimer-badge {
+    font-size: 0.7rem;
+    color: rgba(255,255,255,0.4);
+    border: 1px solid rgba(255,255,255,0.15);
+    padding: 0.3rem 0.7rem;
+    border-radius: 20px;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+  }
+
+  /* HERO */
+  .hero {
+    background: var(--navy);
+    padding: 3rem 2rem 5rem;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero::before {
+    content: '';
+    position: absolute;
+    bottom: -100px; left: 50%;
+    transform: translateX(-50%);
+    width: 500px; height: 200px;
+    border-radius: 50%;
+    background: radial-gradient(ellipse, rgba(13,148,136,0.18) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  .hero::after {
+    content: '';
+    position: absolute;
+    top: -60px; right: -60px;
+    width: 250px; height: 250px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(45,212,191,0.08) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  .hero h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2rem, 5vw, 3rem);
+    color: var(--white);
+    line-height: 1.15;
+    max-width: 580px;
+    margin: 0 auto 1rem;
+  }
+
+  .hero h1 em {
+    font-style: italic;
+    color: var(--teal-light);
+  }
+
+  .hero p {
+    color: rgba(255,255,255,0.55);
+    font-size: 1rem;
+    max-width: 440px;
+    margin: 0 auto;
+    line-height: 1.65;
+  }
+
+  /* PULL-UP CARD EFFECT */
+  .container {
+    max-width: 900px;
+    margin: -2rem auto 0;
+    padding: 0 1.5rem 4rem;
+    position: relative;
+    z-index: 1;
+  }
+
+  /* STEPS NAV */
+  .steps-nav {
+    display: flex;
+    background: white;
+    border-radius: 14px 14px 0 0;
+    overflow: hidden;
+    border: 1px solid var(--border);
+    border-bottom: none;
+  }
+
+  .step-tab {
+    flex: 1;
+    padding: 1rem 0.5rem;
+    text-align: center;
+    font-size: 0.72rem;
+    font-weight: 500;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    color: var(--slate-light);
+    cursor: pointer;
+    transition: all 0.2s;
+    border-right: 1px solid var(--border);
+    position: relative;
+  }
+
+  .step-tab:last-child { border-right: none; }
+
+  .step-tab.active {
+    background: var(--teal);
+    color: white;
+  }
+
+  .step-tab.completed {
+    color: var(--teal);
+  }
+
+  .step-tab .step-num {
+    display: block;
+    font-family: 'Playfair Display', serif;
+    font-size: 1.3rem;
+    font-weight: 700;
+    margin-bottom: 0.15rem;
+  }
+
+  .step-tab.completed .step-num::after {
+    content: ' ✓';
+    font-size: 0.85rem;
+  }
+
+  /* CARD */
+  .card {
+    background: white;
+    border-radius: 0 0 14px 14px;
+    padding: 2.5rem 2rem;
+    border: 1px solid var(--border);
+    border-top: none;
+    box-shadow: 0 8px 32px rgba(15,31,56,0.08);
+    display: none;
+    animation: fadeUp 0.3s ease;
+  }
+
+  .card.active { display: block; }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .card-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.6rem;
+    color: var(--navy);
+    margin-bottom: 0.4rem;
+  }
+
+  .card-subtitle {
+    color: var(--slate);
+    font-size: 0.9rem;
+    margin-bottom: 2rem;
+    line-height: 1.6;
+    max-width: 560px;
+  }
+
+  /* TWO COLUMN LAYOUT */
+  .two-col {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.25rem;
+  }
+
+  @media (max-width: 640px) {
+    .two-col { grid-template-columns: 1fr; }
+  }
+
+  /* FORM */
+  .field-group { margin-bottom: 1.4rem; }
+
+  label {
+    display: block;
+    font-size: 0.83rem;
+    font-weight: 500;
+    color: var(--navy);
+    margin-bottom: 0.45rem;
+    letter-spacing: 0.01em;
+  }
+
+  .input-wrap { position: relative; }
+
+  .input-prefix {
+    position: absolute;
+    left: 13px; top: 50%;
+    transform: translateY(-50%);
+    color: var(--slate-light);
+    font-size: 0.95rem;
+    pointer-events: none;
+  }
+
+  .input-suffix {
+    position: absolute;
+    right: 13px; top: 50%;
+    transform: translateY(-50%);
+    color: var(--slate-light);
+    font-size: 0.9rem;
+    pointer-events: none;
+  }
+
+  input[type="number"], select {
+    width: 100%;
+    padding: 0.72rem 2.2rem 0.72rem 2rem;
+    border: 1.5px solid #dde1e7;
+    border-radius: 8px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.95rem;
+    color: var(--navy);
+    background: white;
+    transition: border-color 0.2s, box-shadow 0.2s;
+    appearance: none;
+  }
+
+  input[type="number"]:focus, select:focus {
+    outline: none;
+    border-color: var(--teal);
+    box-shadow: 0 0 0 3px rgba(13,148,136,0.1);
+  }
+
+  input.no-prefix { padding-left: 1rem; }
+  input.has-suffix { padding-right: 2.5rem; }
+
+  .hint {
+    font-size: 0.77rem;
+    color: var(--slate-light);
+    margin-top: 0.35rem;
+    line-height: 1.45;
+  }
+
+  /* RANGE SLIDER */
+  .range-wrap { margin-top: 0.5rem; }
+
+  input[type="range"] {
+    width: 100%;
+    accent-color: var(--teal);
+    height: 4px;
+    cursor: pointer;
+  }
+
+  .range-labels {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.72rem;
+    color: var(--slate-light);
+    margin-top: 0.25rem;
+  }
+
+  /* RADIO BUTTONS */
+  .radio-group { display: flex; gap: 0.6rem; flex-wrap: wrap; }
+
+  .radio-btn {
+    flex: 1;
+    min-width: 100px;
+    padding: 0.65rem 0.75rem;
+    border: 1.5px solid #dde1e7;
+    border-radius: 8px;
+    text-align: center;
+    cursor: pointer;
+    font-size: 0.85rem;
+    font-weight: 500;
+    transition: all 0.18s;
+    color: var(--slate);
+    background: white;
+    line-height: 1.3;
+  }
+
+  .radio-btn:hover { border-color: var(--teal); color: var(--navy); }
+  .radio-btn.selected { border-color: var(--teal); background: var(--teal-pale); color: var(--teal); }
+
+  /* RESULTS GRID */
+  .results-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    gap: 0.85rem;
+    margin: 1.5rem 0;
+  }
+
+  .result-box {
+    background: var(--navy);
+    border-radius: 10px;
+    padding: 1.1rem 1rem;
+    text-align: center;
+  }
+
+  .result-box.teal {
+    background: linear-gradient(135deg, var(--teal) 0%, #0f766e 100%);
+  }
+
+  .result-box.highlight {
+    background: linear-gradient(135deg, var(--teal-light) 0%, var(--teal) 100%);
+  }
+
+  .result-box .r-label {
+    font-size: 0.68rem;
+    text-transform: uppercase;
+    letter-spacing: 0.07em;
+    color: rgba(255,255,255,0.55);
+    margin-bottom: 0.4rem;
+  }
+
+  .result-box.highlight .r-label { color: rgba(255,255,255,0.75); }
+
+  .result-box .r-amount {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.65rem;
+    font-weight: 700;
+    color: white;
+    line-height: 1;
+  }
+
+  .result-box .r-sub {
+    font-size: 0.7rem;
+    color: rgba(255,255,255,0.4);
+    margin-top: 0.3rem;
+  }
+
+  .result-box.highlight .r-sub { color: rgba(255,255,255,0.65); }
+
+  /* COMPARISON TABLE */
+  .compare-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.88rem;
+    margin: 1rem 0;
+  }
+
+  .compare-table th {
+    padding: 0.6rem 1rem;
+    text-align: left;
+    font-size: 0.72rem;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--slate-light);
+    border-bottom: 2px solid var(--border);
+  }
+
+  .compare-table th.teal-col { color: var(--teal); }
+
+  .compare-table td {
+    padding: 0.75rem 1rem;
+    border-bottom: 1px solid rgba(0,0,0,0.05);
+    color: var(--slate);
+    vertical-align: middle;
+  }
+
+  .compare-table tr:last-child td { border-bottom: none; }
+
+  .compare-table td:first-child { font-weight: 500; color: var(--navy); }
+
+  .compare-table td.win {
+    color: var(--teal);
+    font-weight: 600;
+  }
+
+  .compare-table td.lose { color: var(--slate-light); }
+
+  .winner-tag {
+    display: inline-block;
+    background: var(--teal);
+    color: white;
+    font-size: 0.65rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    padding: 0.15rem 0.5rem;
+    border-radius: 20px;
+    margin-left: 0.4rem;
+    vertical-align: middle;
+  }
+
+  /* GUIDANCE */
+  .guidance-box {
+    border-left: 3px solid var(--teal);
+    background: var(--teal-pale);
+    border-radius: 0 8px 8px 0;
+    padding: 1rem 1.25rem;
+    margin: 1rem 0;
+  }
+
+  .guidance-box h4 {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--navy);
+    margin-bottom: 0.35rem;
+  }
+
+  .guidance-box p, .guidance-box li {
+    font-size: 0.84rem;
+    color: var(--slate);
+    line-height: 1.65;
+  }
+
+  .guidance-box ul { padding-left: 1.1rem; margin-top: 0.3rem; }
+  .guidance-box li { margin-bottom: 0.2rem; }
+
+  .alert-box {
+    border-left: 3px solid var(--teal);
+    background: var(--teal-pale);
+    border-radius: 0 8px 8px 0;
+    padding: 0.9rem 1.1rem;
+    margin: 0.75rem 0;
+  }
+
+  .alert-box.warning {
+    border-left-color: #d97706;
+    background: #fffbeb;
+  }
+
+  .alert-box.danger {
+    border-left-color: var(--red);
+    background: #fff5f5;
+  }
+
+  .alert-box h4 {
+    font-size: 0.83rem;
+    font-weight: 600;
+    color: var(--navy);
+    margin-bottom: 0.3rem;
+  }
+
+  .alert-box p {
+    font-size: 0.83rem;
+    color: var(--slate);
+    line-height: 1.6;
+  }
+
+  /* CHART BAR */
+  .bar-chart { margin: 1.5rem 0; }
+
+  .bar-row {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-bottom: 0.75rem;
+  }
+
+  .bar-label {
+    width: 130px;
+    font-size: 0.78rem;
+    color: var(--slate);
+    flex-shrink: 0;
+    text-align: right;
+  }
+
+  .bar-track {
+    flex: 1;
+    height: 28px;
+    background: rgba(0,0,0,0.05);
+    border-radius: 4px;
+    overflow: hidden;
+    position: relative;
+  }
+
+  .bar-fill {
+    height: 100%;
+    border-radius: 4px;
+    transition: width 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+    display: flex;
+    align-items: center;
+    padding-left: 0.6rem;
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: white;
+    min-width: 2px;
+  }
+
+  .bar-fill.salary { background: var(--navy); }
+  .bar-fill.pension { background: var(--teal); }
+  .bar-fill.tax { background: #94a3b8; }
+  .bar-fill.ni { background: #cbd5e1; }
+
+  .bar-value {
+    width: 80px;
+    font-size: 0.8rem;
+    font-weight: 500;
+    color: var(--navy);
+    flex-shrink: 0;
+  }
+
+  /* PROJECTION */
+  .projection-canvas-wrap {
+    margin: 1.5rem 0;
+    background: var(--navy);
+    border-radius: 12px;
+    padding: 1.5rem;
+    position: relative;
+  }
+
+  canvas#projectionChart {
+    width: 100% !important;
+    height: 220px !important;
+  }
+
+  .proj-legend {
+    display: flex;
+    gap: 1.25rem;
+    margin-top: 1rem;
+    flex-wrap: wrap;
+  }
+
+  .proj-legend-item {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-size: 0.75rem;
+    color: rgba(255,255,255,0.65);
+  }
+
+  .proj-legend-dot {
+    width: 10px; height: 10px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+
+  /* ALLOWANCE METER */
+  .allowance-meter {
+    margin: 1.25rem 0;
+  }
+
+  .meter-track {
+    height: 16px;
+    background: rgba(0,0,0,0.07);
+    border-radius: 8px;
+    overflow: hidden;
+    margin: 0.5rem 0;
+  }
+
+  .meter-fill {
+    height: 100%;
+    border-radius: 8px;
+    transition: width 0.5s ease;
+  }
+
+  .meter-labels {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.75rem;
+    color: var(--slate-light);
+  }
+
+  /* DIVIDER */
+  hr { border: none; border-top: 1px solid rgba(0,0,0,0.07); margin: 1.5rem 0; }
+
+  /* BUTTONS */
+  .btn-primary {
+    background: var(--teal);
+    color: white;
+    border: none;
+    padding: 0.85rem 2rem;
+    border-radius: 8px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.95rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+    letter-spacing: 0.01em;
+  }
+
+  .btn-primary:hover {
+    background: #0f766e;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 14px rgba(13,148,136,0.3);
+  }
+
+  .btn-secondary {
+    background: transparent;
+    color: var(--slate);
+    border: 1.5px solid #dde1e7;
+    padding: 0.85rem 1.5rem;
+    border-radius: 8px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.9rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+
+  .btn-secondary:hover { border-color: var(--teal); color: var(--navy); }
+
+  .btn-row {
+    display: flex;
+    gap: 0.75rem;
+    margin-top: 2rem;
+    justify-content: flex-end;
+    flex-wrap: wrap;
+  }
+
+  /* SUMMARY PANEL */
+  .summary-panel {
+    background: var(--navy);
+    border-radius: 12px;
+    padding: 1.5rem;
+    margin-top: 1.5rem;
+  }
+
+  .summary-panel-title {
+    font-family: 'Playfair Display', serif;
+    color: var(--teal-light);
+    font-size: 1rem;
+    margin-bottom: 1rem;
+  }
+
+  .summary-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.5rem 0;
+    border-bottom: 1px solid rgba(255,255,255,0.07);
+    font-size: 0.85rem;
+  }
+
+  .summary-row:last-child { border-bottom: none; }
+  .summary-row .s-label { color: rgba(255,255,255,0.55); }
+  .summary-row .s-val { color: white; font-weight: 500; }
+  .summary-row .s-val.teal { color: var(--teal-light); font-weight: 600; }
+  .summary-row .s-val.dim { color: rgba(255,255,255,0.35); }
+
+  @media (max-width: 600px) {
+    .hero { padding: 2rem 1.25rem 4rem; }
+    .card { padding: 1.5rem 1.25rem; }
+    .step-tab { font-size: 0.62rem; padding: 0.7rem 0.2rem; }
+    .step-tab .step-num { font-size: 1.1rem; }
+    .bar-label { width: 90px; font-size: 0.72rem; }
+    .btn-row { justify-content: stretch; }
+    .btn-primary, .btn-secondary { flex: 1; text-align: center; }
+  }
+
+  /* APP SWITCHER */
+  .app-switcher { position: relative; }
+
+  .switcher-trigger {
+    display: flex; align-items: center; gap: 0.5rem;
+    cursor: pointer; padding: 0.4rem 0.75rem;
+    border-radius: 8px; border: 1px solid rgba(255,255,255,0.15);
+    transition: background 0.2s; user-select: none;
+  }
+  .switcher-trigger:hover { background: rgba(255,255,255,0.07); }
+  .switcher-trigger .app-name { font-family: 'Playfair Display', serif; font-size: 1.1rem; color: var(--teal-light); }
+  .switcher-trigger .app-name span { color: var(--white); font-weight: 300; }
+  .switcher-trigger .app-suite { font-size: 0.65rem; color: rgba(255,255,255,0.3); letter-spacing: 0.08em; text-transform: uppercase; margin-top: 0.1rem; }
+  .switcher-trigger .chevron { color: rgba(255,255,255,0.4); font-size: 0.7rem; transition: transform 0.2s; }
+  .app-switcher.open .chevron { transform: rotate(180deg); }
+
+  .switcher-dropdown {
+    display: none; position: absolute; top: calc(100% + 8px); left: 0;
+    background: #1a2f4e; border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 10px; overflow: hidden; min-width: 230px;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.3); z-index: 100;
+  }
+  .app-switcher.open .switcher-dropdown { display: block; }
+
+  .switcher-item {
+    display: flex; align-items: center; gap: 0.75rem;
+    padding: 0.85rem 1rem; cursor: pointer; transition: background 0.15s;
+    text-decoration: none; border-bottom: 1px solid rgba(255,255,255,0.06);
+  }
+  .switcher-item:last-child { border-bottom: none; }
+  .switcher-item:hover { background: rgba(255,255,255,0.06); }
+  .switcher-item.current { background: rgba(13,148,136,0.12); }
+
+  .switcher-item-icon {
+    width: 32px; height: 32px; border-radius: 8px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1rem; flex-shrink: 0;
+  }
+  .switcher-item-text .item-name { font-family: 'Playfair Display', serif; font-size: 0.9rem; color: white; }
+  .switcher-item-text .item-desc { font-size: 0.72rem; color: rgba(255,255,255,0.4); margin-top: 0.1rem; }
+  .switcher-item.current .item-name { color: var(--teal-light); }
+
+  /* GOAL CHECKBOXES */
+  .goal-item {
+    display: flex; align-items: flex-start; gap: 0.75rem;
+    padding: 0.75rem 0.9rem; border: 1.5px solid #dde1e7;
+    border-radius: 8px; cursor: pointer; transition: all 0.18s;
+    background: white;
+  }
+  .goal-item:hover { border-color: var(--teal); }
+  .goal-item.selected { border-color: var(--teal); background: var(--teal-pale); }
+  .goal-item.selected .goal-check { background: var(--teal); border-color: var(--teal); color: white; }
+  .goal-check {
+    width: 20px; height: 20px; border-radius: 5px;
+    border: 2px solid #dde1e7; display: flex; align-items: center;
+    justify-content: center; font-size: 0.7rem; flex-shrink: 0;
+    margin-top: 1px; transition: all 0.15s; color: transparent;
+  }
+  .goal-text .g-title { font-size: 0.88rem; font-weight: 500; color: var(--navy); }
+  .goal-text .g-desc { font-size: 0.76rem; color: var(--slate-light); margin-top: 0.15rem; line-height: 1.4; }
+  .optimise-result-box {
+    background: var(--navy); border-radius: 10px; padding: 1.1rem 1.25rem;
+  }
+  .optimise-result-box .or-title {
+    font-family: 'Playfair Display', serif; color: var(--teal-light);
+    font-size: 0.95rem; margin-bottom: 0.75rem;
+  }
+  .optimise-goal-tag {
+    display: inline-flex; align-items: center; gap: 0.3rem;
+    background: rgba(45,212,191,0.12); border: 1px solid rgba(45,212,191,0.25);
+    border-radius: 20px; padding: 0.2rem 0.6rem;
+    font-size: 0.72rem; color: var(--teal-light); margin: 0.2rem 0.2rem 0.2rem 0;
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="app-switcher" id="appSwitcher">
+    <div class="switcher-trigger" onclick="toggleSwitcher()">
+      <div>
+        <div class="app-name">MyPay<span>Optimiser</span></div>
+        <div class="app-suite">Part of the MyPension Suite</div>
+      </div>
+      <div class="chevron">▼</div>
+    </div>
+    <div class="switcher-dropdown">
+      <div class="switcher-item" onclick="window.location.href='index.html'">
+        <div class="switcher-item-icon" style="background:rgba(255,255,255,0.06);">🏠</div>
+        <div class="switcher-item-text">
+          <div class="item-name">Suite Home</div>
+          <div class="item-desc">Back to all tools</div>
+        </div>
+      </div>
+      <div class="switcher-item current">
+        <div class="switcher-item-icon" style="background:rgba(13,148,136,0.15);">📈</div>
+        <div class="switcher-item-text">
+          <div class="item-name" style="color:rgba(255,255,255,0.4);">MyPayOptimiser</div>
+          <div class="item-desc">Make every pound work harder.</div>
+        </div>
+      </div>
+      <div class="switcher-item" onclick="window.location.href='pension-reclaim.html'">
+        <div class="switcher-item-icon" style="background:rgba(201,168,76,0.15);">💰</div>
+        <div class="switcher-item-text">
+          <div class="item-name">MyPensionReclaim</div>
+          <div class="item-desc">Missed salary sacrifice? Get it back.</div>
+        </div>
+      </div>
+      <div class="switcher-item" onclick="window.location.href='pension-topup.html'">
+        <div class="switcher-item-icon" style="background:rgba(237,172,0,0.15);">➕</div>
+        <div class="switcher-item-text">
+          <div class="item-name">MyPensionTop-Up</div>
+          <div class="item-desc">Make AVCs and claim your tax relief.</div>
+        </div>
+      </div>
+      <div class="switcher-item" onclick="window.location.href='family-benefits.html'">
+        <div class="switcher-item-icon" style="background:rgba(155,35,53,0.15);">👨‍👩‍👧</div>
+        <div class="switcher-item-text"><div class="item-name">MyFamily&amp;Benefits</div><div class="item-desc">Child Benefit &amp; TFC optimiser.</div></div>
+      </div>
+      <div class="switcher-item" onclick="window.location.href='retirement-helper.html'">
+        <div class="switcher-item-icon" style="background:rgba(107,114,128,0.15);">🌅</div>
+        <div class="switcher-item-text"><div class="item-name">MyRetirementHelper</div><div class="item-desc">Clarity in later life.</div></div>
+      </div>
+    </div>
+  </div>
+  <div class="disclaimer-badge">Not financial advice</div>
+</header>
+
+<div class="hero">
+  <h1>Make every pound<br><em>work harder</em> for retirement</h1>
+  <p>Find your optimal pension contribution, compare your options, and see your money grow.</p>
+</div>
+
+<div class="container">
+
+  <div class="steps-nav">
+    <div class="step-tab active" onclick="goTo(1)" id="tab1"><span class="step-num">1</span>Your Pay</div>
+    <div class="step-tab" onclick="goTo(2)" id="tab2"><span class="step-num">2</span>Take-Home</div>
+    <div class="step-tab" onclick="goTo(3)" id="tab3"><span class="step-num">3</span>Compare</div>
+    <div class="step-tab" onclick="goTo(4)" id="tab4"><span class="step-num">4</span>Projection</div>
+    <div class="step-tab" onclick="goTo(5)" id="tab5"><span class="step-num">5</span>Allowance</div>
+  </div>
+
+  <!-- STEP 1: YOUR PAY -->
+  <div class="card active" id="step1">
+    <div class="card-title">Tell us about your pay</div>
+    <p class="card-subtitle">We'll calculate the most tax-efficient way to contribute to your pension based on your situation.</p>
+
+    <div class="two-col">
+      <div class="field-group">
+        <label>Annual gross salary</label>
+        <div class="input-wrap">
+          <span class="input-prefix">£</span>
+          <input type="number" id="grossSalary" placeholder="e.g. 55000" min="0">
+        </div>
+      </div>
+      <div class="field-group">
+        <label>Current employer pension contribution</label>
+        <div class="input-wrap">
+          <input type="number" id="employerContrib" placeholder="e.g. 5" min="0" max="100" class="has-suffix no-prefix">
+          <span class="input-suffix">%</span>
+        </div>
+        <p class="hint">What your employer pays in (often 3–10%).</p>
+      </div>
+    </div>
+
+    <div class="two-col">
+      <div class="field-group">
+        <label>Your current pension contribution</label>
+        <div class="input-wrap">
+          <input type="number" id="employeeContrib" placeholder="e.g. 5" min="0" max="100" class="has-suffix no-prefix">
+          <span class="input-suffix">%</span>
+        </div>
+      </div>
+      <div class="field-group">
+        <label>Desired contribution (what you're exploring)</label>
+        <div class="radio-group" style="margin-bottom:0.6rem;">
+          <div class="radio-btn selected" id="mode_manual" onclick="setContribMode('manual')">Enter manually</div>
+          <div class="radio-btn" id="mode_optimise" onclick="setContribMode('optimise')" style="border-color:var(--teal);color:var(--teal);font-weight:600;">✦ Optimise for me</div>
+        </div>
+        <div id="manualContribWrap">
+          <div class="input-wrap">
+            <input type="number" id="targetContrib" placeholder="e.g. 10" min="0" max="100" class="has-suffix no-prefix" oninput="syncManualTarget()">
+            <span class="input-suffix">%</span>
+          </div>
+          <p class="hint">The new contribution level you're considering.</p>
+        </div>
+        <div id="optimiseWrap" style="display:none;">
+          <p style="font-size:0.82rem;color:var(--slate);margin-bottom:0.75rem;line-height:1.5;">What are your goals? Select all that apply and we'll work out the ideal contribution.</p>
+          <div id="goalsList" style="display:flex;flex-direction:column;gap:0.5rem;"></div>
+          <div id="optimiseResult" style="display:none;margin-top:1rem;"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="field-group">
+      <label>Contribution method</label>
+      <div class="radio-group">
+        <div class="radio-btn selected" id="rb_ss" onclick="selectMethod('salary_sacrifice')">Salary Sacrifice</div>
+        <div class="radio-btn" id="rb_pc" onclick="selectMethod('personal')">Personal Contribution</div>
+        <div class="radio-btn" id="rb_both" onclick="selectMethod('both')">Compare Both</div>
+      </div>
+      <p class="hint" style="margin-top:0.5rem;">Not sure? Choose "Compare Both" — we'll show you the difference.</p>
+    </div>
+
+    <div class="field-group">
+      <label>Current pension pot value (optional)</label>
+      <div class="input-wrap">
+        <span class="input-prefix">£</span>
+        <input type="number" id="currentPot" placeholder="e.g. 25000" min="0">
+      </div>
+      <p class="hint">Used for the growth projection. Leave blank to start from £0.</p>
+    </div>
+
+    <div class="field-group">
+      <label>Years to retirement</label>
+      <div class="range-wrap">
+        <input type="range" id="yearsToRetire" min="5" max="45" value="25" oninput="updateYearsLabel()">
+        <div class="range-labels">
+          <span>5 yrs</span>
+          <span id="yearsLabel" style="color: var(--teal); font-weight:600;">25 years</span>
+          <span>45 yrs</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="btn-row">
+      <button class="btn-primary" onclick="goTo(2)">See my take-home impact →</button>
+    </div>
+  </div>
+
+  <!-- STEP 2: TAKE-HOME IMPACT -->
+  <div class="card" id="step2">
+    <div class="card-title">Take-home pay impact</div>
+    <p class="card-subtitle">Here's how your monthly take-home changes between your current and target contribution levels.</p>
+
+    <div class="results-grid" id="takeHomeGrid"></div>
+
+    <hr>
+
+    <div class="bar-chart" id="barChart"></div>
+
+    <div id="takeHomeGuidance"></div>
+
+    <div class="btn-row">
+      <button class="btn-secondary" onclick="goTo(1)">← Back</button>
+      <button class="btn-primary" onclick="goTo(3)">Compare methods →</button>
+    </div>
+  </div>
+
+  <!-- STEP 3: COMPARISON -->
+  <div class="card" id="step3">
+    <div class="card-title">Salary sacrifice vs personal contribution</div>
+    <p class="card-subtitle">Both get money into your pension — but they're not equal. Here's the side-by-side.</p>
+
+    <div id="comparisonContent"></div>
+
+    <div class="btn-row">
+      <button class="btn-secondary" onclick="goTo(2)">← Back</button>
+      <button class="btn-primary" onclick="goTo(4)">See my projection →</button>
+    </div>
+  </div>
+
+  <!-- STEP 4: PROJECTION -->
+  <div class="card" id="step4">
+    <div class="card-title">Pension pot projection</div>
+    <p class="card-subtitle">Based on your target contribution, here's an estimate of your pot at retirement.</p>
+
+    <div class="two-col" style="margin-bottom:1rem;">
+      <div class="field-group">
+        <label>Assumed annual growth rate</label>
+        <div class="input-wrap">
+          <input type="number" id="growthRate" value="5" min="1" max="12" class="has-suffix no-prefix" oninput="renderStep4()">
+          <span class="input-suffix">%</span>
+        </div>
+        <p class="hint">Typical range 4–7% for a balanced fund.</p>
+      </div>
+      <div class="field-group">
+        <label>Assumed annual salary growth</label>
+        <div class="input-wrap">
+          <input type="number" id="salaryGrowth" value="2" min="0" max="10" class="has-suffix no-prefix" oninput="renderStep4()">
+          <span class="input-suffix">%</span>
+        </div>
+        <p class="hint">Used to inflate contributions over time.</p>
+      </div>
+    </div>
+
+    <div class="projection-canvas-wrap">
+      <canvas id="projectionChart"></canvas>
+      <div class="proj-legend">
+        <div class="proj-legend-item"><div class="proj-legend-dot" style="background:var(--teal-light)"></div> Target contribution</div>
+        <div class="proj-legend-item"><div class="proj-legend-dot" style="background:rgba(255,255,255,0.3)"></div> Current contribution</div>
+      </div>
+    </div>
+
+    <div class="results-grid" id="projectionResults"></div>
+
+    <div class="guidance-box" style="margin-top:1rem;">
+      <h4>Important caveats</h4>
+      <p>These projections are illustrative only. Actual returns will vary. They do not account for charges, inflation, or changes in contribution rates. A financial adviser can model personalised scenarios.</p>
+    </div>
+
+    <div class="btn-row">
+      <button class="btn-secondary" onclick="goTo(3)">← Back</button>
+      <button class="btn-primary" onclick="goTo(5)">Check my allowance →</button>
+    </div>
+  </div>
+
+  <!-- STEP 5: ALLOWANCE -->
+  <div class="card" id="step5">
+    <div class="card-title">Annual allowance checker</div>
+    <p class="card-subtitle">Make sure your contributions stay within HMRC's limits — breaching them triggers a tax charge.</p>
+
+    <div id="allowanceContent"></div>
+
+    <hr>
+
+    <div class="guidance-box">
+      <h4>Carry forward</h4>
+      <p>If you've been a pension scheme member for the past three years, you may be able to carry forward unused annual allowance from those years — potentially allowing contributions well above £60,000 in a single year. This requires specialist advice to use correctly.</p>
+    </div>
+
+    <div class="guidance-box" style="margin-top:0.75rem;">
+      <h4>Money Purchase Annual Allowance (MPAA)</h4>
+      <p>If you've already started drawing flexibly from a defined contribution pension, your annual allowance may be reduced to just £10,000. This does not apply if you haven't yet accessed your pension.</p>
+    </div>
+
+    <div class="summary-panel" id="finalSummary"></div>
+
+    <div class="btn-row">
+      <button class="btn-secondary" onclick="goTo(4)">← Back</button>
+      <button class="btn-primary" onclick="window.open('https://www.gov.uk/tax-on-your-private-pension','_blank')">Read more on gov.uk ↗</button>
+    </div>
+  </div>
+
+</div>
+
+<!-- FOOTER DISCLAIMER -->
+<footer style="background: var(--navy); border-top: 3px solid var(--teal); padding: 2rem 1.5rem;">
+  <div style="max-width: 900px; margin: 0 auto; display: flex; gap: 1.25rem; align-items: flex-start;">
+    <div style="font-size: 1.5rem; line-height:1; flex-shrink:0;">⚠️</div>
+    <div>
+      <div style="font-family: 'Playfair Display', serif; color: var(--teal-light); font-size: 0.95rem; margin-bottom: 0.4rem;">Important — Not Financial or Tax Advice</div>
+      <p style="color: rgba(255,255,255,0.55); font-size: 0.8rem; line-height: 1.7; margin:0;">
+        This tool is for illustrative and educational purposes only. It does not constitute financial, tax, or legal advice. Calculations are estimates based on standard 2024/25 UK tax rates and may not reflect your individual circumstances. Tax rules are subject to change. Always verify your position with <a href="https://www.gov.uk/contact-hmrc" target="_blank" style="color:var(--teal-light); text-decoration:none;">HMRC</a> or a qualified financial adviser before making decisions.
+      </p>
+    </div>
+  </div>
+</footer>
+
+<script>
+  function toggleSwitcher() {
+    document.getElementById('appSwitcher').classList.toggle('open');
+  }
+  document.addEventListener('click', function(e) {
+    if (!document.getElementById('appSwitcher').contains(e.target)) {
+      document.getElementById('appSwitcher').classList.remove('open');
+    }
+  });
+
+  // ── STATE ──────────────────────────────────────────────────────────────────
+  let state = {
+    method: 'salary_sacrifice'
+  };
+
+  // ── HELPERS ────────────────────────────────────────────────────────────────
+  const fmt = n => '£' + Math.round(n).toLocaleString('en-GB');
+  const fmtD = n => '£' + n.toLocaleString('en-GB', { minimumFractionDigits: 0, maximumFractionDigits: 0 });
+  const pct = n => Math.round(n) + '%';
+
+  function updateYearsLabel() {
+    const v = document.getElementById('yearsToRetire').value;
+    document.getElementById('yearsLabel').textContent = v + ' year' + (v == 1 ? '' : 's');
+  }
+
+  function selectMethod(m) {
+    state.method = m;
+    document.getElementById('rb_ss').classList.toggle('selected', m === 'salary_sacrifice');
+    document.getElementById('rb_pc').classList.toggle('selected', m === 'personal');
+    document.getElementById('rb_both').classList.toggle('selected', m === 'both');
+  }
+
+  // ── TAX CALC ───────────────────────────────────────────────────────────────
+  function calcTakeHome(grossSalary, pensionGross) {
+    // 2024/25 rates
+    const PA = 12570, BRT = 50270, HRT = 125140;
+    const NI_PT = 12570, NI_UEL = 50270;
+    const taxable = Math.max(0, grossSalary - pensionGross - PA);
+    let tax = 0;
+    let rem = taxable;
+    const atBasic = Math.min(rem, BRT - PA);
+    tax += Math.max(0, atBasic) * 0.20; rem -= atBasic;
+    if (rem > 0) { const atHigher = Math.min(rem, HRT - BRT); tax += atHigher * 0.40; rem -= atHigher; }
+    if (rem > 0) tax += rem * 0.45;
+
+    const niable = grossSalary - pensionGross;
+    let ni = 0;
+    const niBasic = Math.max(0, Math.min(niable, NI_UEL) - NI_PT);
+    const niAbove = Math.max(0, niable - NI_UEL);
+    ni = niBasic * 0.08 + niAbove * 0.02;
+
+    const takeHome = grossSalary - pensionGross - tax - ni;
+    return { tax, ni, takeHome, taxable, pensionGross };
+  }
+
+  function calcPersonalContrib(grossSalary, pensionGross) {
+    // Personal contrib — paid from net, no NI saving
+    const PA = 12570, BRT = 50270, HRT = 125140;
+    const NI_PT = 12570, NI_UEL = 50270;
+    const taxable = Math.max(0, grossSalary - PA);
+    let tax = 0;
+    let rem = taxable;
+    const atBasic = Math.min(rem, BRT - PA);
+    tax += Math.max(0, atBasic) * 0.20; rem -= atBasic;
+    if (rem > 0) { const atHigher = Math.min(rem, HRT - BRT); tax += atHigher * 0.40; rem -= atHigher; }
+    if (rem > 0) tax += rem * 0.45;
+
+    let ni = 0;
+    const niBasic = Math.max(0, Math.min(grossSalary, NI_UEL) - NI_PT);
+    const niAbove = Math.max(0, grossSalary - NI_UEL);
+    ni = niBasic * 0.08 + niAbove * 0.02;
+
+    // Relief at source — you pay net, provider claims 20%
+    const netContrib = pensionGross * 0.8;
+    const takeHome = grossSalary - tax - ni - netContrib;
+    const isHigher = grossSalary > BRT;
+    const higherRelief = isHigher ? pensionGross * 0.20 : 0;
+    const effectiveCost = netContrib - higherRelief;
+
+    return { tax, ni, takeHome, netContrib, higherRelief, effectiveCost };
+  }
+
+  // ── STEP 2 ─────────────────────────────────────────────────────────────────
+  function renderStep2() {
+    const salary = parseFloat(document.getElementById('grossSalary').value) || 0;
+    const empPct = parseFloat(document.getElementById('employerContrib').value) || 0;
+    const curPct = parseFloat(document.getElementById('employeeContrib').value) || 0;
+    const tgtPct = parseFloat(document.getElementById('targetContrib').value) || 0;
+
+    const curPension = salary * curPct / 100;
+    const tgtPension = salary * tgtPct / 100;
+    const curCalc = calcTakeHome(salary, curPension);
+    const tgtCalc = calcTakeHome(salary, tgtPension);
+
+    const curMonthly = curCalc.takeHome / 12;
+    const tgtMonthly = tgtCalc.takeHome / 12;
+    const diff = tgtMonthly - curMonthly;
+    const extraPension = (tgtPension - curPension) / 12;
+
+    document.getElementById('takeHomeGrid').innerHTML = `
+      <div class="result-box">
+        <div class="r-label">Current Monthly Take-Home</div>
+        <div class="r-amount">${fmt(curMonthly)}</div>
+        <div class="r-sub">At ${curPct}% contribution</div>
+      </div>
+      <div class="result-box teal">
+        <div class="r-label">New Monthly Take-Home</div>
+        <div class="r-amount">${fmt(tgtMonthly)}</div>
+        <div class="r-sub">At ${tgtPct}% contribution</div>
+      </div>
+      <div class="result-box">
+        <div class="r-label">Monthly Take-Home Change</div>
+        <div class="r-amount">${diff >= 0 ? '+' : ''}${fmt(diff)}</div>
+        <div class="r-sub">${diff < 0 ? 'reduction' : 'increase'} per month</div>
+      </div>
+      <div class="result-box highlight">
+        <div class="r-label">Extra Pension Per Month</div>
+        <div class="r-amount">${fmt(extraPension)}</div>
+        <div class="r-sub">Additional going in</div>
+      </div>
+    `;
+
+    // Bar chart
+    const maxVal = salary / 12;
+    const bars = [
+      { label: 'Gross salary', cur: salary / 12, tgt: salary / 12, cls: 'salary' },
+      { label: 'Pension (you)', cur: curPension / 12, tgt: tgtPension / 12, cls: 'pension' },
+      { label: 'Income tax', cur: curCalc.tax / 12, tgt: tgtCalc.tax / 12, cls: 'tax' },
+      { label: 'NI', cur: curCalc.ni / 12, tgt: tgtCalc.ni / 12, cls: 'ni' },
+      { label: 'Take-home', cur: curMonthly, tgt: tgtMonthly, cls: 'pension' },
+    ];
+
+    let html = '';
+    bars.forEach(b => {
+      const curW = Math.max(0, (b.cur / maxVal) * 100);
+      const tgtW = Math.max(0, (b.tgt / maxVal) * 100);
+      html += `
+        <div class="bar-row">
+          <div class="bar-label">${b.label}</div>
+          <div style="flex:1">
+            <div style="display:flex; align-items:center; gap:0.5rem; margin-bottom:3px;">
+              <div style="font-size:0.68rem; width:45px; color:var(--slate-light); flex-shrink:0;">Now</div>
+              <div class="bar-track" style="flex:1"><div class="bar-fill ${b.cls}" style="width:${curW}%">${b.cur > maxVal * 0.12 ? fmt(b.cur) : ''}</div></div>
+              <div class="bar-value">${fmt(b.cur)}</div>
+            </div>
+            <div style="display:flex; align-items:center; gap:0.5rem;">
+              <div style="font-size:0.68rem; width:45px; color:var(--teal); flex-shrink:0; font-weight:500;">New</div>
+              <div class="bar-track" style="flex:1"><div class="bar-fill ${b.cls}" style="width:${tgtW}%; opacity:0.75">${b.tgt > maxVal * 0.12 ? fmt(b.tgt) : ''}</div></div>
+              <div class="bar-value" style="color:var(--teal); font-weight:500;">${fmt(b.tgt)}</div>
+            </div>
+          </div>
+        </div>`;
+    });
+
+    document.getElementById('barChart').innerHTML = html;
+
+    const isHigher = salary > 50270;
+    const realCost = Math.abs(diff);
+    const grossExtra = tgtPension - curPension;
+
+    document.getElementById('takeHomeGuidance').innerHTML = `
+      <div class="guidance-box">
+        <h4>What this means</h4>
+        <p>To put an extra ${fmt(grossExtra / 12)} per month into your pension via salary sacrifice, your take-home reduces by just ${fmt(realCost)} per month — because you save ${isHigher ? '40%' : '20%'} income tax and 8% NI on that amount. ${isHigher ? `As a higher rate taxpayer, salary sacrifice is particularly powerful — the government is effectively subsidising ${pct((grossExtra - realCost * 12) / grossExtra * 100)} of your contribution.` : 'Every £100 extra you put in only costs you around £72 in take-home pay.'}</p>
+      </div>`;
+  }
+
+  // ── STEP 3 ─────────────────────────────────────────────────────────────────
+  function renderStep3() {
+    const salary = parseFloat(document.getElementById('grossSalary').value) || 0;
+    const tgtPct = parseFloat(document.getElementById('targetContrib').value) || 0;
+    const pensionGross = salary * tgtPct / 100;
+    const isHigher = salary > 50270;
+
+    const ss = calcTakeHome(salary, pensionGross);
+    const pc = calcPersonalContrib(salary, pensionGross);
+
+    const ssTakeHome = ss.takeHome / 12;
+    const pcTakeHome = pc.takeHome / 12;
+    const ssWins = ssTakeHome > pcTakeHome;
+    const diff = Math.abs(ssTakeHome - pcTakeHome);
+
+    const method = state.method;
+
+    let html = '';
+
+    if (method === 'personal') {
+      html = `
+        <div class="alert-box warning">
+          <h4>You selected personal contribution only</h4>
+          <p>Personal contributions recover income tax via Self Assessment but don't save NI. See how this compares to salary sacrifice below.</p>
+        </div>`;
+    }
+
+    if (method === 'salary_sacrifice') {
+      html = `
+        <div class="alert-box">
+          <h4>You selected salary sacrifice</h4>
+          <p>This is typically the most tax-efficient method for employed workers — you save both income tax and NI. See the full comparison below.</p>
+        </div>`;
+    }
+
+    html += `
+      <table class="compare-table">
+        <thead>
+          <tr>
+            <th>Factor</th>
+            <th class="teal-col">Salary Sacrifice ${ssWins ? '<span class="winner-tag">Better</span>' : ''}</th>
+            <th>Personal Contribution ${!ssWins ? '<span class="winner-tag" style="background:#718096">Better</span>' : ''}</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Gross pension contribution</td>
+            <td>${fmt(pensionGross / 12)}/mo</td>
+            <td>${fmt(pensionGross / 12)}/mo</td>
+          </tr>
+          <tr>
+            <td>Income tax saved</td>
+            <td class="win">✓ ${fmt(pensionGross * (isHigher ? 0.4 : 0.2) / 12)}/mo</td>
+            <td class="win">✓ ${fmt(pensionGross * (isHigher ? 0.4 : 0.2) / 12)}/mo <span style="font-size:0.75rem; color:var(--slate-light)">(via Self Assessment)</span></td>
+          </tr>
+          <tr>
+            <td>NI saved</td>
+            <td class="win">✓ ${fmt(Math.min(pensionGross, Math.max(0, 50270 - salary)) * 0.08 / 12)}/mo</td>
+            <td class="lose">✗ None</td>
+          </tr>
+          <tr>
+            <td>Employer NI saved (may be passed on)</td>
+            <td class="win">✓ Up to ${fmt(Math.min(pensionGross, Math.max(0, 50270 - salary)) * 0.138 / 12)}/mo</td>
+            <td class="lose">✗ None</td>
+          </tr>
+          <tr>
+            <td>Monthly take-home</td>
+            <td class="${ssWins ? 'win' : ''}">${fmt(ssTakeHome)}</td>
+            <td class="${!ssWins ? 'win' : ''}">${fmt(pcTakeHome)}</td>
+          </tr>
+          <tr>
+            <td>Annual effective cost to you</td>
+            <td class="${ssWins ? 'win' : ''}">${fmt(calcTakeHome(salary, 0).takeHome - ss.takeHome)}</td>
+            <td>${fmt(pc.effectiveCost * 12)}</td>
+          </tr>
+          <tr>
+            <td>Affects student loan repayments?</td>
+            <td class="win">✓ Reduces threshold income</td>
+            <td class="lose">✗ No effect</td>
+          </tr>
+          <tr>
+            <td>Affects child benefit tax charge?</td>
+            <td class="win">✓ Reduces adjusted net income</td>
+            <td class="lose">✗ No effect</td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="guidance-box">
+        <h4>Bottom line</h4>
+        <p>Salary sacrifice puts ${fmt(diff)}/month more in your pocket for the same pension contribution${diff > 0 ? ` — ${fmt(diff * 12)} per year better off` : ''}. Unless your employer doesn't offer it, salary sacrifice is almost always the better choice for employed workers.</p>
+      </div>`;
+
+    document.getElementById('comparisonContent').innerHTML = html;
+  }
+
+  // ── STEP 4 ─────────────────────────────────────────────────────────────────
+  function renderStep4() {
+    const salary = parseFloat(document.getElementById('grossSalary').value) || 0;
+    const empPct = parseFloat(document.getElementById('employerContrib').value) || 0;
+    const curPct = parseFloat(document.getElementById('employeeContrib').value) || 0;
+    const tgtPct = parseFloat(document.getElementById('targetContrib').value) || 0;
+    const currentPot = parseFloat(document.getElementById('currentPot').value) || 0;
+    const years = parseInt(document.getElementById('yearsToRetire').value) || 25;
+    const growth = (parseFloat(document.getElementById('growthRate').value) || 5) / 100;
+    const salGrowth = (parseFloat(document.getElementById('salaryGrowth').value) || 2) / 100;
+
+    function project(employeePct) {
+      let pot = currentPot;
+      let sal = salary;
+      const pts = [pot];
+      for (let y = 0; y < years; y++) {
+        const annual = sal * (employeePct + empPct) / 100;
+        pot = (pot + annual) * (1 + growth);
+        sal *= (1 + salGrowth);
+        pts.push(Math.round(pot));
+      }
+      return pts;
+    }
+
+    const curPoints = project(curPct);
+    const tgtPoints = project(tgtPct);
+    const labels = Array.from({ length: years + 1 }, (_, i) => i === 0 ? 'Now' : `Yr ${i}`);
+
+    // Draw canvas chart
+    const canvas = document.getElementById('projectionChart');
+    const ctx = canvas.getContext('2d');
+    canvas.width = canvas.offsetWidth * window.devicePixelRatio || 800;
+    canvas.height = 220 * window.devicePixelRatio;
+    ctx.scale(window.devicePixelRatio, window.devicePixelRatio);
+    const W = canvas.offsetWidth || 800, H = 220;
+    ctx.clearRect(0, 0, W, H);
+
+    const maxVal = Math.max(...tgtPoints) * 1.1;
+    const pad = { t: 20, r: 20, b: 40, l: 60 };
+    const cW = W - pad.l - pad.r, cH = H - pad.t - pad.b;
+
+    const xPos = i => pad.l + (i / years) * cW;
+    const yPos = v => pad.t + cH - (v / maxVal) * cH;
+
+    // Grid lines
+    ctx.strokeStyle = 'rgba(255,255,255,0.08)';
+    ctx.lineWidth = 1;
+    for (let g = 0; g <= 4; g++) {
+      const y = pad.t + (g / 4) * cH;
+      ctx.beginPath(); ctx.moveTo(pad.l, y); ctx.lineTo(pad.l + cW, y); ctx.stroke();
+      const val = maxVal * (1 - g / 4);
+      ctx.fillStyle = 'rgba(255,255,255,0.35)';
+      ctx.font = '10px DM Sans, sans-serif';
+      ctx.textAlign = 'right';
+      ctx.fillText(val >= 1000000 ? (val/1000000).toFixed(1)+'M' : val >= 1000 ? Math.round(val/1000)+'k' : Math.round(val), pad.l - 6, y + 4);
+    }
+
+    // X labels
+    ctx.fillStyle = 'rgba(255,255,255,0.3)';
+    ctx.font = '9px DM Sans, sans-serif';
+    ctx.textAlign = 'center';
+    [0, Math.floor(years/4), Math.floor(years/2), Math.floor(3*years/4), years].forEach(i => {
+      ctx.fillText(i === 0 ? 'Now' : `Yr ${i}`, xPos(i), H - pad.b + 16);
+    });
+
+    // Current line
+    ctx.beginPath();
+    ctx.strokeStyle = 'rgba(255,255,255,0.25)';
+    ctx.lineWidth = 2;
+    ctx.setLineDash([5, 4]);
+    curPoints.forEach((v, i) => i === 0 ? ctx.moveTo(xPos(i), yPos(v)) : ctx.lineTo(xPos(i), yPos(v)));
+    ctx.stroke();
+    ctx.setLineDash([]);
+
+    // Target area fill
+    const tealGrad = ctx.createLinearGradient(0, pad.t, 0, pad.t + cH);
+    tealGrad.addColorStop(0, 'rgba(45,212,191,0.25)');
+    tealGrad.addColorStop(1, 'rgba(45,212,191,0.02)');
+    ctx.beginPath();
+    tgtPoints.forEach((v, i) => i === 0 ? ctx.moveTo(xPos(i), yPos(v)) : ctx.lineTo(xPos(i), yPos(v)));
+    ctx.lineTo(xPos(years), yPos(0));
+    ctx.lineTo(xPos(0), yPos(0));
+    ctx.closePath();
+    ctx.fillStyle = tealGrad;
+    ctx.fill();
+
+    // Target line
+    ctx.beginPath();
+    ctx.strokeStyle = '#2dd4bf';
+    ctx.lineWidth = 2.5;
+    tgtPoints.forEach((v, i) => i === 0 ? ctx.moveTo(xPos(i), yPos(v)) : ctx.lineTo(xPos(i), yPos(v)));
+    ctx.stroke();
+
+    const finalCur = curPoints[years];
+    const finalTgt = tgtPoints[years];
+    const extra = finalTgt - finalCur;
+
+    document.getElementById('projectionResults').innerHTML = `
+      <div class="result-box">
+        <div class="r-label">Pot at Retirement (Current Rate)</div>
+        <div class="r-amount">${finalCur >= 1000000 ? (finalCur/1000000).toFixed(2)+'M' : fmt(finalCur)}</div>
+        <div class="r-sub">At ${curPct}% contribution</div>
+      </div>
+      <div class="result-box highlight">
+        <div class="r-label">Pot at Retirement (Target Rate)</div>
+        <div class="r-amount">${finalTgt >= 1000000 ? (finalTgt/1000000).toFixed(2)+'M' : fmt(finalTgt)}</div>
+        <div class="r-sub">At ${tgtPct}% contribution</div>
+      </div>
+      <div class="result-box teal">
+        <div class="r-label">Extra Accumulated</div>
+        <div class="r-amount">${extra >= 1000000 ? (extra/1000000).toFixed(2)+'M' : fmt(extra)}</div>
+        <div class="r-sub">By increasing your contribution</div>
+      </div>
+    `;
+  }
+
+  // ── STEP 5 ─────────────────────────────────────────────────────────────────
+  function renderStep5() {
+    const salary = parseFloat(document.getElementById('grossSalary').value) || 0;
+    const empPct = parseFloat(document.getElementById('employerContrib').value) || 0;
+    const tgtPct = parseFloat(document.getElementById('targetContrib').value) || 0;
+    const annualAllowance = 60000;
+    const totalPct = empPct + tgtPct;
+    const totalContrib = salary * totalPct / 100;
+    const usedPct = Math.min(100, (totalContrib / annualAllowance) * 100);
+    const remaining = Math.max(0, annualAllowance - totalContrib);
+    const breached = totalContrib > annualAllowance;
+    const tapered = salary > 260000;
+    const taperedAllowance = tapered ? Math.max(10000, annualAllowance - Math.floor((salary - 260000) / 2)) : annualAllowance;
+
+    const meterColor = breached ? '#e53e3e' : usedPct > 80 ? '#d97706' : 'var(--teal)';
+
+    document.getElementById('allowanceContent').innerHTML = `
+      <div class="allowance-meter">
+        <div style="display:flex; justify-content:space-between; align-items:baseline; margin-bottom:0.5rem;">
+          <span style="font-size:0.85rem; font-weight:500; color:var(--navy);">Annual allowance used</span>
+          <span style="font-family:'Playfair Display',serif; font-size:1.1rem; color:${meterColor}; font-weight:700;">${fmt(totalContrib)} / ${fmt(annualAllowance)}</span>
+        </div>
+        <div class="meter-track">
+          <div class="meter-fill" style="width:${usedPct}%; background:${meterColor};"></div>
+        </div>
+        <div class="meter-labels">
+          <span>£0</span>
+          <span style="color:${meterColor}; font-weight:500;">${Math.round(usedPct)}% used</span>
+          <span>£60,000</span>
+        </div>
+      </div>
+
+      ${breached ? `<div class="alert-box danger"><h4>⚠ Annual allowance exceeded</h4><p>Your total contributions of ${fmt(totalContrib)} exceed the £60,000 annual allowance. The excess (${fmt(totalContrib - annualAllowance)}) would be subject to a tax charge at your marginal rate. Consider reducing contributions or using carry forward.</p></div>` : ''}
+      ${!breached && usedPct > 80 ? `<div class="alert-box warning"><h4>Approaching your annual allowance</h4><p>You're using ${Math.round(usedPct)}% of your allowance. You have ${fmt(remaining)} of headroom remaining this tax year.</p></div>` : ''}
+      ${!breached && usedPct <= 80 ? `<div class="alert-box"><h4>✓ Within annual allowance</h4><p>Your total contributions of ${fmt(totalContrib)} are comfortably within the £60,000 limit. You have ${fmt(remaining)} of remaining allowance this year.</p></div>` : ''}
+
+      ${tapered ? `<div class="alert-box warning" style="margin-top:0.75rem;"><h4>Tapered annual allowance may apply</h4><p>Your salary exceeds £260,000. Your tapered allowance could be as low as ${fmt(taperedAllowance)}. This requires specialist advice to calculate accurately.</p></div>` : ''}
+
+      <div style="margin-top:1.25rem;">
+        <div style="font-size:0.8rem; font-weight:600; text-transform:uppercase; letter-spacing:0.06em; color:var(--slate-light); margin-bottom:0.75rem;">Contribution breakdown</div>
+        <div class="summary-row" style="border-top:1px solid rgba(0,0,0,0.07); border-bottom:1px solid rgba(0,0,0,0.07); padding:0.5rem 0;">
+          <span style="font-size:0.85rem; color:var(--slate);">Your contribution (${tgtPct}%)</span>
+          <span style="font-size:0.85rem; font-weight:500; color:var(--navy);">${fmt(salary * tgtPct / 100)}/yr</span>
+        </div>
+        <div class="summary-row" style="border-bottom:1px solid rgba(0,0,0,0.07); padding:0.5rem 0;">
+          <span style="font-size:0.85rem; color:var(--slate);">Employer contribution (${empPct}%)</span>
+          <span style="font-size:0.85rem; font-weight:500; color:var(--navy);">${fmt(salary * empPct / 100)}/yr</span>
+        </div>
+        <div class="summary-row" style="padding:0.5rem 0;">
+          <span style="font-size:0.85rem; font-weight:600; color:var(--navy);">Total going in</span>
+          <span style="font-size:0.85rem; font-weight:600; color:var(--teal);">${fmt(totalContrib)}/yr</span>
+        </div>
+      </div>`;
+
+    // Final summary panel
+    const salary2 = salary;
+    const curPct = parseFloat(document.getElementById('employeeContrib').value) || 0;
+    const curPension = salary * curPct / 100;
+    const tgtPension = salary * tgtPct / 100;
+    const curCalc = calcTakeHome(salary, curPension);
+    const tgtCalc = calcTakeHome(salary, tgtPension);
+    const years = parseInt(document.getElementById('yearsToRetire').value) || 25;
+
+    document.getElementById('finalSummary').innerHTML = `
+      <div class="summary-panel-title">Your optimised pension plan</div>
+      <div class="summary-row"><span class="s-label">Gross salary</span><span class="s-val">${fmt(salary)}/yr</span></div>
+      <div class="summary-row"><span class="s-label">Your contribution</span><span class="s-val teal">${tgtPct}% (${fmt(tgtPension)}/yr)</span></div>
+      <div class="summary-row"><span class="s-label">Employer contribution</span><span class="s-val">${empPct}% (${fmt(salary * empPct / 100)}/yr)</span></div>
+      <div class="summary-row"><span class="s-label">Monthly take-home</span><span class="s-val">${fmt(tgtCalc.takeHome / 12)}</span></div>
+      <div class="summary-row"><span class="s-label">Monthly take-home change</span><span class="s-val">${fmt((tgtCalc.takeHome - curCalc.takeHome) / 12)}</span></div>
+      <div class="summary-row"><span class="s-label">Recommended method</span><span class="s-val teal">Salary Sacrifice</span></div>
+      <div class="summary-row"><span class="s-label">Years to retirement</span><span class="s-val">${years}</span></div>
+      <div class="summary-row"><span class="s-label">Annual allowance status</span><span class="s-val ${breached ? '' : 'teal'}">${breached ? '⚠ Exceeded' : '✓ Within limit'}</span></div>
+    `;
+  }
+
+  // ── NAVIGATION ─────────────────────────────────────────────────────────────
+  function goTo(step) {
+    if (step > 1) {
+      const salary = parseFloat(document.getElementById('grossSalary').value) || 0;
+      if (!salary) {
+        document.getElementById('grossSalary').focus();
+        return;
+      }
+    }
+
+    for (let i = 1; i <= 5; i++) {
+      document.getElementById('step' + i).classList.toggle('active', i === step);
+      const tab = document.getElementById('tab' + i);
+      tab.classList.toggle('active', i === step);
+      if (i < step) tab.classList.add('completed');
+      else if (i > step) tab.classList.remove('completed');
+    }
+
+    if (step === 2) renderStep2();
+    if (step === 3) { renderStep2(); renderStep3(); }
+    if (step === 4) { renderStep2(); setTimeout(renderStep4, 50); }
+    if (step === 5) { renderStep2(); renderStep5(); }
+
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+
+  // ── OPTIMISE MODE ───────────────────────────────────────────────────────────
+  const GOALS = [
+    {
+      id: 'avoid_higher',
+      title: 'Avoid higher rate tax',
+      desc: 'Keep income below £50,270 so you stay in the basic rate band.',
+      calc: (salary, empPct) => Math.max(0, salary - 50270),
+    },
+    {
+      id: 'child_benefit',
+      title: 'Keep Child Benefit',
+      desc: 'Keep adjusted net income below £60,000 to avoid the High Income Child Benefit Charge.',
+      calc: (salary, empPct) => Math.max(0, salary - 60000),
+    },
+    {
+      id: 'avoid_additional',
+      title: 'Avoid additional rate tax',
+      desc: 'Keep income below £125,140 to avoid the 45% rate and retain your personal allowance.',
+      calc: (salary, empPct) => Math.max(0, salary - 125140),
+    },
+    {
+      id: 'maximise',
+      title: 'Maximise pension growth',
+      desc: 'Contribute up to the annual allowance (£60,000 or 100% of salary, whichever is lower).',
+      calc: (salary, empPct) => Math.max(0, Math.min(60000, salary) - salary * empPct / 100),
+    },
+  ];
+
+  let selectedGoals = new Set();
+  let optimiseMode = false;
+
+  function setContribMode(mode) {
+    optimiseMode = mode === 'optimise';
+    document.getElementById('mode_manual').classList.toggle('selected', !optimiseMode);
+    document.getElementById('mode_optimise').classList.toggle('selected', optimiseMode);
+    document.getElementById('manualContribWrap').style.display = optimiseMode ? 'none' : 'block';
+    document.getElementById('optimiseWrap').style.display = optimiseMode ? 'block' : 'none';
+    if (optimiseMode) renderGoals();
+  }
+
+  function renderGoals() {
+    const salary = parseFloat(document.getElementById('grossSalary').value) || 0;
+    const empPct = parseFloat(document.getElementById('employerContrib').value) || 0;
+    const list = document.getElementById('goalsList');
+
+    list.innerHTML = GOALS.map(g => {
+      const needed = salary > 0 ? g.calc(salary, empPct) : null;
+      const pctNeeded = salary > 0 ? Math.ceil((needed / salary) * 100) : null;
+      const relevant = salary > 0 && needed > 0;
+      const sel = selectedGoals.has(g.id);
+      return `<div class="goal-item${sel ? ' selected' : ''}${!relevant && salary > 0 ? ' disabled' : ''}" onclick="toggleGoal('${g.id}')" style="${!relevant && salary > 0 ? 'opacity:0.45;cursor:not-allowed;' : ''}">
+        <div class="goal-check">${sel ? '✓' : ''}</div>
+        <div class="goal-text">
+          <div class="g-title">${g.title}</div>
+          <div class="g-desc">${g.desc}${relevant ? ` <strong style="color:var(--teal)">Contribute ${pctNeeded}%+ of salary.</strong>` : salary > 0 ? ' <span style="color:#94a3b8">Already achieved at your salary.</span>' : ''}</div>
+        </div>
+      </div>`;
+    }).join('');
+
+    updateOptimiseResult();
+  }
+
+  function toggleGoal(id) {
+    const salary = parseFloat(document.getElementById('grossSalary').value) || 0;
+    const empPct = parseFloat(document.getElementById('employerContrib').value) || 0;
+    const goal = GOALS.find(g => g.id === id);
+    const needed = goal.calc(salary, empPct);
+    if (needed <= 0 && salary > 0) return; // already achieved
+    if (selectedGoals.has(id)) selectedGoals.delete(id);
+    else selectedGoals.add(id);
+    renderGoals();
+  }
+
+  function updateOptimiseResult() {
+    const salary = parseFloat(document.getElementById('grossSalary').value) || 0;
+    const empPct = parseFloat(document.getElementById('employerContrib').value) || 0;
+    const resultBox = document.getElementById('optimiseResult');
+
+    if (!salary || selectedGoals.size === 0) {
+      resultBox.style.display = 'none';
+      return;
+    }
+
+    // Find the max required employee contribution across all selected goals
+    let maxNeeded = 0;
+    let drivingGoals = [];
+
+    selectedGoals.forEach(id => {
+      const goal = GOALS.find(g => g.id === id);
+      const needed = goal.calc(salary, empPct);
+      const empNeeded = Math.max(0, needed - salary * empPct / 100);
+      const pctNeeded = Math.ceil((empNeeded / salary) * 100);
+      if (pctNeeded > maxNeeded) {
+        maxNeeded = pctNeeded;
+        drivingGoals = [goal.title];
+      } else if (pctNeeded === maxNeeded) {
+        drivingGoals.push(goal.title);
+      }
+    });
+
+    // Cap at annual allowance
+    const annualAllowancePct = Math.floor((60000 / salary) * 100);
+    const cappedPct = Math.min(maxNeeded, annualAllowancePct);
+
+    // Write back to targetContrib
+    document.getElementById('targetContrib').value = cappedPct;
+
+    const tags = Array.from(selectedGoals).map(id => {
+      const g = GOALS.find(g => g.id === id);
+      return `<span class="optimise-goal-tag">✓ ${g.title}</span>`;
+    }).join('');
+
+    resultBox.style.display = 'block';
+    resultBox.innerHTML = `<div class="optimise-result-box">
+      <div class="or-title">Recommended contribution: <strong style="font-size:1.3rem;">${cappedPct}%</strong> &nbsp;<span style="font-size:0.8rem;color:rgba(255,255,255,0.45)">(${fmt(salary * cappedPct / 100)}/yr)</span></div>
+      <div style="margin-bottom:0.6rem;">${tags}</div>
+      <p style="font-size:0.78rem;color:rgba(255,255,255,0.5);line-height:1.5;">This is the minimum employee contribution needed to achieve all your selected goals via salary sacrifice. The calculations on the next steps will use this figure.</p>
+    </div>`;
+  }
+
+  function syncManualTarget() {
+    // nothing extra needed — targetContrib input is read directly
+  }
+
+  // Live recalc on projection inputs + re-render goals when salary/employer changes
+  document.addEventListener('input', function(e) {
+    if (['growthRate', 'salaryGrowth'].includes(e.target.id)) renderStep4();
+    if (['grossSalary', 'employerContrib'].includes(e.target.id) && optimiseMode) renderGoals();
+  });
+
+  updateYearsLabel();
+</script>
+</body>
+</html>

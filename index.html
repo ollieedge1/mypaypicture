@@ -7,339 +7,230 @@
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
   :root {
-    --navy: #0f1f38;
-    --navy-mid: #162d4f;
-    --cream: #f7f4ef;
-    --slate: #4a5568;
-    --slate-light: #718096;
-    --white: #ffffff;
-    --gold: #c9a84c;
-    --amber: #EDAC00;
-    --teal: #0d9488;
-    --teal-light: #2dd4bf;
-    --border-light: rgba(255,255,255,0.08);
+    --navy:        #0f1f38;
+    --navy-mid:    #162d4f;
+    --border-light:rgba(255,255,255,0.08);
+    --white:       #ffffff;
+    --gold:        #c9a84c;
+    --amber:       #EDAC00;
+    --teal:        #0d9488;
+    --teal-light:  #2dd4bf;
+    --rose:        #9b2335;
+    --rose-light:  #c0392b;
+    --stone:       #6b7280;
+    --stone-light: #d1d5db;
   }
 
   * { box-sizing: border-box; margin: 0; padding: 0; }
-
-  body {
-    font-family: 'DM Sans', sans-serif;
-    background: var(--navy);
-    color: var(--white);
-    min-height: 100vh;
-  }
+  body { font-family: 'DM Sans', sans-serif; background: var(--navy); color: var(--white); min-height: 100vh; }
 
   /* HEADER */
-  header {
-    padding: 1.75rem 2.5rem;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    border-bottom: 1px solid var(--border-light);
-  }
+  header { padding: 1.75rem 2.5rem; display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid var(--border-light); }
+  .logo { font-family: 'Playfair Display', serif; font-size: 1.3rem; color: var(--white); }
+  .logo em { font-style: italic; color: rgba(255,255,255,0.35); font-size: 0.85em; }
+  .disclaimer-badge { font-size: 0.68rem; color: rgba(255,255,255,0.35); border: 1px solid rgba(255,255,255,0.12); padding: 0.3rem 0.7rem; border-radius: 20px; letter-spacing: 0.06em; text-transform: uppercase; }
 
-  .logo {
-    font-family: 'Playfair Display', serif;
-    font-size: 1.3rem;
-    color: var(--white);
-    letter-spacing: 0.02em;
-  }
-
-  .logo em {
-    font-style: italic;
-    color: rgba(255,255,255,0.4);
-    font-size: 0.85em;
-  }
-
-  .disclaimer-badge {
-    font-size: 0.68rem;
-    color: rgba(255,255,255,0.35);
-    border: 1px solid rgba(255,255,255,0.12);
-    padding: 0.3rem 0.7rem;
-    border-radius: 20px;
-    letter-spacing: 0.06em;
-    text-transform: uppercase;
-  }
+  /* APP SWITCHER */
+  .app-switcher { position: relative; }
+  .switcher-trigger { display: flex; align-items: center; gap: 0.5rem; cursor: pointer; padding: 0.4rem 0.75rem; border-radius: 8px; border: 1px solid rgba(255,255,255,0.15); transition: background 0.2s; user-select: none; }
+  .switcher-trigger:hover { background: rgba(255,255,255,0.07); }
+  .switcher-trigger .app-name { font-family: 'Playfair Display', serif; font-size: 1.1rem; color: var(--white); }
+  .switcher-trigger .app-name em { font-style: italic; color: rgba(255,255,255,0.4); font-size: 0.85em; }
+  .switcher-trigger .chevron { color: rgba(255,255,255,0.4); font-size: 0.7rem; transition: transform 0.2s; }
+  .app-switcher.open .chevron { transform: rotate(180deg); }
+  .switcher-dropdown { display: none; position: absolute; top: calc(100% + 8px); left: 0; background: #1a2f4e; border: 1px solid rgba(255,255,255,0.1); border-radius: 10px; overflow: hidden; min-width: 240px; box-shadow: 0 8px 24px rgba(0,0,0,0.3); z-index: 100; }
+  .app-switcher.open .switcher-dropdown { display: block; }
+  .switcher-item { display: flex; align-items: center; gap: 0.75rem; padding: 0.85rem 1rem; cursor: pointer; transition: background 0.15s; border-bottom: 1px solid rgba(255,255,255,0.06); }
+  .switcher-item:last-child { border-bottom: none; }
+  .switcher-item:hover { background: rgba(255,255,255,0.06); }
+  .switcher-item.current { background: rgba(255,255,255,0.05); }
+  .switcher-item-icon { width: 32px; height: 32px; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 1rem; flex-shrink: 0; }
+  .switcher-item-text .item-name { font-family: 'Playfair Display', serif; font-size: 0.9rem; color: white; }
+  .switcher-item-text .item-desc { font-size: 0.72rem; color: rgba(255,255,255,0.4); margin-top: 0.1rem; }
+  .switcher-item.current .item-name { color: rgba(255,255,255,0.4); }
 
   /* HERO */
-  .hero {
-    max-width: 860px;
-    margin: 0 auto;
-    padding: 5rem 2rem 3.5rem;
-    text-align: center;
-    position: relative;
-  }
+  .hero { max-width: 860px; margin: 0 auto; padding: 4.5rem 2rem 3rem; text-align: center; }
+  .hero-eyebrow { font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.12em; color: rgba(255,255,255,0.3); margin-bottom: 1.1rem; }
+  .hero h1 { font-family: 'Playfair Display', serif; font-size: clamp(2.2rem, 5.5vw, 3.5rem); line-height: 1.12; color: var(--white); margin-bottom: 1rem; }
+  .hero h1 em { font-style: italic; background: linear-gradient(135deg, var(--gold) 0%, var(--amber) 40%, var(--teal-light) 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+  .hero p { font-size: 1rem; color: rgba(255,255,255,0.45); max-width: 420px; margin: 0 auto; line-height: 1.7; }
 
-  .hero-eyebrow {
-    font-size: 0.75rem;
-    text-transform: uppercase;
-    letter-spacing: 0.12em;
-    color: rgba(255,255,255,0.35);
-    margin-bottom: 1.25rem;
-  }
+  /* GRID SECTION */
+  .grid-section { max-width: 980px; margin: 0 auto; padding: 1rem 2rem 5rem; }
+  .suite-label { text-align: center; font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.12em; color: rgba(255,255,255,0.2); margin-bottom: 1.75rem; display: flex; align-items: center; gap: 1rem; }
+  .suite-label::before, .suite-label::after { content: ''; flex: 1; height: 1px; background: rgba(255,255,255,0.07); }
 
-  .hero h1 {
-    font-family: 'Playfair Display', serif;
-    font-size: clamp(2.4rem, 6vw, 3.8rem);
-    line-height: 1.1;
-    color: var(--white);
-    max-width: 640px;
-    margin: 0 auto 1.25rem;
-  }
+  /* TOOL CARDS */
+  .tool-card { background: var(--navy-mid); border: 1px solid var(--border-light); border-radius: 16px; padding: 1.75rem; cursor: pointer; transition: all 0.22s; text-decoration: none; display: flex; flex-direction: column; position: relative; overflow: hidden; color: var(--white); }
+  .tool-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; border-radius: 16px 16px 0 0; }
+  .tool-card.c-teal::before   { background: linear-gradient(90deg, var(--teal), var(--teal-light)); }
+  .tool-card.c-gold::before   { background: linear-gradient(90deg, var(--gold), #e8c96a); }
+  .tool-card.c-amber::before  { background: linear-gradient(90deg, var(--amber), #f5c842); }
+  .tool-card.c-rose::before   { background: linear-gradient(90deg, var(--rose), var(--rose-light)); }
+  .tool-card.c-stone::before  { background: linear-gradient(90deg, var(--stone), var(--stone-light)); }
+  .tool-card:hover { border-color: rgba(255,255,255,0.16); transform: translateY(-3px); box-shadow: 0 14px 36px rgba(0,0,0,0.25); }
+  .tool-card.c-teal:hover  { box-shadow: 0 14px 36px rgba(13,148,136,0.12); }
+  .tool-card.c-gold:hover  { box-shadow: 0 14px 36px rgba(201,168,76,0.12); }
+  .tool-card.c-amber:hover { box-shadow: 0 14px 36px rgba(237,172,0,0.12); }
+  .tool-card.c-rose:hover  { box-shadow: 0 14px 36px rgba(155,35,53,0.12); }
+  .tool-card.c-stone:hover { box-shadow: 0 14px 36px rgba(107,114,128,0.12); }
 
-  .hero h1 em {
-    font-style: italic;
-    background: linear-gradient(135deg, var(--gold) 0%, var(--amber) 50%, var(--teal-light) 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-  }
+  .tool-icon { font-size: 1.75rem; margin-bottom: 1rem; display: block; }
+  .tool-name { font-family: 'Playfair Display', serif; font-size: 1.2rem; color: var(--white); margin-bottom: 0.4rem; line-height: 1.2; font-weight: 400; }
+  .tool-card.c-teal  .tool-name { color: var(--teal-light); }
+  .tool-card.c-gold  .tool-name { color: var(--gold); }
+  .tool-card.c-amber .tool-name { color: var(--amber); }
+  .tool-card.c-rose  .tool-name { color: #f87171; }
+  .tool-card.c-stone .tool-name { color: var(--stone-light); }
 
-  .hero p {
-    font-size: 1.05rem;
-    color: rgba(255,255,255,0.5);
-    max-width: 460px;
-    margin: 0 auto;
-    line-height: 1.7;
-  }
-
-  /* TOOL GRID */
-  .grid-section {
-    max-width: 980px;
-    margin: 0 auto;
-    padding: 1rem 2rem 6rem;
-  }
-
-  .tools-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 1.25rem;
-  }
-
-  @media (max-width: 768px) { .tools-grid { grid-template-columns: 1fr; } }
-  @media (min-width: 540px) and (max-width: 768px) { .tools-grid { grid-template-columns: 1fr 1fr; } }
-
-  .tool-card {
-    background: var(--navy-mid);
-    border: 1px solid var(--border-light);
-    border-radius: 18px;
-    padding: 2rem 1.75rem 1.75rem;
-    cursor: pointer;
-    transition: all 0.25s;
-    text-decoration: none;
-    display: flex;
-    flex-direction: column;
-    position: relative;
-    overflow: hidden;
-  }
-
-  .tool-card::before {
-    content: '';
-    position: absolute;
-    top: 0; left: 0; right: 0;
-    height: 3px;
-    border-radius: 18px 18px 0 0;
-    transition: opacity 0.25s;
-  }
-
-  .tool-card.gold::before { background: linear-gradient(90deg, var(--gold), #e8c96a); }
-  .tool-card.amber::before { background: linear-gradient(90deg, var(--amber), #f5c842); }
-  .tool-card.teal::before { background: linear-gradient(90deg, var(--teal), var(--teal-light)); }
-
-  .tool-card:hover {
-    border-color: rgba(255,255,255,0.18);
-    transform: translateY(-4px);
-    box-shadow: 0 16px 40px rgba(0,0,0,0.3);
-  }
-
-  .tool-card.gold:hover { box-shadow: 0 16px 40px rgba(201,168,76,0.15); }
-  .tool-card.amber:hover { box-shadow: 0 16px 40px rgba(237,172,0,0.15); }
-  .tool-card.teal:hover { box-shadow: 0 16px 40px rgba(13,148,136,0.15); }
-
-  .tool-icon {
-    font-size: 2rem;
-    margin-bottom: 1.25rem;
-    display: block;
-  }
-
-  .tool-name {
-    font-family: 'Playfair Display', serif;
-    font-size: 1.3rem;
-    color: var(--white);
-    margin-bottom: 0.5rem;
-    line-height: 1.2;
-  }
-
-  .tool-name .accent { font-weight: 400; }
-  .tool-card.gold .tool-name .accent { color: var(--gold); }
-  .tool-card.amber .tool-name .accent { color: var(--amber); }
-  .tool-card.teal .tool-name .accent { color: var(--teal-light); }
-
-  .tool-tagline {
-    font-size: 0.82rem;
-    color: rgba(255,255,255,0.45);
-    line-height: 1.6;
-    flex: 1;
-    margin-bottom: 1.5rem;
-  }
-
-  .tool-scenarios {
-    list-style: none;
-    margin-bottom: 1.75rem;
-    flex: 1;
-  }
-
-  .tool-scenarios li {
-    font-size: 0.78rem;
-    color: rgba(255,255,255,0.5);
-    padding: 0.3rem 0;
-    border-bottom: 1px solid rgba(255,255,255,0.05);
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-  }
-
-  .tool-scenarios li:last-child { border-bottom: none; }
-
-  .tool-scenarios li::before {
-    content: '→';
-    font-size: 0.7rem;
-    opacity: 0.5;
-    flex-shrink: 0;
-  }
-
-  .tool-cta {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 0.65rem 1rem;
-    border-radius: 8px;
-    font-size: 0.85rem;
-    font-weight: 600;
-    transition: all 0.2s;
-    margin-top: auto;
-  }
-
-  .tool-card.gold .tool-cta { background: rgba(201,168,76,0.12); color: var(--gold); }
-  .tool-card.amber .tool-cta { background: rgba(237,172,0,0.12); color: var(--amber); }
-  .tool-card.teal .tool-cta { background: rgba(13,148,136,0.12); color: var(--teal-light); }
-
-  .tool-card:hover .tool-cta { opacity: 0.9; }
-
-  .cta-arrow { font-size: 1rem; transition: transform 0.2s; }
+  .tool-tagline { font-size: 0.8rem; color: rgba(255,255,255,0.42); line-height: 1.6; flex: 1; margin-bottom: 1.25rem; }
+  .tool-cta { display: flex; align-items: center; justify-content: space-between; padding: 0.6rem 0.9rem; border-radius: 8px; font-size: 0.82rem; font-weight: 600; margin-top: auto; transition: opacity 0.2s; }
+  .tool-card.c-teal  .tool-cta { background: rgba(13,148,136,0.12);  color: var(--teal-light); }
+  .tool-card.c-gold  .tool-cta { background: rgba(201,168,76,0.12);  color: var(--gold); }
+  .tool-card.c-amber .tool-cta { background: rgba(237,172,0,0.12);   color: var(--amber); }
+  .tool-card.c-rose  .tool-cta { background: rgba(155,35,53,0.15);   color: #f87171; }
+  .tool-card.c-stone .tool-cta { background: rgba(107,114,128,0.12); color: var(--stone-light); }
+  .tool-card:hover .tool-cta { opacity: 0.85; }
+  .cta-arrow { transition: transform 0.2s; }
   .tool-card:hover .cta-arrow { transform: translateX(4px); }
 
-  /* DIVIDER LINE */
-  .suite-label {
-    text-align: center;
-    font-size: 0.7rem;
-    text-transform: uppercase;
-    letter-spacing: 0.12em;
-    color: rgba(255,255,255,0.2);
-    margin-bottom: 2rem;
-    display: flex;
-    align-items: center;
-    gap: 1rem;
-  }
+  /* HERO CARD (featured) */
+  .hero-card { padding: 2.25rem 2.25rem; margin-bottom: 1.25rem; width: 100%; }
+  .hero-card-inner { display: flex; align-items: flex-end; justify-content: space-between; gap: 2rem; flex-wrap: wrap; }
+  .hero-card .tool-icon { font-size: 2.25rem; margin-bottom: 0.85rem; }
+  .hero-card .tool-name { font-size: 1.6rem; }
+  .hero-card .tool-tagline { margin-top: 0.4rem; margin-bottom: 0; max-width: 360px; font-size: 0.88rem; color: rgba(255,255,255,0.5); }
+  .hero-card-badge { display: inline-block; font-size: 0.62rem; text-transform: uppercase; letter-spacing: 0.1em; font-weight: 600; color: var(--teal-light); border: 1px solid rgba(45,212,191,0.25); background: rgba(45,212,191,0.07); padding: 0.18rem 0.6rem; border-radius: 20px; margin-bottom: 0.85rem; }
+  .hero-card .tool-cta { white-space: nowrap; padding: 0.75rem 1.4rem; font-size: 0.88rem; align-self: flex-start; }
 
-  .suite-label::before, .suite-label::after {
-    content: '';
-    flex: 1;
-    height: 1px;
-    background: rgba(255,255,255,0.07);
+  /* GRID LAYOUTS */
+  .grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1rem; }
+  .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-top: 1rem; }
+
+  @media (max-width: 860px) { .grid-4 { grid-template-columns: 1fr 1fr; } }
+  @media (max-width: 560px) {
+    .grid-4 { grid-template-columns: 1fr; }
+    .grid-2 { grid-template-columns: 1fr; }
+    .hero-card-inner { flex-direction: column; align-items: flex-start; }
+    .hero-card .tool-cta { width: 100%; justify-content: space-between; }
+    header { padding: 1.25rem; }
+    .hero { padding: 3rem 1.25rem 2rem; }
+    .grid-section { padding: 1rem 1.25rem 4rem; }
   }
 
   /* FOOTER */
-  footer {
-    border-top: 1px solid var(--border-light);
-    padding: 1.75rem 2.5rem;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 1rem;
-    flex-wrap: wrap;
-  }
-
-  .footer-logo {
-    font-family: 'Playfair Display', serif;
-    font-size: 0.95rem;
-    color: rgba(255,255,255,0.3);
-  }
-
-  .footer-disclaimer {
-    font-size: 0.72rem;
-    color: rgba(255,255,255,0.2);
-    max-width: 520px;
-    line-height: 1.6;
-    text-align: right;
-  }
-
-  @media (max-width: 600px) {
-    header { padding: 1.25rem 1.25rem; }
-    .hero { padding: 3rem 1.25rem 2rem; }
-    .grid-section { padding: 1rem 1.25rem 4rem; }
-    .footer-disclaimer { text-align: left; }
-  }
+  footer { border-top: 1px solid var(--border-light); padding: 1.75rem 2.5rem; display: flex; align-items: center; justify-content: space-between; gap: 1rem; flex-wrap: wrap; }
+  .footer-logo { font-family: 'Playfair Display', serif; font-size: 0.95rem; color: rgba(255,255,255,0.25); }
+  .footer-disclaimer { font-size: 0.72rem; color: rgba(255,255,255,0.18); max-width: 520px; line-height: 1.6; text-align: right; }
+  @media (max-width: 600px) { .footer-disclaimer { text-align: left; } }
 </style>
 </head>
 <body>
 
 <header>
-  <div class="logo">MyPension <em>Suite</em></div>
+  <div class="app-switcher" id="appSwitcher">
+    <div class="switcher-trigger" onclick="toggleSwitcher()">
+      <div class="app-name">MyPension <em>Suite</em></div>
+      <div class="chevron">▼</div>
+    </div>
+    <div class="switcher-dropdown">
+      <div class="switcher-item current">
+        <div class="switcher-item-icon" style="background:rgba(255,255,255,0.06);">🏠</div>
+        <div class="switcher-item-text"><div class="item-name">Suite Home</div><div class="item-desc">You are here</div></div>
+      </div>
+      <div class="switcher-item" onclick="window.location.href='pay-optimiser.html'">
+        <div class="switcher-item-icon" style="background:rgba(13,148,136,0.15);">📈</div>
+        <div class="switcher-item-text"><div class="item-name">MyPayOptimiser</div><div class="item-desc">Make every pound work harder.</div></div>
+      </div>
+      <div class="switcher-item" onclick="window.location.href='pension-reclaim.html'">
+        <div class="switcher-item-icon" style="background:rgba(201,168,76,0.15);">💰</div>
+        <div class="switcher-item-text"><div class="item-name">MyPensionReclaim</div><div class="item-desc">Missed salary sacrifice? Get it back.</div></div>
+      </div>
+      <div class="switcher-item" onclick="window.location.href='pension-topup.html'">
+        <div class="switcher-item-icon" style="background:rgba(237,172,0,0.15);">➕</div>
+        <div class="switcher-item-text"><div class="item-name">MyPensionTop-Up</div><div class="item-desc">Make AVCs and claim your tax relief.</div></div>
+      </div>
+      <div class="switcher-item" onclick="window.location.href='family-benefits.html'">
+        <div class="switcher-item-icon" style="background:rgba(155,35,53,0.15);">👨‍👩‍👧</div>
+        <div class="switcher-item-text"><div class="item-name">MyFamily&Benefits</div><div class="item-desc">Child Benefit & TFC optimiser.</div></div>
+      </div>
+      <div class="switcher-item" onclick="window.location.href='retirement-helper.html'">
+        <div class="switcher-item-icon" style="background:rgba(107,114,128,0.15);">🌅</div>
+        <div class="switcher-item-text"><div class="item-name">MyRetirementHelper</div><div class="item-desc">Clarity in later life.</div></div>
+      </div>
+    </div>
+  </div>
   <div class="disclaimer-badge">Not financial advice</div>
 </header>
 
 <div class="hero">
   <div class="hero-eyebrow">The MyPension Suite</div>
   <h1>Pick your tool.<br><em>Get started.</em></h1>
+  <p>Six tools to help you save smarter, claim what's yours, and plan with confidence.</p>
 </div>
 
 <div class="grid-section">
 
   <div class="suite-label">Choose your tool</div>
 
-  <div class="tools-grid">
-
-    <!-- RECLAIM -->
-    <a class="tool-card gold" href="pension-reclaim.html">
-      <span class="tool-icon">💰</span>
-      <div class="tool-name">MyPension<span class="accent">Reclaim</span></div>
-      <p class="tool-tagline">Missed salary sacrifice on your bonus? You can still recover the income tax.</p>
-      <div class="tool-cta">
-        Open Reclaim <span class="cta-arrow">→</span>
-      </div>
-    </a>
-
-    <!-- TOP-UP -->
-    <a class="tool-card amber" href="pension-topup.html">
-      <span class="tool-icon">➕</span>
-      <div class="tool-name">MyPension<span class="accent">Top-Up</span></div>
-      <p class="tool-tagline">Make additional voluntary contributions and claim your full tax relief.</p>
-      <div class="tool-cta">
-        Open Top-Up <span class="cta-arrow">→</span>
-      </div>
-    </a>
-
-    <!-- OPTIMISE -->
-    <a class="tool-card teal" href="pension-optimiser.html">
+  <!-- FEATURED: PAY OPTIMISER -->
+  <a class="tool-card c-teal hero-card" href="pay-optimiser.html" style="display:flex; flex-direction:row; align-items:flex-end; justify-content:space-between; gap:2rem; flex-wrap:wrap;">
+    <div>
+      <div class="hero-card-badge">Most popular</div>
       <span class="tool-icon">📈</span>
-      <div class="tool-name">MyPension<span class="accent">Optimise</span></div>
-      <p class="tool-tagline">Find your ideal contribution level and see your pot grow over time.</p>
-      <div class="tool-cta">
-        Open Optimise <span class="cta-arrow">→</span>
-      </div>
+      <div class="tool-name">MyPayOptimiser</div>
+      <p class="tool-tagline" style="max-width:360px; font-size:0.88rem; color:rgba(255,255,255,0.5); margin-top:0.4rem; margin-bottom:0;">Find your ideal contribution, compare salary sacrifice vs personal contributions, and see your pot grow.</p>
+    </div>
+    <div class="tool-cta" style="white-space:nowrap; align-self:flex-start;">Open Optimiser <span class="cta-arrow">→</span></div>
+  </a>
+
+  <!-- FOUR CARD GRID -->
+  <div class="grid-4">
+
+    <a class="tool-card c-gold" href="pension-reclaim.html">
+      <span class="tool-icon">💰</span>
+      <div class="tool-name">Reclaim</div>
+      <p class="tool-tagline">Missed salary sacrifice on your bonus? Recover the tax.</p>
+      <div class="tool-cta">Open <span class="cta-arrow">→</span></div>
+    </a>
+
+    <a class="tool-card c-amber" href="pension-topup.html">
+      <span class="tool-icon">➕</span>
+      <div class="tool-name">Top-Up</div>
+      <p class="tool-tagline">Make AVCs from net pay and claim your full tax relief.</p>
+      <div class="tool-cta">Open <span class="cta-arrow">→</span></div>
+    </a>
+
+    <a class="tool-card c-rose" href="family-benefits.html">
+      <span class="tool-icon">👨‍👩‍👧</span>
+      <div class="tool-name">Family & Benefits</div>
+      <p class="tool-tagline">Child Benefit & Tax-Free Childcare — see what you're losing and how to recover it.</p>
+      <div class="tool-cta">Open <span class="cta-arrow">→</span></div>
+    </a>
+
+    <a class="tool-card c-stone" href="retirement-helper.html">
+      <span class="tool-icon">🌅</span>
+      <div class="tool-name">Retirement Helper</div>
+      <p class="tool-tagline">State Pension, drawdown, tax-efficient withdrawals and sustainability planning.</p>
+      <div class="tool-cta">Open <span class="cta-arrow">→</span></div>
     </a>
 
   </div>
+
 </div>
 
 <footer>
   <div class="footer-logo">MyPension Suite</div>
-  <div class="footer-disclaimer">For illustrative purposes only. Not financial or tax advice. Always verify with HMRC or a qualified adviser before making decisions.</div>
+  <div class="footer-disclaimer">Illustrative purposes only. Not financial or tax advice. Always verify with HMRC or a qualified adviser.</div>
 </footer>
 
 <script>
-  // Prevent default link if JS needed in future — links work natively
+  function toggleSwitcher() { document.getElementById('appSwitcher').classList.toggle('open'); }
+  document.addEventListener('click', e => {
+    if (!document.getElementById('appSwitcher').contains(e.target))
+      document.getElementById('appSwitcher').classList.remove('open');
+  });
 </script>
 </body>
 </html>
