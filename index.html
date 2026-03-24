@@ -33,91 +33,6 @@
 
 
 
-  /* PDF REPORT CTA */
-  .pdf-bar {
-    background: white;
-    border-radius: 12px;
-    padding: 1.1rem 1.5rem;
-    margin: 0.75rem 0 0;
-    border: 1.5px solid var(--border, rgba(0,0,0,0.1));
-    box-shadow: 0 2px 12px rgba(15,31,56,0.06);
-    display: none;
-    animation: fadeIn 0.4s ease;
-  }
-
-  .pdf-bar.visible { display: block; }
-
-  .pdf-bar-inner {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 1rem;
-    flex-wrap: wrap;
-  }
-
-  .pdf-bar-text { flex: 1; min-width: 180px; }
-
-  .pdf-bar-text strong {
-    display: block;
-    font-family: 'Playfair Display', serif;
-    font-size: 0.95rem;
-    color: var(--navy, #0f1f38);
-    margin-bottom: 0.2rem;
-  }
-
-  .pdf-bar-text span {
-    font-size: 0.75rem;
-    color: var(--slate-light, #718096);
-    line-height: 1.4;
-  }
-
-  .pdf-bar-right {
-    display: flex;
-    align-items: center;
-    gap: 0.75rem;
-    flex-shrink: 0;
-    flex-wrap: wrap;
-  }
-
-  .pdf-price {
-    font-family: 'Playfair Display', serif;
-    font-size: 1.1rem;
-    font-weight: 700;
-    color: var(--navy, #0f1f38);
-  }
-
-  .pdf-buy-btn {
-    padding: 0.65rem 1.25rem;
-    border-radius: 8px;
-    font-family: 'DM Sans', sans-serif;
-    font-size: 0.85rem;
-    font-weight: 600;
-    text-decoration: none;
-    white-space: nowrap;
-    transition: all 0.2s;
-    background: var(--navy, #0f1f38);
-    color: white;
-    border: none;
-    cursor: pointer;
-  }
-
-  .pdf-buy-btn:hover {
-    opacity: 0.85;
-    transform: translateY(-1px);
-  }
-
-  .pdf-dismiss {
-    background: none;
-    border: none;
-    color: var(--slate-light, #718096);
-    cursor: pointer;
-    font-size: 1.1rem;
-    padding: 0;
-    line-height: 1;
-  }
-
-  .pdf-dismiss:hover { color: var(--navy, #0f1f38); }
-
   /* ADVISER CTA */
   .adviser-cta {
     background: linear-gradient(135deg, var(--navy) 0%, #162d4f 100%);
@@ -398,33 +313,7 @@
 
   </div>
 
-</div>
-
-
-    
-    <!-- PDF REPORT CTA -->
-    <div class="pdf-bar" id="pdfBar">
-      <div class="pdf-bar-inner">
-        <div class="pdf-bar-text">
-          <strong>&#128196; Download your results as a PDF report</strong>
-          <span>A branded summary of your figures &#8212; take it to an adviser or share with a partner.</span>
-        </div>
-        <div class="pdf-bar-right">
-          <div class="pdf-price" id="pdfPrice">&#163;4.99</div>
-          <a class="pdf-buy-btn" id="pdfBuyBtn" href="https://buy.stripe.com/4gM8wP2IV4l0gPn9D353O00" target="_blank">Buy report &#8594;</a>
-          <button class="pdf-download-btn" id="pdfDownloadBtn" style="display:none;" onclick="generateReport()">&#8595; Download PDF</button>
-          <button class="pdf-dismiss" onclick="document.getElementById('pdfBar').classList.remove('visible')" title="Dismiss">&#215;</button>
-        </div>
-      </div>
-    </div>
-        <div class="pdf-bar-right">
-          <div class="pdf-price">&#163;4.99</div>
-          <a class="pdf-buy-btn" href="https://buy.stripe.com/4gM8wP2IV4l0gPn9D353O00" target="_blank">Buy report &#8594;</a>
-          <button class="pdf-dismiss" onclick="document.getElementById('pdfBar').classList.remove('visible')" title="Dismiss">&#215;</button>
-        </div>
-      </div>
-    </div>
-<div class="chat-wrap">
+</div><div class="chat-wrap">
   <div class="chat-divider">Ask MyPayPicture Assistant</div>
   <div class="chat-box">
     <div class="chat-head">
@@ -561,9 +450,5 @@
 
 
   // ── PDF REPORT CTA ────────────────────────────────────────────────────────
-  function showPdfBar() {
-    const bar = document.getElementById('pdfBar');
-    if (bar) bar.classList.add('visible');
-  }
 
 </script>
