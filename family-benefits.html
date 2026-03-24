@@ -212,14 +212,14 @@
 
 <header>
   <div class="app-switcher" id="appSwitcher">
-    <div class="switcher-trigger" onclick="toggleSwitcher()">
+    <div class="switcher-trigger" onclick="toggleSwitcher(event)">
       <div class="app-name">MyFamily<span>&amp;Benefits</span></div>
       <div class="chevron">▼</div>
     </div>
     <div class="switcher-dropdown">
       <div class="switcher-item" onclick="window.location.href='index.html'">
         <div class="switcher-item-icon" style="background:rgba(255,255,255,0.06);">🏠</div>
-        <div class="switcher-item-text"><div class="item-name" style="color:rgba(255,255,255,0.4); font-size:0.8rem;">← Suite Home</div></div>
+        <div class="switcher-item-text"><div class="item-name" style="color:rgba(255,255,255,0.4); font-size:0.8rem;">← MyPay Home</div></div>
       </div>
       <div class="switcher-item" onclick="window.location.href='pay-optimiser.html'">
         <div class="switcher-item-icon" style="background:rgba(13,148,136,0.15);">📈</div>
@@ -484,13 +484,12 @@
 </footer>
 
 <script>
-  function toggleSwitcher() {
+  function toggleSwitcher(e) {
+    e.stopPropagation();
     document.getElementById('appSwitcher').classList.toggle('open');
   }
-  document.addEventListener('click', function(e) {
-    if (!document.getElementById('appSwitcher').contains(e.target)) {
-      document.getElementById('appSwitcher').classList.remove('open');
-    }
+  document.addEventListener('click', function() {
+    document.getElementById('appSwitcher').classList.remove('open');
   });
 
   function toggleTooltip(id) {

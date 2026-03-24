@@ -289,7 +289,7 @@
 
 <header>
   <div class="app-switcher" id="appSwitcher">
-    <div class="switcher-trigger" onclick="toggleSwitcher()">
+    <div class="switcher-trigger" onclick="toggleSwitcher(event)">
       <div class="app-name">MyRetirement<span>Helper</span></div>
       <div class="chevron">▼</div>
     </div>
@@ -742,10 +742,12 @@
 
 <script>
   // ── SWITCHER ───────────────────────────────────────────────────────────────
-  function toggleSwitcher() { document.getElementById('appSwitcher').classList.toggle('open'); }
-  document.addEventListener('click', e => {
-    if (!document.getElementById('appSwitcher').contains(e.target))
-      document.getElementById('appSwitcher').classList.remove('open');
+  function toggleSwitcher(e) {
+    e.stopPropagation();
+    document.getElementById('appSwitcher').classList.toggle('open');
+  }
+  document.addEventListener('click', function() {
+    document.getElementById('appSwitcher').classList.remove('open');
   });
 
   // ── HELPERS ────────────────────────────────────────────────────────────────

@@ -539,7 +539,7 @@
 
 <header>
   <div class="app-switcher" id="appSwitcher">
-    <div class="switcher-trigger" onclick="toggleSwitcher()">
+    <div class="switcher-trigger" onclick="toggleSwitcher(event)">
       <div class="app-name">MyPension<span>Reclaim</span></div>
       <div class="chevron">▼</div>
     </div>
@@ -810,13 +810,12 @@
 </footer>
 
 <script>
-  function toggleSwitcher() {
+  function toggleSwitcher(e) {
+    e.stopPropagation();
     document.getElementById('appSwitcher').classList.toggle('open');
   }
-  document.addEventListener('click', function(e) {
-    if (!document.getElementById('appSwitcher').contains(e.target)) {
-      document.getElementById('appSwitcher').classList.remove('open');
-    }
+  document.addEventListener('click', function() {
+    document.getElementById('appSwitcher').classList.remove('open');
   });
 
   let state = {
