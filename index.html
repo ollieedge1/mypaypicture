@@ -30,6 +30,41 @@
   .logo em { font-style: italic; color: rgba(255,255,255,0.35); font-size: 0.85em; }
   .disclaimer-badge { font-size: 0.68rem; color: rgba(255,255,255,0.35); border: 1px solid rgba(255,255,255,0.12); padding: 0.3rem 0.7rem; border-radius: 20px; letter-spacing: 0.06em; text-transform: uppercase; }
 
+
+  /* CHAT PANEL */
+  .chat-wrap { max-width: 860px; margin: 0 auto; padding: 0 1.5rem 2.5rem; }
+  .chat-divider { display: flex; align-items: center; gap: 0.75rem; margin-bottom: 1rem; font-size: 0.65rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--slate-light, #718096); }
+  .chat-divider::before, .chat-divider::after { content: ''; flex: 1; height: 1px; background: rgba(0,0,0,0.08); }
+  .chat-box { background: white; border-radius: 16px; border: 1px solid var(--border, rgba(0,0,0,0.1)); box-shadow: 0 4px 24px rgba(15,31,56,0.06); overflow: hidden; }
+  .chat-head { background: var(--navy, #0f1f38); padding: 0.9rem 1.25rem; display: flex; align-items: center; gap: 0.75rem; }
+  .chat-head-icon { width: 30px; height: 30px; border-radius: 50%; background: rgba(255,255,255,0.12); display: flex; align-items: center; justify-content: center; font-size: 0.9rem; flex-shrink: 0; }
+  .chat-head-title { font-family: 'Playfair Display', serif; font-size: 0.9rem; color: white; }
+  .chat-head-sub { font-size: 0.68rem; color: rgba(255,255,255,0.4); margin-top: 0.05rem; }
+  .chat-msgs { padding: 1rem 1.25rem; max-height: 380px; overflow-y: auto; display: flex; flex-direction: column; gap: 0.85rem; scroll-behavior: smooth; }
+  .chat-msg { display: flex; gap: 0.6rem; align-items: flex-start; animation: fadeIn 0.2s ease; }
+  .chat-msg.user { flex-direction: row-reverse; }
+  .msg-av { width: 26px; height: 26px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.7rem; font-weight: 600; flex-shrink: 0; margin-top: 2px; }
+  .chat-msg.ai .msg-av { background: var(--navy, #0f1f38); color: rgba(255,255,255,0.7); }
+  .chat-msg.user .msg-av { background: #f3f4f6; color: var(--slate, #4a5568); }
+  .msg-bub { max-width: 80%; padding: 0.65rem 0.9rem; border-radius: 12px; font-size: 0.84rem; line-height: 1.65; }
+  .chat-msg.ai .msg-bub { background: #f3f4f6; color: var(--navy, #0f1f38); border-radius: 4px 12px 12px 12px; }
+  .chat-msg.user .msg-bub { background: var(--navy, #0f1f38); color: white; border-radius: 12px 4px 12px 12px; }
+  .msg-bub p { margin-bottom: 0.4rem; } .msg-bub p:last-child { margin-bottom: 0; }
+  .chat-typing { display: flex; gap: 3px; align-items: center; padding: 0.2rem 0; }
+  .chat-typing span { width: 6px; height: 6px; border-radius: 50%; background: var(--slate-light, #718096); animation: typeBounce 1.2s infinite; }
+  .chat-typing span:nth-child(2) { animation-delay: 0.2s; }
+  .chat-typing span:nth-child(3) { animation-delay: 0.4s; }
+  @keyframes typeBounce { 0%,60%,100% { transform:translateY(0); opacity:0.4; } 30% { transform:translateY(-4px); opacity:1; } }
+  .chat-chips { padding: 0 1.25rem 0.6rem; display: flex; gap: 0.4rem; flex-wrap: wrap; }
+  .chat-chip { font-size: 0.73rem; padding: 0.28rem 0.65rem; border-radius: 20px; border: 1px solid var(--border, #ddd); background: white; color: var(--slate, #4a5568); cursor: pointer; transition: all 0.15s; white-space: nowrap; }
+  .chat-chip:hover { border-color: #6b7280; color: var(--navy, #0f1f38); background: #f3f4f6; }
+  .chat-input-wrap { display: flex; gap: 0.5rem; padding: 0.75rem 1.25rem 1rem; border-top: 1px solid rgba(0,0,0,0.07); align-items: flex-end; }
+  .chat-textarea { flex: 1; padding: 0.6rem 0.85rem; border: 1.5px solid #ddd; border-radius: 10px; font-family: 'DM Sans', sans-serif; font-size: 0.88rem; color: var(--navy, #0f1f38); resize: none; min-height: 40px; max-height: 110px; line-height: 1.5; transition: border-color 0.2s; background: white; }
+  .chat-textarea:focus { outline: none; border-color: #6b7280; box-shadow: 0 0 0 3px rgba(107,114,128,0.1); }
+  .chat-send { width: 40px; height: 40px; border-radius: 10px; background: var(--navy, #0f1f38); border: none; color: white; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 1rem; flex-shrink: 0; transition: opacity 0.15s; }
+  .chat-send:hover { opacity: 0.85; } .chat-send:disabled { opacity: 0.3; cursor: not-allowed; }
+  .chat-footer-note { text-align: center; font-size: 0.68rem; color: var(--slate-light, #718096); padding: 0 1.25rem 0.85rem; line-height: 1.5; }
+
   /* APP SWITCHER */
   .app-switcher { position: relative; }
   .switcher-trigger { display: flex; align-items: center; gap: 0.5rem; cursor: pointer; padding: 0.4rem 0.75rem; border-radius: 8px; border: 1px solid rgba(255,255,255,0.15); transition: background 0.2s; user-select: none; }
@@ -167,7 +202,7 @@
 <div class="hero">
   <div class="hero-eyebrow">MyPayPicture</div>
   <h1>See your complete<br><em>financial picture.</em></h1>
-  <p>Tools to help you understand, optimise, and plan every part of your pay and pension.</p>
+  <p>Clarity for every pay decision.</p>
 </div>
 
 <div class="grid-section">
@@ -220,6 +255,28 @@
 
 </div>
 
+<div class="chat-wrap">
+  <div class="chat-divider">Ask MyPayPicture Assistant</div>
+  <div class="chat-box">
+    <div class="chat-head">
+      <div class="chat-head-icon">✦</div>
+      <div>
+        <div class="chat-head-title">MyPayPicture Assistant</div>
+        <div class="chat-head-sub">General information only · Not financial advice</div>
+      </div>
+    </div>
+    <div class="chat-msgs" id="chatMsgs"></div>
+    <div class="chat-chips" id="chatChips"><div class="chat-chip" onclick="chatChip(this)">Which tool is right for me?</div><div class="chat-chip" onclick="chatChip(this)">I missed salary sacrifice on my bonus</div><div class="chat-chip" onclick="chatChip(this)">I want to top up my pension</div><div class="chat-chip" onclick="chatChip(this)">I am approaching retirement</div></div>
+    <div class="chat-input-wrap">
+      <textarea class="chat-textarea" id="chatInput" placeholder="Ask a question about your finances..." rows="1"
+        onkeydown="if(event.key==='Enter'&&!event.shiftKey){event.preventDefault();chatSend();}"
+        oninput="this.style.height='auto';this.style.height=Math.min(this.scrollHeight,110)+'px'"></textarea>
+      <button class="chat-send" id="chatSendBtn" onclick="chatSend()">&#8594;</button>
+    </div>
+    <div class="chat-footer-note">General information only. Always consult a qualified financial adviser before making decisions.</div>
+  </div>
+</div>
+
 <footer>
   <div class="footer-logo">MyPayPicture</div>
   <div class="footer-disclaimer">Illustrative purposes only. Not financial or tax advice. Always verify with HMRC or a qualified adviser.</div>
@@ -231,6 +288,73 @@
     if (!document.getElementById('appSwitcher').contains(e.target))
       document.getElementById('appSwitcher').classList.remove('open');
   });
+
+  // ── MYPAYPICTURE CHAT ─────────────────────────────────────────────────────
+  const WORKER_URL = 'https://mypaypicture-api.proud-truth-9c88.workers.dev';
+  const SYS_PROMPT = 'You are a helpful UK personal finance assistant for MyPayPicture, a suite of tools helping people understand their pay, pension, and benefits. Help users find the right tool and answer general UK personal finance questions.\n\nTools: MyPayOptimiser (salary sacrifice, contributions), MyPensionReclaim (missed salary sacrifice on bonuses), MyPensionTop-Up (AVCs and tax relief), MyFamily and Benefits (Child Benefit and Tax-Free Childcare), MyRetirementHelper (State Pension, drawdown, sustainability).\n\nRules:\n- UK English, 2024/25 rates\n- General information only, not personalised financial advice\n- Direct users to the right tool\n- Warm, clear, approachable tone';
+  let chatHist = [];
+  let chatBusy = false;
+
+  function chatAddMsg(role, text, typing) {
+    const msgs = document.getElementById('chatMsgs');
+    const div = document.createElement('div');
+    div.className = 'chat-msg ' + (role === 'user' ? 'user' : 'ai');
+    if (typing) div.id = 'chatTyping';
+    const av = role === 'user' ? 'You' : '✦';
+    let bubble;
+    if (typing) {
+      bubble = '<div class="chat-typing"><span></span><span></span><span></span></div>';
+    } else {
+      const formatted = text.split('\n\n').map(function(p) {
+        return p.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
+      }).join('</p><p>');
+      bubble = '<p>' + formatted + '</p>';
+    }
+    div.innerHTML = '<div class="msg-av">' + av + '</div><div class="msg-bub">' + bubble + '</div>';
+    msgs.appendChild(div);
+    msgs.scrollTop = msgs.scrollHeight;
+  }
+
+  async function chatSend() {
+    const input = document.getElementById('chatInput');
+    const btn = document.getElementById('chatSendBtn');
+    const text = input.value.trim();
+    if (!text || chatBusy) return;
+    document.getElementById('chatChips').style.display = 'none';
+    chatAddMsg('user', text);
+    chatHist.push({ role: 'user', content: text });
+    input.value = '';
+    input.style.height = 'auto';
+    chatBusy = true;
+    btn.disabled = true;
+    chatAddMsg('ai', '', true);
+    try {
+      const res = await fetch(WORKER_URL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ messages: chatHist, system: SYS_PROMPT }),
+      });
+      const data = await res.json();
+      const reply = (data.content && data.content[0] && data.content[0].text)
+        ? data.content[0].text
+        : (data.error || 'Sorry, something went wrong. Please try again.');
+      var t = document.getElementById('chatTyping');
+      if (t) t.remove();
+      chatAddMsg('ai', reply);
+      chatHist.push({ role: 'assistant', content: reply });
+    } catch (err) {
+      var t = document.getElementById('chatTyping');
+      if (t) t.remove();
+      chatAddMsg('ai', 'Unable to connect. Please check your connection and try again.');
+    }
+    chatBusy = false;
+    btn.disabled = false;
+    input.focus();
+  }
+
+  function chatChip(el) {
+    document.getElementById('chatInput').value = el.textContent;
+    chatSend();
+  }
+
 </script>
-</body>
-</html>
