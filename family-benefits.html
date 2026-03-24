@@ -133,6 +133,19 @@
   .chat-send:hover { opacity: 0.85; } .chat-send:disabled { opacity: 0.3; cursor: not-allowed; }
   .chat-footer-note { text-align: center; font-size: 0.68rem; color: var(--slate-light, #718096); padding: 0 1.25rem 0.85rem; line-height: 1.5; }
 
+
+  /* SWITCHER GROUP LABELS */
+  .switcher-group-label {
+    padding: 0.5rem 1rem 0.25rem;
+    font-size: 0.6rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: rgba(255,255,255,0.25);
+    border-top: 1px solid rgba(255,255,255,0.06);
+    margin-top: 0.15rem;
+  }
+
   /* APP SWITCHER */
   .app-switcher { position: relative; }
   .switcher-trigger { display: flex; align-items: center; gap: 0.5rem; cursor: pointer; padding: 0.4rem 0.75rem; border-radius: 8px; border: 1px solid rgba(255,255,255,0.15); transition: background 0.2s; user-select: none; }
@@ -325,29 +338,37 @@
     </div>
     <div class="switcher-dropdown">
       <div class="switcher-item" onclick="window.location.href='index.html'">
-        <div class="switcher-item-icon" style="background:rgba(255,255,255,0.06);">🏠</div>
-        <div class="switcher-item-text"><div class="item-name" style="color:rgba(255,255,255,0.4); font-size:0.8rem;">← MyPayPicturePicture Home</div></div>
+        <div class="switcher-item-icon" style="background:rgba(255,255,255,0.06);">&#127968;</div>
+        <div class="switcher-item-text"><div class="item-name" style="color:rgba(255,255,255,0.4); font-size:0.8rem;">&#8592; MyPayPicture</div></div>
       </div>
+      <div class="switcher-group-label">&#128084; Employed</div>
       <div class="switcher-item" onclick="window.location.href='pay-optimiser.html'">
-        <div class="switcher-item-icon" style="background:rgba(13,148,136,0.15);">📈</div>
-        <div class="switcher-item-text"><div class="item-name">MyPayPictureOptimiser</div><div class="item-desc">Make every pound work harder.</div></div>
+        <div class="switcher-item-icon" style="background:rgba(13,148,136,0.15);">&#128200;</div>
+        <div class="switcher-item-text"><div class="item-name" >MyPayOptimiser</div><div class="item-desc">Make every pound work harder.</div></div>
       </div>
       <div class="switcher-item" onclick="window.location.href='pension-reclaim.html'">
-        <div class="switcher-item-icon" style="background:rgba(201,168,76,0.15);">💰</div>
-        <div class="switcher-item-text"><div class="item-name">MyPensionReclaim</div><div class="item-desc">Missed salary sacrifice? Get it back.</div></div>
+        <div class="switcher-item-icon" style="background:rgba(201,168,76,0.15);">&#128176;</div>
+        <div class="switcher-item-text"><div class="item-name" >MyPensionReclaim</div><div class="item-desc">Missed salary sacrifice? Get it back.</div></div>
       </div>
       <div class="switcher-item" onclick="window.location.href='pension-topup.html'">
-        <div class="switcher-item-icon" style="background:rgba(237,172,0,0.15);">➕</div>
-        <div class="switcher-item-text"><div class="item-name">MyPensionTop-Up</div><div class="item-desc">Make AVCs and claim your tax relief.</div></div>
+        <div class="switcher-item-icon" style="background:rgba(237,172,0,0.15);">&#10133;</div>
+        <div class="switcher-item-text"><div class="item-name" >MyPensionTop-Up</div><div class="item-desc">Make AVCs and claim your tax relief.</div></div>
       </div>
-      <div class="switcher-item current">
-        <div class="switcher-item-icon" style="background:rgba(155,35,53,0.15);">👨‍👩‍👧</div>
-        <div class="switcher-item-text"><div class="item-name">MyFamily&amp;Benefits</div><div class="item-desc">Child Benefit & TFC optimiser.</div></div>
+      <div class="switcher-item  current" style="cursor:default;">
+        <div class="switcher-item-icon" style="background:rgba(155,35,53,0.15);">&#128106;</div>
+        <div class="switcher-item-text"><div class="item-name" style="color:#f87171;">MyFamily&amp;Benefits</div><div class="item-desc">Child Benefit &amp; Tax-Free Childcare.</div></div>
       </div>
+      <div class="switcher-group-label">&#127962; Director</div>
+      <div class="switcher-item" onclick="window.location.href='pay-director.html'">
+        <div class="switcher-item-icon" style="background:rgba(79,70,229,0.15);">&#127962;</div>
+        <div class="switcher-item-text"><div class="item-name" >MyPayDirector</div><div class="item-desc">Salary vs dividends for directors.</div></div>
+      </div>
+      <div class="switcher-group-label">&#127749; Retired</div>
       <div class="switcher-item" onclick="window.location.href='retirement-helper.html'">
-        <div class="switcher-item-icon" style="background:rgba(107,114,128,0.15);">🌅</div>
-        <div class="switcher-item-text"><div class="item-name">MyRetirementHelper</div><div class="item-desc">Clarity in later life.</div></div>
+        <div class="switcher-item-icon" style="background:rgba(107,114,128,0.15);">&#127749;</div>
+        <div class="switcher-item-text"><div class="item-name" >MyRetirementHelper</div><div class="item-desc">Clarity in later life.</div></div>
       </div>
+    </div>
     </div>
   </div>
   <div class="disclaimer-badge">Not financial advice</div>
