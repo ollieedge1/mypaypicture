@@ -1,0 +1,1016 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="manifest" href="manifest.json">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="MyPayPicture">
+<link rel="apple-touch-icon" href="icon-192.png">
+<meta name="theme-color" content="#0f1f38">
+<title>MySelfAssessment — MyPayPicture</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy:#0f1f38; --sa:#7c3aed; --sa-light:#c4b5fd; --sa-pale:#f5f3ff; --sa-dark:#5b21b6;
+    --cream:#f7f5f2; --slate:#4a5568; --slate-light:#718096; --stone-pale:#f3f4f6;
+    --green:#2d6a4f; --green-light:#40916c; --amber:#b45309; --red:#b91c1c;
+    --border:rgba(124,58,237,0.15); --white:#ffffff;
+  }
+  * { box-sizing:border-box; margin:0; padding:0; }
+  body { font-family:'DM Sans',sans-serif; background:var(--cream); color:var(--navy); min-height:100vh; }
+
+  .switcher-group-label { padding:0.5rem 1rem 0.25rem; font-size:0.6rem; font-weight:700; text-transform:uppercase; letter-spacing:0.1em; color:rgba(255,255,255,0.25); border-top:1px solid rgba(255,255,255,0.06); margin-top:0.15rem; }
+  header { background:var(--navy); padding:1.25rem 2rem; display:flex; align-items:center; justify-content:space-between; }
+  .app-switcher { position:relative; }
+  .switcher-trigger { display:flex; align-items:center; gap:0.5rem; cursor:pointer; padding:0.4rem 0.75rem; border-radius:8px; border:1px solid rgba(255,255,255,0.15); transition:background 0.2s; user-select:none; }
+  .switcher-trigger:hover { background:rgba(255,255,255,0.07); }
+  .switcher-trigger .app-name { font-family:'Playfair Display',serif; font-size:1.1rem; color:var(--sa-light); }
+  .switcher-trigger .app-name span { color:white; font-weight:300; }
+  .switcher-trigger .chevron { color:rgba(255,255,255,0.4); font-size:0.7rem; transition:transform 0.2s; }
+  .app-switcher.open .chevron { transform:rotate(180deg); }
+  .switcher-dropdown { display:none; position:absolute; top:calc(100% + 8px); left:0; background:#1a2f4e; border:1px solid rgba(255,255,255,0.1); border-radius:10px; overflow:hidden; min-width:260px; box-shadow:0 8px 24px rgba(0,0,0,0.3); z-index:100; }
+  .app-switcher.open .switcher-dropdown { display:block; }
+  .switcher-item { display:flex; align-items:center; gap:0.75rem; padding:0.75rem 1rem; cursor:pointer; transition:background 0.15s; border-bottom:1px solid rgba(255,255,255,0.05); }
+  .switcher-item:last-child { border-bottom:none; }
+  .switcher-item:hover { background:rgba(255,255,255,0.06); }
+  .switcher-item.current { background:rgba(124,58,237,0.1); }
+  .switcher-item-icon { width:30px; height:30px; border-radius:7px; display:flex; align-items:center; justify-content:center; font-size:0.9rem; flex-shrink:0; }
+  .switcher-item-text .item-name { font-size:0.85rem; font-weight:600; color:white; }
+  .switcher-item-text .item-desc { font-size:0.7rem; color:rgba(255,255,255,0.35); margin-top:0.1rem; }
+  .switcher-item.current .item-name { color:var(--sa-light); }
+  .disclaimer-badge { font-size:0.7rem; color:rgba(255,255,255,0.4); border:1px solid rgba(255,255,255,0.15); padding:0.3rem 0.7rem; border-radius:20px; letter-spacing:0.05em; text-transform:uppercase; }
+
+  .hero { background:var(--navy); padding:3.5rem 2rem 4.5rem; text-align:center; position:relative; overflow:hidden; }
+  .hero::before { content:''; position:absolute; top:-60px; right:-60px; width:400px; height:400px; background:radial-gradient(circle, rgba(124,58,237,0.1) 0%, transparent 70%); pointer-events:none; }
+  .hero-eyebrow { font-size:0.65rem; text-transform:uppercase; letter-spacing:0.15em; color:rgba(255,255,255,0.3); margin-bottom:1.25rem; }
+  .hero h1 { font-family:'Playfair Display',serif; font-size:clamp(2rem,5.5vw,3.2rem); color:white; line-height:1.1; max-width:600px; margin:0 auto 1rem; font-weight:700; }
+  .hero h1 em { font-style:italic; color:var(--sa-light); }
+  .hero p { color:rgba(255,255,255,0.45); font-size:0.95rem; max-width:440px; margin:0 auto; line-height:1.65; }
+
+  .container { max-width:860px; margin:0 auto; padding:2.5rem 1.5rem 4rem; }
+  .steps-nav { display:flex; border-radius:12px 12px 0 0; overflow:hidden; border:1px solid var(--border); border-bottom:none; background:white; }
+  .step-tab { flex:1; padding:0.85rem 0.4rem; text-align:center; font-size:0.68rem; font-weight:500; letter-spacing:0.04em; text-transform:uppercase; color:var(--slate-light); cursor:pointer; transition:all 0.2s; border-right:1px solid var(--border); }
+  .step-tab:last-child { border-right:none; }
+  .step-tab.active { background:var(--navy); color:var(--sa-light); }
+  .step-tab.completed { color:var(--green-light); }
+  .step-tab .step-num { display:block; font-family:'Playfair Display',serif; font-size:1.15rem; font-weight:700; margin-bottom:0.15rem; color:inherit; }
+  .step-tab.completed .step-num::after { content:' ✓'; font-size:0.85rem; }
+  .card { background:white; border-radius:0 0 16px 16px; padding:2rem; border:1px solid var(--border); border-top:none; box-shadow:0 4px 24px rgba(15,31,56,0.06); display:none; animation:fadeIn 0.3s ease; }
+  .card.active { display:block; }
+  @keyframes fadeIn { from{opacity:0;transform:translateY(8px);}to{opacity:1;transform:translateY(0);} }
+  .card-title { font-family:'Playfair Display',serif; font-size:1.5rem; color:var(--navy); margin-bottom:0.4rem; }
+  .card-subtitle { color:var(--slate); font-size:0.9rem; margin-bottom:2rem; line-height:1.65; max-width:560px; }
+
+  .two-col { display:grid; grid-template-columns:1fr 1fr; gap:1.25rem; }
+  @media (max-width:580px) { .two-col { grid-template-columns:1fr; } }
+  .field-group { margin-bottom:1.5rem; }
+  .field-group:last-child { margin-bottom:0; }
+  label { display:block; font-size:0.85rem; font-weight:500; color:var(--navy); margin-bottom:0.5rem; }
+  .input-wrap { position:relative; }
+  .input-prefix { position:absolute; left:14px; top:50%; transform:translateY(-50%); color:var(--slate-light); font-size:0.95rem; pointer-events:none; }
+  input[type="number"], select { width:100%; padding:0.75rem 1rem 0.75rem 2rem; border:1.5px solid #ddd; border-radius:8px; font-family:'DM Sans',sans-serif; font-size:1rem; color:var(--navy); background:white; transition:border-color 0.2s; appearance:none; }
+  input[type="number"]:focus, select:focus { outline:none; border-color:var(--sa); box-shadow:0 0 0 3px rgba(124,58,237,0.1); }
+  select { padding-left:1rem; }
+  input.no-prefix { padding-left:1rem; }
+  .hint { font-size:0.78rem; color:var(--slate-light); margin-top:0.4rem; line-height:1.45; }
+
+  /* CHECKLIST */
+  .check-list { display:flex; flex-direction:column; gap:0.6rem; }
+  .check-item { display:flex; align-items:flex-start; gap:0.75rem; padding:0.85rem 1rem; border:1.5px solid #ddd; border-radius:10px; cursor:pointer; transition:all 0.18s; }
+  .check-item:hover { border-color:var(--sa); }
+  .check-item.checked { border-color:var(--sa); background:var(--sa-pale); }
+  .check-item-box { width:20px; height:20px; border-radius:5px; border:1.5px solid #ddd; flex-shrink:0; margin-top:2px; display:flex; align-items:center; justify-content:center; transition:all 0.15s; font-size:0.75rem; color:white; }
+  .check-item.checked .check-item-box { background:var(--sa); border-color:var(--sa); }
+  .check-item-label { font-size:0.88rem; font-weight:500; color:var(--navy); margin-bottom:0.15rem; }
+  .check-item-desc { font-size:0.75rem; color:var(--slate-light); line-height:1.4; }
+
+  /* FILING BANNER */
+  .filing-banner { border-radius:12px; padding:1.1rem 1.4rem; margin-bottom:1.25rem; display:flex; align-items:flex-start; gap:0.85rem; }
+  .filing-banner.must-file { background:#fef2f2; border:1.5px solid #fca5a5; }
+  .filing-banner.maybe    { background:#fffbeb; border:1.5px solid #fde68a; }
+  .filing-banner.clear    { background:#f0fdf4; border:1.5px solid #6ee7b7; }
+  .filing-banner-icon { font-size:1.3rem; flex-shrink:0; line-height:1.2; }
+  .filing-banner-title { font-family:'Playfair Display',serif; font-size:1rem; color:var(--navy); margin-bottom:0.25rem; }
+  .filing-banner-desc { font-size:0.82rem; color:var(--slate); line-height:1.55; }
+
+  /* RESULTS */
+  .results-grid { display:grid; grid-template-columns:repeat(auto-fit, minmax(150px,1fr)); gap:0.85rem; margin:1.5rem 0; }
+  .result-box { background:var(--navy); border-radius:12px; padding:1.1rem; text-align:center; }
+  .result-box.sa   { background:linear-gradient(135deg,var(--sa-dark) 0%,var(--sa) 100%); }
+  .result-box.good { background:linear-gradient(135deg,var(--green) 0%,var(--green-light) 100%); }
+  .result-box.warn { background:linear-gradient(135deg,#92400e 0%,#b45309 100%); }
+  .result-box.highlight { background:linear-gradient(135deg,#374151 0%,var(--navy) 100%); border:1px solid rgba(124,58,237,0.2); }
+  .result-box .r-label { font-size:0.68rem; text-transform:uppercase; letter-spacing:0.07em; color:rgba(255,255,255,0.55); margin-bottom:0.4rem; }
+  .result-box .r-amount { font-family:'Playfair Display',serif; font-size:1.65rem; font-weight:700; color:white; line-height:1; }
+  .result-box .r-sub { font-size:0.68rem; color:rgba(255,255,255,0.4); margin-top:0.25rem; }
+
+  /* BREAKDOWN TABLE */
+  .breakdown-table { width:100%; border-collapse:collapse; font-size:0.85rem; margin:1rem 0; }
+  .breakdown-table th { padding:0.6rem 0.85rem; text-align:left; font-size:0.7rem; text-transform:uppercase; letter-spacing:0.06em; color:var(--slate-light); border-bottom:2px solid rgba(124,58,237,0.15); }
+  .breakdown-table th.sa-col { color:var(--sa-dark); }
+  .breakdown-table td { padding:0.65rem 0.85rem; border-bottom:1px solid rgba(0,0,0,0.05); color:var(--slate); }
+  .breakdown-table tr:last-child td { border-bottom:none; }
+  .breakdown-table td:first-child { font-weight:500; color:var(--navy); font-size:0.82rem; }
+  .breakdown-table td.positive { color:var(--green); font-weight:600; }
+  .breakdown-table td.negative { color:var(--red); font-weight:600; }
+  .breakdown-table tr.total-row td { font-weight:700; color:var(--navy); border-top:2px solid rgba(124,58,237,0.2); font-size:0.9rem; }
+
+  .guidance-box { border-left:3px solid var(--sa); background:var(--sa-pale); border-radius:0 8px 8px 0; padding:1rem 1.25rem; margin:1rem 0; }
+  .guidance-box h4 { font-size:0.85rem; font-weight:600; color:var(--navy); margin-bottom:0.4rem; }
+  .guidance-box p, .guidance-box li { font-size:0.84rem; color:var(--slate); line-height:1.65; }
+  .guidance-box ul { padding-left:1.1rem; margin-top:0.3rem; }
+  .guidance-box li { margin-bottom:0.3rem; }
+  .alert-box { border-left:3px solid var(--green-light); background:rgba(64,145,108,0.06); border-radius:0 8px 8px 0; padding:0.9rem 1.1rem; margin:0.75rem 0; }
+  .alert-box.warning { border-left-color:#d97706; background:#fffbeb; }
+  .alert-box.danger  { border-left-color:var(--red); background:#fef2f2; }
+  .alert-box h4 { font-size:0.83rem; font-weight:600; color:var(--navy); margin-bottom:0.3rem; }
+  .alert-box p { font-size:0.83rem; color:var(--slate); line-height:1.6; }
+
+  /* DEADLINE TIMELINE */
+  .deadline-list { display:flex; flex-direction:column; gap:0; margin:1rem 0; }
+  .deadline-item { display:flex; gap:1rem; align-items:flex-start; padding:0.85rem 0; border-bottom:1px solid rgba(0,0,0,0.06); }
+  .deadline-item:last-child { border-bottom:none; }
+  .deadline-dot { width:10px; height:10px; border-radius:50%; flex-shrink:0; margin-top:5px; }
+  .deadline-dot.done   { background:var(--slate-light); }
+  .deadline-dot.next   { background:var(--sa); box-shadow:0 0 0 3px rgba(124,58,237,0.2); }
+  .deadline-dot.urgent { background:var(--red); box-shadow:0 0 0 3px rgba(185,28,28,0.2); }
+  .deadline-date { font-size:0.82rem; font-weight:700; color:var(--navy); min-width:120px; flex-shrink:0; }
+  .deadline-desc { font-size:0.82rem; color:var(--slate); line-height:1.5; }
+
+  /* SUMMARY */
+  .summary-panel { background:var(--navy); border-radius:12px; padding:1.5rem; margin-top:1.5rem; }
+  .summary-title { font-family:'Playfair Display',serif; color:var(--sa-light); font-size:1rem; margin-bottom:1rem; }
+  .summary-row { display:flex; justify-content:space-between; padding:0.45rem 0; border-bottom:1px solid rgba(255,255,255,0.07); font-size:0.85rem; }
+  .summary-row:last-child { border-bottom:none; }
+  .summary-row .s-label { color:rgba(255,255,255,0.5); }
+  .summary-row .s-val { color:white; font-weight:500; }
+  .summary-row .s-val.sa   { color:var(--sa-light); font-weight:600; }
+  .summary-row .s-val.good { color:#6ee7b7; }
+  .summary-row .s-val.warn { color:#fbbf24; }
+
+  .pdf-inline-cta { display:none; margin-top:1.5rem; background:var(--cream); border:1.5px solid var(--border); border-radius:12px; padding:1.1rem 1.25rem; }
+  .pdf-inline-cta.visible { display:block; }
+  .pdf-inline-inner { display:flex; align-items:center; justify-content:space-between; gap:1rem; flex-wrap:wrap; }
+  .pdf-inline-text strong { display:block; font-family:'Playfair Display',serif; font-size:0.95rem; color:var(--navy); margin-bottom:0.2rem; }
+  .pdf-inline-text span { font-size:0.75rem; color:var(--slate-light); }
+  .pdf-inline-right { display:flex; align-items:center; gap:0.75rem; flex-shrink:0; }
+  .pdf-inline-price { font-family:'Playfair Display',serif; font-size:1.1rem; font-weight:700; color:var(--navy); }
+  .pdf-inline-btn { padding:0.65rem 1.25rem; border-radius:8px; font-family:'DM Sans',sans-serif; font-size:0.88rem; font-weight:600; text-decoration:none; white-space:nowrap; transition:all 0.2s; background:var(--navy); color:white; border:none; cursor:pointer; display:inline-block; }
+  .pdf-inline-btn:hover { opacity:0.85; }
+  .pdf-inline-btn.paid { background:#40916c; }
+
+  .adviser-cta { background:linear-gradient(135deg,var(--navy) 0%,#162d4f 100%); border-radius:12px; padding:1.1rem 1.5rem; margin:0.75rem 0 0; border:1px solid rgba(255,255,255,0.08); display:none; }
+  .adviser-cta.visible { display:block; }
+  .adviser-cta-inner { display:flex; align-items:center; justify-content:space-between; gap:1rem; flex-wrap:wrap; }
+  .adviser-cta-text strong { display:block; font-family:'Playfair Display',serif; font-size:0.95rem; color:white; margin-bottom:0.2rem; }
+  .adviser-cta-text span { font-size:0.75rem; color:rgba(255,255,255,0.45); }
+  .adviser-cta-btn { padding:0.65rem 1.25rem; border-radius:8px; font-family:'DM Sans',sans-serif; font-size:0.85rem; font-weight:600; text-decoration:none; white-space:nowrap; transition:all 0.2s; flex-shrink:0; background:white; color:var(--navy); }
+
+  .chat-wrap { max-width:860px; margin:0 auto; padding:0 1.5rem 2.5rem; }
+  .chat-divider { display:flex; align-items:center; gap:0.75rem; margin-bottom:1rem; font-size:0.65rem; text-transform:uppercase; letter-spacing:0.1em; color:var(--slate-light); }
+  .chat-divider::before, .chat-divider::after { content:''; flex:1; height:1px; background:rgba(0,0,0,0.08); }
+  .chat-box { background:white; border-radius:16px; border:1px solid var(--border); box-shadow:0 4px 24px rgba(15,31,56,0.06); overflow:hidden; }
+  .chat-head { background:var(--navy); padding:0.9rem 1.25rem; display:flex; align-items:center; gap:0.75rem; }
+  .chat-head-icon { width:30px; height:30px; border-radius:50%; background:rgba(255,255,255,0.12); display:flex; align-items:center; justify-content:center; font-size:0.9rem; flex-shrink:0; }
+  .chat-head-title { font-family:'Playfair Display',serif; font-size:0.9rem; color:white; }
+  .chat-head-sub { font-size:0.68rem; color:rgba(255,255,255,0.4); margin-top:0.05rem; }
+  .chat-msgs { padding:1rem 1.25rem; max-height:380px; overflow-y:auto; display:flex; flex-direction:column; gap:0.85rem; scroll-behavior:smooth; }
+  .chat-msg { display:flex; gap:0.6rem; align-items:flex-start; animation:fadeIn 0.2s ease; }
+  .chat-msg.user { flex-direction:row-reverse; }
+  .msg-av { width:26px; height:26px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:0.7rem; font-weight:600; flex-shrink:0; margin-top:2px; }
+  .chat-msg.ai .msg-av { background:var(--navy); color:rgba(255,255,255,0.7); }
+  .chat-msg.user .msg-av { background:#f3f4f6; color:var(--slate); }
+  .msg-bub { max-width:80%; padding:0.65rem 0.9rem; border-radius:12px; font-size:0.84rem; line-height:1.65; }
+  .chat-msg.ai .msg-bub { background:#f3f4f6; color:var(--navy); border-radius:4px 12px 12px 12px; }
+  .chat-msg.user .msg-bub { background:var(--navy); color:white; border-radius:12px 4px 12px 12px; }
+  .msg-bub p { margin-bottom:0.4rem; } .msg-bub p:last-child { margin-bottom:0; }
+  .chat-typing { display:flex; gap:3px; align-items:center; padding:0.2rem 0; }
+  .chat-typing span { width:6px; height:6px; border-radius:50%; background:var(--slate-light); animation:typeBounce 1.2s infinite; }
+  .chat-typing span:nth-child(2) { animation-delay:0.2s; }
+  .chat-typing span:nth-child(3) { animation-delay:0.4s; }
+  @keyframes typeBounce { 0%,60%,100%{transform:translateY(0);opacity:0.4;}30%{transform:translateY(-4px);opacity:1;} }
+  .chat-chips { padding:0 1.25rem 0.6rem; display:flex; gap:0.4rem; flex-wrap:wrap; }
+  .chat-chip { font-size:0.73rem; padding:0.28rem 0.65rem; border-radius:20px; border:1px solid var(--border); background:white; color:var(--slate); cursor:pointer; transition:all 0.15s; white-space:nowrap; }
+  .chat-chip:hover { border-color:var(--sa); color:var(--navy); background:var(--sa-pale); }
+  .chat-input-wrap { display:flex; gap:0.5rem; padding:0.75rem 1.25rem 1rem; border-top:1px solid rgba(0,0,0,0.07); align-items:flex-end; }
+  .chat-textarea { flex:1; padding:0.6rem 0.85rem; border:1.5px solid #ddd; border-radius:10px; font-family:'DM Sans',sans-serif; font-size:0.88rem; color:var(--navy); resize:none; min-height:40px; max-height:110px; line-height:1.5; transition:border-color 0.2s; background:white; }
+  .chat-textarea:focus { outline:none; border-color:var(--sa); box-shadow:0 0 0 3px rgba(124,58,237,0.1); }
+  .chat-send { width:40px; height:40px; border-radius:10px; background:var(--navy); border:none; color:white; cursor:pointer; display:flex; align-items:center; justify-content:center; font-size:1rem; flex-shrink:0; transition:opacity 0.15s; }
+  .chat-send:hover { opacity:0.85; } .chat-send:disabled { opacity:0.3; cursor:not-allowed; }
+  .chat-footer-note { text-align:center; font-size:0.68rem; color:var(--slate-light); padding:0 1.25rem 0.85rem; line-height:1.5; }
+
+  hr { border:none; border-top:1px solid rgba(0,0,0,0.08); margin:1.5rem 0; }
+  .btn-primary { background:var(--sa); color:white; border:none; padding:0.85rem 2rem; border-radius:8px; font-family:'DM Sans',sans-serif; font-size:0.95rem; font-weight:600; cursor:pointer; transition:all 0.2s; }
+  .btn-primary:hover { background:var(--sa-dark); transform:translateY(-1px); box-shadow:0 4px 12px rgba(124,58,237,0.3); }
+  .btn-secondary { background:transparent; color:var(--slate); border:1.5px solid #ddd; padding:0.85rem 1.5rem; border-radius:8px; font-family:'DM Sans',sans-serif; font-size:0.9rem; font-weight:500; cursor:pointer; transition:all 0.2s; }
+  .btn-secondary:hover { border-color:var(--navy); color:var(--navy); }
+  .btn-row { display:flex; gap:0.75rem; margin-top:2rem; justify-content:flex-end; flex-wrap:wrap; }
+
+  @media (max-width:600px) {
+    header { padding:1rem 1.25rem; }
+    .hero { padding:2.5rem 1.25rem 3.5rem; }
+    .container { padding:2rem 1.25rem 3rem; }
+    .card { padding:1.5rem 1.25rem; }
+    .step-tab { font-size:0.6rem; padding:0.7rem 0.2rem; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="app-switcher" id="appSwitcher">
+    <div class="switcher-trigger" onclick="toggleSwitcher(event)">
+      <div class="app-name">MySelf<span>Assessment</span></div>
+      <div class="chevron">&#9660;</div>
+    </div>
+    <div class="switcher-dropdown">
+      <div class="switcher-item" onclick="window.location.href='index.html'">
+        <div class="switcher-item-icon" style="background:rgba(255,255,255,0.06);">&#127968;</div>
+        <div class="switcher-item-text"><div class="item-name" style="color:rgba(255,255,255,0.4);font-size:0.8rem;">&#8592; MyPayPicture</div></div>
+      </div>
+      <div class="switcher-group-label">&#128084; Employed</div>
+      <div class="switcher-item" onclick="window.location.href='pension-optimiser.html'">
+        <div class="switcher-item-icon" style="background:rgba(13,148,136,0.15);">&#128200;</div>
+        <div class="switcher-item-text"><div class="item-name">MyPensionOptimiser</div><div class="item-desc">Optimising your pension? Pay less tax.</div></div>
+      </div>
+      <div class="switcher-item" onclick="window.location.href='pension-reclaim.html'">
+        <div class="switcher-item-icon" style="background:rgba(201,168,76,0.15);">&#128176;</div>
+        <div class="switcher-item-text"><div class="item-name">MyPensionReclaim</div><div class="item-desc">Missed salary sacrifice? Get it back.</div></div>
+      </div>
+      <div class="switcher-item" onclick="window.location.href='pension-topup.html'">
+        <div class="switcher-item-icon" style="background:rgba(237,172,0,0.15);">&#10133;</div>
+        <div class="switcher-item-text"><div class="item-name">MyPensionTop-Up</div><div class="item-desc">The government helps pay for it.</div></div>
+      </div>
+      <div class="switcher-item" onclick="window.location.href='family-benefits.html'">
+        <div class="switcher-item-icon" style="background:rgba(244,167,185,0.2);">&#128106;</div>
+        <div class="switcher-item-text"><div class="item-name">MyFamily&amp;Benefits</div><div class="item-desc">Paying the Child Benefit charge? Reduce it.</div></div>
+      </div>
+      <div class="switcher-item" onclick="window.location.href='car-allowance.html'">
+        <div class="switcher-item-icon" style="background:rgba(14,165,233,0.15);">&#128663;</div>
+        <div class="switcher-item-text"><div class="item-name">MyCarAllowance</div><div class="item-desc">Company car or cash? See what wins.</div></div>
+      </div>
+      <div class="switcher-item current">
+        <div class="switcher-item-icon" style="background:rgba(124,58,237,0.15);">&#128196;</div>
+        <div class="switcher-item-text"><div class="item-name">MySelfAssessment</div><div class="item-desc">Self Assessment made less daunting.</div></div>
+      </div>
+      <div class="switcher-group-label">&#127962; Director</div>
+      <div class="switcher-item" onclick="window.location.href='pay-director.html'">
+        <div class="switcher-item-icon" style="background:rgba(79,70,229,0.15);">&#127962;</div>
+        <div class="switcher-item-text"><div class="item-name">MyPayDirector</div><div class="item-desc">Be smart with your pay.</div></div>
+      </div>
+      <div class="switcher-group-label">&#127749; Retired</div>
+      <div class="switcher-item" onclick="window.location.href='retirement-helper.html'">
+        <div class="switcher-item-icon" style="background:rgba(107,114,128,0.15);">&#127749;</div>
+        <div class="switcher-item-text"><div class="item-name">MyRetirementHelper</div><div class="item-desc">Near or at retirement? See where you stand.</div></div>
+      </div>
+    </div>
+  </div>
+  <div class="disclaimer-badge">Not financial advice</div>
+</header>
+
+<div class="hero">
+  <div class="hero-eyebrow">MyPayPicture</div>
+  <h1>Dreading Self Assessment?<br><em>Let&#8217;s make it manageable.</em></h1>
+  <p>Find out if you need to file, get an estimate of what you owe, and know exactly what to do next.</p>
+</div>
+
+<div class="container">
+  <div class="steps-nav">
+    <div class="step-tab active" onclick="goTo(1)" id="tab1"><span class="step-num">1</span>Do I Need to File?</div>
+    <div class="step-tab" onclick="goTo(2)" id="tab2"><span class="step-num">2</span>Your Income</div>
+    <div class="step-tab" onclick="goTo(3)" id="tab3"><span class="step-num">3</span>Deductions</div>
+    <div class="step-tab" onclick="goTo(4)" id="tab4"><span class="step-num">4</span>Tax Estimate</div>
+    <div class="step-tab" onclick="goTo(5)" id="tab5"><span class="step-num">5</span>Next Steps</div>
+  </div>
+
+  <!-- STEP 1: DO I NEED TO FILE -->
+  <div class="card active" id="step1">
+    <div class="card-title">Do you need to file a Self Assessment?</div>
+    <p class="card-subtitle">Tick everything that applies to your 2024/25 tax year (6 April 2024 to 5 April 2025). We&#8217;ll tell you if HMRC requires a return from you.</p>
+
+    <div class="check-list" id="triggerList"></div>
+
+    <div id="filingVerdict" style="margin-top:1.5rem;"></div>
+
+    <div class="btn-row">
+      <button class="btn-primary" onclick="goTo(2)">Enter my income &#8594;</button>
+    </div>
+  </div>
+
+  <!-- STEP 2: YOUR INCOME -->
+  <div class="card" id="step2">
+    <div class="card-title">Your income sources</div>
+    <p class="card-subtitle">Enter figures for the 2024/25 tax year. Leave blank anything that doesn&#8217;t apply.</p>
+
+    <div class="two-col">
+      <div class="field-group">
+        <label>Employment income (gross salary)</label>
+        <div class="input-wrap"><span class="input-prefix">£</span>
+          <input type="number" id="empIncome" placeholder="e.g. 55000" min="0" oninput="updateTaxEstimate()">
+        </div>
+        <p class="hint">Your total gross salary before tax and NI. Check your P60 or payslip.</p>
+      </div>
+      <div class="field-group">
+        <label>Tax already paid via PAYE</label>
+        <div class="input-wrap"><span class="input-prefix">£</span>
+          <input type="number" id="payeTax" placeholder="e.g. 12000" min="0" oninput="updateTaxEstimate()">
+        </div>
+        <p class="hint">From your P60 &#8212; the income tax deducted by your employer.</p>
+      </div>
+    </div>
+
+    <div class="two-col">
+      <div class="field-group">
+        <label>Self-employment profit</label>
+        <div class="input-wrap"><span class="input-prefix">£</span>
+          <input type="number" id="selfEmpProfit" placeholder="e.g. 0" min="0" oninput="updateTaxEstimate()">
+        </div>
+        <p class="hint">Income minus allowable business expenses. Not turnover.</p>
+      </div>
+      <div class="field-group">
+        <label>Rental income (profit after expenses)</label>
+        <div class="input-wrap"><span class="input-prefix">£</span>
+          <input type="number" id="rentalProfit" placeholder="e.g. 0" min="0" oninput="updateTaxEstimate()">
+        </div>
+        <p class="hint">Total rent received minus allowable expenses (not mortgage capital).</p>
+      </div>
+    </div>
+
+    <div class="two-col">
+      <div class="field-group">
+        <label>Dividends received</label>
+        <div class="input-wrap"><span class="input-prefix">£</span>
+          <input type="number" id="dividends" placeholder="e.g. 0" min="0" oninput="updateTaxEstimate()">
+        </div>
+        <p class="hint">From shares, funds, or a limited company. First £500 is tax-free (2024/25).</p>
+      </div>
+      <div class="field-group">
+        <label>Other taxable income</label>
+        <div class="input-wrap"><span class="input-prefix">£</span>
+          <input type="number" id="otherIncome" placeholder="e.g. 0" min="0" oninput="updateTaxEstimate()">
+        </div>
+        <p class="hint">Foreign income, tips, interest above savings allowance, etc.</p>
+      </div>
+    </div>
+
+    <div class="btn-row">
+      <button class="btn-secondary" onclick="goTo(1)">&#8592; Back</button>
+      <button class="btn-primary" onclick="goTo(3)">Add deductions &#8594;</button>
+    </div>
+  </div>
+
+  <!-- STEP 3: DEDUCTIONS -->
+  <div class="card" id="step3">
+    <div class="card-title">Deductions &amp; reliefs</div>
+    <p class="card-subtitle">These reduce your taxable income or the tax you owe. Enter what applies &#8212; leave blank if not relevant.</p>
+
+    <div class="two-col">
+      <div class="field-group">
+        <label>Personal pension contributions (gross)</label>
+        <div class="input-wrap"><span class="input-prefix">£</span>
+          <input type="number" id="pensionContribs" placeholder="e.g. 0" min="0" oninput="updateTaxEstimate()">
+        </div>
+        <p class="hint">Include relief at source top-up. Higher rate relief is claimed through SA.</p>
+      </div>
+      <div class="field-group">
+        <label>Gift Aid donations</label>
+        <div class="input-wrap"><span class="input-prefix">£</span>
+          <input type="number" id="giftAid" placeholder="e.g. 0" min="0" oninput="updateTaxEstimate()">
+        </div>
+        <p class="hint">Total amount donated &#8212; the charity claims basic rate relief. You claim higher rate via SA.</p>
+      </div>
+    </div>
+
+    <div class="two-col">
+      <div class="field-group">
+        <label>Marriage Allowance transfer</label>
+        <div class="input-wrap"><span class="input-prefix">£</span>
+          <input type="number" id="marriageAllowance" placeholder="e.g. 0" min="0" oninput="updateTaxEstimate()">
+        </div>
+        <p class="hint">Up to £1,260 transferred from a non-taxpaying spouse. Worth £252 tax reduction.</p>
+      </div>
+      <div class="field-group">
+        <label>Student loan repayments (total paid)</label>
+        <div class="input-wrap"><span class="input-prefix">£</span>
+          <input type="number" id="studentLoan" placeholder="e.g. 0" min="0" oninput="updateTaxEstimate()">
+        </div>
+        <p class="hint">Declare if self-employed or earning above your plan threshold.</p>
+      </div>
+    </div>
+
+    <div class="btn-row">
+      <button class="btn-secondary" onclick="goTo(2)">&#8592; Back</button>
+      <button class="btn-primary" onclick="goTo(4)">See my tax estimate &#8594;</button>
+    </div>
+  </div>
+
+  <!-- STEP 4: TAX ESTIMATE -->
+  <div class="card" id="step4">
+    <div class="card-title">Your illustrative tax estimate</div>
+    <p class="card-subtitle">Based on what you&#8217;ve entered. This is a guide &#8212; your actual liability depends on your specific circumstances.</p>
+
+    <div class="results-grid" id="taxResultGrid"></div>
+    <div id="taxBreakdown"></div>
+    <div id="taxGuidance"></div>
+
+    <div class="btn-row">
+      <button class="btn-secondary" onclick="goTo(3)">&#8592; Back</button>
+      <button class="btn-primary" onclick="goTo(5)">See next steps &#8594;</button>
+    </div>
+
+    <div class="pdf-inline-cta" id="pdfInlineCta">
+      <div class="pdf-inline-inner">
+        <div class="pdf-inline-text">
+          <strong>&#128196; Download your Self Assessment summary</strong>
+          <span>A full breakdown to take to your accountant or keep on file.</span>
+        </div>
+        <div class="pdf-inline-right">
+          <div class="pdf-inline-price" id="pdfInlinePrice">&#163;4.99</div>
+          <a class="pdf-inline-btn" id="pdfInlineBuyBtn" href="https://buy.stripe.com/4gM8wP2IV4l0gPn9D353O00" target="_blank">Buy report &#8594;</a>
+          <button class="pdf-inline-btn paid" id="pdfInlineDlBtn" style="display:none;" onclick="generateReport()">&#8595; Download PDF</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- STEP 5: NEXT STEPS -->
+  <div class="card" id="step5">
+    <div class="card-title">What to do next</div>
+    <p class="card-subtitle">Key deadlines, what to gather, and where to go from here.</p>
+
+    <div id="deadlineSection"></div>
+
+    <hr>
+
+    <div class="guidance-box">
+      <h4>What to gather before you file</h4>
+      <ul>
+        <li><strong>P60</strong> &#8212; from your employer, shows gross pay and tax paid</li>
+        <li><strong>P11D</strong> &#8212; if you have taxable benefits (company car, private medical etc.)</li>
+        <li><strong>Bank interest statements</strong> &#8212; if above your Personal Savings Allowance</li>
+        <li><strong>Rental income records</strong> &#8212; rent received and all allowable expenses</li>
+        <li><strong>Dividend vouchers / broker statements</strong> &#8212; if you received dividends</li>
+        <li><strong>Pension certificates</strong> &#8212; to claim higher rate relief on contributions</li>
+        <li><strong>Gift Aid records</strong> &#8212; to claim higher rate relief on donations</li>
+        <li><strong>UTR number</strong> &#8212; if registered, your 10-digit Unique Taxpayer Reference</li>
+      </ul>
+    </div>
+
+    <div class="guidance-box" style="margin-top:1rem;">
+      <h4>Not registered yet?</h4>
+      <p>If this is your first Self Assessment you need to register with HMRC. For the 2024/25 tax year the deadline to register is <strong>5 October 2025</strong>. You can register at gov.uk/register-for-self-assessment. You&#8217;ll receive your UTR number within 10 working days.</p>
+    </div>
+
+    <div class="summary-panel" id="finalSummary"></div>
+
+    <div class="btn-row">
+      <button class="btn-secondary" onclick="goTo(4)">&#8592; Back</button>
+      <button class="btn-primary" onclick="window.open('https://www.gov.uk/self-assessment-tax-returns','_blank')">File on gov.uk &#8594;</button>
+    </div>
+
+    <div class="adviser-cta visible">
+      <div class="adviser-cta-inner">
+        <div class="adviser-cta-text">
+          <strong>Want help with your return?</strong>
+          <span>A tax adviser or accountant can file on your behalf and ensure you don&#8217;t pay more than you need to.</span>
+        </div>
+        <a class="adviser-cta-btn" href="https://tally.so/r/xX2YP5" target="_blank">Get advice &#8594;</a>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<div class="chat-wrap">
+  <div class="chat-divider">Ask MyPayPicture Assistant</div>
+  <div class="chat-box">
+    <div class="chat-head">
+      <div class="chat-head-icon">&#10022;</div>
+      <div>
+        <div class="chat-head-title">MyPayPicture Assistant</div>
+        <div class="chat-head-sub">General information only &middot; Not financial advice</div>
+      </div>
+    </div>
+    <div class="chat-msgs" id="chatMsgs"></div>
+    <div class="chat-chips" id="chatChips">
+      <div class="chat-chip" onclick="chatChip(this)">Do I need to file a return?</div>
+      <div class="chat-chip" onclick="chatChip(this)">What are the filing deadlines?</div>
+      <div class="chat-chip" onclick="chatChip(this)">How do I register for Self Assessment?</div>
+      <div class="chat-chip" onclick="chatChip(this)">Can I claim higher rate pension relief?</div>
+      <div class="chat-chip" onclick="chatChip(this)">What expenses can I deduct as self-employed?</div>
+    </div>
+    <div class="chat-input-wrap">
+      <textarea class="chat-textarea" id="chatInput" placeholder="Ask about Self Assessment..." rows="1"
+        onkeydown="if(event.key==='Enter'&&!event.shiftKey){event.preventDefault();chatSend();}"
+        oninput="this.style.height='auto';this.style.height=Math.min(this.scrollHeight,110)+'px'"></textarea>
+      <button class="chat-send" id="chatSendBtn" onclick="chatSend()">&#8594;</button>
+    </div>
+    <div class="chat-footer-note">General information only. Always consult a qualified tax adviser before filing your return.</div>
+  </div>
+</div>
+
+<footer style="background:var(--navy); border-top:3px solid var(--sa); padding:2rem 1.5rem;">
+  <div style="max-width:860px; margin:0 auto; display:flex; gap:1.25rem; align-items:flex-start;">
+    <div style="font-size:1.5rem; line-height:1; flex-shrink:0;">&#9888;&#65039;</div>
+    <div>
+      <div style="font-family:'Playfair Display',serif; color:var(--sa-light); font-size:0.95rem; margin-bottom:0.4rem;">Important &mdash; Not Financial or Tax Advice</div>
+      <p style="color:rgba(255,255,255,0.5); font-size:0.8rem; line-height:1.7; margin:0;">
+        This tool provides illustrative estimates based on 2024/25 UK tax rates and is not a substitute for professional tax advice. Always verify your tax position with HMRC or a qualified tax adviser before filing. No data is stored.
+      </p>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // ── SWITCHER ───────────────────────────────────────────────────────────────
+  function toggleSwitcher(e) {
+    e.stopPropagation();
+    document.getElementById('appSwitcher').classList.toggle('open');
+  }
+  document.addEventListener('click', function() {
+    document.getElementById('appSwitcher').classList.remove('open');
+  });
+
+  // ── HELPERS ────────────────────────────────────────────────────────────────
+  var fmt = function(n) { return '\u00a3' + Math.round(Math.abs(n)).toLocaleString('en-GB'); };
+
+  // ── TAX CONSTANTS 2024/25 ──────────────────────────────────────────────────
+  var PA        = 12570;
+  var BRT       = 50270;
+  var HRT       = 125140;
+  var DIV_ALLOW = 500;
+  var SAVE_ALLOW_BASIC  = 1000;
+  var SAVE_ALLOW_HIGHER = 500;
+
+  function calcIncomeTax(income) {
+    if (income <= PA) return 0;
+    var tax = 0, rem = income - PA;
+    var basic = Math.min(rem, BRT - PA); tax += basic * 0.20; rem -= basic;
+    if (rem > 0) { var higher = Math.min(rem, HRT - BRT); tax += higher * 0.40; rem -= higher; }
+    if (rem > 0) tax += rem * 0.45;
+    return tax;
+  }
+
+  function calcDivTax(divs, otherIncome) {
+    if (divs <= DIV_ALLOW) return 0;
+    var taxableDiv = divs - DIV_ALLOW;
+    var baseIncome = Math.max(0, otherIncome - PA);
+    var tax = 0, rem = taxableDiv;
+    var spaceBasic = Math.max(0, BRT - PA - baseIncome);
+    var atBasic = Math.min(rem, spaceBasic); tax += atBasic * 0.0875; rem -= atBasic;
+    if (rem > 0) { var atHigher = Math.min(rem, HRT - BRT); tax += atHigher * 0.3375; rem -= atHigher; }
+    if (rem > 0) tax += rem * 0.3935;
+    return tax;
+  }
+
+  function calcClass4NI(profit) {
+    if (profit <= 12570) return 0;
+    return Math.min(profit - 12570, 50270 - 12570) * 0.09 + Math.max(0, profit - 50270) * 0.02;
+  }
+
+  function calcClass2NI(profit) {
+    return profit > 12570 ? 179.40 : 0; // 2024/25 flat rate
+  }
+
+  // ── STEP 1: TRIGGERS ──────────────────────────────────────────────────────
+  var TRIGGERS = [
+    { id: 'selfEmp',     label: 'Self-employed income',             desc: 'Any income from freelance work, a sole trader business, or a partnership.' },
+    { id: 'rental',      label: 'Rental income over £2,500',        desc: 'Income from letting property. Under £2,500 can sometimes be dealt with by HMRC directly.' },
+    { id: 'dividends',   label: 'Dividends over £500',              desc: 'From shares, funds, or a limited company you own (2024/25 allowance is £500).' },
+    { id: 'highIncome',  label: 'Income over £100,000',             desc: 'Your Personal Allowance tapers to zero above £100,000. You must file to reconcile this.' },
+    { id: 'hicbc',       label: 'High Income Child Benefit Charge',  desc: 'Adjusted net income over £60,000 with Child Benefit in your household.' },
+    { id: 'foreignInc',  label: 'Foreign income',                   desc: 'Salary, rental, or investment income from abroad.' },
+    { id: 'higherRate',  label: 'Higher rate taxpayer with pension', desc: 'Claiming higher rate relief on personal pension contributions not via salary sacrifice.' },
+    { id: 'giftAid',     label: 'Higher rate taxpayer with Gift Aid', desc: 'Claiming the additional relief on Gift Aid donations.' },
+    { id: 'cg',          label: 'Capital gains over the annual exempt amount', desc: '\u00a33,000 exempt for 2024/25. Gains from selling shares, property (not main home), crypto etc.' },
+    { id: 'hmrcAsked',   label: 'HMRC has written to ask you to file', desc: 'If HMRC sends a notice to file a return, you must file even if you have no additional tax to pay.' },
+  ];
+
+  var checkedTriggers = {};
+
+  function initTriggers() {
+    var html = '';
+    TRIGGERS.forEach(function(t) {
+      html +=
+        '<div class="check-item" id="ci_' + t.id + '" onclick="toggleTrigger(\'' + t.id + '\')">' +
+          '<div class="check-item-box" id="cb_' + t.id + '"></div>' +
+          '<div>' +
+            '<div class="check-item-label">' + t.label + '</div>' +
+            '<div class="check-item-desc">' + t.desc + '</div>' +
+          '</div>' +
+        '</div>';
+    });
+    document.getElementById('triggerList').innerHTML = html;
+  }
+
+  function toggleTrigger(id) {
+    checkedTriggers[id] = !checkedTriggers[id];
+    var el = document.getElementById('ci_' + id);
+    var box = document.getElementById('cb_' + id);
+    el.classList.toggle('checked', checkedTriggers[id]);
+    box.textContent = checkedTriggers[id] ? '\u2713' : '';
+    updateFilingVerdict();
+  }
+
+  function updateFilingVerdict() {
+    var checked = Object.keys(checkedTriggers).filter(function(k) { return checkedTriggers[k]; });
+    var verdict = document.getElementById('filingVerdict');
+    if (checked.length === 0) {
+      verdict.innerHTML = '';
+      return;
+    }
+    var mustFile = checked.some(function(k) { return ['selfEmp','highIncome','hicbc','foreignInc','hmrcAsked','cg'].indexOf(k) > -1; });
+    var likelyFile = checked.length > 0;
+
+    if (mustFile) {
+      verdict.innerHTML =
+        '<div class="filing-banner must-file">' +
+          '<div class="filing-banner-icon">&#9940;</div>' +
+          '<div><div class="filing-banner-title">You need to file a Self Assessment return</div>' +
+          '<div class="filing-banner-desc">Based on what you\u2019ve ticked, HMRC requires you to file a return for 2024/25. You must register by <strong>5 October 2025</strong> if you haven\u2019t already.</div></div>' +
+        '</div>';
+    } else {
+      verdict.innerHTML =
+        '<div class="filing-banner maybe">' +
+          '<div class="filing-banner-icon">&#9888;</div>' +
+          '<div><div class="filing-banner-title">You may need to file</div>' +
+          '<div class="filing-banner-desc">The items you\u2019ve ticked suggest you may need to file, or that filing would allow you to claim relief you\u2019re owed. Carry on to get your estimate.</div></div>' +
+        '</div>';
+    }
+  }
+
+  // ── TAX ESTIMATE ──────────────────────────────────────────────────────────
+  function getInputs() {
+    return {
+      emp:          parseFloat(document.getElementById('empIncome').value) || 0,
+      payeTax:      parseFloat(document.getElementById('payeTax').value) || 0,
+      selfEmp:      parseFloat(document.getElementById('selfEmpProfit').value) || 0,
+      rental:       parseFloat(document.getElementById('rentalProfit').value) || 0,
+      dividends:    parseFloat(document.getElementById('dividends').value) || 0,
+      other:        parseFloat(document.getElementById('otherIncome').value) || 0,
+      pension:      parseFloat(document.getElementById('pensionContribs').value) || 0,
+      giftAid:      parseFloat(document.getElementById('giftAid').value) || 0,
+      marriageAllow:parseFloat(document.getElementById('marriageAllowance').value) || 0,
+      studentLoan:  parseFloat(document.getElementById('studentLoan').value) || 0,
+    };
+  }
+
+  function calcTax(d) {
+    // Adjusted income after pension and gift aid (extend basic rate band)
+    var pensionRelief = d.pension;
+    var giftAidRelief = d.giftAid;
+    var extendedBRT = BRT + pensionRelief + giftAidRelief;
+
+    // Total non-dividend income
+    var totalIncome = d.emp + d.selfEmp + d.rental + d.other;
+
+    // Adjusted PA (tapers above £100k)
+    var adjPA = PA;
+    if (totalIncome + d.dividends > 100000) {
+      adjPA = Math.max(0, PA - (totalIncome + d.dividends - 100000) / 2);
+    }
+
+    // Income tax on non-dividend income
+    var taxableIncome = Math.max(0, totalIncome - adjPA);
+    var tax = 0;
+    var rem = taxableIncome;
+    var basic = Math.min(rem, extendedBRT - adjPA); tax += basic * 0.20; rem -= basic;
+    if (rem > 0) { var higher = Math.min(rem, HRT - extendedBRT); tax += higher * 0.40; rem -= higher; }
+    if (rem > 0) tax += rem * 0.45;
+
+    // Dividend tax
+    var divTax = calcDivTax(d.dividends, totalIncome);
+
+    // NI for self-employed
+    var class4 = calcClass4NI(d.selfEmp);
+    var class2 = calcClass2NI(d.selfEmp);
+
+    // Marriage allowance reduction
+    var marriageReduction = d.marriageAllow > 0 ? 252 : 0;
+
+    // Total tax liability
+    var totalTaxLiability = tax + divTax + class4 + class2 - marriageReduction;
+
+    // Tax already paid
+    var alreadyPaid = d.payeTax;
+
+    // Balance
+    var balance = totalTaxLiability - alreadyPaid;
+
+    // Higher rate pension relief
+    var isHigher = totalIncome > extendedBRT;
+    var pensionHigherRelief = isHigher ? pensionRelief * 0.20 : 0;
+    var giftAidHigherRelief = isHigher ? giftAidRelief * 0.20 : 0;
+    var extraRelief = pensionHigherRelief + giftAidHigherRelief;
+
+    return {
+      totalIncome, taxableIncome, tax, divTax, class4, class2,
+      marriageReduction, totalTaxLiability, alreadyPaid,
+      balance, extraRelief, pensionHigherRelief, giftAidHigherRelief,
+      isHigher, adjPA, extendedBRT,
+    };
+  }
+
+  function updateTaxEstimate() {
+    // Live update if on step 4
+    var step4 = document.getElementById('step4');
+    if (step4 && step4.classList.contains('active')) {
+      renderStep4();
+    }
+  }
+
+  function renderStep4() {
+    var d = getInputs();
+    var r = calcTax(d);
+    var totalIncome = d.emp + d.selfEmp + d.rental + d.dividends + d.other;
+
+    // Result boxes
+    var owingCls = r.balance > 0 ? 'warn' : 'good';
+    document.getElementById('taxResultGrid').innerHTML =
+      '<div class="result-box sa">' +
+        '<div class="r-label">Total taxable income</div>' +
+        '<div class="r-amount">' + fmt(totalIncome) + '</div>' +
+        '<div class="r-sub">all sources combined</div>' +
+      '</div>' +
+      '<div class="result-box highlight">' +
+        '<div class="r-label">Total tax liability</div>' +
+        '<div class="r-amount">' + fmt(r.totalTaxLiability) + '</div>' +
+        '<div class="r-sub">income tax + NI</div>' +
+      '</div>' +
+      '<div class="result-box">' +
+        '<div class="r-label">Already paid (PAYE)</div>' +
+        '<div class="r-amount">' + fmt(r.alreadyPaid) + '</div>' +
+        '<div class="r-sub">deducted by employer</div>' +
+      '</div>' +
+      '<div class="result-box ' + owingCls + '">' +
+        '<div class="r-label">' + (r.balance > 0 ? 'Amount owed to HMRC' : 'Refund due') + '</div>' +
+        '<div class="r-amount">' + fmt(r.balance) + '</div>' +
+        '<div class="r-sub">' + (r.balance > 0 ? 'to pay by 31 Jan 2026' : 'HMRC will repay you') + '</div>' +
+      '</div>';
+
+    // Breakdown table
+    var rows = [];
+    if (d.emp > 0)       rows.push(['Employment income',         fmt(d.emp),        fmt(r.tax > 0 ? Math.min(r.tax, calcIncomeTax(d.emp)) : 0)]);
+    if (d.selfEmp > 0)   rows.push(['Self-employment profit',    fmt(d.selfEmp),    fmt(r.class4 + r.class2)]);
+    if (d.rental > 0)    rows.push(['Rental profit',             fmt(d.rental),     '\u2014']);
+    if (d.dividends > 0) rows.push(['Dividends',                 fmt(d.dividends),  fmt(r.divTax)]);
+    if (d.other > 0)     rows.push(['Other income',              fmt(d.other),      '\u2014']);
+    if (d.pension > 0)   rows.push(['Pension relief extended band', '\u2212 ' + fmt(d.pension), '\u2014']);
+    if (d.giftAid > 0)   rows.push(['Gift Aid extended band',   '\u2212 ' + fmt(d.giftAid),    '\u2014']);
+
+    var tableHtml =
+      '<table class="breakdown-table" style="margin-top:1rem;">' +
+        '<thead><tr><th>Item</th><th>Amount</th><th class="sa-col">Tax / NI</th></tr></thead>' +
+        '<tbody>';
+
+    rows.forEach(function(row) {
+      tableHtml += '<tr><td>' + row[0] + '</td><td>' + row[1] + '</td><td>' + row[2] + '</td></tr>';
+    });
+
+    tableHtml +=
+      '<tr class="total-row"><td>Total tax liability</td><td>' + fmt(totalIncome) + '</td><td>' + fmt(r.totalTaxLiability) + '</td></tr>' +
+      '<tr><td>Less: PAYE already paid</td><td>\u2014</td><td class="positive">\u2212 ' + fmt(r.alreadyPaid) + '</td></tr>' +
+      (r.marriageReduction > 0 ? '<tr><td>Less: Marriage Allowance</td><td>\u2014</td><td class="positive">\u2212 ' + fmt(r.marriageReduction) + '</td></tr>' : '') +
+      '<tr class="total-row"><td>' + (r.balance > 0 ? 'Balance to pay' : 'Refund due') + '</td><td>\u2014</td><td class="' + (r.balance > 0 ? 'negative' : 'positive') + '">' + (r.balance > 0 ? '' : '\u2212 ') + fmt(r.balance) + '</td></tr>' +
+      '</tbody></table>';
+
+    document.getElementById('taxBreakdown').innerHTML = tableHtml;
+
+    // Guidance
+    var guidance = '';
+    if (r.extraRelief > 0) {
+      guidance += '<div class="alert-box"><h4>&#10022; Higher rate relief available: ' + fmt(r.extraRelief) + '</h4>' +
+        '<p>As a higher rate taxpayer you can claim additional relief on your pension contributions' +
+        (d.giftAid > 0 ? ' and Gift Aid donations' : '') + ' through your Self Assessment return. ' +
+        'This reduces your tax bill by ' + fmt(r.extraRelief) + '.</p></div>';
+    }
+    if (r.balance < 0) {
+      guidance += '<div class="alert-box"><h4>You\u2019re due a refund of ' + fmt(Math.abs(r.balance)) + '</h4>' +
+        '<p>It looks like you\u2019ve overpaid tax via PAYE. Filing your return will trigger a refund from HMRC &#8212; usually within a few weeks of filing online.</p></div>';
+    }
+    if (totalIncome > 100000 && totalIncome <= 125140) {
+      guidance += '<div class="alert-box warning"><h4>Personal Allowance taper applies</h4>' +
+        '<p>Your income is between \u00a3100,000 and \u00a3125,140. Your Personal Allowance reduces by \u00a31 for every \u00a32 above \u00a3100,000, creating an effective 60% tax rate on income in this band. Pension contributions can reduce your adjusted net income and recover your allowance.</p></div>';
+    }
+    if (r.balance > 3000 && d.selfEmp > 0) {
+      guidance += '<div class="alert-box warning"><h4>Payments on Account may apply</h4>' +
+        '<p>If your Self Assessment tax bill is over \u00a31,000, HMRC typically requires you to make Payments on Account &#8212; advance payments towards next year\u2019s bill due 31 January and 31 July. Budget for this.</p></div>';
+    }
+    guidance += '<p style="font-size:0.75rem;color:var(--slate-light);margin-top:1rem;font-style:italic;">This estimate is illustrative only and does not account for all reliefs or circumstances. Figures based on 2024/25 tax rates. Always verify with HMRC or a qualified tax adviser.</p>';
+    document.getElementById('taxGuidance').innerHTML = guidance;
+
+    // Show PDF CTA
+    if (totalIncome > 0) {
+      document.getElementById('pdfInlineCta').classList.add('visible');
+    }
+  }
+
+  // ── STEP 5: NEXT STEPS ────────────────────────────────────────────────────
+  function renderStep5() {
+    var d = getInputs();
+    var r = calcTax(d);
+    var totalIncome = d.emp + d.selfEmp + d.rental + d.dividends + d.other;
+
+    var deadlines = [
+      { date: '5 October 2025', desc: 'Register for Self Assessment (if new to SA)', dot: 'next' },
+      { date: '31 October 2025', desc: 'Deadline for paper returns (2024/25 tax year)', dot: 'next' },
+      { date: '30 December 2025', desc: 'Online filing deadline to collect tax via PAYE (if owed \u226a\u00a33,000)', dot: 'next' },
+      { date: '31 January 2026', desc: 'Online filing deadline and any tax owed must be paid', dot: 'urgent' },
+      { date: '31 July 2026', desc: 'Second Payment on Account (if applicable)', dot: 'next' },
+    ];
+
+    var html = '<div style="font-size:0.82rem;font-weight:600;color:var(--navy);margin-bottom:0.5rem;">Key deadlines &#8212; 2024/25 tax year</div><div class="deadline-list">';
+    deadlines.forEach(function(d) {
+      html += '<div class="deadline-item"><div class="deadline-dot ' + d.dot + '"></div><div class="deadline-date">' + d.date + '</div><div class="deadline-desc">' + d.desc + '</div></div>';
+    });
+    html += '</div>';
+    document.getElementById('deadlineSection').innerHTML = html;
+
+    document.getElementById('finalSummary').innerHTML =
+      '<div class="summary-title">&#9998; Your Self Assessment summary</div>' +
+      '<div class="summary-row"><span class="s-label">Total income (all sources)</span><span class="s-val">' + fmt(totalIncome) + '</span></div>' +
+      '<div class="summary-row"><span class="s-label">Income tax liability</span><span class="s-val">' + fmt(r.tax + r.divTax) + '</span></div>' +
+      (d.selfEmp > 0 ? '<div class="summary-row"><span class="s-label">Class 2 &amp; 4 NI (self-employed)</span><span class="s-val">' + fmt(r.class4 + r.class2) + '</span></div>' : '') +
+      '<div class="summary-row"><span class="s-label">Total tax liability</span><span class="s-val sa">' + fmt(r.totalTaxLiability) + '</span></div>' +
+      '<div class="summary-row"><span class="s-label">Already paid via PAYE</span><span class="s-val">' + fmt(r.alreadyPaid) + '</span></div>' +
+      '<div class="summary-row"><span class="s-label">' + (r.balance > 0 ? 'To pay by 31 Jan 2026' : 'Refund due') + '</span><span class="s-val ' + (r.balance > 0 ? 'warn' : 'good') + '">' + fmt(r.balance) + '</span></div>' +
+      (r.extraRelief > 0 ? '<div class="summary-row"><span class="s-label">Higher rate relief to claim</span><span class="s-val good">' + fmt(r.extraRelief) + '</span></div>' : '') +
+      '<div class="summary-row"><span class="s-label">Filing deadline</span><span class="s-val">31 January 2026</span></div>';
+  }
+
+  // ── NAVIGATION ─────────────────────────────────────────────────────────────
+
+  function renderStep2() { updateTaxEstimate(); }
+  function renderStep3() { updateTaxEstimate(); }
+
+  function goTo(step) {
+    for (var i = 1; i <= 5; i++) {
+      document.getElementById('step' + i).classList.toggle('active', i === step);
+      var tab = document.getElementById('tab' + i);
+      tab.classList.toggle('active', i === step);
+      if (i < step) tab.classList.add('completed');
+      else if (i > step) tab.classList.remove('completed');
+    }
+    if (step === 2) renderStep2();
+    if (step === 3) renderStep3();
+    if (step === 4) renderStep4();
+    if (step === 5) { renderStep4(); renderStep5(); }
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  // Initialise trigger checklist
+  initTriggers();
+
+  // ── PDF REPORT ─────────────────────────────────────────────────────────────
+  function loadJsPDF(cb) {
+    if (window.jspdf) { cb(); return; }
+    var s = document.createElement('script');
+    s.src = 'https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js';
+    s.onload = cb; document.head.appendChild(s);
+  }
+
+  function generateReport() {
+    loadJsPDF(function() {
+      var d = getInputs();
+      var r = calcTax(d);
+      var totalIncome = d.emp + d.selfEmp + d.rental + d.dividends + d.other;
+      var doc = new window.jspdf.jsPDF();
+      var navy=[15,31,56], sa=[124,58,237], white=[255,255,255], grey=[74,85,104], light=[245,245,248];
+
+      doc.setFillColor(...navy); doc.rect(0,0,210,28,'F');
+      doc.setFont('helvetica','bold'); doc.setFontSize(16); doc.setTextColor(...white);
+      doc.text('MyPay',14,14); doc.setFont('helvetica','normal'); doc.text('Picture',33,14);
+      doc.setFontSize(8); doc.setTextColor(180,180,180);
+      doc.text('MySelfAssessment Report \u2014 2024/25', 14, 22);
+      doc.text('Generated ' + new Date().toLocaleDateString('en-GB',{day:'numeric',month:'long',year:'numeric'}), 196, 22, {align:'right'});
+
+      var y = 36;
+      doc.setFont('helvetica','bold'); doc.setFontSize(14); doc.setTextColor(...navy);
+      doc.text('Self Assessment Estimate \u2014 2024/25', 14, y); y += 10;
+
+      function section(title, rows) {
+        doc.setFillColor(...sa); doc.rect(14,y,182,7,'F');
+        doc.setFont('helvetica','bold'); doc.setFontSize(9); doc.setTextColor(...white);
+        doc.text(title.toUpperCase(), 17, y+5); y += 11;
+        rows.forEach(function(row, i) {
+          if (i%2===0) { doc.setFillColor(...light); doc.rect(14,y-3,182,8,'F'); }
+          doc.setFont('helvetica','normal'); doc.setFontSize(9); doc.setTextColor(...grey);
+          doc.text(row[0], 17, y+2);
+          doc.setFont('helvetica','bold'); doc.setTextColor(...navy);
+          doc.text(row[1], 193, y+2, {align:'right'}); y+=8;
+        }); y+=4;
+      }
+
+      section('Income Sources', [
+        ['Employment income', fmt(d.emp)],
+        ['Self-employment profit', fmt(d.selfEmp)],
+        ['Rental profit', fmt(d.rental)],
+        ['Dividends', fmt(d.dividends)],
+        ['Other income', fmt(d.other)],
+        ['Total income', fmt(totalIncome)],
+      ]);
+      section('Deductions & Reliefs', [
+        ['Pension contributions (gross)', fmt(d.pension)],
+        ['Gift Aid donations', fmt(d.giftAid)],
+        ['Marriage Allowance', d.marriageAllow > 0 ? fmt(d.marriageAllow) : 'N/A'],
+        ['Higher rate relief available', fmt(r.extraRelief)],
+      ]);
+      section('Tax Calculation', [
+        ['Income tax liability', fmt(r.tax + r.divTax)],
+        ['Class 2 & 4 NI (self-employed)', fmt(r.class4 + r.class2)],
+        ['Total tax liability', fmt(r.totalTaxLiability)],
+        ['Less: tax paid via PAYE', '\u2212 ' + fmt(r.alreadyPaid)],
+        [r.balance > 0 ? 'Balance to pay (by 31 Jan 2026)' : 'Refund due', fmt(r.balance)],
+      ]);
+      section('Key Deadlines', [
+        ['Register for SA (if new)', '5 October 2025'],
+        ['Online filing deadline', '31 January 2026'],
+        ['Tax payment deadline', '31 January 2026'],
+      ]);
+
+      var ph = doc.internal.pageSize.height;
+      doc.setFillColor(...light); doc.rect(0,ph-18,210,18,'F');
+      doc.setFont('helvetica','italic'); doc.setFontSize(7); doc.setTextColor(120,120,140);
+      doc.text('Illustrative only \u2014 not financial or tax advice. Based on 2024/25 UK tax rates. Verify with HMRC or a qualified tax adviser before filing.', 14, ph-10);
+      doc.text('mypaypicture.com', 196, ph-4, {align:'right'});
+      doc.save('MyPayPicture-SelfAssessment-Report.pdf');
+    });
+  }
+
+  (function() {
+    if (window.location.search.includes('paid=true')) {
+      window.addEventListener('DOMContentLoaded', function() {
+        var buy=document.getElementById('pdfInlineBuyBtn');
+        var dl=document.getElementById('pdfInlineDlBtn');
+        var price=document.getElementById('pdfInlinePrice');
+        var cta=document.getElementById('pdfInlineCta');
+        if(cta) cta.classList.add('visible');
+        if(buy) buy.style.display='none';
+        if(dl) dl.style.display='inline-block';
+        if(price) price.textContent='\u2713 Paid';
+      });
+    }
+  })();
+
+  // ── CHAT ───────────────────────────────────────────────────────────────────
+  var WORKER_URL = 'https://mypaypicture-api.proud-truth-9c88.workers.dev';
+  var SYS_PROMPT = 'You are a helpful UK tax assistant embedded in MyPayPicture\'s MySelfAssessment tool. This tool helps people understand whether they need to file a Self Assessment return, estimate their tax liability, and know what to do next.\n\nKey topics: Self Assessment triggers (self-employment, rental income, dividends over \u00a3500, income over \u00a3100k, HICBC, capital gains), 2024/25 tax rates (personal allowance \u00a312,570, basic rate 20% to \u00a350,270, higher rate 40% to \u00a3125,140), Class 2 and 4 NI for self-employed, dividend tax rates (8.75% basic, 33.75% higher), higher rate pension and Gift Aid relief, Payments on Account, key deadlines (registration 5 Oct 2025, online filing 31 Jan 2026).\n\nRules:\n- UK English, 2024/25 rates\n- General information only, not personalised tax advice\n- Always recommend verifying with HMRC or a qualified accountant/tax adviser\n- Plain English, reassuring tone \u2014 Self Assessment is anxiety-inducing for many people';
+
+  var chatHist = [], chatBusy = false;
+
+  function chatAddMsg(role, text, typing) {
+    var msgs = document.getElementById('chatMsgs');
+    var div = document.createElement('div');
+    div.className = 'chat-msg ' + (role==='user'?'user':'ai');
+    if (typing) div.id = 'chatTyping';
+    var av = role==='user'?'You':'\u2726';
+    var bubble;
+    if (typing) {
+      bubble = '<div class="chat-typing"><span></span><span></span><span></span></div>';
+    } else {
+      var formatted = text.split('\n\n').map(function(p) {
+        return p.replace(/\*\*(.*?)\*\*/g,'<strong>$1</strong>');
+      }).join('</p><p>');
+      bubble = '<p>'+formatted+'</p>';
+    }
+    div.innerHTML = '<div class="msg-av">'+av+'</div><div class="msg-bub">'+bubble+'</div>';
+    msgs.appendChild(div); msgs.scrollTop = msgs.scrollHeight;
+  }
+
+  async function chatSend() {
+    var input = document.getElementById('chatInput');
+    var btn = document.getElementById('chatSendBtn');
+    var text = input.value.trim();
+    if (!text || chatBusy) return;
+    document.getElementById('chatChips').style.display = 'none';
+    chatAddMsg('user', text);
+    chatHist.push({role:'user',content:text});
+    input.value = ''; input.style.height = 'auto';
+    chatBusy = true; btn.disabled = true;
+    chatAddMsg('ai','',true);
+    try {
+      var res = await fetch(WORKER_URL, {method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({messages:chatHist,system:SYS_PROMPT})});
+      var data = await res.json();
+      var reply = (data.content&&data.content[0]&&data.content[0].text)?data.content[0].text:(data.error||'Sorry, something went wrong.');
+      var t = document.getElementById('chatTyping'); if(t) t.remove();
+      chatAddMsg('ai', reply);
+      chatHist.push({role:'assistant',content:reply});
+    } catch(err) {
+      var t = document.getElementById('chatTyping'); if(t) t.remove();
+      chatAddMsg('ai','Unable to connect. Please check your connection and try again.');
+    }
+    chatBusy = false; btn.disabled = false; input.focus();
+  }
+
+  function chatChip(el) { document.getElementById('chatInput').value = el.textContent; chatSend(); }
+</script>
+<script>
+  if ('serviceWorker' in navigator) {
+    window.addEventListener('load', function() {
+      navigator.serviceWorker.register('/sw.js').catch(function() {});
+    });
+  }
+</script>
+</body>
+</html>
