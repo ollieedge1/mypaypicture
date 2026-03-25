@@ -1,0 +1,2234 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#0f1f38">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="MyPayPicture">
+  <link rel="apple-touch-icon" href="icon-192.png">
+  <meta name="mobile-web-app-capable" content="yes">
+<title>MyPensionOptimiser — MyPayPicture</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy: #0f1f38;
+    --teal: #0d9488;
+    --teal-light: #2dd4bf;
+    --teal-pale: #f0fdfa;
+    --cream: #f4f7f6;
+    --slate: #4a5568;
+    --slate-light: #718096;
+    --white: #ffffff;
+    --border: rgba(13,148,136,0.2);
+    --red: #e53e3e;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--cream);
+    color: var(--navy);
+    min-height: 100vh;
+  }
+
+  /* HEADER */
+  header {
+    background: var(--navy);
+    padding: 1.5rem 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .logo {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.4rem;
+    color: var(--teal-light);
+    letter-spacing: 0.02em;
+  }
+
+  .logo span { color: var(--white); font-weight: 300; }
+
+  .logo-suite {
+    font-size: 0.7rem;
+    color: rgba(255,255,255,0.35);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin-top: 0.15rem;
+  }
+
+  .disclaimer-badge {
+    font-size: 0.7rem;
+    color: rgba(255,255,255,0.4);
+    border: 1px solid rgba(255,255,255,0.15);
+    padding: 0.3rem 0.7rem;
+    border-radius: 20px;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+  }
+
+  /* HERO */
+  .hero {
+    background: var(--navy);
+    padding: 3rem 2rem 5rem;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero::before {
+    content: '';
+    position: absolute;
+    bottom: -100px; left: 50%;
+    transform: translateX(-50%);
+    width: 500px; height: 200px;
+    border-radius: 50%;
+    background: radial-gradient(ellipse, rgba(13,148,136,0.18) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  .hero::after {
+    content: '';
+    position: absolute;
+    top: -60px; right: -60px;
+    width: 250px; height: 250px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(45,212,191,0.08) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  .hero h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2rem, 5vw, 3rem);
+    color: var(--white);
+    line-height: 1.15;
+    max-width: 580px;
+    margin: 0 auto 1rem;
+  }
+
+  .hero h1 em {
+    font-style: italic;
+    color: var(--teal-light);
+  }
+
+  .hero p {
+    color: rgba(255,255,255,0.55);
+    font-size: 1rem;
+    max-width: 440px;
+    margin: 0 auto;
+    line-height: 1.65;
+  }
+
+  /* PULL-UP CARD EFFECT */
+  .container {
+    max-width: 900px;
+    margin: -2rem auto 0;
+    padding: 0 1.5rem 4rem;
+    position: relative;
+    z-index: 1;
+  }
+
+  /* STEPS NAV */
+  .steps-nav {
+    display: flex;
+    background: white;
+    border-radius: 14px 14px 0 0;
+    overflow: hidden;
+    border: 1px solid var(--border);
+    border-bottom: none;
+  }
+
+  .step-tab {
+    flex: 1;
+    padding: 1rem 0.5rem;
+    text-align: center;
+    font-size: 0.72rem;
+    font-weight: 500;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    color: var(--slate-light);
+    cursor: pointer;
+    transition: all 0.2s;
+    border-right: 1px solid var(--border);
+    position: relative;
+  }
+
+  .step-tab:last-child { border-right: none; }
+
+  .step-tab.active {
+    background: var(--teal);
+    color: white;
+  }
+
+  .step-tab.completed {
+    color: var(--teal);
+  }
+
+  .step-tab .step-num {
+    display: block;
+    font-family: 'Playfair Display', serif;
+    font-size: 1.3rem;
+    font-weight: 700;
+    margin-bottom: 0.15rem;
+  }
+
+  .step-tab.completed .step-num::after {
+    content: ' ✓';
+    font-size: 0.85rem;
+  }
+
+  /* CARD */
+  .card {
+    background: white;
+    border-radius: 0 0 14px 14px;
+    padding: 2.5rem 2rem;
+    border: 1px solid var(--border);
+    border-top: none;
+    box-shadow: 0 8px 32px rgba(15,31,56,0.08);
+    display: none;
+    animation: fadeUp 0.3s ease;
+  }
+
+  .card.active { display: block; }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .card-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.6rem;
+    color: var(--navy);
+    margin-bottom: 0.4rem;
+  }
+
+  .card-subtitle {
+    color: var(--slate);
+    font-size: 0.9rem;
+    margin-bottom: 2rem;
+    line-height: 1.6;
+    max-width: 560px;
+  }
+
+  /* TWO COLUMN LAYOUT */
+  .two-col {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.25rem;
+  }
+
+  @media (max-width: 640px) {
+    .two-col { grid-template-columns: 1fr; }
+  }
+
+  /* FORM */
+  .field-group { margin-bottom: 1.4rem; }
+
+  label {
+    display: block;
+    font-size: 0.83rem;
+    font-weight: 500;
+    color: var(--navy);
+    margin-bottom: 0.45rem;
+    letter-spacing: 0.01em;
+  }
+
+  .input-wrap { position: relative; }
+
+  .input-prefix {
+    position: absolute;
+    left: 13px; top: 50%;
+    transform: translateY(-50%);
+    color: var(--slate-light);
+    font-size: 0.95rem;
+    pointer-events: none;
+  }
+
+  .input-suffix {
+    position: absolute;
+    right: 13px; top: 50%;
+    transform: translateY(-50%);
+    color: var(--slate-light);
+    font-size: 0.9rem;
+    pointer-events: none;
+  }
+
+  input[type="number"], select {
+    width: 100%;
+    padding: 0.72rem 2.2rem 0.72rem 2rem;
+    border: 1.5px solid #dde1e7;
+    border-radius: 8px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.95rem;
+    color: var(--navy);
+    background: white;
+    transition: border-color 0.2s, box-shadow 0.2s;
+    appearance: none;
+  }
+
+  input[type="number"]:focus, select:focus {
+    outline: none;
+    border-color: var(--teal);
+    box-shadow: 0 0 0 3px rgba(13,148,136,0.1);
+  }
+
+  input.no-prefix { padding-left: 1rem; }
+  input.has-suffix { padding-right: 2.5rem; }
+
+  .hint {
+    font-size: 0.77rem;
+    color: var(--slate-light);
+    margin-top: 0.35rem;
+    line-height: 1.45;
+  }
+
+  /* RANGE SLIDER */
+  .range-wrap { margin-top: 0.5rem; }
+
+  input[type="range"] {
+    width: 100%;
+    accent-color: var(--teal);
+    height: 4px;
+    cursor: pointer;
+  }
+
+  .range-labels {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.72rem;
+    color: var(--slate-light);
+    margin-top: 0.25rem;
+  }
+
+  /* RADIO BUTTONS */
+  .radio-group { display: flex; gap: 0.6rem; flex-wrap: wrap; }
+
+  .radio-btn {
+    flex: 1;
+    min-width: 100px;
+    padding: 0.65rem 0.75rem;
+    border: 1.5px solid #dde1e7;
+    border-radius: 8px;
+    text-align: center;
+    cursor: pointer;
+    font-size: 0.85rem;
+    font-weight: 500;
+    transition: all 0.18s;
+    color: var(--slate);
+    background: white;
+    line-height: 1.3;
+  }
+
+  .radio-btn:hover { border-color: var(--teal); color: var(--navy); }
+  .radio-btn.selected { border-color: var(--teal); background: var(--teal-pale); color: var(--teal); }
+
+  /* RESULTS GRID */
+  .results-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    gap: 0.85rem;
+    margin: 1.5rem 0;
+  }
+
+  .result-box {
+    background: var(--navy);
+    border-radius: 10px;
+    padding: 1.1rem 1rem;
+    text-align: center;
+  }
+
+  .result-box.teal {
+    background: linear-gradient(135deg, var(--teal) 0%, #0f766e 100%);
+  }
+
+  .result-box.highlight {
+    background: linear-gradient(135deg, var(--teal-light) 0%, var(--teal) 100%);
+  }
+
+  .result-box .r-label {
+    font-size: 0.68rem;
+    text-transform: uppercase;
+    letter-spacing: 0.07em;
+    color: rgba(255,255,255,0.55);
+    margin-bottom: 0.4rem;
+  }
+
+  .result-box.highlight .r-label { color: rgba(255,255,255,0.75); }
+
+  .result-box .r-amount {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.65rem;
+    font-weight: 700;
+    color: white;
+    line-height: 1;
+  }
+
+  .result-box .r-sub {
+    font-size: 0.7rem;
+    color: rgba(255,255,255,0.4);
+    margin-top: 0.3rem;
+  }
+
+  .result-box.highlight .r-sub { color: rgba(255,255,255,0.65); }
+
+  /* COMPARISON TABLE */
+  .compare-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.88rem;
+    margin: 1rem 0;
+  }
+
+  .compare-table th {
+    padding: 0.6rem 1rem;
+    text-align: left;
+    font-size: 0.72rem;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--slate-light);
+    border-bottom: 2px solid var(--border);
+  }
+
+  .compare-table th.teal-col { color: var(--teal); }
+
+  .compare-table td {
+    padding: 0.75rem 1rem;
+    border-bottom: 1px solid rgba(0,0,0,0.05);
+    color: var(--slate);
+    vertical-align: middle;
+  }
+
+  .compare-table tr:last-child td { border-bottom: none; }
+
+  .compare-table td:first-child { font-weight: 500; color: var(--navy); }
+
+  .compare-table td.win {
+    color: var(--teal);
+    font-weight: 600;
+  }
+
+  .compare-table td.lose { color: var(--slate-light); }
+
+  .winner-tag {
+    display: inline-block;
+    background: var(--teal);
+    color: white;
+    font-size: 0.65rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    padding: 0.15rem 0.5rem;
+    border-radius: 20px;
+    margin-left: 0.4rem;
+    vertical-align: middle;
+  }
+
+  /* GUIDANCE */
+  .guidance-box {
+    border-left: 3px solid var(--teal);
+    background: var(--teal-pale);
+    border-radius: 0 8px 8px 0;
+    padding: 1rem 1.25rem;
+    margin: 1rem 0;
+  }
+
+  .guidance-box h4 {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--navy);
+    margin-bottom: 0.35rem;
+  }
+
+  .guidance-box p, .guidance-box li {
+    font-size: 0.84rem;
+    color: var(--slate);
+    line-height: 1.65;
+  }
+
+  .guidance-box ul { padding-left: 1.1rem; margin-top: 0.3rem; }
+  .guidance-box li { margin-bottom: 0.2rem; }
+
+  .alert-box {
+    border-left: 3px solid var(--teal);
+    background: var(--teal-pale);
+    border-radius: 0 8px 8px 0;
+    padding: 0.9rem 1.1rem;
+    margin: 0.75rem 0;
+  }
+
+  .alert-box.warning {
+    border-left-color: #d97706;
+    background: #fffbeb;
+  }
+
+  .alert-box.danger {
+    border-left-color: var(--red);
+    background: #fff5f5;
+  }
+
+  .alert-box h4 {
+    font-size: 0.83rem;
+    font-weight: 600;
+    color: var(--navy);
+    margin-bottom: 0.3rem;
+  }
+
+  .alert-box p {
+    font-size: 0.83rem;
+    color: var(--slate);
+    line-height: 1.6;
+  }
+
+  /* CHART BAR */
+  .bar-chart { margin: 1.5rem 0; }
+
+  .bar-row {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-bottom: 0.75rem;
+  }
+
+  .bar-label {
+    width: 130px;
+    font-size: 0.78rem;
+    color: var(--slate);
+    flex-shrink: 0;
+    text-align: right;
+  }
+
+  .bar-track {
+    flex: 1;
+    height: 28px;
+    background: rgba(0,0,0,0.05);
+    border-radius: 4px;
+    overflow: hidden;
+    position: relative;
+  }
+
+  .bar-fill {
+    height: 100%;
+    border-radius: 4px;
+    transition: width 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+    display: flex;
+    align-items: center;
+    padding-left: 0.6rem;
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: white;
+    min-width: 2px;
+  }
+
+  .bar-fill.salary { background: var(--navy); }
+  .bar-fill.pension { background: var(--teal); }
+  .bar-fill.tax { background: #94a3b8; }
+  .bar-fill.ni { background: #cbd5e1; }
+
+  .bar-value {
+    width: 80px;
+    font-size: 0.8rem;
+    font-weight: 500;
+    color: var(--navy);
+    flex-shrink: 0;
+  }
+
+  /* PROJECTION */
+  .projection-canvas-wrap {
+    margin: 1.5rem 0;
+    background: var(--navy);
+    border-radius: 12px;
+    padding: 1.5rem;
+    position: relative;
+  }
+
+  canvas#projectionChart {
+    width: 100% !important;
+    height: 220px !important;
+  }
+
+  .proj-legend {
+    display: flex;
+    gap: 1.25rem;
+    margin-top: 1rem;
+    flex-wrap: wrap;
+  }
+
+  .proj-legend-item {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-size: 0.75rem;
+    color: rgba(255,255,255,0.65);
+  }
+
+  .proj-legend-dot {
+    width: 10px; height: 10px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+
+  /* ALLOWANCE METER */
+  .allowance-meter {
+    margin: 1.25rem 0;
+  }
+
+  .meter-track {
+    height: 16px;
+    background: rgba(0,0,0,0.07);
+    border-radius: 8px;
+    overflow: hidden;
+    margin: 0.5rem 0;
+  }
+
+  .meter-fill {
+    height: 100%;
+    border-radius: 8px;
+    transition: width 0.5s ease;
+  }
+
+  .meter-labels {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.75rem;
+    color: var(--slate-light);
+  }
+
+  /* DIVIDER */
+  hr { border: none; border-top: 1px solid rgba(0,0,0,0.07); margin: 1.5rem 0; }
+
+  /* BUTTONS */
+  .btn-primary {
+    background: var(--teal);
+    color: white;
+    border: none;
+    padding: 0.85rem 2rem;
+    border-radius: 8px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.95rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+    letter-spacing: 0.01em;
+  }
+
+  .btn-primary:hover {
+    background: #0f766e;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 14px rgba(13,148,136,0.3);
+  }
+
+  .btn-secondary {
+    background: transparent;
+    color: var(--slate);
+    border: 1.5px solid #dde1e7;
+    padding: 0.85rem 1.5rem;
+    border-radius: 8px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.9rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+
+  .btn-secondary:hover { border-color: var(--teal); color: var(--navy); }
+
+  .btn-row {
+    display: flex;
+    gap: 0.75rem;
+    margin-top: 2rem;
+    justify-content: flex-end;
+    flex-wrap: wrap;
+  }
+
+  /* SUMMARY PANEL */
+  .summary-panel {
+    background: var(--navy);
+    border-radius: 12px;
+    padding: 1.5rem;
+    margin-top: 1.5rem;
+  }
+
+  .summary-panel-title {
+    font-family: 'Playfair Display', serif;
+    color: var(--teal-light);
+    font-size: 1rem;
+    margin-bottom: 1rem;
+  }
+
+  .summary-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.5rem 0;
+    border-bottom: 1px solid rgba(255,255,255,0.07);
+    font-size: 0.85rem;
+  }
+
+  .summary-row:last-child { border-bottom: none; }
+  .summary-row .s-label { color: rgba(255,255,255,0.55); }
+  .summary-row .s-val { color: white; font-weight: 500; }
+  .summary-row .s-val.teal { color: var(--teal-light); font-weight: 600; }
+  .summary-row .s-val.dim { color: rgba(255,255,255,0.35); }
+
+  @media (max-width: 600px) {
+    .hero { padding: 2rem 1.25rem 4rem; }
+    .card { padding: 1.5rem 1.25rem; }
+    .step-tab { font-size: 0.62rem; padding: 0.7rem 0.2rem; }
+    .step-tab .step-num { font-size: 1.1rem; }
+    .bar-label { width: 90px; font-size: 0.72rem; }
+    .btn-row { justify-content: stretch; }
+    .btn-primary, .btn-secondary { flex: 1; text-align: center; }
+  }
+
+
+
+  /* PDF INLINE CTA */
+  .pdf-inline-cta {
+    display: none;
+    margin-top: 1.5rem;
+    background: var(--cream, #f7f3ec);
+    border: 1.5px solid var(--border, rgba(0,0,0,0.1));
+    border-radius: 12px;
+    padding: 1.1rem 1.25rem;
+  }
+
+  .pdf-inline-cta.visible { display: block; }
+
+  .pdf-inline-inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    flex-wrap: wrap;
+  }
+
+  .pdf-inline-text strong {
+    display: block;
+    font-family: 'Playfair Display', serif;
+    font-size: 0.95rem;
+    color: var(--navy, #0f1f38);
+    margin-bottom: 0.2rem;
+  }
+
+  .pdf-inline-text span {
+    font-size: 0.75rem;
+    color: var(--slate-light, #718096);
+  }
+
+  .pdf-inline-right {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    flex-shrink: 0;
+  }
+
+  .pdf-inline-price {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--navy, #0f1f38);
+  }
+
+  .pdf-inline-btn {
+    padding: 0.65rem 1.25rem;
+    border-radius: 8px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.88rem;
+    font-weight: 600;
+    text-decoration: none;
+    white-space: nowrap;
+    transition: all 0.2s;
+    background: var(--navy, #0f1f38);
+    color: white;
+    border: none;
+    cursor: pointer;
+    display: inline-block;
+  }
+
+  .pdf-inline-btn:hover { opacity: 0.85; transform: translateY(-1px); }
+
+  .pdf-inline-btn.paid {
+    background: #40916c;
+  }
+
+
+
+  /* CHAT PANEL */
+  .chat-wrap { max-width: 860px; margin: 0 auto; padding: 0 1.5rem 2.5rem; }
+  .chat-divider { display: flex; align-items: center; gap: 0.75rem; margin-bottom: 1rem; font-size: 0.65rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--slate-light, #718096); }
+  .chat-divider::before, .chat-divider::after { content: ''; flex: 1; height: 1px; background: rgba(0,0,0,0.08); }
+  .chat-box { background: white; border-radius: 16px; border: 1px solid var(--border, rgba(0,0,0,0.1)); box-shadow: 0 4px 24px rgba(15,31,56,0.06); overflow: hidden; }
+  .chat-head { background: var(--navy, #0f1f38); padding: 0.9rem 1.25rem; display: flex; align-items: center; gap: 0.75rem; }
+  .chat-head-icon { width: 30px; height: 30px; border-radius: 50%; background: rgba(255,255,255,0.12); display: flex; align-items: center; justify-content: center; font-size: 0.9rem; flex-shrink: 0; }
+  .chat-head-title { font-family: 'Playfair Display', serif; font-size: 0.9rem; color: white; }
+  .chat-head-sub { font-size: 0.68rem; color: rgba(255,255,255,0.4); margin-top: 0.05rem; }
+  .chat-msgs { padding: 1rem 1.25rem; max-height: 380px; overflow-y: auto; display: flex; flex-direction: column; gap: 0.85rem; scroll-behavior: smooth; }
+  .chat-msg { display: flex; gap: 0.6rem; align-items: flex-start; animation: fadeIn 0.2s ease; }
+  .chat-msg.user { flex-direction: row-reverse; }
+  .msg-av { width: 26px; height: 26px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.7rem; font-weight: 600; flex-shrink: 0; margin-top: 2px; }
+  .chat-msg.ai .msg-av { background: var(--navy, #0f1f38); color: rgba(255,255,255,0.7); }
+  .chat-msg.user .msg-av { background: #f3f4f6; color: var(--slate, #4a5568); }
+  .msg-bub { max-width: 80%; padding: 0.65rem 0.9rem; border-radius: 12px; font-size: 0.84rem; line-height: 1.65; }
+  .chat-msg.ai .msg-bub { background: #f3f4f6; color: var(--navy, #0f1f38); border-radius: 4px 12px 12px 12px; }
+  .chat-msg.user .msg-bub { background: var(--navy, #0f1f38); color: white; border-radius: 12px 4px 12px 12px; }
+  .msg-bub p { margin-bottom: 0.4rem; } .msg-bub p:last-child { margin-bottom: 0; }
+  .chat-typing { display: flex; gap: 3px; align-items: center; padding: 0.2rem 0; }
+  .chat-typing span { width: 6px; height: 6px; border-radius: 50%; background: var(--slate-light, #718096); animation: typeBounce 1.2s infinite; }
+  .chat-typing span:nth-child(2) { animation-delay: 0.2s; }
+  .chat-typing span:nth-child(3) { animation-delay: 0.4s; }
+  @keyframes typeBounce { 0%,60%,100% { transform:translateY(0); opacity:0.4; } 30% { transform:translateY(-4px); opacity:1; } }
+  .chat-chips { padding: 0 1.25rem 0.6rem; display: flex; gap: 0.4rem; flex-wrap: wrap; }
+  .chat-chip { font-size: 0.73rem; padding: 0.28rem 0.65rem; border-radius: 20px; border: 1px solid var(--border, #ddd); background: white; color: var(--slate, #4a5568); cursor: pointer; transition: all 0.15s; white-space: nowrap; }
+  .chat-chip:hover { border-color: #6b7280; color: var(--navy, #0f1f38); background: #f3f4f6; }
+  .chat-input-wrap { display: flex; gap: 0.5rem; padding: 0.75rem 1.25rem 1rem; border-top: 1px solid rgba(0,0,0,0.07); align-items: flex-end; }
+  .chat-textarea { flex: 1; padding: 0.6rem 0.85rem; border: 1.5px solid #ddd; border-radius: 10px; font-family: 'DM Sans', sans-serif; font-size: 0.88rem; color: var(--navy, #0f1f38); resize: none; min-height: 40px; max-height: 110px; line-height: 1.5; transition: border-color 0.2s; background: white; }
+  .chat-textarea:focus { outline: none; border-color: #6b7280; box-shadow: 0 0 0 3px rgba(107,114,128,0.1); }
+  .chat-send { width: 40px; height: 40px; border-radius: 10px; background: var(--navy, #0f1f38); border: none; color: white; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 1rem; flex-shrink: 0; transition: opacity 0.15s; }
+  .chat-send:hover { opacity: 0.85; } .chat-send:disabled { opacity: 0.3; cursor: not-allowed; }
+  .chat-footer-note { text-align: center; font-size: 0.68rem; color: var(--slate-light, #718096); padding: 0 1.25rem 0.85rem; line-height: 1.5; }
+
+
+  /* SWITCHER GROUP LABELS */
+  .switcher-group-label {
+    padding: 0.5rem 1rem 0.25rem;
+    font-size: 0.6rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: rgba(255,255,255,0.25);
+    border-top: 1px solid rgba(255,255,255,0.06);
+    margin-top: 0.15rem;
+  }
+
+  /* APP SWITCHER */
+  .app-switcher { position: relative; }
+
+  .switcher-trigger {
+    display: flex; align-items: center; gap: 0.5rem;
+    cursor: pointer; padding: 0.4rem 0.75rem;
+    border-radius: 8px; border: 1px solid rgba(255,255,255,0.15);
+    transition: background 0.2s; user-select: none;
+  }
+  .switcher-trigger:hover { background: rgba(255,255,255,0.07); }
+  .switcher-trigger .app-name { font-family: 'Playfair Display', serif; font-size: 1.1rem; color: var(--teal-light); }
+  .switcher-trigger .app-name span { color: var(--white); font-weight: 300; }
+  .switcher-trigger .app-suite { font-size: 0.65rem; color: rgba(255,255,255,0.3); letter-spacing: 0.08em; text-transform: uppercase; margin-top: 0.1rem; }
+  .switcher-trigger .chevron { color: rgba(255,255,255,0.4); font-size: 0.7rem; transition: transform 0.2s; }
+  .app-switcher.open .chevron { transform: rotate(180deg); }
+
+  .switcher-dropdown {
+    display: none; position: absolute; top: calc(100% + 8px); left: 0;
+    background: #1a2f4e; border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 10px; overflow: hidden; min-width: 230px;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.3); z-index: 100;
+  }
+  .app-switcher.open .switcher-dropdown { display: block; }
+
+  .switcher-item {
+    display: flex; align-items: center; gap: 0.75rem;
+    padding: 0.85rem 1rem; cursor: pointer; transition: background 0.15s;
+    text-decoration: none; border-bottom: 1px solid rgba(255,255,255,0.06);
+  }
+  .switcher-item:last-child { border-bottom: none; }
+  .switcher-item:hover { background: rgba(255,255,255,0.06); }
+  .switcher-item.current { background: rgba(13,148,136,0.12); }
+
+  .switcher-item-icon {
+    width: 32px; height: 32px; border-radius: 8px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1rem; flex-shrink: 0;
+  }
+  .switcher-item-text .item-name { font-family: 'Playfair Display', serif; font-size: 0.9rem; color: white; }
+  .switcher-item-text .item-desc { font-size: 0.72rem; color: rgba(255,255,255,0.4); margin-top: 0.1rem; }
+  .switcher-item.current .item-name { color: var(--teal-light); }
+
+  /* GOAL CHECKBOXES */
+  .goal-item {
+    display: flex; align-items: flex-start; gap: 0.75rem;
+    padding: 0.75rem 0.9rem; border: 1.5px solid #dde1e7;
+    border-radius: 8px; cursor: pointer; transition: all 0.18s;
+    background: white;
+  }
+  .goal-item:hover { border-color: var(--teal); }
+  .goal-item.selected { border-color: var(--teal); background: var(--teal-pale); }
+  .goal-item.selected .goal-check { background: var(--teal); border-color: var(--teal); color: white; }
+  .goal-check {
+    width: 20px; height: 20px; border-radius: 5px;
+    border: 2px solid #dde1e7; display: flex; align-items: center;
+    justify-content: center; font-size: 0.7rem; flex-shrink: 0;
+    margin-top: 1px; transition: all 0.15s; color: transparent;
+  }
+  .goal-text .g-title { font-size: 0.88rem; font-weight: 500; color: var(--navy); }
+  .goal-text .g-desc { font-size: 0.76rem; color: var(--slate-light); margin-top: 0.15rem; line-height: 1.4; }
+  .optimise-result-box {
+    background: var(--navy); border-radius: 10px; padding: 1.1rem 1.25rem;
+  }
+  .optimise-result-box .or-title {
+    font-family: 'Playfair Display', serif; color: var(--teal-light);
+    font-size: 0.95rem; margin-bottom: 0.75rem;
+  }
+  .optimise-goal-tag {
+    display: inline-flex; align-items: center; gap: 0.3rem;
+    background: rgba(45,212,191,0.12); border: 1px solid rgba(45,212,191,0.25);
+    border-radius: 20px; padding: 0.2rem 0.6rem;
+    font-size: 0.72rem; color: var(--teal-light); margin: 0.2rem 0.2rem 0.2rem 0;
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="app-switcher" id="appSwitcher">
+    <div class="switcher-trigger" onclick="toggleSwitcher(event)">
+      <div>
+        <div class="app-name">MyPay<span>Optimiser</span></div>
+      </div>
+      <div class="chevron">▼</div>
+    </div>
+    <div class="switcher-dropdown">
+      <div class="switcher-item" onclick="window.location.href='index.html'">
+        <div class="switcher-item-icon" style="background:rgba(255,255,255,0.06);">&#127968;</div>
+        <div class="switcher-item-text"><div class="item-name" style="color:rgba(255,255,255,0.4); font-size:0.8rem;">&#8592; MyPayPicture</div></div>
+      </div>
+      <div class="switcher-group-label">&#128084; Employed</div>
+      <div class="switcher-item  current" style="cursor:default;">
+        <div class="switcher-item-icon" style="background:rgba(13,148,136,0.15);">&#128200;</div>
+        <div class="switcher-item-text"><div class="item-name" style="color:var(--teal-light,#5eead4);">MyPensionOptimiser</div><div class="item-desc">Make every pound work harder.</div></div>
+      </div>
+      <div class="switcher-item" onclick="window.location.href='pension-reclaim.html'">
+        <div class="switcher-item-icon" style="background:rgba(201,168,76,0.15);">&#128176;</div>
+        <div class="switcher-item-text"><div class="item-name" >MyPensionReclaim</div><div class="item-desc">Missed salary sacrifice? Get it back.</div></div>
+      </div>
+      <div class="switcher-item" onclick="window.location.href='pension-topup.html'">
+        <div class="switcher-item-icon" style="background:rgba(237,172,0,0.15);">&#10133;</div>
+        <div class="switcher-item-text"><div class="item-name" >MyPensionTop-Up</div><div class="item-desc">Make AVCs and claim your tax relief.</div></div>
+      </div>
+      <div class="switcher-item" onclick="window.location.href='family-benefits.html'">
+        <div class="switcher-item-icon" style="background:rgba(155,35,53,0.15);">&#128106;</div>
+        <div class="switcher-item-text"><div class="item-name" >MyFamily&amp;Benefits</div><div class="item-desc">Child Benefit &amp; Tax-Free Childcare.</div></div>
+      </div>
+      <div class="switcher-group-label">&#127962; Director</div>
+      <div class="switcher-item" onclick="window.location.href='pay-director.html'">
+        <div class="switcher-item-icon" style="background:rgba(79,70,229,0.15);">&#127962;</div>
+        <div class="switcher-item-text"><div class="item-name" >MyPayDirector</div><div class="item-desc">Salary vs dividends for directors.</div></div>
+      </div>
+      <div class="switcher-group-label">&#127749; Retired</div>
+      <div class="switcher-item" onclick="window.location.href='retirement-helper.html'">
+        <div class="switcher-item-icon" style="background:rgba(107,114,128,0.15);">&#127749;</div>
+        <div class="switcher-item-text"><div class="item-name" >MyRetirementHelper</div><div class="item-desc">Clarity in later life.</div></div>
+      </div>
+    </div>
+    </div>
+  </div>
+  <div class="disclaimer-badge">Not financial advice</div>
+</header>
+
+<div class="hero">
+  <h1>Optimising your pension?<br><em>You can pay less tax.</em></h1>
+  <p>Find your optimal pension contribution, compare your options, and see your money grow.</p>
+</div>
+
+<div class="container">
+
+  <div class="steps-nav">
+    <div class="step-tab active" onclick="goTo(1)" id="tab1"><span class="step-num">1</span>Your Pay</div>
+    <div class="step-tab" onclick="goTo(2)" id="tab2"><span class="step-num">2</span>Recommendation</div>
+    
+    <div class="step-tab" onclick="goTo(3)" id="tab3"><span class="step-num">3</span>Projection</div>
+    <div class="step-tab" onclick="goTo(4)" id="tab4"><span class="step-num">4</span>Allowance</div>
+  </div>
+
+  <!-- STEP 1: YOUR PAY -->
+  <div class="card active" id="step1">
+    <div class="card-title">Tell us about your pay</div>
+    <p class="card-subtitle">We'll calculate the most tax-efficient way to contribute to your pension based on your situation.</p>
+
+    <div class="two-col">
+      <div class="field-group">
+        <label>Annual gross salary</label>
+        <div class="input-wrap">
+          <span class="input-prefix">£</span>
+          <input type="number" id="grossSalary" placeholder="e.g. 55000" min="0">
+        </div>
+      </div>
+      <div class="field-group">
+        <label>Employer pension contribution</label>
+        <div class="input-wrap">
+          <input type="number" id="employerContrib" placeholder="e.g. 3" min="0" max="100" class="has-suffix no-prefix" oninput="toggleMatchFields()">
+          <span class="input-suffix">%</span>
+        </div>
+        <p class="hint">What your employer currently contributes.</p>
+        <div style="margin-top:0.65rem;">
+          <label style="font-size:0.8rem; color:var(--slate); display:flex; align-items:center; gap:0.5rem; cursor:pointer; font-weight:400;">
+            <input type="checkbox" id="hasMatch" onchange="toggleMatchFields()" style="width:auto; padding:0; border:none; accent-color:var(--teal);"> My employer matches my contributions
+          </label>
+        </div>
+        <div id="matchFields" style="display:none; margin-top:0.75rem; padding:0.85rem; background:var(--stone-pale); border-radius:8px; border:1px solid rgba(0,0,0,0.07);">
+          <div style="font-size:0.78rem; font-weight:600; color:var(--navy); margin-bottom:0.6rem;">Matching arrangement</div>
+          <div class="two-col" style="gap:0.75rem; margin-bottom:0;">
+            <div class="field-group" style="margin-bottom:0;">
+              <label style="font-size:0.78rem;">They match up to</label>
+              <div class="input-wrap">
+                <input type="number" id="matchUpTo" placeholder="e.g. 5" min="0" max="20" class="has-suffix no-prefix" oninput="updateMatchPreview()" style="font-size:0.88rem;">
+                <span class="input-suffix">%</span>
+              </div>
+            </div>
+            <div class="field-group" style="margin-bottom:0;">
+              <label style="font-size:0.78rem;">If you contribute at least</label>
+              <div class="input-wrap">
+                <input type="number" id="matchThreshold" placeholder="e.g. 5" min="0" max="20" class="has-suffix no-prefix" oninput="updateMatchPreview()" style="font-size:0.88rem;">
+                <span class="input-suffix">%</span>
+              </div>
+            </div>
+          </div>
+          <div id="matchPreview" style="margin-top:0.65rem; font-size:0.78rem; color:var(--teal); font-weight:500; line-height:1.5;"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="two-col">
+      <div class="field-group">
+        <label>Your current pension contribution</label>
+        <div class="input-wrap">
+          <input type="number" id="employeeContrib" placeholder="e.g. 5" min="0" max="100" class="has-suffix no-prefix">
+          <span class="input-suffix">%</span>
+        </div>
+      </div>
+      <div class="field-group">
+        <label>Desired contribution (what you're exploring)</label>
+        <div class="radio-group" style="margin-bottom:0.6rem;">
+          <div class="radio-btn selected" id="mode_manual" onclick="setContribMode('manual')">Enter manually</div>
+          <div class="radio-btn" id="mode_optimise" onclick="setContribMode('optimise')" style="border-color:var(--teal);color:var(--teal);font-weight:600;">✦ Optimise for me</div>
+        </div>
+        <div id="manualContribWrap">
+          <div class="input-wrap">
+            <input type="number" id="targetContrib" placeholder="e.g. 10" min="0" max="100" class="has-suffix no-prefix" oninput="syncManualTarget()">
+            <span class="input-suffix">%</span>
+          </div>
+          <p class="hint">The new contribution level you're considering.</p>
+        </div>
+        <div id="optimiseWrap" style="display:none;">
+          <p style="font-size:0.82rem;color:var(--slate);margin-bottom:0.75rem;line-height:1.5;">What are your goals? Select all that apply and we'll work out the ideal contribution.</p>
+          <div id="goalsList" style="display:flex;flex-direction:column;gap:0.5rem;"></div>
+          <div id="optimiseResult" style="display:none;margin-top:1rem;"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="field-group">
+      <label>Does your employer offer salary sacrifice?</label>
+      <div class="radio-group">
+        <div class="radio-btn selected" id="rb_ss" onclick="selectMethod('salary_sacrifice')">Yes — I can use salary sacrifice</div>
+        <div class="radio-btn" id="rb_pc" onclick="selectMethod('personal')">No — I'll contribute personally</div>
+      </div>
+      <p class="hint" style="margin-top:0.5rem;">Salary sacrifice is more tax-efficient — you save income tax and NI. If unsure, check with your HR or payroll team.</p>
+    </div>
+
+    <div class="field-group">
+      <label>Current pension pot value (optional)</label>
+      <div class="input-wrap">
+        <span class="input-prefix">£</span>
+        <input type="number" id="currentPot" placeholder="e.g. 25000" min="0">
+      </div>
+      <p class="hint">Used for the growth projection. Leave blank to start from £0.</p>
+    </div>
+
+    <div class="field-group">
+      <label>Years to retirement</label>
+      <div class="range-wrap">
+        <input type="range" id="yearsToRetire" min="5" max="45" value="25" oninput="updateYearsLabel()">
+        <div class="range-labels">
+          <span>5 yrs</span>
+          <span id="yearsLabel" style="color: var(--teal); font-weight:600;">25 years</span>
+          <span>45 yrs</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="btn-row">
+      <button class="btn-primary" onclick="goTo(2)">See my take-home impact →</button>
+    </div>
+  </div>
+
+  <!-- STEP 2: RECOMMENDATION -->
+  <div class="card" id="step2">
+    <div class="card-title">Our recommendation</div>
+    <p class="card-subtitle">Based on what you've told us, here's what we'd suggest — and why. Adjust it below to see how different contribution levels affect your take-home.</p>
+
+    <!-- DISCLAIMER -->
+    <div class="rec-disclaimer">
+      <span class="rec-disclaimer-icon">&#9432;</span>
+      <span>This is an illustrative suggestion based on your inputs — not personalised financial advice. Always speak to a qualified financial adviser before changing your pension contributions.</span>
+    </div>
+
+    <!-- RECOMMENDATION SUMMARY -->
+    <div class="rec-summary" id="recSummary"></div>
+
+    <!-- LIVE ADJUSTER -->
+    <div class="rec-adjuster">
+      <div class="rec-adjuster-label">
+        <span>Adjust contribution to see the impact</span>
+        <span id="adjPctDisplay" class="rec-pct-display">5%</span>
+      </div>
+      <div class="rec-slider-row">
+        <button class="rec-nudge" onclick="nudgeContrib(-1)">&#8722;</button>
+        <input type="range" id="adjContribPct" min="0" max="30" step="1" value="5" oninput="renderStep2()">
+        <button class="rec-nudge" onclick="nudgeContrib(1)">+</button>
+      </div>
+      <div class="rec-slider-hints">
+        <span>0%</span>
+        <span id="adjSalaryDisplay" style="color:var(--teal); font-weight:600;"></span>
+        <span>30%</span>
+      </div>
+    </div>
+
+    <!-- LIVE IMPACT GRID -->
+    <div class="results-grid" id="takeHomeGrid"></div>
+
+    <hr>
+
+    <div class="bar-chart" id="barChart"></div>
+
+    <div id="takeHomeGuidance"></div>
+
+    <div class="btn-row">
+      <button class="btn-secondary" onclick="goTo(1)">&#8592; Back</button>
+      <button class="btn-primary" onclick="applyRecommendation()">Use this contribution &#8594;</button>
+    </div>
+  </div>
+
+
+  <!-- STEP 4: PROJECTION -->
+  <div class="card" id="step3">
+    <div class="card-title">Pension pot projection</div>
+    <p class="card-subtitle">Based on your target contribution, here's an estimate of your pot at retirement.</p>
+
+    <div class="two-col" style="margin-bottom:1rem;">
+      <div class="field-group">
+        <label>Assumed annual growth rate</label>
+        <div class="input-wrap">
+          <input type="number" id="growthRate" value="5" min="1" max="12" class="has-suffix no-prefix" oninput="renderStep4()">
+          <span class="input-suffix">%</span>
+        </div>
+        <p class="hint">Typical range 4–7% for a balanced fund.</p>
+      </div>
+      <div class="field-group">
+        <label>Assumed annual salary growth</label>
+        <div class="input-wrap">
+          <input type="number" id="salaryGrowth" value="2" min="0" max="10" class="has-suffix no-prefix" oninput="renderStep4()">
+          <span class="input-suffix">%</span>
+        </div>
+        <p class="hint">Used to inflate contributions over time.</p>
+      </div>
+    </div>
+
+    <div class="projection-canvas-wrap">
+      <canvas id="projectionChart"></canvas>
+      <div class="proj-legend">
+        <div class="proj-legend-item"><div class="proj-legend-dot" style="background:var(--teal-light)"></div> Target contribution</div>
+        <div class="proj-legend-item"><div class="proj-legend-dot" style="background:rgba(255,255,255,0.3)"></div> Current contribution</div>
+      </div>
+    </div>
+
+    <div class="results-grid" id="projectionResults"></div>
+
+    <div class="guidance-box" style="margin-top:1rem;">
+      <h4>Important caveats</h4>
+      <p>These projections are illustrative only. Actual returns will vary. They do not account for charges, inflation, or changes in contribution rates. A financial adviser can model personalised scenarios.</p>
+    </div>
+
+    <div class="btn-row">
+      <button class="btn-secondary" onclick="goTo(3)">← Back</button>
+      <button class="btn-primary" onclick="goTo(5)">Check my allowance →</button>
+    </div>
+  </div>
+
+  <!-- STEP 5: ALLOWANCE -->
+  <div class="card" id="step4">
+    <div class="card-title">Annual allowance checker</div>
+    <p class="card-subtitle">Make sure your contributions stay within HMRC's limits — breaching them triggers a tax charge.</p>
+
+    <div id="allowanceContent"></div>
+
+    <hr>
+
+    <div class="guidance-box">
+      <h4>Carry forward</h4>
+      <p>If you've been a pension scheme member for the past three years, you may be able to carry forward unused annual allowance from those years — potentially allowing contributions well above £60,000 in a single year. This requires specialist advice to use correctly.</p>
+    </div>
+
+    <div class="guidance-box" style="margin-top:0.75rem;">
+      <h4>Money Purchase Annual Allowance (MPAA)</h4>
+      <p>If you've already started drawing flexibly from a defined contribution pension, your annual allowance may be reduced to just £10,000. This does not apply if you haven't yet accessed your pension.</p>
+    </div>
+
+    <div class="summary-panel" id="finalSummary"></div>
+
+        <div class="btn-row">
+      <button class="btn-secondary" onclick="goTo(3)">&#8592; Back</button>
+      <button class="btn-primary" onclick="window.open('https://www.gov.uk/tax-on-your-private-pension','_blank')">Read more on gov.uk ↗</button>
+    </div>
+
+    <!-- PDF INLINE CTA -->
+    <div class="pdf-inline-cta" id="pdfInlineCta">
+      <div class="pdf-inline-inner">
+        <div class="pdf-inline-text">
+          <strong>&#128196; Download your personalised PDF report</strong>
+          <span>A branded summary of your results to take to an adviser or share with a partner.</span>
+        </div>
+        <div class="pdf-inline-right">
+          <div class="pdf-inline-price" id="pdfInlinePrice">&#163;4.99</div>
+          <a class="pdf-inline-btn" id="pdfInlineBuyBtn" href="https://buy.stripe.com/4gM8wP2IV4l0gPn9D353O00" target="_blank">Buy report &#8594;</a>
+          <button class="pdf-inline-btn paid" id="pdfInlineDlBtn" style="display:none;" onclick="generateReport()">&#8595; Download PDF</button>
+        </div>
+      </div>
+    </div>
+        <button class="lead-dismiss" onclick="dismissLead()" title="Dismiss">×</button>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- FOOTER DISCLAIMER -->
+      </div>
+    </div>
+        </div>
+      </div>
+    </div>
+<div class="chat-wrap">
+  <div class="chat-divider">Ask MyPayPicture Assistant</div>
+  <div class="chat-box">
+    <div class="chat-head">
+      <div class="chat-head-icon">✦</div>
+      <div>
+        <div class="chat-head-title">MyPayPicture Assistant</div>
+        <div class="chat-head-sub">General information only · Not financial advice</div>
+      </div>
+    </div>
+    <div class="chat-msgs" id="chatMsgs"></div>
+    <div class="chat-chips" id="chatChips"><div class="chat-chip" onclick="chatChip(this)">What contribution rate should I aim for?</div><div class="chat-chip" onclick="chatChip(this)">Is salary sacrifice always better?</div><div class="chat-chip" onclick="chatChip(this)">How does this affect my take-home?</div><div class="chat-chip" onclick="chatChip(this)">What is the annual allowance?</div></div>
+    <div class="chat-input-wrap">
+      <textarea class="chat-textarea" id="chatInput" placeholder="Ask a question about your finances..." rows="1"
+        onkeydown="if(event.key==='Enter'&&!event.shiftKey){event.preventDefault();chatSend();}"
+        oninput="this.style.height='auto';this.style.height=Math.min(this.scrollHeight,110)+'px'"></textarea>
+      <button class="chat-send" id="chatSendBtn" onclick="chatSend()">&#8594;</button>
+    </div>
+    <div class="chat-footer-note">General information only. Always consult a qualified financial adviser before making decisions.</div>
+  </div>
+</div>
+
+<footer style="background: var(--navy); border-top: 3px solid var(--teal); padding: 2rem 1.5rem;">
+  <div style="max-width: 900px; margin: 0 auto; display: flex; gap: 1.25rem; align-items: flex-start;">
+    <div style="font-size: 1.5rem; line-height:1; flex-shrink:0;">⚠️</div>
+    <div>
+      <div style="font-family: 'Playfair Display', serif; color: var(--teal-light); font-size: 0.95rem; margin-bottom: 0.4rem;">Important — Not Financial or Tax Advice</div>
+      <p style="color: rgba(255,255,255,0.55); font-size: 0.8rem; line-height: 1.7; margin:0;">
+        This tool is for illustrative and educational purposes only. It does not constitute financial, tax, or legal advice. Calculations are estimates based on standard 2024/25 UK tax rates and may not reflect your individual circumstances. Tax rules are subject to change. Always verify your position with <a href="https://www.gov.uk/contact-hmrc" target="_blank" style="color:var(--teal-light); text-decoration:none;">HMRC</a> or a qualified financial adviser before making decisions.
+      </p>
+    </div>
+  </div>
+</footer>
+
+<script>
+  function toggleSwitcher(e) {
+    e.stopPropagation();
+    document.getElementById('appSwitcher').classList.toggle('open');
+  }
+  document.addEventListener('click', function() {
+    document.getElementById('appSwitcher').classList.remove('open');
+  });
+
+  // ── STATE ──────────────────────────────────────────────────────────────────
+  let state = {
+    method: 'salary_sacrifice'
+  };
+
+  // ── HELPERS ────────────────────────────────────────────────────────────────
+  const fmt = n => '£' + Math.round(n).toLocaleString('en-GB');
+  const fmtD = n => '£' + n.toLocaleString('en-GB', { minimumFractionDigits: 0, maximumFractionDigits: 0 });
+  const pct = n => Math.round(n) + '%';
+
+  function updateYearsLabel() {
+    const v = document.getElementById('yearsToRetire').value;
+    document.getElementById('yearsLabel').textContent = v + ' year' + (v == 1 ? '' : 's');
+  }
+
+  function selectMethod(m) {
+    state.method = m;
+    document.getElementById('rb_ss').classList.toggle('selected', m === 'salary_sacrifice');
+    document.getElementById('rb_pc').classList.toggle('selected', m === 'personal');
+    document.getElementById('rb_both').classList.toggle('selected', m === 'both');
+  }
+
+  // ── TAX CALC ───────────────────────────────────────────────────────────────
+  function calcTakeHome(grossSalary, pensionGross) {
+    // 2024/25 rates
+    const PA = 12570, BRT = 50270, HRT = 125140;
+    const NI_PT = 12570, NI_UEL = 50270;
+    const taxable = Math.max(0, grossSalary - pensionGross - PA);
+    let tax = 0;
+    let rem = taxable;
+    const atBasic = Math.min(rem, BRT - PA);
+    tax += Math.max(0, atBasic) * 0.20; rem -= atBasic;
+    if (rem > 0) { const atHigher = Math.min(rem, HRT - BRT); tax += atHigher * 0.40; rem -= atHigher; }
+    if (rem > 0) tax += rem * 0.45;
+
+    const niable = grossSalary - pensionGross;
+    let ni = 0;
+    const niBasic = Math.max(0, Math.min(niable, NI_UEL) - NI_PT);
+    const niAbove = Math.max(0, niable - NI_UEL);
+    ni = niBasic * 0.08 + niAbove * 0.02;
+
+    const takeHome = grossSalary - pensionGross - tax - ni;
+    return { tax, ni, takeHome, taxable, pensionGross };
+  }
+
+  function calcPersonalContrib(grossSalary, pensionGross) {
+    // Personal contrib — paid from net, no NI saving
+    const PA = 12570, BRT = 50270, HRT = 125140;
+    const NI_PT = 12570, NI_UEL = 50270;
+    const taxable = Math.max(0, grossSalary - PA);
+    let tax = 0;
+    let rem = taxable;
+    const atBasic = Math.min(rem, BRT - PA);
+    tax += Math.max(0, atBasic) * 0.20; rem -= atBasic;
+    if (rem > 0) { const atHigher = Math.min(rem, HRT - BRT); tax += atHigher * 0.40; rem -= atHigher; }
+    if (rem > 0) tax += rem * 0.45;
+
+    let ni = 0;
+    const niBasic = Math.max(0, Math.min(grossSalary, NI_UEL) - NI_PT);
+    const niAbove = Math.max(0, grossSalary - NI_UEL);
+    ni = niBasic * 0.08 + niAbove * 0.02;
+
+    // Relief at source — you pay net, provider claims 20%
+    const netContrib = pensionGross * 0.8;
+    const takeHome = grossSalary - tax - ni - netContrib;
+    const isHigher = grossSalary > BRT;
+    const higherRelief = isHigher ? pensionGross * 0.20 : 0;
+    const effectiveCost = netContrib - higherRelief;
+
+    return { tax, ni, takeHome, netContrib, higherRelief, effectiveCost };
+  }
+
+  // ── STEP 2 ─────────────────────────────────────────────────────────────────
+// ── EMPLOYER MATCH ─────────────────────────────────────────────────────────
+  function toggleMatchFields() {
+    var hasMatch = document.getElementById('hasMatch').checked;
+    document.getElementById('matchFields').style.display = hasMatch ? 'block' : 'none';
+    updateMatchPreview();
+  }
+
+  function getMatchInfo() {
+    var hasMatch = document.getElementById('hasMatch') && document.getElementById('hasMatch').checked;
+    if (!hasMatch) return null;
+    var matchUpTo = parseFloat(document.getElementById('matchUpTo').value) || 0;
+    var matchThreshold = parseFloat(document.getElementById('matchThreshold').value) || 0;
+    return { matchUpTo: matchUpTo, matchThreshold: matchThreshold };
+  }
+
+  function getEffectiveEmployerContrib(employeePct) {
+    var basePct = parseFloat(document.getElementById('employerContrib').value) || 0;
+    var match = getMatchInfo();
+    if (!match || match.matchUpTo === 0) return basePct;
+    // Employer contributes base + match if employee meets threshold
+    if (employeePct >= match.matchThreshold) {
+      return basePct + match.matchUpTo;
+    }
+    return basePct;
+  }
+
+  function updateMatchPreview() {
+    var preview = document.getElementById('matchPreview');
+    if (!preview) return;
+    var match = getMatchInfo();
+    var salary = parseFloat(document.getElementById('grossSalary').value) || 0;
+    if (!match || match.matchUpTo === 0 || match.matchThreshold === 0) {
+      preview.textContent = '';
+      return;
+    }
+    var matchValue = salary * match.matchUpTo / 100;
+    preview.innerHTML = 'If you contribute at least ' + match.matchThreshold + '%, your employer adds ' +
+      match.matchUpTo + '% (' + fmt(matchValue) + '/yr) on top of their base contribution.';
+  }
+
+  function getMatchAlertHtml(adjPct) {
+    var match = getMatchInfo();
+    if (!match || match.matchUpTo === 0 || match.matchThreshold === 0) return '';
+
+    var salary = parseFloat(document.getElementById('grossSalary').value) || 0;
+    var basePct = parseFloat(document.getElementById('employerContrib').value) || 0;
+    var matchValue = salary * match.matchUpTo / 100;
+    var isGettingMatch = adjPct >= match.matchThreshold;
+
+    if (isGettingMatch) {
+      return '<div class="match-alert">' +
+        '<div class="match-alert-icon">&#10003;</div>' +
+        '<div class="match-alert-body">' +
+          '<div class="match-alert-title">You’re getting the full employer match</div>' +
+          '<div class="match-alert-desc">At ' + adjPct + '% your employer adds their full <strong>' + match.matchUpTo + '% match (' + fmt(matchValue) + '/yr)</strong> on top of their base ' + basePct + '% contribution.</div>' +
+        '</div>' +
+      '</div>';
+    } else {
+      var shortfall = match.matchThreshold - adjPct;
+      return '<div class="match-alert warning">' +
+        '<div class="match-alert-icon">&#9888;</div>' +
+        '<div class="match-alert-body">' +
+          '<div class="match-alert-title">You’re leaving ' + fmt(matchValue) + '/yr on the table</div>' +
+          '<div class="match-alert-desc">Increase your contribution by just <strong>' + shortfall + '%</strong> (to ' + match.matchThreshold + '%) and your employer will add <strong>' + fmt(matchValue) + '/yr</strong> extra. That’s free money — the most valuable thing this tool can tell you.</div>' +
+        '</div>' +
+      '</div>';
+    }
+  }
+
+    function renderStep2() {
+    var salary = parseFloat(document.getElementById('grossSalary').value) || 0;
+    var empPct = parseFloat(document.getElementById('employerContrib').value) || 0;
+    var curPct = parseFloat(document.getElementById('employeeContrib').value) || 0;
+    var tgtPct = parseFloat(document.getElementById('targetContrib').value) || 0;
+
+    var adjSlider = document.getElementById('adjContribPct');
+    var adjPct = adjSlider ? parseFloat(adjSlider.value) : tgtPct;
+    var isRec = adjPct === tgtPct;
+
+    var adjDisplay = document.getElementById('adjPctDisplay');
+    var adjSalary = document.getElementById('adjSalaryDisplay');
+    if (adjDisplay) adjDisplay.textContent = adjPct + '%';
+    if (adjSalary) adjSalary.textContent = fmt(salary * adjPct / 100) + '/yr into pension';
+
+    var curPension = salary * curPct / 100;
+    var adjPension = salary * adjPct / 100;
+    var effectiveEmpPct = getEffectiveEmployerContrib(adjPct);
+    var empPension = salary * effectiveEmpPct / 100;
+    var curEmpPension = salary * empPct / 100;
+
+    var curCalc = calcTakeHome(salary, curPension);
+    var adjCalc = calcTakeHome(salary, adjPension);
+
+    var curMonthly = curCalc.takeHome / 12;
+    var adjMonthly = adjCalc.takeHome / 12;
+    var diff = adjMonthly - curMonthly;
+    var totalPct = adjPct + effectiveEmpPct;
+    var totalPension = adjPension + empPension;
+    var isHigher = salary > 50270;
+
+    // ── Employer match alert ───────────────────────────────────────────────
+    var matchAlertHtml = getMatchAlertHtml(adjPct);
+
+    // ── Result boxes ──────────────────────────────────────────────────────
+    var diffCls = diff < -50 ? 'warn' : diff > 50 ? 'good' : 'highlight';
+    var boxesHtml =
+      '<div class="results-grid">' +
+        '<div class="result-box">' +
+          '<div class="r-label">Current Take-Home</div>' +
+          '<div class="r-amount">' + fmt(curMonthly) + '</div>' +
+          '<div class="r-sub">at ' + curPct + '% contribution / mo</div>' +
+        '</div>' +
+        '<div class="result-box teal">' +
+          '<div class="r-label">' + (isRec ? 'Recommended' : 'Adjusted') + ' Take-Home</div>' +
+          '<div class="r-amount">' + fmt(adjMonthly) + '</div>' +
+          '<div class="r-sub">at ' + adjPct + '% contribution / mo</div>' +
+        '</div>' +
+        '<div class="result-box ' + diffCls + '">' +
+          '<div class="r-label">Monthly Change</div>' +
+          '<div class="r-amount">' + (diff >= 0 ? '+' : '') + fmt(diff) + '</div>' +
+          '<div class="r-sub">' + (diff < 0 ? 'less per month' : 'more per month') + '</div>' +
+        '</div>' +
+        '<div class="result-box highlight">' +
+          '<div class="r-label">Total Into Pension</div>' +
+          '<div class="r-amount">' + fmt(totalPension / 12) + '</div>' +
+          '<div class="r-sub">' + totalPct + '% combined / mo</div>' +
+        '</div>' +
+      '</div>';
+
+    // ── Detail table ──────────────────────────────────────────────────────
+    var newLabel = isRec ? 'New (' + adjPct + '%)' : 'Adjusted (' + adjPct + '%)';
+    var rows = [
+      { label: 'Your pension contribution', cur: fmt(curPension/12)+'/mo', adj: fmt(adjPension/12)+'/mo', adjCls: adjPension >= curPension ? 'win' : '' },
+      { label: 'Employer contribution',     cur: fmt(curEmpPension/12)+'/mo', adj: fmt(empPension/12)+'/mo', adjCls: empPension > curEmpPension ? 'win' : '' },
+      { label: 'Total into pension',        cur: fmt((curPension+curEmpPension)/12)+'/mo', adj: fmt(totalPension/12)+'/mo', adjCls: totalPension > curPension+curEmpPension ? 'win' : '' },
+      { label: 'Income tax',                cur: fmt(curCalc.tax/12)+'/mo', adj: fmt(adjCalc.tax/12)+'/mo', adjCls: adjCalc.tax < curCalc.tax ? 'win' : '' },
+      { label: 'National Insurance',        cur: fmt(curCalc.ni/12)+'/mo', adj: fmt(adjCalc.ni/12)+'/mo', adjCls: adjCalc.ni < curCalc.ni ? 'win' : '' },
+      { label: 'Monthly take-home',         cur: fmt(curMonthly), adj: fmt(adjMonthly), adjCls: adjMonthly >= curMonthly ? 'win' : 'lose', bold: true },
+      { label: 'Annual take-home',          cur: fmt(curCalc.takeHome), adj: fmt(adjCalc.takeHome), adjCls: adjCalc.takeHome >= curCalc.takeHome ? 'win' : 'lose', bold: true },
+    ];
+
+    var tableHtml =
+      '<table class="compare-table" style="margin-top:1.25rem;">' +
+        '<thead><tr>' +
+          '<th>Item</th>' +
+          '<th>Now (' + curPct + '%)</th>' +
+          '<th class="teal-col">' + newLabel + '</th>' +
+        '</tr></thead><tbody>';
+
+    rows.forEach(function(row) {
+      tableHtml +=
+        '<tr><td' + (row.bold ? ' style="font-weight:600;color:var(--navy);"' : '') + '>' + row.label + '</td>' +
+        '<td>' + row.cur + '</td>' +
+        '<td class="' + (row.adjCls||'') + '">' + row.adj + '</td></tr>';
+    });
+    tableHtml += '</tbody></table>';
+
+    document.getElementById('takeHomeGrid').innerHTML = matchAlertHtml + boxesHtml + tableHtml;
+
+    var bc = document.getElementById('barChart');
+    if (bc) bc.innerHTML = '';
+
+    // Guidance
+    var realCost = Math.abs(diff);
+    var grossExtra = adjPension - curPension;
+    var subsidyPct = grossExtra > 0 ? Math.round((grossExtra - realCost * 12) / grossExtra * 100) : 0;
+
+    var guidanceHtml = isRec
+      ? '<div class="guidance-box">' +
+          '<h4>Why we suggest ' + adjPct + '%</h4>' +
+          '<p>To put an extra ' + fmt(Math.max(0, grossExtra)/12) + '/month into your pension via salary sacrifice, your take-home reduces by just ' + fmt(realCost) + '/month \u2014 because you save ' + (isHigher ? '40%' : '20%') + ' income tax and 8% NI on the amount sacrificed. ' +
+          (isHigher ? 'As a higher rate taxpayer, salary sacrifice is particularly powerful \u2014 the government effectively subsidises ' + subsidyPct + '% of your contribution.' : 'Every \u00a3100 extra you contribute only costs you around \u00a372 in take-home pay.') +
+          ' Use the slider above to explore different levels.</p>' +
+          '<p style="font-size:0.75rem;color:var(--slate-light);margin-top:0.5rem;font-style:italic;">Illustrative suggestion only \u2014 not financial advice. Speak to a qualified adviser for personalised guidance.</p>' +
+        '</div>'
+      : '<div class="guidance-box">' +
+          '<h4>At ' + adjPct + '% contribution</h4>' +
+          '<p>You\u2019d take home ' + fmt(adjMonthly) + '/month and contribute ' + fmt(adjPension) + '/year to your pension' +
+          (empPension > 0 ? ', plus ' + fmt(empPension) + '/year from your employer (total ' + fmt(totalPension) + '/year going in)' : '') +
+          '. Your take-home ' + (diff < 0 ? 'reduces by ' + fmt(realCost) + '/month compared to now' : 'stays the same or increases') + '.</p>' +
+          '<p style="font-size:0.75rem;color:var(--slate-light);margin-top:0.5rem;font-style:italic;">Illustrative only \u2014 not financial advice. Speak to a qualified adviser for personalised guidance.</p>' +
+        '</div>';
+
+    document.getElementById('takeHomeGuidance').innerHTML = guidanceHtml;
+
+    // Summary panel
+    var recEl = document.getElementById('recSummary');
+    if (recEl) {
+      recEl.innerHTML =
+        '<div class="rec-summary-title">' + (isRec ? '&#10022; Our suggestion' : '&#9998; Your adjusted scenario') + '</div>' +
+        '<div class="rec-summary-row"><span class="rs-label">Your contribution</span><span class="rs-val teal">' + adjPct + '% \u2014 ' + fmt(adjPension) + '/yr</span></div>' +
+        '<div class="rec-summary-row"><span class="rs-label">Employer adds</span><span class="rs-val">' + effectiveEmpPct + '% \u2014 ' + fmt(empPension) + '/yr</span></div>' +
+        '<div class="rec-summary-row"><span class="rs-label">Total going into pension</span><span class="rs-val good">' + totalPct + '% \u2014 ' + fmt(totalPension) + '/yr</span></div>' +
+        '<div class="rec-summary-row"><span class="rs-label">Monthly take-home</span><span class="rs-val">' + fmt(adjMonthly) + '/mo</span></div>' +
+        '<div class="rec-summary-row"><span class="rs-label">Change vs current</span><span class="rs-val ' + (diff < -10 ? 'warn' : 'good') + '">' + (diff >= 0 ? '+' : '') + fmt(diff) + '/mo</span></div>';
+    }
+  }
+
+
+  function nudgeContrib(delta) {
+    var slider = document.getElementById('adjContribPct');
+    if (!slider) return;
+    slider.value = Math.min(30, Math.max(0, parseInt(slider.value) + delta));
+    renderStep2();
+  }
+
+  function applyRecommendation() {
+    var adjPct = parseFloat(document.getElementById('adjContribPct').value) || 0;
+    var tgtField = document.getElementById('targetContrib');
+    if (tgtField) tgtField.value = adjPct;
+    goTo(3);
+  }
+
+
+  
+  function renderStep4() {
+    const salary = parseFloat(document.getElementById('grossSalary').value) || 0;
+    const empPct = parseFloat(document.getElementById('employerContrib').value) || 0;
+    const curPct = parseFloat(document.getElementById('employeeContrib').value) || 0;
+    const tgtPct = parseFloat(document.getElementById('targetContrib').value) || 0;
+    const currentPot = parseFloat(document.getElementById('currentPot').value) || 0;
+    const years = parseInt(document.getElementById('yearsToRetire').value) || 25;
+    const growth = (parseFloat(document.getElementById('growthRate').value) || 5) / 100;
+    const salGrowth = (parseFloat(document.getElementById('salaryGrowth').value) || 2) / 100;
+
+    function project(employeePct) {
+      let pot = currentPot;
+      let sal = salary;
+      const pts = [pot];
+      for (let y = 0; y < years; y++) {
+        const annual = sal * (employeePct + empPct) / 100;
+        pot = (pot + annual) * (1 + growth);
+        sal *= (1 + salGrowth);
+        pts.push(Math.round(pot));
+      }
+      return pts;
+    }
+
+    const curPoints = project(curPct);
+    const tgtPoints = project(tgtPct);
+    const labels = Array.from({ length: years + 1 }, (_, i) => i === 0 ? 'Now' : `Yr ${i}`);
+
+    // Draw canvas chart
+    const canvas = document.getElementById('projectionChart');
+    const ctx = canvas.getContext('2d');
+    canvas.width = canvas.offsetWidth * window.devicePixelRatio || 800;
+    canvas.height = 220 * window.devicePixelRatio;
+    ctx.scale(window.devicePixelRatio, window.devicePixelRatio);
+    const W = canvas.offsetWidth || 800, H = 220;
+    ctx.clearRect(0, 0, W, H);
+
+    const maxVal = Math.max(...tgtPoints) * 1.1;
+    const pad = { t: 20, r: 20, b: 40, l: 60 };
+    const cW = W - pad.l - pad.r, cH = H - pad.t - pad.b;
+
+    const xPos = i => pad.l + (i / years) * cW;
+    const yPos = v => pad.t + cH - (v / maxVal) * cH;
+
+    // Grid lines
+    ctx.strokeStyle = 'rgba(255,255,255,0.08)';
+    ctx.lineWidth = 1;
+    for (let g = 0; g <= 4; g++) {
+      const y = pad.t + (g / 4) * cH;
+      ctx.beginPath(); ctx.moveTo(pad.l, y); ctx.lineTo(pad.l + cW, y); ctx.stroke();
+      const val = maxVal * (1 - g / 4);
+      ctx.fillStyle = 'rgba(255,255,255,0.35)';
+      ctx.font = '10px DM Sans, sans-serif';
+      ctx.textAlign = 'right';
+      ctx.fillText(val >= 1000000 ? (val/1000000).toFixed(1)+'M' : val >= 1000 ? Math.round(val/1000)+'k' : Math.round(val), pad.l - 6, y + 4);
+    }
+
+    // X labels
+    ctx.fillStyle = 'rgba(255,255,255,0.3)';
+    ctx.font = '9px DM Sans, sans-serif';
+    ctx.textAlign = 'center';
+    [0, Math.floor(years/4), Math.floor(years/2), Math.floor(3*years/4), years].forEach(i => {
+      ctx.fillText(i === 0 ? 'Now' : `Yr ${i}`, xPos(i), H - pad.b + 16);
+    });
+
+    // Current line
+    ctx.beginPath();
+    ctx.strokeStyle = 'rgba(255,255,255,0.25)';
+    ctx.lineWidth = 2;
+    ctx.setLineDash([5, 4]);
+    curPoints.forEach((v, i) => i === 0 ? ctx.moveTo(xPos(i), yPos(v)) : ctx.lineTo(xPos(i), yPos(v)));
+    ctx.stroke();
+    ctx.setLineDash([]);
+
+    // Target area fill
+    const tealGrad = ctx.createLinearGradient(0, pad.t, 0, pad.t + cH);
+    tealGrad.addColorStop(0, 'rgba(45,212,191,0.25)');
+    tealGrad.addColorStop(1, 'rgba(45,212,191,0.02)');
+    ctx.beginPath();
+    tgtPoints.forEach((v, i) => i === 0 ? ctx.moveTo(xPos(i), yPos(v)) : ctx.lineTo(xPos(i), yPos(v)));
+    ctx.lineTo(xPos(years), yPos(0));
+    ctx.lineTo(xPos(0), yPos(0));
+    ctx.closePath();
+    ctx.fillStyle = tealGrad;
+    ctx.fill();
+
+    // Target line
+    ctx.beginPath();
+    ctx.strokeStyle = '#2dd4bf';
+    ctx.lineWidth = 2.5;
+    tgtPoints.forEach((v, i) => i === 0 ? ctx.moveTo(xPos(i), yPos(v)) : ctx.lineTo(xPos(i), yPos(v)));
+    ctx.stroke();
+
+    const finalCur = curPoints[years];
+    const finalTgt = tgtPoints[years];
+    const extra = finalTgt - finalCur;
+
+    document.getElementById('projectionResults').innerHTML = `
+      <div class="result-box">
+        <div class="r-label">Pot at Retirement (Current Rate)</div>
+        <div class="r-amount">${finalCur >= 1000000 ? (finalCur/1000000).toFixed(2)+'M' : fmt(finalCur)}</div>
+        <div class="r-sub">At ${curPct}% contribution</div>
+      </div>
+      <div class="result-box highlight">
+        <div class="r-label">Pot at Retirement (Target Rate)</div>
+        <div class="r-amount">${finalTgt >= 1000000 ? (finalTgt/1000000).toFixed(2)+'M' : fmt(finalTgt)}</div>
+        <div class="r-sub">At ${tgtPct}% contribution</div>
+      </div>
+      <div class="result-box teal">
+        <div class="r-label">Extra Accumulated</div>
+        <div class="r-amount">${extra >= 1000000 ? (extra/1000000).toFixed(2)+'M' : fmt(extra)}</div>
+        <div class="r-sub">By increasing your contribution</div>
+      </div>
+    `;
+  }
+
+  // ── STEP 5 ─────────────────────────────────────────────────────────────────
+  function renderStep5() {
+    const salary = parseFloat(document.getElementById('grossSalary').value) || 0;
+    const empPct = parseFloat(document.getElementById('employerContrib').value) || 0;
+    const tgtPct = parseFloat(document.getElementById('targetContrib').value) || 0;
+    const annualAllowance = 60000;
+    const totalPct = empPct + tgtPct;
+    const totalContrib = salary * totalPct / 100;
+    const usedPct = Math.min(100, (totalContrib / annualAllowance) * 100);
+    const remaining = Math.max(0, annualAllowance - totalContrib);
+    const breached = totalContrib > annualAllowance;
+    const tapered = salary > 260000;
+    const taperedAllowance = tapered ? Math.max(10000, annualAllowance - Math.floor((salary - 260000) / 2)) : annualAllowance;
+
+    const meterColor = breached ? '#e53e3e' : usedPct > 80 ? '#d97706' : 'var(--teal)';
+
+    document.getElementById('allowanceContent').innerHTML = `
+      <div class="allowance-meter">
+        <div style="display:flex; justify-content:space-between; align-items:baseline; margin-bottom:0.5rem;">
+          <span style="font-size:0.85rem; font-weight:500; color:var(--navy);">Annual allowance used</span>
+          <span style="font-family:'Playfair Display',serif; font-size:1.1rem; color:${meterColor}; font-weight:700;">${fmt(totalContrib)} / ${fmt(annualAllowance)}</span>
+        </div>
+        <div class="meter-track">
+          <div class="meter-fill" style="width:${usedPct}%; background:${meterColor};"></div>
+        </div>
+        <div class="meter-labels">
+          <span>£0</span>
+          <span style="color:${meterColor}; font-weight:500;">${Math.round(usedPct)}% used</span>
+          <span>£60,000</span>
+        </div>
+      </div>
+
+      ${breached ? `<div class="alert-box danger"><h4>⚠ Annual allowance exceeded</h4><p>Your total contributions of ${fmt(totalContrib)} exceed the £60,000 annual allowance. The excess (${fmt(totalContrib - annualAllowance)}) would be subject to a tax charge at your marginal rate. Consider reducing contributions or using carry forward.</p></div>` : ''}
+      ${!breached && usedPct > 80 ? `<div class="alert-box warning"><h4>Approaching your annual allowance</h4><p>You're using ${Math.round(usedPct)}% of your allowance. You have ${fmt(remaining)} of headroom remaining this tax year.</p></div>` : ''}
+      ${!breached && usedPct <= 80 ? `<div class="alert-box"><h4>✓ Within annual allowance</h4><p>Your total contributions of ${fmt(totalContrib)} are comfortably within the £60,000 limit. You have ${fmt(remaining)} of remaining allowance this year.</p></div>` : ''}
+
+      ${tapered ? `<div class="alert-box warning" style="margin-top:0.75rem;"><h4>Tapered annual allowance may apply</h4><p>Your salary exceeds £260,000. Your tapered allowance could be as low as ${fmt(taperedAllowance)}. This requires specialist advice to calculate accurately.</p></div>` : ''}
+
+      <div style="margin-top:1.25rem;">
+        <div style="font-size:0.8rem; font-weight:600; text-transform:uppercase; letter-spacing:0.06em; color:var(--slate-light); margin-bottom:0.75rem;">Contribution breakdown</div>
+        <div class="summary-row" style="border-top:1px solid rgba(0,0,0,0.07); border-bottom:1px solid rgba(0,0,0,0.07); padding:0.5rem 0;">
+          <span style="font-size:0.85rem; color:var(--slate);">Your contribution (${tgtPct}%)</span>
+          <span style="font-size:0.85rem; font-weight:500; color:var(--navy);">${fmt(salary * tgtPct / 100)}/yr</span>
+        </div>
+        <div class="summary-row" style="border-bottom:1px solid rgba(0,0,0,0.07); padding:0.5rem 0;">
+          <span style="font-size:0.85rem; color:var(--slate);">Employer contribution (${empPct}%)</span>
+          <span style="font-size:0.85rem; font-weight:500; color:var(--navy);">${fmt(salary * empPct / 100)}/yr</span>
+        </div>
+        <div class="summary-row" style="padding:0.5rem 0;">
+          <span style="font-size:0.85rem; font-weight:600; color:var(--navy);">Total going in</span>
+          <span style="font-size:0.85rem; font-weight:600; color:var(--teal);">${fmt(totalContrib)}/yr</span>
+        </div>
+      </div>`;
+
+    // Final summary panel
+    const salary2 = salary;
+    const curPct = parseFloat(document.getElementById('employeeContrib').value) || 0;
+    const curPension = salary * curPct / 100;
+    const tgtPension = salary * tgtPct / 100;
+    const curCalc = calcTakeHome(salary, curPension);
+    const tgtCalc = calcTakeHome(salary, tgtPension);
+    const years = parseInt(document.getElementById('yearsToRetire').value) || 25;
+
+    document.getElementById('finalSummary').innerHTML = `
+      <div class="summary-panel-title">Your optimised pension plan</div>
+      <div class="summary-row"><span class="s-label">Gross salary</span><span class="s-val">${fmt(salary)}/yr</span></div>
+      <div class="summary-row"><span class="s-label">Your contribution</span><span class="s-val teal">${tgtPct}% (${fmt(tgtPension)}/yr)</span></div>
+      <div class="summary-row"><span class="s-label">Employer contribution</span><span class="s-val">${empPct}% (${fmt(salary * empPct / 100)}/yr)</span></div>
+      <div class="summary-row"><span class="s-label">Monthly take-home</span><span class="s-val">${fmt(tgtCalc.takeHome / 12)}</span></div>
+      <div class="summary-row"><span class="s-label">Monthly take-home change</span><span class="s-val">${fmt((tgtCalc.takeHome - curCalc.takeHome) / 12)}</span></div>
+      <div class="summary-row"><span class="s-label">Recommended method</span><span class="s-val teal">Salary Sacrifice</span></div>
+      <div class="summary-row"><span class="s-label">Years to retirement</span><span class="s-val">${years}</span></div>
+      <div class="summary-row"><span class="s-label">Annual allowance status</span><span class="s-val ${breached ? '' : 'teal'}">${breached ? '⚠ Exceeded' : '✓ Within limit'}</span></div>
+    `;
+  }
+
+  // ── NAVIGATION ─────────────────────────────────────────────────────────────
+  function goTo(step) {
+    if (step > 1) {
+      const salary = parseFloat(document.getElementById('grossSalary').value) || 0;
+      if (!salary) {
+        document.getElementById('grossSalary').focus();
+        return;
+      }
+    }
+
+    for (let i = 1; i <= 4; i++) {
+      document.getElementById('step' + i).classList.toggle('active', i === step);
+      const tab = document.getElementById('tab' + i);
+      tab.classList.toggle('active', i === step);
+      if (i < step) tab.classList.add('completed');
+      else if (i > step) tab.classList.remove('completed');
+    }
+
+    if (step === 2) {
+      const tgt = parseFloat(document.getElementById('targetContrib').value) || 5;
+      const slider = document.getElementById('adjContribPct');
+      if (slider) slider.value = tgt;
+      renderStep2();
+    }
+    if (step === 3) { renderStep2(); renderStep3(); }
+    if (step === 4) { renderStep2(); setTimeout(renderStep4, 50); }
+    if (step === 5) { renderStep2(); renderStep5(); }
+
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+    if (step >= 5) { checkAndShowPdfCta(); showAdviserCta(); } else if (hasEnoughData && hasEnoughData()) { showAdviserCta(); }
+  }
+
+
+  // ── OPTIMISE MODE ───────────────────────────────────────────────────────────
+  const GOALS = [
+    {
+      id: 'avoid_higher',
+      title: 'Avoid higher rate tax',
+      desc: 'Keep income below £50,270 so you stay in the basic rate band.',
+      calc: (salary, empPct) => Math.max(0, salary - 50270),
+    },
+    {
+      id: 'child_benefit',
+      title: 'Keep Child Benefit',
+      desc: 'Keep adjusted net income below £60,000 to avoid the High Income Child Benefit Charge.',
+      calc: (salary, empPct) => Math.max(0, salary - 60000),
+    },
+    {
+      id: 'avoid_additional',
+      title: 'Avoid additional rate tax',
+      desc: 'Keep income below £125,140 to avoid the 45% rate and retain your personal allowance.',
+      calc: (salary, empPct) => Math.max(0, salary - 125140),
+    },
+    {
+      id: 'maximise',
+      title: 'Maximise pension growth',
+      desc: 'Contribute up to the annual allowance (£60,000 or 100% of salary, whichever is lower).',
+      calc: (salary, empPct) => Math.max(0, Math.min(60000, salary) - salary * empPct / 100),
+    },
+  ];
+
+  let selectedGoals = new Set();
+  let optimiseMode = false;
+
+  function setContribMode(mode) {
+    optimiseMode = mode === 'optimise';
+    document.getElementById('mode_manual').classList.toggle('selected', !optimiseMode);
+    document.getElementById('mode_optimise').classList.toggle('selected', optimiseMode);
+    document.getElementById('manualContribWrap').style.display = optimiseMode ? 'none' : 'block';
+    document.getElementById('optimiseWrap').style.display = optimiseMode ? 'block' : 'none';
+    if (optimiseMode) renderGoals();
+  }
+
+  function renderGoals() {
+    const salary = parseFloat(document.getElementById('grossSalary').value) || 0;
+    const empPct = parseFloat(document.getElementById('employerContrib').value) || 0;
+    const minTH = parseFloat(document.getElementById('minTakeHomePO').value) || 0;
+    const list = document.getElementById('goalsList');
+
+    list.innerHTML = GOALS.map(function(g) {
+      const sel = selectedGoals.has(g.id);
+
+      if (g.dynamic && g.id === 'min_takehome') {
+        const hasMin = minTH > 0;
+        const desc = hasMin
+          ? 'Find the highest contribution that keeps take-home above <strong style="color:var(--navy)">\u00a3' + Math.round(minTH).toLocaleString('en-GB') + '/month</strong>.'
+          : g.desc;
+        return '<div class="goal-item' + (sel ? ' selected' : '') + (!hasMin ? ' disabled' : '') + '" '
+          + (hasMin ? 'onclick="toggleGoal(\'' + g.id + '\')"' : '')
+          + ' style="' + (!hasMin ? 'opacity:0.45;cursor:not-allowed;' : '') + '">'
+          + '<div class="goal-check">' + (sel ? '\u2713' : '') + '</div>'
+          + '<div class="goal-text">'
+          + '<div class="g-title">' + g.title + '</div>'
+          + '<div class="g-desc">' + desc + (!hasMin ? ' <span style="color:#94a3b8">Enter a minimum above to use this goal.</span>' : '') + '</div>'
+          + '</div></div>';
+      }
+
+      const needed = salary > 0 ? g.calc(salary, empPct) : null;
+      const pctNeeded = salary > 0 ? Math.ceil((needed / salary) * 100) : null;
+      const relevant = salary > 0 && needed > 0;
+      return '<div class="goal-item' + (sel ? ' selected' : '') + (!relevant && salary > 0 ? ' disabled' : '') + '" '
+        + 'onclick="toggleGoal(\'' + g.id + '\')" style="' + (!relevant && salary > 0 ? 'opacity:0.45;cursor:not-allowed;' : '') + '">'
+        + '<div class="goal-check">' + (sel ? '\u2713' : '') + '</div>'
+        + '<div class="goal-text">'
+        + '<div class="g-title">' + g.title + '</div>'
+        + '<div class="g-desc">' + g.desc
+        + (relevant ? ' <strong style="color:var(--teal)">Needs ' + pctNeeded + '% of salary.</strong>' : salary > 0 ? ' <span style="color:#94a3b8">Already achieved at your salary.</span>' : '')
+        + '</div></div></div>';
+    }).join('');
+
+    updateOptimiseResult();
+  }
+
+  function toggleGoal(id) {
+    const salary = parseFloat(document.getElementById('grossSalary').value) || 0;
+    const empPct = parseFloat(document.getElementById('employerContrib').value) || 0;
+    const goal = GOALS.find(g => g.id === id);
+    const needed = goal.calc(salary, empPct);
+    if (needed <= 0 && salary > 0) return; // already achieved
+    if (selectedGoals.has(id)) selectedGoals.delete(id);
+    else selectedGoals.add(id);
+    renderGoals();
+  }
+
+  function updateOptimiseResult() {
+    const salary = parseFloat(document.getElementById('grossSalary').value) || 0;
+    const empPct = parseFloat(document.getElementById('employerContrib').value) || 0;
+    const minTH = parseFloat(document.getElementById('minTakeHomePO').value) || 0;
+    const resultBox = document.getElementById('optimiseResult');
+
+    if (!salary || selectedGoals.size === 0) {
+      resultBox.style.display = 'none';
+      return;
+    }
+
+    let maxNeeded = 0;
+    let drivingGoals = [];
+    let minTHFlag = false;
+
+    // Min take-home goal: binary search for highest contrib that meets floor
+    if (selectedGoals.has('min_takehome') && minTH > 0) {
+      var lo = 0, hi = 100, bestPct = 0;
+      for (var i = 0; i < 25; i++) {
+        var mid = (lo + hi) / 2;
+        var taxable = salary - (salary * mid / 100);
+        var itax = taxable <= 12570 ? 0
+          : taxable <= 50270 ? (taxable - 12570) * 0.2
+          : (50270 - 12570) * 0.2 + (taxable - 50270) * 0.4;
+        var eni = taxable <= 12570 ? 0
+          : Math.min(taxable - 12570, 50270 - 12570) * 0.08
+          + Math.max(0, taxable - 50270) * 0.02;
+        var monthlyTH = (taxable - itax - eni) / 12;
+        if (monthlyTH >= minTH) { bestPct = mid; lo = mid; }
+        else { hi = mid; }
+      }
+      var pct = Math.floor(bestPct);
+      if (pct > maxNeeded) {
+        maxNeeded = pct;
+        drivingGoals = ['Protect my take-home pay'];
+        minTHFlag = true;
+      }
+    }
+
+    // Other goals
+    selectedGoals.forEach(function(id) {
+      if (id === 'min_takehome') return;
+      var goal = GOALS.find(function(g) { return g.id === id; });
+      if (!goal) return;
+      var needed = goal.calc(salary, empPct);
+      var empNeeded = Math.max(0, needed - salary * empPct / 100);
+      var pctNeeded = Math.ceil((empNeeded / salary) * 100);
+      if (pctNeeded > maxNeeded) {
+        maxNeeded = pctNeeded;
+        drivingGoals = [goal.title];
+        minTHFlag = false;
+      } else if (pctNeeded === maxNeeded) {
+        drivingGoals.push(goal.title);
+      }
+    });
+
+    var annualAllowancePct = Math.floor((60000 / salary) * 100);
+    var cappedPct = Math.min(maxNeeded, annualAllowancePct);
+
+    document.getElementById('targetContrib').value = cappedPct;
+
+    // Projected take-home at this contribution
+    var projTaxable = salary - (salary * cappedPct / 100);
+    var projTax = projTaxable <= 12570 ? 0
+      : projTaxable <= 50270 ? (projTaxable - 12570) * 0.2
+      : (50270 - 12570) * 0.2 + (projTaxable - 50270) * 0.4;
+    var projNI = projTaxable <= 12570 ? 0
+      : Math.min(projTaxable - 12570, 50270 - 12570) * 0.08
+      + Math.max(0, projTaxable - 50270) * 0.02;
+    var projMonthlyTH = (projTaxable - projTax - projNI) / 12;
+    var belowFloor = minTH > 0 && projMonthlyTH < minTH && !minTHFlag;
+
+    var tags = Array.from(selectedGoals).map(function(id) {
+      var g = GOALS.find(function(g) { return g.id === id; });
+      return g ? '<span class="optimise-goal-tag">\u2713 ' + g.title + '</span>' : '';
+    }).join('');
+
+    var floorWarning = belowFloor
+      ? '<div style="background:rgba(255,165,0,0.1);border:1px solid rgba(255,165,0,0.3);border-radius:6px;padding:0.6rem 0.85rem;margin-top:0.6rem;font-size:0.78rem;color:#fbbf24;">'
+        + '\u26a0 This contribution would leave you with <strong>\u00a3' + Math.round(projMonthlyTH).toLocaleString('en-GB') + '/month</strong>'
+        + ' \u2014 below your \u00a3' + Math.round(minTH).toLocaleString('en-GB') + '/month floor.'
+        + ' Consider reducing your goals or adjusting your minimum.'
+        + '</div>'
+      : '';
+
+    var mainMsg = minTHFlag
+      ? 'This is the highest contribution that keeps your take-home above \u00a3' + Math.round(minTH).toLocaleString('en-GB') + '/month via salary sacrifice. Your estimated take-home: <strong style="color:rgba(255,255,255,0.8)">\u00a3' + Math.round(projMonthlyTH).toLocaleString('en-GB') + '/month</strong>.'
+      : 'This is the minimum employee contribution needed to achieve all your selected goals via salary sacrifice.';
+
+    resultBox.style.display = 'block';
+    resultBox.innerHTML = '<div class="optimise-result-box">'
+      + '<div class="or-title">Recommended contribution: <strong style="font-size:1.3rem;">' + cappedPct + '%</strong>'
+      + ' &nbsp;<span style="font-size:0.8rem;color:rgba(255,255,255,0.45)">(' + fmt(salary * cappedPct / 100) + '/yr)</span></div>'
+      + '<div style="margin-bottom:0.6rem;">' + tags + '</div>'
+      + '<p style="font-size:0.78rem;color:rgba(255,255,255,0.5);line-height:1.5;">' + mainMsg + '</p>'
+      + floorWarning
+      + '</div>';
+  }
+
+  function syncManualTarget() {
+    // nothing extra needed — targetContrib input is read directly
+  }
+
+  // Live recalc on projection inputs + re-render goals when salary/employer changes
+  document.addEventListener('input', function(e) {
+    if (['growthRate', 'salaryGrowth'].includes(e.target.id)) renderStep4();
+    if (['grossSalary', 'employerContrib'].includes(e.target.id) && optimiseMode) renderGoals();
+  });
+
+  updateYearsLabel();
+
+  // ── MYPAYPICTURE CHAT ─────────────────────────────────────────────────────
+  const WORKER_URL = 'https://mypaypicture-api.proud-truth-9c88.workers.dev';
+  const SYS_PROMPT = 'You are a helpful UK personal finance assistant embedded in MyPayPicture\'s Pay Optimiser tool. This tool helps employed people find their ideal pension contribution, compare salary sacrifice vs personal contributions, understand take-home pay impact, and project pension growth.\n\nKey topics: salary sacrifice, take-home pay, NI savings, income tax bands, annual allowance, pension pot projection, goal-based optimisation.\n\nRules:\n- UK English, 2024/25 rates\n- General information only, not personalised financial advice\n- Plain English, warm and practical tone\n- Never recommend specific investment products or providers';
+  let chatHist = [];
+  let chatBusy = false;
+
+  function chatAddMsg(role, text, typing) {
+    const msgs = document.getElementById('chatMsgs');
+    const div = document.createElement('div');
+    div.className = 'chat-msg ' + (role === 'user' ? 'user' : 'ai');
+    if (typing) div.id = 'chatTyping';
+    const av = role === 'user' ? 'You' : '✦';
+    let bubble;
+    if (typing) {
+      bubble = '<div class="chat-typing"><span></span><span></span><span></span></div>';
+    } else {
+      const toolLinks = {
+        'MyPensionOptimiser': 'pension-optimiser.html',
+        'MyPensionReclaim': 'pension-reclaim.html',
+        'MyPensionTop-Up': 'pension-topup.html',
+        'MyRetirementHelper': 'retirement-helper.html',
+      };
+      const formatted = text.split('\n\n').map(function(p) {
+        var line = p.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
+        Object.keys(toolLinks).forEach(function(name) {
+          line = line.split(name).join('<a href="' + toolLinks[name] + '" style="color:var(--navy,#0f1f38);font-weight:600;text-decoration:underline;">' + name + '</a>');
+        });
+        return line;
+      }).join('</p><p>');
+      // Render markdown links [text](url)
+      const linkedFormatted = formatted.replace(/\[([^\]]+)\]\((https?:\/\/[^)]+)\)/g, '<a href="$2" target="_blank" style="color:var(--navy,#0f1f38);font-weight:600;text-decoration:underline;">$1</a>');
+      bubble = '<p>' + linkedFormatted + '</p>';
+    }
+    div.innerHTML = '<div class="msg-av">' + av + '</div><div class="msg-bub">' + bubble + '</div>';
+    msgs.appendChild(div);
+    msgs.scrollTop = msgs.scrollHeight;
+  }
+
+  async function chatSend() {
+    const input = document.getElementById('chatInput');
+    const btn = document.getElementById('chatSendBtn');
+    const text = input.value.trim();
+    if (!text || chatBusy) return;
+    document.getElementById('chatChips').style.display = 'none';
+    chatAddMsg('user', text);
+    chatHist.push({ role: 'user', content: text });
+    input.value = '';
+    input.style.height = 'auto';
+    chatBusy = true;
+    btn.disabled = true;
+    chatAddMsg('ai', '', true);
+    try {
+      const res = await fetch(WORKER_URL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ messages: chatHist, system: SYS_PROMPT }),
+      });
+      const data = await res.json();
+      const reply = (data.content && data.content[0] && data.content[0].text)
+        ? data.content[0].text
+        : (data.error || 'Sorry, something went wrong. Please try again.');
+      var t = document.getElementById('chatTyping');
+      if (t) t.remove();
+      if (isComplex) {
+        const ctaNote = '\n\n---\n**Want personalised advice?** A regulated financial adviser can help with your specific situation. [Speak to an adviser →](https://tally.so/r/xX2YP5)';
+        chatAddMsg('ai', reply + ctaNote);
+      } else {
+        chatAddMsg('ai', reply);
+      }
+      // Show adviser CTA after any response
+      showAdviserCta();
+      chatHist.push({ role: 'assistant', content: reply });
+    } catch (err) {
+      var t = document.getElementById('chatTyping');
+      if (t) t.remove();
+      chatAddMsg('ai', 'Unable to connect. Please check your connection and try again.');
+    }
+    chatBusy = false;
+    btn.disabled = false;
+    input.focus();
+  }
+
+  function chatChip(el) {
+    document.getElementById('chatInput').value = el.textContent;
+    chatSend();
+  }
+
+
+  // ── ADVISER CTA ───────────────────────────────────────────────────────────
+  function showAdviserCta() {
+    const el = document.getElementById('adviserCta');
+    if (el) el.classList.add('visible');
+  }
+
+  function adviserCtaClick() {
+    // Track click if analytics available
+    if (typeof gtag !== 'undefined') {
+      gtag('event', 'adviser_cta_click', { event_category: 'engagement' });
+    }
+  }
+
+
+  // ── PDF REPORT CTA ────────────────────────────────────────────────────────
+
+  function hasEnoughData() {
+    var salary = parseFloat(document.getElementById('grossSalary') && document.getElementById('grossSalary').value) || 0;
+    var tgt = parseFloat(document.getElementById('targetContrib') && document.getElementById('targetContrib').value) || 0;
+    return salary > 0 && tgt > 0;
+  }
+
+  // Also wire up live input checking — show bar as soon as data is complete
+  document.addEventListener('input', function() {
+    if (typeof hasEnoughData === 'function' && hasEnoughData()) {
+      showAdviserCta();
+    }
+    if (typeof checkAndShowPdfCta === 'function') checkAndShowPdfCta();
+  });
+
+
+  function checkAndShowPdfCta() {
+    var ready = (document.getElementById('grossSalary') && parseFloat(document.getElementById('grossSalary').value) > 0) || (document.getElementById('targetContrib') && parseFloat(document.getElementById('targetContrib').value) > 0);
+    var cta = document.getElementById('pdfInlineCta');
+    if (cta) cta.classList.toggle('visible', ready);
+  }
+
+
+  // Show download button if already paid
+  (function() {
+    if (window.location.search.includes('paid=true')) {
+      window.addEventListener('DOMContentLoaded', function() {
+        var buy = document.getElementById('pdfInlineBuyBtn');
+        var dl = document.getElementById('pdfInlineDlBtn');
+        var price = document.getElementById('pdfInlinePrice');
+        var cta = document.getElementById('pdfInlineCta');
+        if (cta) cta.classList.add('visible');
+        if (buy) buy.style.display = 'none';
+        if (dl) dl.style.display = 'inline-block';
+        if (price) price.textContent = '\u2713 Paid';
+      });
+    }
+  })();
+
+
+  // ── PDF REPORT ─────────────────────────────────────────────────────────────
+  function loadJsPDF(cb) {
+    if (window.jspdf) { cb(); return; }
+    var s = document.createElement('script');
+    s.src = 'https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js';
+    s.onload = cb;
+    document.head.appendChild(s);
+  }
+
+  function generateReport() {
+    loadJsPDF(function() {
+      var doc = new window.jspdf.jsPDF();
+      var navy = [15,31,56], teal = [13,148,136], white = [255,255,255], grey = [74,85,104], light = [245,245,248];
+
+      // Inputs
+      var salary = parseFloat(document.getElementById('grossSalary').value) || 0;
+      var empPct = parseFloat(document.getElementById('employerContrib').value) || 0;
+      var curPct = parseFloat(document.getElementById('employeeContrib').value) || 0;
+      var adjSlider = document.getElementById('adjContribPct');
+      var adjPct = adjSlider ? parseFloat(adjSlider.value) : (parseFloat(document.getElementById('targetContrib').value) || 0);
+      var years = parseInt(document.getElementById('yearsToRetire').value) || 25;
+      var isSS = state && state.method !== 'personal';
+      var method = isSS ? 'Salary Sacrifice' : 'Personal Contribution';
+
+      var curPension = salary * curPct / 100;
+      var adjPension = salary * adjPct / 100;
+      var empPension = salary * empPct / 100;
+      var curCalc = calcTakeHome(salary, curPension);
+      var adjCalc = calcTakeHome(salary, adjPension);
+      var curMonthly = curCalc.takeHome / 12;
+      var adjMonthly = adjCalc.takeHome / 12;
+      var diff = adjMonthly - curMonthly;
+      var totalPension = adjPension + empPension;
+      var growthRate = 0.04;
+      var potVal = Math.round(totalPension * ((Math.pow(1 + growthRate, years) - 1) / growthRate));
+
+      function fmtN(n) { return '\u00a3' + Math.round(n).toLocaleString('en-GB'); }
+
+      // ── Header ────────────────────────────────────────────────────────────
+      doc.setFillColor(...navy); doc.rect(0, 0, 210, 28, 'F');
+      doc.setFont('helvetica', 'bold'); doc.setFontSize(16); doc.setTextColor(...white);
+      doc.text('MyPay', 14, 14);
+      doc.setFont('helvetica', 'normal'); doc.text('Picture', 33, 14);
+      doc.setFontSize(8); doc.setTextColor(180, 180, 180);
+      doc.text('MyPensionOptimiser Report', 14, 22);
+      doc.text('Generated ' + new Date().toLocaleDateString('en-GB', {day:'numeric',month:'long',year:'numeric'}), 196, 22, {align:'right'});
+
+      var y = 36;
+
+      // ── Title ─────────────────────────────────────────────────────────────
+      doc.setFont('helvetica', 'bold'); doc.setFontSize(14); doc.setTextColor(...navy);
+      doc.text('Your Pay Optimisation Summary', 14, y); y += 10;
+
+      // ── Section helper ─────────────────────────────────────────────────────
+      function section(title, rows, accent) {
+        accent = accent || navy;
+        doc.setFillColor(...accent); doc.rect(14, y, 182, 7, 'F');
+        doc.setFont('helvetica', 'bold'); doc.setFontSize(9); doc.setTextColor(...white);
+        doc.text(title.toUpperCase(), 17, y + 5); y += 11;
+        rows.forEach(function(row, i) {
+          if (i % 2 === 0) { doc.setFillColor(...light); doc.rect(14, y-3, 182, 8, 'F'); }
+          doc.setFont('helvetica', 'normal'); doc.setFontSize(9); doc.setTextColor(...grey);
+          doc.text(row[0], 17, y + 2);
+          doc.setFont('helvetica', 'bold'); doc.setTextColor(...navy);
+          if (row[2]) { // three-col (label, now, new)
+            doc.text(row[1], 120, y + 2, {align:'right'});
+            doc.setTextColor(...teal);
+            doc.text(row[2], 193, y + 2, {align:'right'});
+          } else {
+            doc.text(row[1], 193, y + 2, {align:'right'});
+          }
+          y += 8;
+        });
+        y += 4;
+      }
+
+      // ── Now vs New comparison ─────────────────────────────────────────────
+      // Column headers
+      doc.setFontSize(8); doc.setTextColor(...grey);
+      doc.text('Now (' + curPct + '%)', 120, y, {align:'right'});
+      doc.setTextColor(...teal);
+      doc.text('New (' + adjPct + '%)', 193, y, {align:'right'});
+      y += 4;
+
+      section('Your Pay & Contributions', [
+        ['Your pension contribution', fmtN(curPension/12)+'/mo', fmtN(adjPension/12)+'/mo'],
+        ['Employer contribution', fmtN(empPension/12)+'/mo', fmtN(empPension/12)+'/mo'],
+        ['Total into pension', fmtN((curPension+empPension)/12)+'/mo', fmtN((adjPension+empPension)/12)+'/mo'],
+        ['Contribution method', method, method],
+      ], navy);
+
+      section('Take-Home Impact', [
+        ['Income tax', fmtN(curCalc.tax/12)+'/mo', fmtN(adjCalc.tax/12)+'/mo'],
+        ['National Insurance', fmtN(curCalc.ni/12)+'/mo', fmtN(adjCalc.ni/12)+'/mo'],
+        ['Monthly take-home', fmtN(curMonthly), fmtN(adjMonthly)],
+        ['Annual take-home', fmtN(curCalc.takeHome), fmtN(adjCalc.takeHome)],
+        ['Monthly change', '', (diff >= 0 ? '+' : '') + fmtN(diff) + '/mo'],
+      ], teal);
+
+      section('Illustrative Pot Projection', [
+        ['Years to retirement', String(years) + ' years', String(years) + ' years'],
+        ['Annual growth rate assumed', '4%', '4%'],
+        ['Estimated pot at retirement', '', fmtN(potVal)],
+        ['Annual allowance', '\u00a360,000', '\u00a360,000'],
+        ['Total contributions vs allowance', fmtN(curPension+empPension)+'/yr', fmtN(totalPension)+'/yr'],
+      ], [80, 80, 100]);
+
+      // ── Disclaimer ────────────────────────────────────────────────────────
+      var ph = doc.internal.pageSize.height;
+      doc.setFillColor(...light); doc.rect(0, ph-18, 210, 18, 'F');
+      doc.setFont('helvetica', 'italic'); doc.setFontSize(7); doc.setTextColor(120,120,140);
+      doc.text('Illustrative only \u2014 not financial advice. Figures based on 2024/25 UK tax rates. Speak to a qualified financial adviser before making changes.', 14, ph-10);
+      doc.text('mypaypicture.com', 196, ph-4, {align:'right'});
+
+      doc.save('MyPayPicture-PayOptimiser-Report.pdf');
+    });
+  }
+
+
+</script>
+<script>
+  if ('serviceWorker' in navigator) {
+    window.addEventListener('load', function() {
+      navigator.serviceWorker.register('/sw.js').catch(function(err) {
+        console.log('SW registration failed:', err);
+      });
+    });
+  }
+</script>
+</body>
+</html>

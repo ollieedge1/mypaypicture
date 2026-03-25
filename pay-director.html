@@ -449,9 +449,9 @@
         <div class="switcher-item-text"><div class="item-name" style="color:rgba(255,255,255,0.4); font-size:0.8rem;">&#8592; MyPayPicture</div></div>
       </div>
       <div class="switcher-group-label">&#128084; Employed</div>
-      <div class="switcher-item" onclick="window.location.href='pay-optimiser.html'">
+      <div class="switcher-item" onclick="window.location.href='pension-optimiser.html'">
         <div class="switcher-item-icon" style="background:rgba(13,148,136,0.15);">&#128200;</div>
-        <div class="switcher-item-text"><div class="item-name" >MyPayOptimiser</div><div class="item-desc">Make every pound work harder.</div></div>
+        <div class="switcher-item-text"><div class="item-name" >MyPensionOptimiser</div><div class="item-desc">Make every pound work harder.</div></div>
       </div>
       <div class="switcher-item" onclick="window.location.href='pension-reclaim.html'">
         <div class="switcher-item-icon" style="background:rgba(201,168,76,0.15);">&#128176;</div>
@@ -1275,7 +1275,7 @@ const STRATEGIES = [
     if (typing) {
       bubble = '<div class="chat-typing"><span></span><span></span><span></span></div>';
     } else {
-      const toolLinks = { 'MyPayOptimiser':'pay-optimiser.html','MyPensionReclaim':'pension-reclaim.html','MyPensionTop-Up':'pension-topup.html','MyRetirementHelper':'retirement-helper.html' };
+      const toolLinks = { 'MyPensionOptimiser':'pension-optimiser.html','MyPensionReclaim':'pension-reclaim.html','MyPensionTop-Up':'pension-topup.html','MyRetirementHelper':'retirement-helper.html' };
       let formatted = text.split('\n\n').map(function(p) {
         var line = p.replace(/\*\*(.*?)\*\*/g,'<strong>$1</strong>');
         line = line.replace(/\[([^\]]+)\]\((https?:\/\/[^)]+)\)/g,'<a href="$2" target="_blank" style="color:var(--navy);font-weight:600;text-decoration:underline;">$1</a>');

@@ -191,9 +191,9 @@
         <div class="switcher-item-text"><div class="item-name" style="color:rgba(255,255,255,0.4);">Suite Home</div><div class="item-desc">You are here</div></div>
       </div>
       <div class="switcher-group-label">&#128084; Employed</div>
-      <div class="switcher-item" onclick="window.location.href='pay-optimiser.html'">
+      <div class="switcher-item" onclick="window.location.href='pension-optimiser.html'">
         <div class="switcher-item-icon" style="background:rgba(13,148,136,0.15);">&#128200;</div>
-        <div class="switcher-item-text"><div class="item-name">MyPayOptimiser</div><div class="item-desc">Make every pound work harder.</div></div>
+        <div class="switcher-item-text"><div class="item-name">MyPensionOptimiser</div><div class="item-desc">Make every pound work harder.</div></div>
       </div>
       <div class="switcher-item" onclick="window.location.href='pension-reclaim.html'">
         <div class="switcher-item-icon" style="background:rgba(201,168,76,0.15);">&#128176;</div>
@@ -247,11 +247,11 @@
   <!-- EMPLOYED -->
   <div class="tab-panel active" id="tpanel_employed">
     <div class="group-grid-2">
-      <a class="tool-card c-teal" href="pay-optimiser.html">
+      <a class="tool-card c-teal" href="pension-optimiser.html">
         <span class="tool-icon">&#128200;</span>
-        <div class="tool-name">MyPayOptimiser</div>
+        <div class="tool-name">MyPensionOptimiser</div>
         <p class="tool-tagline">Optimising your pension? We'll show you exactly what to contribute and how much tax you can save.</p>
-        <div class="tool-cta">Open MyPayOptimiser <span class="cta-arrow">&#8594;</span></div>
+        <div class="tool-cta">Open MyPensionOptimiser <span class="cta-arrow">&#8594;</span></div>
       </a>
       <a class="tool-card c-gold" href="pension-reclaim.html">
         <span class="tool-icon">&#128176;</span>
@@ -355,7 +355,7 @@
 
   // CHAT
   const WORKER_URL = 'https://mypaypicture-api.proud-truth-9c88.workers.dev';
-  const SYS_PROMPT = 'You are a helpful UK personal finance assistant for MyPayPicture, a suite of tools helping people understand their pay, pension, and benefits. Help users find the right tool and answer general UK personal finance questions.\n\nTools: MyPayOptimiser (salary sacrifice, contributions), MyPensionReclaim (missed salary sacrifice on bonuses), MyPensionTop-Up (AVCs and tax relief), MyFamily&Benefits (Child Benefit and Tax-Free Childcare), MyRetirementHelper (State Pension, drawdown, sustainability), MyPayDirector (salary vs dividends for limited company directors).\n\nRules:\n- UK English, 2024/25 rates\n- General information only, not personalised financial advice\n- When recommending a tool, always use its exact name: MyPayOptimiser, MyPensionReclaim, MyPensionTop-Up, MyRetirementHelper, MyPayDirector\n- Direct users to the right tool\n- Warm, clear, approachable tone';
+  const SYS_PROMPT = 'You are a helpful UK personal finance assistant for MyPayPicture, a suite of tools helping people understand their pay, pension, and benefits. Help users find the right tool and answer general UK personal finance questions.\n\nTools: MyPensionOptimiser (salary sacrifice, contributions), MyPensionReclaim (missed salary sacrifice on bonuses), MyPensionTop-Up (AVCs and tax relief), MyFamily&Benefits (Child Benefit and Tax-Free Childcare), MyRetirementHelper (State Pension, drawdown, sustainability), MyPayDirector (salary vs dividends for limited company directors).\n\nRules:\n- UK English, 2024/25 rates\n- General information only, not personalised financial advice\n- When recommending a tool, always use its exact name: MyPensionOptimiser, MyPensionReclaim, MyPensionTop-Up, MyRetirementHelper, MyPayDirector\n- Direct users to the right tool\n- Warm, clear, approachable tone';
 
   let chatHist = [], chatBusy = false;
 
@@ -370,7 +370,7 @@
       bubble = '<div class="chat-typing"><span></span><span></span><span></span></div>';
     } else {
       const toolLinks = {
-        'MyPayOptimiser':'pay-optimiser.html',
+        'MyPensionOptimiser':'pension-optimiser.html',
         'MyPensionReclaim':'pension-reclaim.html',
         'MyPensionTop-Up':'pension-topup.html',
         'MyRetirementHelper':'retirement-helper.html',
