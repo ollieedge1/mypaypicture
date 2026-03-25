@@ -839,7 +839,7 @@
     }
     if (step === 2) renderStep2();
     if (step === 3) renderStep3();
-    if (step === 4) renderStep4();
+    if (step === 4) { renderStep4(); checkAndShowPdfCta(); }
     if (step === 5) { renderStep4(); renderStep5(); }
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }
@@ -848,6 +848,22 @@
   initTriggers();
 
   // ── PDF REPORT ─────────────────────────────────────────────────────────────
+
+  // ── PDF CTA ────────────────────────────────────────────────────────────────
+  function hasEnoughData() {
+    var emp    = parseFloat(document.getElementById('empIncome').value) || 0;
+    var selfEmp = parseFloat(document.getElementById('selfEmpProfit').value) || 0;
+    var rental  = parseFloat(document.getElementById('rentalProfit').value) || 0;
+    var divs    = parseFloat(document.getElementById('dividends').value) || 0;
+    var other   = parseFloat(document.getElementById('otherIncome').value) || 0;
+    return (emp + selfEmp + rental + divs + other) > 0;
+  }
+
+  function checkAndShowPdfCta() {
+    var cta = document.getElementById('pdfInlineCta');
+    if (cta) cta.classList.toggle('visible', hasEnoughData());
+  }
+
   function loadJsPDF(cb) {
     if (window.jspdf) { cb(); return; }
     var s = document.createElement('script');
@@ -941,6 +957,10 @@
   // ── CHAT ───────────────────────────────────────────────────────────────────
   var WORKER_URL = 'https://mypaypicture-api.proud-truth-9c88.workers.dev';
   var SYS_PROMPT = 'You are a helpful UK tax assistant embedded in MyPayPicture\'s MySelfAssessment tool. This tool helps people understand whether they need to file a Self Assessment return, estimate their tax liability, and know what to do next.\n\nKey topics: Self Assessment triggers (self-employment, rental income, dividends over \u00a3500, income over \u00a3100k, HICBC, capital gains), 2024/25 tax rates (personal allowance \u00a312,570, basic rate 20% to \u00a350,270, higher rate 40% to \u00a3125,140), Class 2 and 4 NI for self-employed, dividend tax rates (8.75% basic, 33.75% higher), higher rate pension and Gift Aid relief, Payments on Account, key deadlines (registration 5 Oct 2025, online filing 31 Jan 2026).\n\nRules:\n- UK English, 2024/25 rates\n- General information only, not personalised tax advice\n- Always recommend verifying with HMRC or a qualified accountant/tax adviser\n- Plain English, reassuring tone \u2014 Self Assessment is anxiety-inducing for many people';
+
+  document.addEventListener('input', function() {
+    if (typeof checkAndShowPdfCta === 'function') checkAndShowPdfCta();
+  });
 
   var chatHist = [], chatBusy = false;
 
