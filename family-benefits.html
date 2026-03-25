@@ -15,15 +15,15 @@
 <style>
   :root {
     --navy: #0f1f38;
-    --rose: #9b2335;
-    --rose-light: #c0392b;
-    --rose-pale: #fdf2f2;
+    --rose: #f4a7b9;
+    --rose-light: #fce4ec;
+    --rose-pale: #fdf0f5;
     --cream: #f7f3ec;
     --slate: #4a5568;
     --slate-light: #718096;
     --green-light: #40916c;
     --white: #ffffff;
-    --border: rgba(155,35,53,0.2);
+    --border: rgba(244,167,185,0.2);
     --red: #c0392b;
   }
 
@@ -166,7 +166,7 @@
   .switcher-item { display: flex; align-items: center; gap: 0.75rem; padding: 0.85rem 1rem; cursor: pointer; transition: background 0.15s; border-bottom: 1px solid rgba(255,255,255,0.06); }
   .switcher-item:last-child { border-bottom: none; }
   .switcher-item:hover { background: rgba(255,255,255,0.06); }
-  .switcher-item.current { background: rgba(155,35,53,0.1); }
+  .switcher-item.current { background: rgba(244,167,185,0.1); }
   .switcher-item-icon { width: 32px; height: 32px; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 1rem; flex-shrink: 0; }
   .switcher-item-text .item-name { font-family: 'Playfair Display', serif; font-size: 0.9rem; color: white; }
   .switcher-item-text .item-desc { font-size: 0.72rem; color: rgba(255,255,255,0.4); margin-top: 0.1rem; }
@@ -176,7 +176,7 @@
 
   /* HERO */
   .hero { background: var(--navy); padding: 3rem 2rem 4rem; text-align: center; position: relative; overflow: hidden; }
-  .hero::before { content: ''; position: absolute; top: -80px; right: -80px; width: 300px; height: 300px; border-radius: 50%; background: radial-gradient(circle, rgba(155,35,53,0.12) 0%, transparent 70%); pointer-events: none; }
+  .hero::before { content: ''; position: absolute; top: -80px; right: -80px; width: 300px; height: 300px; border-radius: 50%; background: radial-gradient(circle, rgba(244,167,185,0.12) 0%, transparent 70%); pointer-events: none; }
   .hero h1 { font-family: 'Playfair Display', serif; font-size: clamp(1.9rem, 5vw, 3rem); color: var(--white); line-height: 1.15; max-width: 580px; margin: 0 auto 1rem; }
   .hero h1 em { font-style: italic; color: var(--rose-light); }
   .hero p { color: rgba(255,255,255,0.55); font-size: 1rem; max-width: 460px; margin: 0 auto; line-height: 1.65; }
@@ -188,7 +188,7 @@
   .steps-nav { display: flex; border-radius: 12px 12px 0 0; overflow: hidden; border: 1px solid var(--border); border-bottom: none; background: white; }
   .step-tab { flex: 1; padding: 0.9rem 0.5rem; text-align: center; font-size: 0.73rem; font-weight: 500; letter-spacing: 0.04em; text-transform: uppercase; color: var(--slate-light); cursor: pointer; transition: all 0.2s; border-right: 1px solid var(--border); }
   .step-tab:last-child { border-right: none; }
-  .step-tab.active { background: var(--navy); color: var(--rose-light); }
+  .step-tab.active { background: var(--navy); color: var(--rose); }
   .step-tab.completed { color: var(--green-light); }
   .step-tab .step-num { display: block; font-family: 'Playfair Display', serif; font-size: 1.2rem; font-weight: 700; margin-bottom: 0.2rem; color: inherit; }
   .step-tab.completed .step-num::after { content: ' ✓'; font-size: 0.9rem; }
@@ -207,7 +207,7 @@
   .input-wrap { position: relative; }
   .input-prefix { position: absolute; left: 14px; top: 50%; transform: translateY(-50%); color: var(--slate); font-size: 1rem; pointer-events: none; }
   input[type="number"] { width: 100%; padding: 0.75rem 1rem 0.75rem 2rem; border: 1.5px solid #ddd; border-radius: 8px; font-family: 'DM Sans', sans-serif; font-size: 1rem; color: var(--navy); background: white; transition: border-color 0.2s; appearance: none; -webkit-appearance: none; }
-  input[type="number"]:focus { outline: none; border-color: var(--rose); box-shadow: 0 0 0 3px rgba(155,35,53,0.1); }
+  input[type="number"]:focus { outline: none; border-color: var(--rose); box-shadow: 0 0 0 3px rgba(244,167,185,0.1); }
   input.no-prefix { padding-left: 1rem; }
   .hint { font-size: 0.78rem; color: var(--slate-light); margin-top: 0.4rem; line-height: 1.4; }
 
@@ -318,7 +318,7 @@
 
   /* BUTTONS */
   .btn-primary { background: var(--rose); color: white; border: none; padding: 0.85rem 2rem; border-radius: 8px; font-family: 'DM Sans', sans-serif; font-size: 0.95rem; font-weight: 600; cursor: pointer; transition: all 0.2s; }
-  .btn-primary:hover { background: var(--rose-light); transform: translateY(-1px); box-shadow: 0 4px 12px rgba(155,35,53,0.3); }
+  .btn-primary:hover { background: var(--rose-light); transform: translateY(-1px); box-shadow: 0 4px 12px rgba(244,167,185,0.3); }
   .btn-secondary { background: transparent; color: var(--slate); border: 1.5px solid #ddd; padding: 0.85rem 1.5rem; border-radius: 8px; font-family: 'DM Sans', sans-serif; font-size: 0.9rem; font-weight: 500; cursor: pointer; transition: all 0.2s; }
   .btn-secondary:hover { border-color: var(--navy); color: var(--navy); }
   .btn-row { display: flex; gap: 0.75rem; margin-top: 2rem; justify-content: flex-end; flex-wrap: wrap; }
@@ -362,8 +362,8 @@
         <div class="switcher-item-text"><div class="item-name" >MyPensionTop-Up</div><div class="item-desc">Make AVCs and claim your tax relief.</div></div>
       </div>
       <div class="switcher-item  current" style="cursor:default;">
-        <div class="switcher-item-icon" style="background:rgba(155,35,53,0.15);">&#128106;</div>
-        <div class="switcher-item-text"><div class="item-name" style="color:#f87171;">MyFamily&amp;Benefits</div><div class="item-desc">Child Benefit &amp; Tax-Free Childcare.</div></div>
+        <div class="switcher-item-icon" style="background:rgba(244,167,185,0.15);">&#128106;</div>
+        <div class="switcher-item-text"><div class="item-name" style="color:#f4a7b9;">MyFamily&amp;Benefits</div><div class="item-desc">Child Benefit &amp; Tax-Free Childcare.</div></div>
       </div>
       <div class="switcher-group-label">&#127962; Director</div>
       <div class="switcher-item" onclick="window.location.href='pay-director.html'">
