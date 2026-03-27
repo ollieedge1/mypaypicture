@@ -1,6 +1,66 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-XY51DX80VL"></script>
+<script>
+  // ── ANALYTICS ──────────────────────────────────────────────────────────────
+  var GA_ID = 'G-XY51DX80VL';
+
+  function gaEvent(name, params) {
+    if (typeof gtag !== 'undefined') {
+      gtag('event', name, params || {});
+    }
+  }
+
+  // Track tool started (step 2+)
+  var _gaToolStarted = false;
+  function trackToolStart(toolName) {
+    if (!_gaToolStarted) {
+      _gaToolStarted = true;
+      gaEvent('tool_started', { tool: toolName });
+    }
+  }
+
+  // Track tool completed (final step)
+  function trackToolComplete(toolName) {
+    gaEvent('tool_completed', { tool: toolName });
+  }
+
+  // Track PDF CTA shown
+  function trackPdfCtaShown(toolName) {
+    gaEvent('pdf_cta_shown', { tool: toolName });
+  }
+
+  // Track PDF purchased (paid=true on load)
+  function trackPdfPurchased(toolName) {
+    gaEvent('pdf_purchased', { tool: toolName });
+  }
+
+  // Track adviser CTA clicked
+  document.addEventListener('click', function(e) {
+    var el = e.target.closest('.adviser-cta-btn');
+    if (el) gaEvent('adviser_cta_clicked', { tool: document.title });
+  });
+
+  // Track chat messages sent
+  function trackChatSent(toolName) {
+    gaEvent('chat_message_sent', { tool: toolName });
+  }
+
+  // Check for paid=true on load
+  if (window.location.search.includes('paid=true')) {
+    window.addEventListener('DOMContentLoaded', function() {
+      trackPdfPurchased(document.title);
+    });
+  }
+</script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-XY51DX80VL');
+</script>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link rel="manifest" href="manifest.json">
