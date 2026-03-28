@@ -339,6 +339,75 @@
     .btn-row { justify-content: stretch; }
     .btn-primary, .btn-secondary { flex: 1; text-align: center; }
   }
+
+  /* ── Tooltip system ─────────────────────────────────────── */
+  .tooltip-wrap { position: relative; display: inline; }
+  .tooltip-icon {
+    display: inline-flex; align-items: center; justify-content: center;
+    width: 1.1rem; height: 1.1rem; border-radius: 50%;
+    background: var(--amber-pale, #fdf8e8); color: var(--navy);
+    font-size: 0.65rem; font-weight: 700; cursor: help;
+    vertical-align: middle; margin-left: 0.3rem; border: none;
+    font-family: 'DM Sans', sans-serif;
+  }
+  .tooltip-bubble {
+    display: none; position: absolute; bottom: calc(100% + 8px); left: 50%;
+    transform: translateX(-50%); background: var(--navy); color: #fff;
+    padding: 0.6rem 0.85rem; border-radius: 8px; font-size: 0.78rem;
+    line-height: 1.5; width: max-content; max-width: 280px;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.18); z-index: 100;
+    font-family: 'DM Sans', sans-serif; font-weight: 400;
+  }
+  .tooltip-bubble::after {
+    content: ''; position: absolute; top: 100%; left: 50%;
+    transform: translateX(-50%); border: 6px solid transparent;
+    border-top-color: var(--navy);
+  }
+  .tooltip-wrap:hover .tooltip-bubble,
+  .tooltip-wrap:focus-within .tooltip-bubble { display: block; }
+
+  /* ── Privacy badge ──────────────────────────────────────── */
+  .privacy-badge {
+    display: flex; align-items: center; gap: 0.5rem;
+    background: #f0fdf4; border: 1px solid #bbf7d0;
+    border-radius: 8px; padding: 0.5rem 0.85rem;
+    font-size: 0.78rem; color: #166534; margin-bottom: 0.75rem;
+  }
+
+  /* ── Breakdown toggle ───────────────────────────────────── */
+  .breakdown-toggle { margin-top: 0.75rem; }
+  .breakdown-toggle summary {
+    font-size: 0.82rem; font-weight: 500; color: var(--slate);
+    cursor: pointer; padding: 0.4rem 0; list-style: none;
+    display: flex; align-items: center; gap: 0.4rem;
+  }
+  .breakdown-toggle summary::before { content: '▸'; transition: transform 0.2s; }
+  .breakdown-toggle[open] summary::before { transform: rotate(90deg); }
+  .breakdown-toggle summary::-webkit-details-marker { display: none; }
+
+  /* ── Step reassurance ───────────────────────────────────── */
+  .step-reassurance {
+    font-size: 0.8rem; color: var(--amber, #EDAC00); text-align: right;
+    margin: 1rem 0 0.25rem; font-style: italic;
+  }
+
+  /* ── Softer result boxes ────────────────────────────────── */
+  .result-box {
+    background: #f8f9fa !important; border-radius: 12px;
+    padding: 1.1rem; text-align: center;
+    border: 1px solid rgba(0,0,0,0.06);
+  }
+  .result-box .r-label { color: var(--slate-light) !important; }
+  .result-box .r-amount { color: var(--navy) !important; }
+  .result-box .r-sub { color: var(--slate-light) !important; }
+  .result-box.highlight {
+    background: var(--amber-pale, #fdf8e8) !important;
+    border-color: rgba(237,172,0,0.2) !important;
+  }
+  .result-box.highlight .r-amount { color: var(--navy) !important; }
+
+  /* ── Active tab text fix ────────────────────────────────── */
+  .step-tab.active.completed { color: white !important; }
 </style>
 </head>
 <body>
@@ -386,17 +455,22 @@
 </div>
 
 <div class="container">
+  <div class="privacy-badge">
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+    <span>Your data stays on your device — nothing is sent to a server or stored in the cloud.</span>
+  </div>
+
   <div class="steps-nav">
-    <div class="step-tab active" onclick="goTo(1)" id="tab1"><span class="step-num">1</span>Your Details</div>
-    <div class="step-tab" onclick="goTo(2)" id="tab2"><span class="step-num">2</span>Relief Calculation</div>
-    <div class="step-tab" onclick="goTo(3)" id="tab3"><span class="step-num">3</span>Allowance Check</div>
-    <div class="step-tab" onclick="goTo(4)" id="tab4"><span class="step-num">4</span>Next Steps</div>
+    <div class="step-tab active" onclick="goTo(1)" id="tab1"><span class="step-num">1</span>Your Income</div>
+    <div class="step-tab" onclick="goTo(2)" id="tab2"><span class="step-num">2</span>Your Relief</div>
+    <div class="step-tab" onclick="goTo(3)" id="tab3"><span class="step-num">3</span>Check Limits</div>
+    <div class="step-tab" onclick="goTo(4)" id="tab4"><span class="step-num">4</span>Go Next</div>
   </div>
 
 <!-- STEP 1 -->
   <div class="card active" id="step1">
     <div class="card-title">Your details</div>
-    <p class="card-subtitle">Tell us about your income and how much you'd like to contribute. We'll calculate exactly what the government adds on top.</p>
+    <p class="card-subtitle">So we can calculate your tax relief.</p>
 
     <div class="field-group">
       <label>Annual gross salary</label>
@@ -404,44 +478,45 @@
         <span class="input-prefix">£</span>
         <input type="number" id="salary" placeholder="e.g. 55000" min="0">
       </div>
-      <p class="hint">Your total employment income before tax. Used to determine your tax band and how much relief you can claim.</p>
+      <p class="hint">Your total employment income before tax.</p>
     </div>
 
     <div class="field-group">
-      <label>Amount you want to contribute (from your net pay)</label>
+      <label>Amount you want to contribute</label>
       <div class="input-wrap">
         <span class="input-prefix">£</span>
         <input type="number" id="contribution" placeholder="e.g. 2000" min="0">
       </div>
-      <p class="hint">The amount you'll actually transfer from your bank account. Your pension provider will automatically add 20% basic rate relief on top.</p>
+      <p class="hint">The amount you'll transfer from your bank account.</p>
     </div>
 
     <div class="field-group">
-      <label>Do you already have pension contributions this tax year?</label>
+      <label>Do you already have pension contributions this tax year? <span class="tooltip-wrap"><button class="tooltip-icon" type="button">?</button><div class="tooltip-bubble">All contributions you and your employer made this tax year (April to April).</div></span></label>
       <div class="input-wrap">
         <span class="input-prefix">£</span>
         <input type="number" id="existingContribs" placeholder="e.g. 5000" min="0">
       </div>
-      <p class="hint">Include employer contributions too. Used to check your annual allowance headroom. Leave blank if unsure.</p>
+      <p class="hint">Leave blank if unsure.</p>
     </div>
 
     <div class="field-group">
-      <label>Where are you making the AVC?</label>
+      <label>Where are you contributing? <span class="tooltip-wrap"><button class="tooltip-icon" type="button">?</button><div class="tooltip-bubble">AVC = extra contribution to your employer's scheme. SIPP = a private self-invested pension account.</div></span></label>
       <div class="radio-group">
         <div class="radio-btn selected" id="dest_employer" onclick="selectDest('employer')">Employer scheme (AVC)</div>
         <div class="radio-btn" id="dest_sipp" onclick="selectDest('sipp')">Personal SIPP</div>
         <div class="radio-btn" id="dest_unsure" onclick="selectDest('unsure')">Not sure yet</div>
       </div>
-      <p class="hint" style="margin-top:0.5rem;">Both work the same way for tax relief. This just affects the guidance we give you.</p>
+      <p class="hint" style="margin-top:0.5rem;">Both get the same tax relief.</p>
     </div>
 
     <div id="sippNote" style="display:none;">
       <div class="alert-box info">
         <h4>Opening a SIPP</h4>
-        <p>Popular providers include Vanguard, Fidelity, and Hargreaves Lansdown. You can open one in around 15 minutes online. All operate on a relief-at-source basis — you pay net, they claim the 20% automatically.</p>
+        <p>Popular providers include Vanguard, Fidelity, and Hargreaves Lansdown. You can open one in around 15 minutes online. All operate on a <span class="tooltip-wrap">relief-at-source<span class="tooltip-bubble">You pay net (the amount after tax), they claim 20% from HMRC automatically.</span></span> basis — you pay net, they claim the 20% automatically.</p>
       </div>
     </div>
 
+    <div class="step-reassurance">Just 3 more steps to go</div>
     <div class="btn-row">
       <button class="btn-primary" onclick="goTo(2)">Calculate my relief →</button>
     </div>
@@ -449,8 +524,8 @@
 
   <!-- STEP 2 -->
   <div class="card" id="step2">
-    <div class="card-title">Your tax relief breakdown</div>
-    <p class="card-subtitle">Here's exactly what happens to your contribution and how much you can claim back.</p>
+    <div class="card-title">Your tax relief</div>
+    <p class="card-subtitle">What you pay and what the government gives back.</p>
 
     <div class="results-grid" id="reliefGrid"></div>
 
@@ -458,23 +533,26 @@
 
     <hr>
 
-    <div class="guidance-box">
-      <h4>How relief at source works</h4>
-      <ul>
-        <li>You transfer your net contribution from your bank account to the pension</li>
-        <li>Your pension provider claims 20% basic rate relief from HMRC and adds it automatically — usually within 6–10 weeks</li>
-        <li>If you're a higher or additional rate taxpayer, you claim the extra relief via Self Assessment</li>
-        <li>The full gross amount is then invested in your chosen fund</li>
-      </ul>
-    </div>
+    <details class="breakdown-toggle">
+      <summary>How does relief at source work?</summary>
+      <div class="guidance-box">
+        <ul>
+          <li>You transfer your net contribution from your bank account to the pension</li>
+          <li>Your pension provider claims 20% basic rate relief from HMRC and adds it automatically — usually within 6–10 weeks</li>
+          <li>If you're a higher or additional rate taxpayer, you claim the extra relief via Self Assessment</li>
+          <li>The full gross amount is then invested in your chosen fund</li>
+        </ul>
+      </div>
+    </details>
 
     <div id="higherRateBox" style="display:none;">
       <div class="alert-box warning">
-        <h4>Higher rate taxpayer — don't leave money on the table</h4>
+        <h4>Higher rate taxpayer — claim the extra relief <span class="tooltip-wrap"><button class="tooltip-icon" type="button">?</button><div class="tooltip-bubble">You pay tax at 40% or 45%, so the government contributes more to your pension through tax relief.</div></span></h4>
         <p id="higherRateText"></p>
       </div>
     </div>
 
+    <div class="step-reassurance">Step 3 of 4 — almost done</div>
     <div class="btn-row">
       <button class="btn-secondary" onclick="goTo(1)">← Back</button>
       <button class="btn-primary" onclick="goTo(3)">Check my allowance →</button>
@@ -483,21 +561,26 @@
 
   <!-- STEP 3 -->
   <div class="card" id="step3">
-    <div class="card-title">Annual allowance check</div>
-    <p class="card-subtitle">Make sure your total contributions stay within HMRC's limits — breaching them triggers a tax charge that wipes out the relief.</p>
+    <div class="card-title">Check your limits</div>
+    <p class="card-subtitle">Make sure your total contributions stay within HMRC's annual allowance.</p>
 
     <div id="allowanceContent"></div>
 
-    <div class="guidance-box" style="margin-top:1rem;">
-      <h4>What counts towards the annual allowance?</h4>
-      <p>Both your own contributions and your employer's contributions count. For defined contribution schemes, it's simply the total paid in. The limit is £60,000 or 100% of your earnings, whichever is lower.</p>
-    </div>
+    <details class="breakdown-toggle" style="margin-top:1rem;">
+      <summary>What counts towards the annual allowance? <span class="tooltip-wrap"><button class="tooltip-icon" type="button">?</button><div class="tooltip-bubble">The total of your and your employer's contributions in a tax year. The government allows £60,000 (or 100% of earnings if less).</div></span></summary>
+      <div class="guidance-box">
+        <p>Both your own contributions and your employer's contributions count. For defined contribution schemes, it's simply the total paid in. The limit is £60,000 or 100% of your earnings, whichever is lower.</p>
+      </div>
+    </details>
 
-    <div class="guidance-box">
-      <h4>Carry forward</h4>
-      <p>If you've been a pension scheme member for the past three years and haven't used your full allowance, you can carry forward unused allowance — potentially allowing contributions well above £60,000 this year. Speak to a financial adviser to use this correctly.</p>
-    </div>
+    <details class="breakdown-toggle">
+      <summary>What is carry forward? <span class="tooltip-wrap"><button class="tooltip-icon" type="button">?</button><div class="tooltip-bubble">Unused allowance from the past 3 years that you can use this year to contribute more than £60,000.</div></span></summary>
+      <div class="guidance-box">
+        <p>If you've been a pension scheme member for the past three years and haven't used your full allowance, you can carry forward unused allowance — potentially allowing contributions well above £60,000 this year. Speak to a financial adviser to use this correctly.</p>
+      </div>
+    </details>
 
+    <div class="step-reassurance">One last step — see what to do next</div>
     <div class="btn-row">
       <button class="btn-secondary" onclick="goTo(2)">← Back</button>
       <button class="btn-primary" onclick="goTo(4)">See my next steps →</button>
@@ -506,28 +589,26 @@
 
   <!-- STEP 4 -->
   <div class="card" id="step4">
-    <div class="card-title">Your next steps</div>
-    <p class="card-subtitle">Here's exactly what to do to make your AVC and claim your full tax relief.</p>
+    <div class="card-title">Next steps</div>
+    <p class="card-subtitle">What to do now.</p>
 
     <ul class="checklist" id="nextStepsList"></ul>
 
     <hr>
 
     <div id="selfAssessmentSection" style="display:none;">
-      <div class="card-title" style="font-size:1.2rem; margin-bottom:0.4rem;">Registering for Self Assessment</div>
-      <p style="font-size:0.88rem; color:var(--slate); margin-bottom:1rem; line-height:1.6;">You're employed, but you can still register to claim higher rate pension relief. Here's how.</p>
+      <div class="card-title" style="font-size:1.2rem; margin-bottom:0.4rem;">Claim the extra relief via Self Assessment</div>
+      <p style="font-size:0.88rem; color:var(--slate); margin-bottom:1rem; line-height:1.6;">If you're a higher rate taxpayer, you get extra relief. Register and file a tax return to claim it.</p>
 
       <ul class="checklist">
-        <li><div class="check-icon num">1</div><div><strong>Go to gov.uk and search "register for Self Assessment"</strong><br>Select "I need to complete a tax return for another reason."</div></li>
-        <li><div class="check-icon num">2</div><div><strong>Create or sign into your Government Gateway account</strong><br>You'll need your National Insurance number and a passport or UK driving licence.</div></li>
-        <li><div class="check-icon num">3</div><div><strong>Wait for your UTR (Unique Taxpayer Reference)</strong><br>Posted by HMRC — allow up to 10 working days. You cannot file without it.</div></li>
-        <li><div class="check-icon num">4</div><div><strong>File your return and declare your pension contribution</strong><br>Enter the gross contribution amount (net + 20% relief added by provider). HMRC calculates what's owed.</div></li>
-        <li><div class="check-icon num">5</div><div><strong>Receive your refund</strong><br>Paid directly to your bank or applied as a tax code adjustment.</div></li>
+        <li><div class="check-icon num">1</div><div><strong>Register for Self Assessment</strong><br>Go to gov.uk and select "register for Self Assessment".</div></li>
+        <li><div class="check-icon num">2</div><div><strong>Get your UTR</strong><br>HMRC posts it to you — wait 10 working days.</div></li>
+        <li><div class="check-icon num">3</div><div><strong>File your tax return</strong><br>Enter your gross contribution and HMRC calculates your refund.</div></li>
       </ul>
 
       <div class="alert-box warning" style="margin-top:0.5rem;">
-        <h4>Key deadlines</h4>
-        <p>Register by <strong>5 October 2025</strong> for the 2024/25 tax year. File online by <strong>31 January 2026</strong>.</p>
+        <h4>Deadlines</h4>
+        <p>Register by <strong>5 October</strong>. File by <strong>31 January</strong>.</p>
       </div>
     </div>
 
@@ -552,7 +633,6 @@
         </div>
       </div>
     </div>
-        <button class="lead-dismiss" onclick="dismissLead()" title="Dismiss">×</button>
       </div>
     </div>
   </div>
@@ -815,7 +895,7 @@
       }).join('</p><p>');
       // Render markdown links [text](url)
       const linkedFormatted = formatted.replace(/\[([^\]]+)\]\((https?:\/\/[^)]+)\)/g, '<a href="$2" target="_blank" style="color:var(--navy,#0f1f38);font-weight:600;text-decoration:underline;">$1</a>');
-      bubble = '<p>' + linkedFormatted + ' &nbsp;&middot;&nbsp; <a href="about.html" style="color:rgba(255,255,255,0.4);text-decoration:none;">About</a> &nbsp;&middot;&nbsp; <a href="privacy.html" style="color:rgba(255,255,255,0.4);text-decoration:none;">Privacy</a> &nbsp;&middot;&nbsp; <a href="mailto:hello@mypaypicture.com" style="color:rgba(255,255,255,0.4);text-decoration:none;">hello@mypaypicture.com</a></p>';
+      bubble = '<p>' + linkedFormatted + '</p>';
     }
     div.innerHTML = '<div class="msg-av">' + av + '</div><div class="msg-bub">' + bubble + '</div>';
     msgs.appendChild(div);

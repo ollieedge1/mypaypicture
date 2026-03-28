@@ -486,6 +486,87 @@
   .chat-send:hover { opacity: 0.85; } .chat-send:disabled { opacity: 0.3; cursor: not-allowed; }
   .chat-footer-note { text-align: center; font-size: 0.68rem; color: var(--slate-light); padding: 0 1.25rem 0.85rem; line-height: 1.5; }
 
+  /* ── Tooltip system ─────────────────────────────────────── */
+  .tooltip-wrap { position: relative; display: inline; }
+  .tooltip-icon {
+    display: inline-flex; align-items: center; justify-content: center;
+    width: 1.1rem; height: 1.1rem; border-radius: 50%;
+    background: var(--indigo-pale, #eef2ff); color: var(--navy);
+    font-size: 0.65rem; font-weight: 700; cursor: help;
+    vertical-align: middle; margin-left: 0.3rem; border: none;
+    font-family: 'DM Sans', sans-serif;
+  }
+  .tooltip-bubble {
+    display: none; position: absolute; bottom: calc(100% + 8px); left: 50%;
+    transform: translateX(-50%); background: var(--navy); color: #fff;
+    padding: 0.6rem 0.85rem; border-radius: 8px; font-size: 0.78rem;
+    line-height: 1.5; width: max-content; max-width: 280px;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.18); z-index: 100;
+    font-family: 'DM Sans', sans-serif; font-weight: 400;
+  }
+  .tooltip-bubble::after {
+    content: ''; position: absolute; top: 100%; left: 50%;
+    transform: translateX(-50%); border: 6px solid transparent;
+    border-top-color: var(--navy);
+  }
+  .tooltip-wrap:hover .tooltip-bubble,
+  .tooltip-wrap:focus-within .tooltip-bubble { display: block; }
+
+  /* ── Privacy badge ──────────────────────────────────────── */
+  .privacy-badge {
+    display: flex; align-items: center; gap: 0.5rem;
+    background: #f0fdf4; border: 1px solid #bbf7d0;
+    border-radius: 8px; padding: 0.5rem 0.85rem;
+    font-size: 0.78rem; color: #166534; margin-bottom: 0.75rem;
+  }
+
+  /* ── Breakdown toggle (progressive disclosure) ──────────── */
+  .breakdown-toggle { margin-top: 0.75rem; }
+  .breakdown-toggle summary {
+    font-size: 0.82rem; font-weight: 500; color: var(--slate);
+    cursor: pointer; padding: 0.4rem 0; list-style: none;
+    display: flex; align-items: center; gap: 0.4rem;
+  }
+  .breakdown-toggle summary::before { content: '▸'; transition: transform 0.2s; }
+  .breakdown-toggle[open] summary::before { transform: rotate(90deg); }
+  .breakdown-toggle summary::-webkit-details-marker { display: none; }
+
+  /* ── Step reassurance ───────────────────────────────────── */
+  .step-reassurance {
+    font-size: 0.8rem; color: var(--indigo-light, #818cf8); text-align: right;
+    margin: 1rem 0 0.25rem; font-style: italic;
+  }
+
+  /* ── Plain-English summary ──────────────────────────────── */
+  .plain-summary {
+    background: var(--indigo-pale, #eef2ff); border-radius: 10px;
+    padding: 0.85rem 1rem; margin: 0.75rem 0; font-size: 0.85rem;
+    line-height: 1.6; color: var(--slate);
+  }
+
+  /* ── Softer result boxes ────────────────────────────────── */
+  .result-box {
+    background: #f8f9fa !important; border-radius: 12px;
+    padding: 1.1rem; text-align: center;
+    border: 1px solid rgba(0,0,0,0.06);
+  }
+  .result-box .r-label { color: var(--slate-light) !important; }
+  .result-box .r-amount { color: var(--navy) !important; }
+  .result-box .r-sub { color: var(--slate-light) !important; }
+  .result-box.indigo {
+    background: var(--indigo-pale, #eef2ff) !important;
+    border-color: rgba(79,70,229,0.15) !important;
+  }
+  .result-box.indigo .r-amount { color: var(--navy) !important; }
+  .result-box.good {
+    background: #f0fdf4 !important;
+    border-color: #bbf7d0 !important;
+  }
+  .result-box.good .r-amount { color: var(--green) !important; }
+
+  /* ── Active tab text fix ────────────────────────────────── */
+  .step-tab.active.completed { color: var(--indigo-light) !important; }
+
   @media (max-width: 600px) {
     .hero { padding: 2rem 1.25rem 3rem; }
     .card { padding: 1.5rem 1.25rem; }
@@ -524,18 +605,23 @@
 </div>
 
 <div class="container">
+  <div class="privacy-badge">
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+    <span>Your data stays on your device — nothing is sent to a server or stored in the cloud.</span>
+  </div>
+
   <div class="steps-nav">
-    <div class="step-tab active" onclick="goTo(1)" id="tab1"><span class="step-num">1</span>Your Company</div>
-    <div class="step-tab" onclick="goTo(2)" id="tab2"><span class="step-num">2</span>Tax Breakdown</div>
-    <div class="step-tab" onclick="goTo(3)" id="tab3"><span class="step-num">3</span>Optimise Split</div>
+    <div class="step-tab active" onclick="goTo(1)" id="tab1"><span class="step-num">1</span>Company</div>
+    <div class="step-tab" onclick="goTo(2)" id="tab2"><span class="step-num">2</span>Tax</div>
+    <div class="step-tab" onclick="goTo(3)" id="tab3"><span class="step-num">3</span>Pay split</div>
     <div class="step-tab" onclick="goTo(4)" id="tab4"><span class="step-num">4</span>Pension</div>
     <div class="step-tab" onclick="goTo(5)" id="tab5"><span class="step-num">5</span>Summary</div>
   </div>
 
 <!-- STEP 1 -->
   <div class="card active" id="step1">
-    <div class="card-title">Your company details</div>
-    <p class="card-subtitle">Tell us about your limited company and how you currently pay yourself. We'll calculate the most tax-efficient approach.</p>
+    <div class="card-title">Your company</div>
+    <p class="card-subtitle">Tell us about your profit and current pay setup.</p>
 
     <div class="two-col">
       <div class="field-group">
@@ -556,12 +642,12 @@
       <div class="field-group">
         <label>Your current salary from the company</label>
         <div class="input-wrap"><span class="input-prefix">£</span><input type="number" id="currentSalary" placeholder="e.g. 12570" min="0"></div>
-        <p class="hint">Most directors take salary at the Personal Allowance (£12,570) or NI Secondary Threshold (£9,100).</p>
+        <p class="hint">Most directors take salary at the <span class="tooltip-wrap">Personal Allowance<span class="tooltip-icon" tabindex="0">?</span><span class="tooltip-bubble">The amount of income you can earn each year without paying income tax. Currently £12,570 for 2024/25.</span></span> (£12,570) or <span class="tooltip-wrap">NI Secondary Threshold<span class="tooltip-icon" tabindex="0">?</span><span class="tooltip-bubble">The point above which your company must pay National Insurance on your salary. Currently £9,100 for 2024/25.</span></span> (£9,100).</p>
       </div>
       <div class="field-group">
         <label>Any other personal income (outside company)</label>
         <div class="input-wrap"><span class="input-prefix">£</span><input type="number" id="otherIncome" placeholder="e.g. 0" min="0"></div>
-        <p class="hint">Rental income, employment elsewhere, etc. Affects your dividend tax bands.</p>
+        <p class="hint">Rental income, employment elsewhere, etc. Affects your <span class="tooltip-wrap">dividend tax bands<span class="tooltip-icon" tabindex="0">?</span><span class="tooltip-bubble">Dividend tax rates depend on your total income. The first £500 of dividends are tax-free (the Dividend Allowance), then taxed at 8.75%, 33.75%, or 39.35% depending on your tax band.</span></span>.</p>
       </div>
     </div>
 
@@ -574,6 +660,7 @@
       <p class="hint" style="margin-top:0.5rem;">VAT status doesn't affect this calculation but helps us tailor guidance.</p>
     </div>
 
+    <p class="step-reassurance">This only takes a minute.</p>
     <div class="btn-row">
       <button class="btn-primary" onclick="goTo(2)">Calculate my tax →</button>
     </div>
@@ -581,8 +668,8 @@
 
   <!-- STEP 2 -->
   <div class="card" id="step2">
-    <div class="card-title">Your tax breakdown</div>
-    <p class="card-subtitle">Here's exactly what happens to your company profits under your current arrangement.</p>
+    <div class="card-title">Your tax</div>
+    <p class="card-subtitle">How your profit splits into salary, dividends, and tax.</p>
 
     <div class="results-grid" id="taxGrid"></div>
 
@@ -598,6 +685,7 @@
 
     <div id="taxGuidance"></div>
 
+    <p class="step-reassurance">Now let's find the best split.</p>
     <div class="btn-row">
       <button class="btn-secondary" onclick="goTo(1)">← Back</button>
       <button class="btn-primary" onclick="goTo(3)">Optimise my split →</button>
@@ -606,24 +694,26 @@
 
   <!-- STEP 3 -->
   <div class="card" id="step3">
-    <div class="card-title">How do you want to pay yourself?</div>
-    <p class="card-subtitle">As a director, you choose when and how much to pay yourself. Pick the goal that fits your situation.</p>
+    <div class="card-title">Pay split</div>
+    <p class="card-subtitle">Choose a goal that fits your situation.</p>
 
     <!-- DIVIDEND TIMING EXPLAINER -->
-    <div class="director-explainer">
-      <div class="explainer-title">&#128161; How director pay actually works</div>
-      <div class="explainer-body">
-        <div class="explainer-row">
-          <div class="explainer-dot salary-dot"></div>
-          <div><strong>Salary</strong> — paid monthly like any employee, processed through payroll. Fixed and predictable. Small amount of NI applies above £9,100.</div>
+    <details class="breakdown-toggle">
+      <summary>How director pay actually works</summary>
+      <div class="director-explainer">
+        <div class="explainer-body">
+          <div class="explainer-row">
+            <div class="explainer-dot salary-dot"></div>
+            <div><strong>Salary</strong> — paid monthly like any employee, processed through payroll. Fixed and predictable. Small amount of NI applies above £9,100.</div>
+          </div>
+          <div class="explainer-row">
+            <div class="explainer-dot div-dot"></div>
+            <div><strong>Dividends</strong> — paid from company profits <em>whenever you choose</em>. Quarterly is common, but you can take them monthly, annually, or as needed. You must have sufficient retained profits — dividends cannot exceed what the company has earned. Taxed at lower rates than salary.</div>
+          </div>
         </div>
-        <div class="explainer-row">
-          <div class="explainer-dot div-dot"></div>
-          <div><strong>Dividends</strong> — paid from company profits <em>whenever you choose</em>. Quarterly is common, but you can take them monthly, annually, or as needed. You must have sufficient retained profits — dividends cannot exceed what the company has earned. Taxed at lower rates than salary.</div>
-        </div>
+        <div class="explainer-note">Most directors take a low salary (paid monthly) plus dividends (taken quarterly or as needed). This is entirely legal and is standard practice for UK limited company directors.</div>
       </div>
-      <div class="explainer-note">Most directors take a low salary (paid monthly) plus dividends (taken quarterly or as needed). This is entirely legal and is standard practice for UK limited company directors.</div>
-    </div>
+    </details>
 
     <hr>
 
@@ -659,6 +749,7 @@
 
     <div id="optimiseComparison" style="margin-top:1.5rem;"></div>
 
+    <p class="step-reassurance">Nearly there — pension is optional.</p>
     <div class="btn-row">
       <button class="btn-secondary" onclick="goTo(2)">&#8592; Back</button>
       <button class="btn-primary" onclick="goTo(4)">Add pension contributions &#8594;</button>
@@ -668,8 +759,8 @@
 
   <!-- STEP 4 -->
   <div class="card" id="step4">
-    <div class="card-title">Company pension contributions</div>
-    <p class="card-subtitle">Employer pension contributions from your limited company are a highly tax-efficient way to extract value — they reduce corporation tax and avoid income tax and NI entirely.</p>
+    <div class="card-title">Pension</div>
+    <p class="card-subtitle">Pension contributions are a tax-efficient way to extract value. They reduce <span class="tooltip-wrap">corporation tax<span class="tooltip-icon" tabindex="0">?</span><span class="tooltip-bubble">Tax your company pays on profits. Pension contributions are deductible against this, lowering your corporation tax bill.</span></span> and avoid income tax and NI.</p>
 
     <div class="two-col">
       <div class="field-group">
@@ -699,6 +790,7 @@
       </ul>
     </div>
 
+    <p class="step-reassurance">Almost done.</p>
     <div class="btn-row">
       <button class="btn-secondary" onclick="goTo(3)">← Back</button>
       <button class="btn-primary" onclick="goTo(5)">See full summary →</button>
@@ -707,8 +799,8 @@
 
   <!-- STEP 5 -->
   <div class="card" id="step5">
-    <div class="card-title">Your director tax summary</div>
-    <p class="card-subtitle">Your complete illustrative picture — total tax paid, take-home, and recommended approach.</p>
+    <div class="card-title">Summary</div>
+    <p class="card-subtitle">Your tax position and recommended approach.</p>
 
     <div class="results-grid" id="summaryGrid"></div>
 
@@ -718,7 +810,7 @@
 
     <div class="guidance-box" style="margin-top:1rem;">
       <h4>Important — always take professional advice</h4>
-      <p>Director remuneration strategy is one of the most impactful financial decisions for a limited company owner. These figures are illustrative. A qualified accountant can model your full position including IR35 implications, Making Tax Digital obligations, and your specific circumstances.</p>
+      <p>Director remuneration strategy is one of the most impactful financial decisions for a limited company owner. These figures are illustrative. A qualified accountant can model your full position including <span class="tooltip-wrap">IR35<span class="tooltip-icon" tabindex="0">?</span><span class="tooltip-bubble">Off-payroll working rules that may apply if you work through your company. Important to check if IR35 applies to your situation.</span></span> implications, Making Tax Digital obligations, and your specific circumstances.</p>
     </div>
 
     <div class="btn-row">
@@ -1312,7 +1404,7 @@ const STRATEGIES = [
         Object.keys(toolLinks).forEach(function(name) { line = line.split(name).join('<a href="'+toolLinks[name]+'" style="color:var(--navy);font-weight:600;text-decoration:underline;">'+name+'</a>'); });
         return line;
       }).join('</p><p>');
-      bubble = '<p>'+formatted+' &nbsp;&middot;&nbsp; <a href="about.html" style="color:rgba(255,255,255,0.4);text-decoration:none;">About</a> &nbsp;&middot;&nbsp; <a href="privacy.html" style="color:rgba(255,255,255,0.4);text-decoration:none;">Privacy</a> &nbsp;&middot;&nbsp; <a href="mailto:hello@mypaypicture.com" style="color:rgba(255,255,255,0.4);text-decoration:none;">hello@mypaypicture.com</a></p>';
+      bubble = '<p>'+formatted+'</p>';
     }
     div.innerHTML = '<div class="msg-av">'+av+'</div><div class="msg-bub">'+bubble+'</div>';
     msgs.appendChild(div); msgs.scrollTop = msgs.scrollHeight;

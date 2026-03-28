@@ -720,6 +720,82 @@
   .switcher-item-text .item-name { font-family: 'Playfair Display', serif; font-size: 0.9rem; color: white; }
   .switcher-item-text .item-desc { font-size: 0.72rem; color: rgba(255,255,255,0.4); margin-top: 0.1rem; }
   .switcher-item.current .item-name { color: var(--gold); }
+
+  /* ── Tooltip system ─────────────────────────────────────── */
+  .tooltip-wrap { position: relative; display: inline; }
+  .tooltip-icon {
+    display: inline-flex; align-items: center; justify-content: center;
+    width: 1.1rem; height: 1.1rem; border-radius: 50%;
+    background: rgba(201,168,76,0.15); color: var(--navy);
+    font-size: 0.65rem; font-weight: 700; cursor: help;
+    vertical-align: middle; margin-left: 0.3rem; border: none;
+    font-family: 'DM Sans', sans-serif;
+  }
+  .tooltip-bubble {
+    display: none; position: absolute; bottom: calc(100% + 8px); left: 50%;
+    transform: translateX(-50%); background: var(--navy); color: #fff;
+    padding: 0.6rem 0.85rem; border-radius: 8px; font-size: 0.78rem;
+    line-height: 1.5; width: max-content; max-width: 280px;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.18); z-index: 100;
+    font-family: 'DM Sans', sans-serif; font-weight: 400;
+  }
+  .tooltip-bubble::after {
+    content: ''; position: absolute; top: 100%; left: 50%;
+    transform: translateX(-50%); border: 6px solid transparent;
+    border-top-color: var(--navy);
+  }
+  .tooltip-wrap:hover .tooltip-bubble,
+  .tooltip-wrap:focus-within .tooltip-bubble { display: block; }
+
+  /* ── Privacy badge ──────────────────────────────────────── */
+  .privacy-badge {
+    display: flex; align-items: center; gap: 0.5rem;
+    background: #f0fdf4; border: 1px solid #bbf7d0;
+    border-radius: 8px; padding: 0.5rem 0.85rem;
+    font-size: 0.78rem; color: #166534; margin-bottom: 0.75rem;
+  }
+
+  /* ── Breakdown toggle ───────────────────────────────────── */
+  .breakdown-toggle { margin-top: 0.75rem; }
+  .breakdown-toggle summary {
+    font-size: 0.82rem; font-weight: 500; color: var(--slate);
+    cursor: pointer; padding: 0.4rem 0; list-style: none;
+    display: flex; align-items: center; gap: 0.4rem;
+  }
+  .breakdown-toggle summary::before { content: '▸'; transition: transform 0.2s; }
+  .breakdown-toggle[open] summary::before { transform: rotate(90deg); }
+  .breakdown-toggle summary::-webkit-details-marker { display: none; }
+
+  /* ── Step reassurance ───────────────────────────────────── */
+  .step-reassurance {
+    font-size: 0.8rem; color: var(--gold, #c9a84c); text-align: right;
+    margin: 1rem 0 0.25rem; font-style: italic;
+  }
+
+  /* ── Plain-English summary ──────────────────────────────── */
+  .plain-summary {
+    background: rgba(201,168,76,0.08); border-radius: 10px;
+    padding: 0.85rem 1rem; margin: 0.75rem 0; font-size: 0.85rem;
+    line-height: 1.6; color: var(--slate);
+  }
+
+  /* ── Softer result boxes ────────────────────────────────── */
+  .result-box {
+    background: #f8f9fa !important; border-radius: 12px;
+    padding: 1.1rem; text-align: center;
+    border: 1px solid rgba(0,0,0,0.06);
+  }
+  .result-box .r-label { color: var(--slate-light) !important; }
+  .result-box .r-amount { color: var(--navy) !important; }
+  .result-box .r-sub { color: var(--slate-light) !important; }
+  .result-box.highlight {
+    background: rgba(201,168,76,0.08) !important;
+    border-color: rgba(201,168,76,0.2) !important;
+  }
+  .result-box.highlight .r-amount { color: var(--navy) !important; }
+
+  /* ── Active tab text fix ────────────────────────────────── */
+  .step-tab.active.completed { color: white !important; }
 </style>
 </head>
 <body>
@@ -767,17 +843,22 @@
 </div>
 
 <div class="container">
+  <div class="privacy-badge">
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+    <span>Your data stays on your device — nothing is sent to a server or stored in the cloud.</span>
+  </div>
+
   <div class="steps-nav">
-    <div class="step-tab active" onclick="goTo(1)" id="tab1"><span class="step-num">1</span>Your Situation</div>
-    <div class="step-tab" onclick="goTo(2)" id="tab2"><span class="step-num">2</span>Tax Calculator</div>
-    <div class="step-tab" onclick="goTo(3)" id="tab3"><span class="step-num">3</span>Pension Contribution</div>
-    <div class="step-tab" onclick="goTo(4)" id="tab4"><span class="step-num">4</span>Next Steps</div>
+    <div class="step-tab active" onclick="goTo(1)" id="tab1"><span class="step-num">1</span>Your bonus</div>
+    <div class="step-tab" onclick="goTo(2)" id="tab2"><span class="step-num">2</span>Your tax</div>
+    <div class="step-tab" onclick="goTo(3)" id="tab3"><span class="step-num">3</span>Your contribution</div>
+    <div class="step-tab" onclick="goTo(4)" id="tab4"><span class="step-num">4</span>What to do</div>
   </div>
 
 <!-- STEP 1: SITUATION -->
   <div class="card active" id="step1">
     <div class="card-title">Tell us about your bonus</div>
-    <p class="card-subtitle">We'll use this to calculate your tax position and show you what you can reclaim.</p>
+    <p class="card-subtitle">So we can work out what you can reclaim.</p>
 
     <div class="field-group">
       <label>Gross bonus amount</label>
@@ -793,11 +874,11 @@
         <span class="input-prefix">£</span>
         <input type="number" id="annualSalary" placeholder="e.g. 60000" min="0">
       </div>
-      <p class="hint">This helps us work out whether your bonus falls into higher rate tax.</p>
+      <p class="hint">This helps us work out whether your bonus falls into <span class="tooltip-wrap">higher rate<span class="tooltip-icon">?</span><span class="tooltip-bubble">If your salary + bonus takes you above £50,270, you pay 40% income tax instead of 20%. This is your marginal rate — the tax rate on your last pound of income.</span></span> tax.</p>
     </div>
 
     <div class="field-group">
-      <label>Was payroll closed before you could elect salary sacrifice?</label>
+      <label>Was payroll closed before you could elect <span class="tooltip-wrap">salary sacrifice<span class="tooltip-icon">?</span><span class="tooltip-bubble">You ask your employer to reduce your salary by a fixed amount and they put that into your pension instead. You save income tax, National Insurance, and your employer saves National Insurance too.</span></span>?</label>
       <div class="radio-group">
         <div class="radio-btn selected" id="rb_yes" onclick="selectRadio('payrollClosed','yes')">Yes — too late</div>
         <div class="radio-btn" id="rb_no" onclick="selectRadio('payrollClosed','no')">No — still possible</div>
@@ -811,6 +892,7 @@
       </div>
     </div>
 
+    <p class="step-reassurance">Quick — let's see what you're owed.</p>
     <div class="btn-row">
       <button class="btn-primary" onclick="goTo(2)">Calculate my tax →</button>
     </div>
@@ -819,7 +901,7 @@
   <!-- STEP 2: CALCULATOR -->
   <div class="card" id="step2">
     <div class="card-title">Your tax breakdown</div>
-    <p class="card-subtitle">Here's how your bonus will be taxed, and what's potentially reclaimable.</p>
+    <p class="card-subtitle">How much tax you owe, and what you can reclaim.</p>
 
     <div class="results-grid" id="resultsGrid">
       <!-- populated by JS -->
@@ -829,18 +911,21 @@
 
     <hr class="divider">
 
-    <div class="guidance-box">
-      <h4>What does this mean?</h4>
-      <p id="taxExplainer"></p>
-    </div>
+    <details class="breakdown-toggle">
+      <summary>What does this mean?</summary>
+      <div class="guidance-box" style="margin-top: 0.75rem;">
+        <p id="taxExplainer"></p>
+      </div>
+    </details>
 
     <div id="higherRateGuidance" style="display:none;">
       <div class="alert-box">
         <h4>✓ Good news — you can reclaim the income tax</h4>
-        <p>By making a personal pension contribution equal to your net bonus, you can recover most of the income tax through Self Assessment. The NI is not reclaimable, but everything else can be.</p>
+        <p>By making a personal pension contribution equal to your net bonus, you can recover most of the income tax through <span class="tooltip-wrap">Self Assessment<span class="tooltip-icon">?</span><span class="tooltip-bubble">A way of telling HMRC (the tax authority) about any tax you owe or any tax relief you're entitled to. Most employees don't need it, but you do if you want to claim pension relief.</span></span>. The <span class="tooltip-wrap"><span class="tooltip-icon">?</span><span class="tooltip-bubble">National Insurance. You pay this in addition to income tax when you earn above a threshold. Pension contributions don't reduce your National Insurance bill — only income tax.</span>NI</span> is not reclaimable, but everything else can be.</p>
       </div>
     </div>
 
+    <p class="step-reassurance">Now let's work out your contribution.</p>
     <div class="btn-row">
       <button class="btn-secondary" onclick="goTo(1)">← Back</button>
       <button class="btn-primary" onclick="goTo(3)">Pension contribution →</button>
@@ -850,7 +935,7 @@
   <!-- STEP 3: PENSION CONTRIBUTION -->
   <div class="card" id="step3">
     <div class="card-title">Making a personal pension contribution</div>
-    <p class="card-subtitle">Even though you missed salary sacrifice, you can still recover the income tax through a direct pension contribution.</p>
+    <p class="card-subtitle">Pay the contribution, claim the tax relief later.</p>
 
     <div class="field-group">
       <label>How much of your net bonus do you want to contribute?</label>
@@ -867,14 +952,16 @@
 
     <hr class="divider">
 
-    <div class="guidance-box">
-      <h4>How does this work in practice?</h4>
-      <ul>
-        <li>Pay the contribution from your bank account into your pension (employer scheme if they accept AVCs, or a SIPP)</li>
-        <li>Your pension provider automatically claims 20% basic rate relief — so £800 from you becomes £1,000 in the pension</li>
-        <li>If you're a higher rate taxpayer, claim the extra 20–25% back via Self Assessment (Step 4)</li>
-      </ul>
-    </div>
+    <details class="breakdown-toggle">
+      <summary>How does this work in practice?</summary>
+      <div class="guidance-box" style="margin-top: 0.75rem;">
+        <ul>
+          <li>Pay the contribution from your bank account into your pension (employer scheme if they accept AVCs, or a SIPP)</li>
+          <li>Your pension provider automatically claims 20% basic rate relief — so £800 from you becomes £1,000 in the pension</li>
+          <li>If you're a higher rate taxpayer, claim the extra 20–25% back via Self Assessment (Step 4)</li>
+        </ul>
+      </div>
+    </details>
 
     <div class="field-group" style="margin-top:1.5rem;">
       <label>Future salary sacrifice — monthly increase</label>
@@ -892,6 +979,7 @@
       </div>
     </div>
 
+    <p class="step-reassurance">Nearly done — one more step.</p>
     <div class="btn-row">
       <button class="btn-secondary" onclick="goTo(2)">← Back</button>
       <button class="btn-primary" onclick="goTo(4)">Self Assessment guide →</button>
@@ -901,7 +989,7 @@
   <!-- STEP 4: SELF ASSESSMENT -->
   <div class="card" id="step4">
     <div class="card-title">Registering for Self Assessment</div>
-    <p class="card-subtitle">You're employed full-time, but you can still register to claim back higher rate pension relief. Here's exactly what to do.</p>
+    <p class="card-subtitle">Five steps to register and claim your relief.</p>
 
     <div class="alert-box warning">
       <h4>⚠ Key deadlines</h4>
@@ -922,7 +1010,7 @@
       </li>
       <li>
         <div class="check-icon num">3</div>
-        <div><strong>Wait for your UTR (Unique Taxpayer Reference)</strong><br>
+        <div><strong>Wait for your <span class="tooltip-wrap">UTR<span class="tooltip-icon">?</span><span class="tooltip-bubble">Your Unique Taxpayer Reference — a 10-digit number that identifies you to HMRC. It's essential for filing any tax return.</span></span> (Unique Taxpayer Reference)</strong><br>
         HMRC posts this to you — allow up to 10 working days. You cannot file without it.</div>
       </li>
       <li>
@@ -939,15 +1027,19 @@
 
     <hr class="divider">
 
-    <div class="guidance-box">
-      <h4>What to enter in the pension section</h4>
-      <p id="saGuidanceText">Enter the gross value of your personal pension contributions (the amount after basic rate relief is added). For example, if you paid in £800, your provider will have claimed £200 relief — enter £1,000 as the gross contribution.</p>
-    </div>
+    <details class="breakdown-toggle">
+      <summary>What to enter in the pension section</summary>
+      <div class="guidance-box" style="margin-top: 0.75rem;">
+        <p id="saGuidanceText">Enter the gross value of your personal pension contributions (the amount after basic rate relief is added). For example, if you paid in £800, your provider will have claimed £200 relief — enter £1,000 as the gross contribution.</p>
+      </div>
+    </details>
 
-    <div class="guidance-box" style="margin-top:1rem;">
-      <h4>Simpler alternative — P55 or direct claim</h4>
-      <p>If your pension is a "relief at source" scheme and you only need to claim higher rate relief, you may be able to do this via a simple letter or phone call to HMRC (0300 200 3300) rather than a full return. Worth asking when you call.</p>
-    </div>
+    <details class="breakdown-toggle">
+      <summary>Simpler alternative — P55 or direct claim</summary>
+      <div class="guidance-box" style="margin-top: 0.75rem;">
+        <p>If your pension is a <span class="tooltip-wrap">"relief at source"<span class="tooltip-icon">?</span><span class="tooltip-bubble">A type of pension scheme where the provider automatically claims 20% basic rate tax relief when you contribute. Most personal pensions and SIPPs work this way.</span></span> scheme and you only need to claim higher rate relief, you may be able to do this via a simple letter or phone call to HMRC (0300 200 3300) rather than a full return. Worth asking when you call.</p>
+      </div>
+    </details>
 
     <div id="summaryBox" style="margin-top:1.5rem;">
       <div style="background: var(--navy); border-radius: 12px; padding: 1.5rem;">
@@ -975,7 +1067,6 @@
         </div>
       </div>
     </div>
-        <button class="lead-dismiss" onclick="dismissLead()" title="Dismiss">×</button>
       </div>
     </div>
   </div>
@@ -1271,7 +1362,7 @@
       }).join('</p><p>');
       // Render markdown links [text](url)
       const linkedFormatted = formatted.replace(/\[([^\]]+)\]\((https?:\/\/[^)]+)\)/g, '<a href="$2" target="_blank" style="color:var(--navy,#0f1f38);font-weight:600;text-decoration:underline;">$1</a>');
-      bubble = '<p>' + linkedFormatted + ' &nbsp;&middot;&nbsp; <a href="about.html" style="color:rgba(255,255,255,0.4);text-decoration:none;">About</a> &nbsp;&middot;&nbsp; <a href="privacy.html" style="color:rgba(255,255,255,0.4);text-decoration:none;">Privacy</a> &nbsp;&middot;&nbsp; <a href="mailto:hello@mypaypicture.com" style="color:rgba(255,255,255,0.4);text-decoration:none;">hello@mypaypicture.com</a></p>';
+      bubble = '<p>' + linkedFormatted + '</p>';
     }
     div.innerHTML = '<div class="msg-av">' + av + '</div><div class="msg-bub">' + bubble + '</div>';
     msgs.appendChild(div);

@@ -386,6 +386,86 @@
   hr { border: none; border-top: 1px solid rgba(0,0,0,0.08); margin: 1.5rem 0; }
   .hidden { display: none; }
 
+  /* ── Tooltip system ─────────────────────────────────────── */
+  .tooltip-wrap { position: relative; display: inline; }
+  .tooltip-icon {
+    display: inline-flex; align-items: center; justify-content: center;
+    width: 1.1rem; height: 1.1rem; border-radius: 50%;
+    background: var(--rose-light, #fce4ec); color: var(--navy);
+    font-size: 0.65rem; font-weight: 700; cursor: help;
+    vertical-align: middle; margin-left: 0.3rem; border: none;
+    font-family: 'DM Sans', sans-serif;
+  }
+  .tooltip-bubble {
+    display: none; position: absolute; bottom: calc(100% + 8px); left: 50%;
+    transform: translateX(-50%); background: var(--navy); color: #fff;
+    padding: 0.6rem 0.85rem; border-radius: 8px; font-size: 0.78rem;
+    line-height: 1.5; width: max-content; max-width: 280px;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.18); z-index: 100;
+    font-family: 'DM Sans', sans-serif; font-weight: 400;
+  }
+  .tooltip-bubble::after {
+    content: ''; position: absolute; top: 100%; left: 50%;
+    transform: translateX(-50%); border: 6px solid transparent;
+    border-top-color: var(--navy);
+  }
+  .tooltip-wrap:hover .tooltip-bubble,
+  .tooltip-wrap:focus-within .tooltip-bubble { display: block; }
+
+  /* ── Privacy badge ──────────────────────────────────────── */
+  .privacy-badge {
+    display: flex; align-items: center; gap: 0.5rem;
+    background: #f0fdf4; border: 1px solid #bbf7d0;
+    border-radius: 8px; padding: 0.5rem 0.85rem;
+    font-size: 0.78rem; color: #166534; margin-bottom: 0.75rem;
+  }
+
+  /* ── Breakdown toggle (progressive disclosure) ──────────── */
+  .breakdown-toggle { margin-top: 0.75rem; }
+  .breakdown-toggle summary {
+    font-size: 0.82rem; font-weight: 500; color: var(--slate);
+    cursor: pointer; padding: 0.4rem 0; list-style: none;
+    display: flex; align-items: center; gap: 0.4rem;
+  }
+  .breakdown-toggle summary::before { content: '▸'; transition: transform 0.2s; }
+  .breakdown-toggle[open] summary::before { transform: rotate(90deg); }
+  .breakdown-toggle summary::-webkit-details-marker { display: none; }
+
+  /* ── Step reassurance ───────────────────────────────────── */
+  .step-reassurance {
+    font-size: 0.8rem; color: var(--rose, #f4a7b9); text-align: right;
+    margin: 1rem 0 0.25rem; font-style: italic;
+  }
+
+  /* ── Plain-English summary ──────────────────────────────── */
+  .plain-summary {
+    background: var(--rose-pale, #fdf0f5); border-radius: 10px;
+    padding: 0.85rem 1rem; margin: 0.75rem 0; font-size: 0.85rem;
+    line-height: 1.6; color: var(--slate);
+  }
+
+  /* ── Softer result boxes ────────────────────────────────── */
+  .result-box {
+    background: #f8f9fa !important; border-radius: 12px;
+    padding: 1.1rem; text-align: center;
+    border: 1px solid rgba(0,0,0,0.06);
+  }
+  .result-box .r-label { color: var(--slate-light) !important; }
+  .result-box .r-amount { color: var(--navy) !important; }
+  .result-box .r-sub { color: var(--slate-light) !important; }
+  .result-box.highlight {
+    background: var(--rose-pale, #fdf0f5) !important;
+    border-color: var(--rose-light, #fce4ec) !important;
+  }
+  .result-box.highlight .r-amount { color: var(--navy) !important; }
+  .result-box.safe-box {
+    background: #f0fdf4 !important;
+    border-color: #bbf7d0 !important;
+  }
+
+  /* ── Active tab text fix ────────────────────────────────── */
+  .step-tab.active.completed { color: white !important; }
+
   @media (max-width: 600px) {
     .hero { padding: 2rem 1.25rem 3rem; }
     .card { padding: 1.5rem 1.25rem; }
@@ -440,16 +520,20 @@
 </div>
 
 <div class="container">
+  <div class="privacy-badge">
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+    <span>Your data stays on your device — nothing is sent to a server or stored in the cloud.</span>
+  </div>
   <div class="steps-nav">
-    <div class="step-tab active" onclick="goTo(1)" id="tab1"><span class="step-num">1</span>Your Household</div>
-    <div class="step-tab" onclick="goTo(2)" id="tab2"><span class="step-num">2</span>Your Position</div>
-    <div class="step-tab" onclick="goTo(3)" id="tab3"><span class="step-num">3</span>Optimise</div>
+    <div class="step-tab active" onclick="goTo(1)" id="tab1"><span class="step-num">1</span>Your family</div>
+    <div class="step-tab" onclick="goTo(2)" id="tab2"><span class="step-num">2</span>Your situation</div>
+    <div class="step-tab" onclick="goTo(3)" id="tab3"><span class="step-num">3</span>What you could save</div>
   </div>
 
 <!-- STEP 1 -->
   <div class="card active" id="step1">
-    <div class="card-title">Your household</div>
-    <p class="card-subtitle">Enter your details to see your Child Benefit position and what you could be missing out on.</p>
+    <div class="card-title">Your family</div>
+    <p class="card-subtitle">Tell us about your household to see your Child Benefit position.</p>
 
     <div class="field-group">
       <label>Your salary (highest earner)</label>
@@ -457,7 +541,7 @@
         <span class="input-prefix">£</span>
         <input type="number" id="salary" placeholder="e.g. 65000" min="0">
       </div>
-      <p class="hint">The Child Benefit charge is based on the highest earner's adjusted net income.</p>
+      <p class="hint">The Child Benefit charge is based on the highest earner's <span class="tooltip-wrap">adjusted net income<span class="tooltip-icon" tabindex="0">?</span><span class="tooltip-bubble">Your salary minus pension contributions and personal tax allowances. This is the figure HMRC uses to calculate the Child Benefit charge.</span></span>.</p>
       <div class="tooltip-trigger" data-show-label="What is the High Income charge?" onclick="toggleTooltip('tt-salary')">
         <span class="tt-icon">i</span><span class="tt-label">What is the High Income charge?</span>
       </div>
@@ -504,12 +588,12 @@
         <span class="input-prefix">£</span>
         <input type="number" id="pensionContribs" placeholder="e.g. 3000" min="0">
       </div>
-      <p class="hint">Include salary sacrifice contributions — these reduce your adjusted net income.</p>
+      <p class="hint">Include <span class="tooltip-wrap">salary sacrifice<span class="tooltip-icon" tabindex="0">?</span><span class="tooltip-bubble">An arrangement where you give up part of your salary before tax in exchange for benefits like pension contributions. This reduces your taxable income and the Child Benefit charge.</span></span> contributions — these reduce your adjusted net income.</p>
       <div class="tooltip-trigger" data-show-label="How do pension contributions help?" onclick="toggleTooltip('tt-pension')">
         <span class="tt-icon">i</span><span class="tt-label">How do pension contributions help?</span>
       </div>
       <div class="tooltip-body" id="tt-pension">
-        <p>Salary sacrifice pension contributions reduce your <strong>adjusted net income</strong> — the figure HMRC uses to calculate both the High Income Child Benefit Charge and Tax-Free Childcare eligibility. Increasing contributions could reduce or eliminate the charge without losing the money — it goes into your pension instead.</p>
+        <p>Salary sacrifice pension contributions reduce your <strong>adjusted net income</strong> — the figure HMRC uses to calculate both the High Income Child Benefit Charge and <span class="tooltip-wrap">Tax-Free Childcare<span class="tooltip-icon" tabindex="0">?</span><span class="tooltip-bubble">A government scheme where you can save up to £2,000 per child per year in a special account, and the government tops it up 25% free. Eligibility ends if either parent earns over £100,000.</span></span> eligibility. Increasing contributions could reduce or eliminate the charge without losing the money — it goes into your pension instead.</p>
       </div>
     </div>
 
@@ -525,7 +609,7 @@
       </div>
       <div class="tooltip-body" id="tt-tfc">
         <p>Tax-Free Childcare (TFC) is a separate government scheme. For every <strong>£8 you pay</strong> into a TFC account, the government adds <strong>£2</strong> — up to £500 per child per quarter (£2,000/year per child). It applies to children under 11 in registered childcare.</p>
-        <p>Either parent earning over <strong>£100,000</strong> makes the household ineligible. Pension contributions can reduce income below this threshold and restore entitlement.</p>
+        <p>Either parent earning over <strong>£100,000</strong> makes the household ineligible. Pension contributions can reduce income below this <span class="tooltip-wrap">threshold<span class="tooltip-icon" tabindex="0">?</span><span class="tooltip-bubble">A boundary income level. If either parent earns above £100,000, the whole household loses Tax-Free Childcare eligibility. Pension contributions can bring you under this limit.</span></span> and restore entitlement.</p>
       </div>
     </div>
 
@@ -543,6 +627,7 @@
       </div>
     </div>
 
+    <p class="step-reassurance">Nearly there — let's see where you stand.</p>
     <div class="btn-row">
       <button class="btn-primary" onclick="goTo(2)">See my position →</button>
     </div>
@@ -550,8 +635,8 @@
 
   <!-- STEP 2 -->
   <div class="card" id="step2">
-    <div class="card-title">Your benefit position</div>
-    <p class="card-subtitle">Here's how your household income compares to the thresholds and what you're currently entitled to.</p>
+    <div class="card-title">Your situation</div>
+    <p class="card-subtitle">How your income compares to the thresholds and what you're entitled to.</p>
 
     <div class="threshold-visual">
       <div style="font-size:0.8rem; font-weight:500; color:var(--navy); margin-bottom:0.2rem;">Adjusted net income vs thresholds</div>
@@ -612,11 +697,14 @@
       </div>
     </div>
 
-    <div class="guidance-box">
-      <h4>How the 2024 thresholds work</h4>
-      <p>From April 2024 the taper thresholds changed: the charge now starts at £60,000 (previously £50,000) and Child Benefit is fully withdrawn at £80,000 (previously £60,000). Between these figures, you lose 1% of the benefit for every £200 of income above £60,000.</p>
-    </div>
+    <details class="breakdown-toggle">
+      <summary>How the 2024 thresholds work</summary>
+      <div class="guidance-box" style="margin-top: 0.5rem;">
+        <p>From April 2024 the taper thresholds changed: the charge now starts at £60,000 (previously £50,000) and Child Benefit is fully withdrawn at £80,000 (previously £60,000). Between these figures, you lose 1% of the benefit for every £200 of income above £60,000.</p>
+      </div>
+    </details>
 
+    <p class="step-reassurance">One more step — let's see what you could recover.</p>
     <div class="btn-row">
       <button class="btn-secondary" onclick="goTo(1)">← Back</button>
       <button class="btn-primary" id="optimiseBtn" onclick="goTo(3)">See how to recover it →</button>
@@ -625,12 +713,12 @@
 
   <!-- STEP 3 -->
   <div class="card" id="step3">
-    <div class="card-title">Illustrative optimisation</div>
-    <p class="card-subtitle">Model how increasing pension contributions could reduce your adjusted net income and restore benefits.</p>
+    <div class="card-title">What you could save</div>
+    <p class="card-subtitle">See how pension contributions could reduce your charge and restore benefits.</p>
 
     <div class="optimise-panel">
       <div class="optimise-title">Could pension contributions help?</div>
-      <div class="optimise-sub">This is an illustrative scenario. Move the slider to model the effect of additional salary sacrifice contributions on your benefits and tax position.</div>
+      <div class="optimise-sub">Move the slider to see how additional pension contributions could affect your benefits and tax.</div>
       <div class="slider-field">
         <label>Additional pension contribution <strong id="sliderValDisplay">£0/yr</strong></label>
         <input type="range" id="pensionSlider" min="0" max="30000" step="100" value="0" oninput="updateSlider()">
@@ -648,7 +736,7 @@
 
     <div class="alert-box warning">
       <h4>Next steps</h4>
-      <p>If you think you could benefit from increasing pension contributions, speak to your employer's HR team about salary sacrifice, or consult a qualified financial adviser who can model your full tax position accurately.</p>
+      <p>Speak to your employer's HR team about salary sacrifice, or consult a qualified financial adviser to explore your options.</p>
     </div>
 
         <div class="btn-row">
@@ -669,7 +757,6 @@
         </div>
       </div>
     </div>
-        <button class="lead-dismiss" onclick="dismissLead()" title="Dismiss">×</button>
       </div>
     </div>
   </div>
@@ -949,7 +1036,7 @@
       }).join('</p><p>');
       // Render markdown links [text](url)
       const linkedFormatted = formatted.replace(/\[([^\]]+)\]\((https?:\/\/[^)]+)\)/g, '<a href="$2" target="_blank" style="color:var(--navy,#0f1f38);font-weight:600;text-decoration:underline;">$1</a>');
-      bubble = '<p>' + linkedFormatted + ' &nbsp;&middot;&nbsp; <a href="about.html" style="color:rgba(255,255,255,0.4);text-decoration:none;">About</a> &nbsp;&middot;&nbsp; <a href="privacy.html" style="color:rgba(255,255,255,0.4);text-decoration:none;">Privacy</a> &nbsp;&middot;&nbsp; <a href="mailto:hello@mypaypicture.com" style="color:rgba(255,255,255,0.4);text-decoration:none;">hello@mypaypicture.com</a></p>';
+      bubble = '<p>' + linkedFormatted + '</p>';
     }
     div.innerHTML = '<div class="msg-av">' + av + '</div><div class="msg-bub">' + bubble + '</div>';
     msgs.appendChild(div);

@@ -559,8 +559,8 @@
   .rls-toggle-btn { font-size: 0.75rem; padding: 0.3rem 0.75rem; border-radius: 20px; border: 1px solid var(--border); background: white; cursor: pointer; color: var(--slate); transition: all 0.15s; font-weight: 500; }
   .rls-toggle-btn.active { background: var(--navy); color: white; border-color: var(--navy); }
 
-  .rls-breakdown { background: var(--stone-pale); border-radius: 8px; padding: 0.85rem 1rem; margin-top: 0.75rem; display: none; }
-  .rls-breakdown.open { display: block; }
+  .rls-breakdown { background: var(--stone-pale); border-radius: 8px; padding: 0.85rem 1rem; margin-top: 0.75rem; }
+
   .rls-breakdown-row { display: flex; justify-content: space-between; font-size: 0.77rem; padding: 0.25rem 0; border-bottom: 1px solid rgba(0,0,0,0.05); }
   .rls-breakdown-row:last-child { border-bottom: none; }
   .rls-breakdown-row span:first-child { color: var(--slate); }
@@ -715,6 +715,89 @@
     .btn-row { justify-content: stretch; }
     .btn-primary, .btn-secondary { flex: 1; text-align: center; }
   }
+
+  /* ── Tooltip system ─────────────────────────────────────── */
+  .tooltip-wrap { position: relative; display: inline; }
+  .tooltip-icon {
+    display: inline-flex; align-items: center; justify-content: center;
+    width: 1.1rem; height: 1.1rem; border-radius: 50%;
+    background: var(--stone-pale, #f3f4f6); color: var(--navy);
+    font-size: 0.65rem; font-weight: 700; cursor: help;
+    vertical-align: middle; margin-left: 0.3rem; border: none;
+    font-family: 'DM Sans', sans-serif;
+  }
+  .tooltip-bubble {
+    display: none; position: absolute; bottom: calc(100% + 8px); left: 50%;
+    transform: translateX(-50%); background: var(--navy); color: #fff;
+    padding: 0.6rem 0.85rem; border-radius: 8px; font-size: 0.78rem;
+    line-height: 1.5; width: max-content; max-width: 280px;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.18); z-index: 100;
+    font-family: 'DM Sans', sans-serif; font-weight: 400;
+  }
+  .tooltip-bubble::after {
+    content: ''; position: absolute; top: 100%; left: 50%;
+    transform: translateX(-50%); border: 6px solid transparent;
+    border-top-color: var(--navy);
+  }
+  .tooltip-wrap:hover .tooltip-bubble,
+  .tooltip-wrap:focus-within .tooltip-bubble { display: block; }
+
+  /* ── Privacy badge ──────────────────────────────────────── */
+  .privacy-badge {
+    display: flex; align-items: center; gap: 0.5rem;
+    background: #f0fdf4; border: 1px solid #bbf7d0;
+    border-radius: 8px; padding: 0.5rem 0.85rem;
+    font-size: 0.78rem; color: #166534; margin-bottom: 0.75rem;
+  }
+
+  /* ── Breakdown toggle ───────────────────────────────────── */
+  .breakdown-toggle { margin-top: 0.75rem; }
+  .breakdown-toggle summary {
+    font-size: 0.82rem; font-weight: 500; color: var(--slate);
+    cursor: pointer; padding: 0.4rem 0; list-style: none;
+    display: flex; align-items: center; gap: 0.4rem;
+  }
+  .breakdown-toggle summary::before { content: '▸'; transition: transform 0.2s; }
+  .breakdown-toggle[open] summary::before { transform: rotate(90deg); }
+  .breakdown-toggle summary::-webkit-details-marker { display: none; }
+
+  /* ── Step reassurance ───────────────────────────────────── */
+  .step-reassurance {
+    font-size: 0.8rem; color: var(--stone-mid, #9ca3af); text-align: right;
+    margin: 1rem 0 0.25rem; font-style: italic;
+  }
+
+  /* ── Softer result boxes ────────────────────────────────── */
+  .result-box {
+    background: #f8f9fa !important; border-radius: 12px;
+    padding: 1.1rem; text-align: center;
+    border: 1px solid rgba(0,0,0,0.06);
+  }
+  .result-box .r-label { color: var(--slate-light) !important; }
+  .result-box .r-amount { color: var(--navy) !important; }
+  .result-box .r-sub { color: var(--slate-light) !important; }
+  .result-box.stone {
+    background: var(--stone-pale, #f3f4f6) !important;
+    border-color: var(--stone-light, #d1d5db) !important;
+  }
+  .result-box.good {
+    background: #f0fdf4 !important;
+    border-color: #bbf7d0 !important;
+  }
+  .result-box.good .r-amount { color: var(--green) !important; }
+  .result-box.warn {
+    background: #fffbeb !important;
+    border-color: #fde68a !important;
+  }
+  .result-box.warn .r-amount { color: var(--amber) !important; }
+  .result-box.danger {
+    background: #fef2f2 !important;
+    border-color: #fecaca !important;
+  }
+  .result-box.danger .r-amount { color: var(--red) !important; }
+
+  /* ── Active tab text fix ────────────────────────────────── */
+  .step-tab.active.completed { color: white !important; }
 </style>
 </head>
 <body>
@@ -742,22 +825,27 @@
 <div class="hero">
   <div class="hero-eyebrow">MyPayPicture</div>
   <h1>Near or at retirement?<br><em>Let&#8217;s see where you stand.</em></h1>
-  <p>State Pension, drawdown, sustainability and what income you can expect.</p>
+  <p><span class="tooltip-wrap">State Pension<span class="tooltip-icon">?</span><span class="tooltip-bubble">Your government pension, based on your National Insurance record.</span></span>, <span class="tooltip-wrap">drawdown<span class="tooltip-icon">?</span><span class="tooltip-bubble">Taking income directly from your pension pot, with some tax benefits.</span></span>, sustainability and what income you can expect.</p>
 </div>
 
 <div class="container">
+  <div class="privacy-badge">
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+    <span>Your data stays on your device — nothing is sent to a server or stored in the cloud.</span>
+  </div>
+
   <div class="steps-nav">
-    <div class="step-tab active" onclick="goTo(1)" id="tab1"><span class="step-num">1</span>Income</div>
-    <div class="step-tab" onclick="goTo(2)" id="tab2"><span class="step-num">2</span>Full Picture</div>
-    <div class="step-tab" onclick="goTo(3)" id="tab3"><span class="step-num">3</span>Drawdown</div>
-    <div class="step-tab" onclick="goTo(4)" id="tab4"><span class="step-num">4</span>Tax &amp; Income</div>
-    <div class="step-tab" onclick="goTo(5)" id="tab5"><span class="step-num">5</span>Sustainability</div>
+    <div class="step-tab active" onclick="goTo(1)" id="tab1"><span class="step-num">1</span>Your income</div>
+    <div class="step-tab" onclick="goTo(2)" id="tab2"><span class="step-num">2</span>The picture</div>
+    <div class="step-tab" onclick="goTo(3)" id="tab3"><span class="step-num">3</span>How to access</div>
+    <div class="step-tab" onclick="goTo(4)" id="tab4"><span class="step-num">4</span>Tax impact</div>
+    <div class="step-tab" onclick="goTo(5)" id="tab5"><span class="step-num">5</span>Will it last?</div>
   </div>
 
 <!-- STEP 1: INCOME INPUTS -->
   <div class="card active" id="step1">
     <div class="card-title">Your retirement income</div>
-    <p class="card-subtitle">Tell us about your income sources and pot size. We'll build a clear picture of your retirement finances.</p>
+    <p class="card-subtitle">Tell us about your income sources and pot size.</p>
 
     <div class="two-col">
       <div class="field-group">
@@ -771,12 +859,12 @@
         <div class="input-wrap">
           <input type="number" id="niYears" placeholder="e.g. 30" min="0" max="35" class="no-prefix">
         </div>
-        <p class="hint">You need 35 years for the full State Pension. Check via your personal tax account on gov.uk.</p>
+        <p class="hint">Full State Pension requires 35 years. Check your account on gov.uk.</p>
       </div>
     </div>
 
     <div class="field-group">
-      <label>State Pension — have you claimed it yet?</label>
+      <label><span class="tooltip-wrap">State Pension<span class="tooltip-icon">?</span><span class="tooltip-bubble">Your government pension, based on your National Insurance record.</span></span> — have you claimed it yet?</label>
       <div class="radio-group">
         <div class="radio-btn selected" id="sp_yes" onclick="selectSP('yes')">Yes, I receive it</div>
         <div class="radio-btn" id="sp_no" onclick="selectSP('no')">Not yet / before retirement</div>
@@ -790,7 +878,7 @@
           <span class="input-prefix">£</span>
           <input type="number" id="statePension" placeholder="e.g. 11500" min="0">
         </div>
-        <p class="hint">The full new State Pension is £11,502/year (2024/25). Enter your actual amount if different.</p>
+        <p class="hint">Full State Pension is £11,502/year. Enter yours if different.</p>
       </div>
     </div>
 
@@ -803,10 +891,10 @@
           <span class="input-prefix">£</span>
           <input type="number" id="potValue" placeholder="e.g. 250000" min="0">
         </div>
-        <p class="hint">Total value of your defined contribution pension(s).</p>
+        <p class="hint">Total value of your <span class="tooltip-wrap">defined contribution<span class="tooltip-icon">?</span><span class="tooltip-bubble">A pension where you and your employer pay in, and the final amount depends on investment returns.</span></span> pension(s).</p>
       </div>
       <div class="field-group">
-        <label>Defined benefit / final salary pension (annual)</label>
+        <label><span class="tooltip-wrap">Defined benefit<span class="tooltip-icon">?</span><span class="tooltip-bubble">A guaranteed pension, usually from an employer, based on salary and service years.</span></span> / final salary pension (annual)</label>
         <div class="input-wrap">
           <span class="input-prefix">£</span>
           <input type="number" id="dbPension" placeholder="e.g. 8000" min="0">
@@ -822,7 +910,7 @@
           <span class="input-prefix">£</span>
           <input type="number" id="otherIncome" placeholder="e.g. 5000" min="0">
         </div>
-        <p class="hint">Rental income, part-time work, savings interest etc.</p>
+        <p class="hint">Rental income, part-time work, interest, etc.</p>
       </div>
       <div class="field-group">
         <label>Annual spending target</label>
@@ -838,7 +926,7 @@
 
     <div class="field-group" style="margin-bottom:0;">
       <label>Retirement Living Standard — what lifestyle are you aiming for?</label>
-      <p class="hint" style="margin-bottom:0.75rem;">Based on <a href="https://www.retirementlivingstandards.org.uk" target="_blank" style="color:var(--stone);">Retirement Living Standards 2025/26</a> research by Loughborough University. Select a standard to pre-fill your spending target, or enter your own above.</p>
+      <p class="hint" style="margin-bottom:0.75rem;">Based on <a href="https://www.retirementlivingstandards.org.uk" target="_blank" style="color:var(--stone);">Retirement Living Standards 2025/26</a>. Pick one to fill your spending target, or enter your own.</p>
 
       <div class="rls-section">
         <div class="rls-toggle">
@@ -862,23 +950,24 @@
             <div class="rls-card-desc">More financial freedom and some luxuries</div>
           </div>
         </div>
-        <div style="margin-top:0.6rem;">
-          <span style="font-size:0.72rem; color:var(--stone); cursor:pointer; text-decoration:underline;" onclick="toggleRLSBreakdown()">What's included in each standard? ▾</span>
-          <div class="rls-breakdown" id="rlsBreakdown">
+        <details class="breakdown-toggle">
+          <summary>What's included in each standard?</summary>
+          <div class="rls-breakdown" id="rlsBreakdown" style="margin-top:0.75rem;">
             <div style="font-size:0.75rem; font-weight:600; color:var(--navy); margin-bottom:0.5rem;">One-person household (2025/26)</div>
             <div class="rls-breakdown-row"><span>Minimum — basic needs + some fun</span><span>£13,400/yr</span></div>
             <div class="rls-breakdown-row"><span>Moderate — overseas holiday, car, eating out</span><span>£31,700/yr</span></div>
-            <div class="rls-breakdown-row"><span>Comfortable — 4★ holidays, more flexibility</span><span>£43,900/yr</span></div>
+            <div class="rls-breakdown-row"><span>Comfortable — 4★ holidays, flexibility</span><span>£43,900/yr</span></div>
             <div style="font-size:0.75rem; font-weight:600; color:var(--navy); margin:0.6rem 0 0.4rem;">Two-person household (2025/26)</div>
             <div class="rls-breakdown-row"><span>Minimum</span><span>£21,600/yr</span></div>
             <div class="rls-breakdown-row"><span>Moderate</span><span>£43,900/yr</span></div>
             <div class="rls-breakdown-row"><span>Comfortable</span><span>£60,600/yr</span></div>
-            <div style="font-size:0.7rem; color:var(--slate-light); margin-top:0.5rem; line-height:1.5;">Figures assume you own your home with no mortgage. Does not include income tax on pension withdrawals. Source: Retirement Living Standards 2025/26, Loughborough University / Pensions UK.</div>
+            <div style="font-size:0.7rem; color:var(--slate-light); margin-top:0.5rem; line-height:1.5;">Source: Retirement Living Standards 2025/26, Loughborough University / Pensions UK.</div>
           </div>
-        </div>
+        </details>
       </div>
     </div>
 
+    <div class="step-reassurance">Your data stays private and isn't saved anywhere.</div>
     <div class="btn-row">
       <button class="btn-primary" onclick="goTo(2)">See my full picture →</button>
     </div>
@@ -886,8 +975,8 @@
 
   <!-- STEP 2: FULL PICTURE -->
   <div class="card" id="step2">
-    <div class="card-title">Your retirement income picture</div>
-    <p class="card-subtitle">Here's a clear view of all your income sources and how they compare to your spending target.</p>
+    <div class="card-title">Your retirement picture</div>
+    <p class="card-subtitle">How your income sources add up vs. your spending target.</p>
 
     <div class="results-grid" id="pictureGrid"></div>
 
@@ -898,6 +987,7 @@
 
     <div class="summary-panel" id="pictureSummary"></div>
 
+    <div class="step-reassurance">These are rough estimates. Real-world results depend on many factors.</div>
     <div class="btn-row">
       <button class="btn-secondary" onclick="goTo(1)">← Back</button>
       <button class="btn-primary" onclick="goTo(3)">Drawdown vs annuity →</button>
@@ -906,8 +996,8 @@
 
   <!-- STEP 3: DRAWDOWN VS ANNUITY -->
   <div class="card" id="step3">
-    <div class="card-title">Drawdown vs annuity</div>
-    <p class="card-subtitle">Two ways to turn your pension pot into income. Neither is right for everyone — here's what matters for your situation.</p>
+    <div class="card-title"><span class="tooltip-wrap">Drawdown<span class="tooltip-icon">?</span><span class="tooltip-bubble">Taking income directly from your pension pot, with some tax benefits and investment risk.</span></span> vs <span class="tooltip-wrap">annuity<span class="tooltip-icon">?</span><span class="tooltip-bubble">A guaranteed income for life from an insurance company, with no investment risk.</span></span></div>
+    <p class="card-subtitle">Two ways to turn your pot into income. Which fits your situation better?</p>
 
     <div class="field-group">
       <label>What annual income do you want from your pot?</label>
@@ -918,7 +1008,7 @@
     </div>
 
     <div class="field-group">
-      <label>Assumed annuity rate</label>
+      <label>Assumed <span class="tooltip-wrap">annuity<span class="tooltip-icon">?</span><span class="tooltip-bubble">A guaranteed income for life from an insurance company, with no investment risk.</span></span> rate</label>
       <div class="range-wrap">
         <input type="range" id="annuityRate" min="3" max="8" step="0.1" value="5" oninput="renderStep3()">
         <div class="range-labels">
@@ -927,7 +1017,7 @@
           <span>8%</span>
         </div>
       </div>
-      <p class="hint">Typical rates for a 65-year-old are currently around 5–6%. Rates vary by age, health, and provider.</p>
+      <p class="hint">Current rates for a 65-year-old: roughly 5–6%. Vary by age, health, provider.</p>
     </div>
 
     <div id="comparisonContent"></div>
@@ -937,7 +1027,7 @@
 
     <div>
       <div style="font-size:0.85rem; font-weight:600; color:var(--navy); margin-bottom:0.25rem;">What are you leaning towards?</div>
-      <p style="font-size:0.8rem; color:var(--slate-light); margin-bottom:0.75rem; line-height:1.5;">Select an option and we'll show you the practical next steps to implement it.</p>
+      <p style="font-size:0.8rem; color:var(--slate-light); margin-bottom:0.75rem; line-height:1.5;">Which appeals to you?</p>
       <div class="pref-grid">
         <div class="pref-card" id="pref_annuity" onclick="selectPref('annuity')">
           <div class="pref-icon">🔒</div>
@@ -958,6 +1048,7 @@
       <div id="nextStepsContent"></div>
     </div>
 
+    <div class="step-reassurance">Your choice isn't locked in — you can change your mind later.</div>
     <div class="btn-row">
       <button class="btn-secondary" onclick="goTo(2)">← Back</button>
       <button class="btn-primary" onclick="goTo(4)">Tax & withdrawals →</button>
@@ -966,8 +1057,8 @@
 
   <!-- STEP 4: TAX & WITHDRAWALS -->
   <div class="card" id="step4">
-    <div class="card-title">Tax-efficient withdrawals</div>
-    <p class="card-subtitle">How you take money from your pension matters. This shows the tax picture for different withdrawal levels.</p>
+    <div class="card-title">Tax impact</div>
+    <p class="card-subtitle">Tax on different withdrawal levels from your pot.</p>
 
     <div class="field-group">
       <label>Annual withdrawal from pension pot</label>
@@ -985,9 +1076,10 @@
 
     <div class="guidance-box">
       <h4>The 25% tax-free lump sum</h4>
-      <p>Up to 25% of your pension pot can be taken tax-free (capped at £268,275 lifetime). You don\'t have to take it all at once — with flexi-access drawdown, 25% of each withdrawal can be tax-free, with the rest taxed as income.</p>
+      <p>Up to 25% of your pension pot can be taken tax-free (capped at £268,275 lifetime). You don't have to take it all at once — with <span class="tooltip-wrap">flexi-access drawdown<span class="tooltip-icon">?</span><span class="tooltip-bubble">A flexible way to access your pension pot, with 25% of each withdrawal tax-free.</span></span>, 25% of each withdrawal can be tax-free, with the rest taxed as income.</p>
     </div>
 
+    <div class="step-reassurance">Tax rules change. Review these figures each year.</div>
     <div class="btn-row">
       <button class="btn-secondary" onclick="goTo(3)">← Back</button>
       <button class="btn-primary" onclick="goTo(5)">How long will it last? →</button>
@@ -996,8 +1088,8 @@
 
   <!-- STEP 5: SUSTAINABILITY -->
   <div class="card" id="step5">
-    <div class="card-title">How long will your money last?</div>
-    <p class="card-subtitle">Model your pot with different spending phases, one-off events, inflation, and care costs. All figures are illustrative.</p>
+    <div class="card-title">Will it last?</div>
+    <p class="card-subtitle">Project your pot with inflation, spending changes, and major events.</p>
 
     <div class="two-col">
       <div class="field-group">
@@ -1129,15 +1221,18 @@
 
     <div id="sustainContent" style="margin-top:1.5rem;"></div>
 
-    <div class="guidance-box" style="margin-top:1rem;">
-      <h4>Important caveats</h4>
-      <p>These projections use simplified assumptions. Investment returns vary year to year, inflation fluctuates, and life is unpredictable. Use this as a directional guide, not a plan. Review regularly with a financial adviser.</p>
-    </div>
+    <details class="breakdown-toggle" style="margin-top:1rem;">
+      <summary>Important caveats</summary>
+      <div class="guidance-box" style="margin-top:0.75rem;">
+        <p>These projections use simplified assumptions. Investment returns vary year to year, inflation fluctuates, and life is unpredictable. Use this as a directional guide, not a plan. Review regularly with a financial adviser.</p>
+      </div>
+    </details>
 
     <div class="summary-panel" id="finalSummary"></div>
 
+    <div class="step-reassurance">Share these results with a financial adviser for a full review.</div>
         <div class="btn-row">
-      <button class="btn-secondary" onclick="goTo(4)">&#8592; Back</button>
+      <button class="btn-secondary" onclick="goTo(4)">← Back</button>
       <button class="btn-primary" onclick="window.open('https://www.moneyhelper.org.uk/en/pensions-and-retirement','_blank')">MoneyHelper guidance ↗</button>
     </div>
 
@@ -1155,7 +1250,6 @@
         </div>
       </div>
     </div>
-        <button class="lead-dismiss" onclick="dismissLead()" title="Dismiss">×</button>
       </div>
     </div>
   </div>
@@ -1923,7 +2017,7 @@
       }).join('</p><p>');
       // Render markdown links [text](url)
       const linkedFormatted = formatted.replace(/\[([^\]]+)\]\((https?:\/\/[^)]+)\)/g, '<a href="$2" target="_blank" style="color:var(--navy,#0f1f38);font-weight:600;text-decoration:underline;">$1</a>');
-      bubble = '<p>' + linkedFormatted + ' &nbsp;&middot;&nbsp; <a href="about.html" style="color:rgba(255,255,255,0.4);text-decoration:none;">About</a> &nbsp;&middot;&nbsp; <a href="privacy.html" style="color:rgba(255,255,255,0.4);text-decoration:none;">Privacy</a> &nbsp;&middot;&nbsp; <a href="mailto:hello@mypaypicture.com" style="color:rgba(255,255,255,0.4);text-decoration:none;">hello@mypaypicture.com</a></p>';
+      bubble = '<p>' + linkedFormatted + '</p>';
     }
     div.innerHTML = '<div class="msg-av">' + av + '</div><div class="msg-bub">' + bubble + '</div>';
     msgs.appendChild(div);

@@ -274,6 +274,85 @@
     .card { padding:1.5rem 1.25rem; }
     .step-tab { font-size:0.6rem; padding:0.7rem 0.2rem; }
   }
+
+  /* ── Tooltip system ─────────────────────────────────────── */
+  .tooltip-wrap { position: relative; display: inline; }
+  .tooltip-icon {
+    display: inline-flex; align-items: center; justify-content: center;
+    width: 1.1rem; height: 1.1rem; border-radius: 50%;
+    background: var(--sa-pale, #f5f3ff); color: var(--navy);
+    font-size: 0.65rem; font-weight: 700; cursor: help;
+    vertical-align: middle; margin-left: 0.3rem; border: none;
+    font-family: 'DM Sans', sans-serif;
+  }
+  .tooltip-bubble {
+    display: none; position: absolute; bottom: calc(100% + 8px); left: 50%;
+    transform: translateX(-50%); background: var(--navy); color: #fff;
+    padding: 0.6rem 0.85rem; border-radius: 8px; font-size: 0.78rem;
+    line-height: 1.5; width: max-content; max-width: 280px;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.18); z-index: 100;
+    font-family: 'DM Sans', sans-serif; font-weight: 400;
+  }
+  .tooltip-bubble::after {
+    content: ''; position: absolute; top: 100%; left: 50%;
+    transform: translateX(-50%); border: 6px solid transparent;
+    border-top-color: var(--navy);
+  }
+  .tooltip-wrap:hover .tooltip-bubble,
+  .tooltip-wrap:focus-within .tooltip-bubble { display: block; }
+
+  /* ── Privacy badge ──────────────────────────────────────── */
+  .privacy-badge {
+    display: flex; align-items: center; gap: 0.5rem;
+    background: #f0fdf4; border: 1px solid #bbf7d0;
+    border-radius: 8px; padding: 0.5rem 0.85rem;
+    font-size: 0.78rem; color: #166534; margin-bottom: 0.75rem;
+  }
+
+  /* ── Breakdown toggle ───────────────────────────────────── */
+  .breakdown-toggle { margin-top: 0.75rem; }
+  .breakdown-toggle summary {
+    font-size: 0.82rem; font-weight: 500; color: var(--slate);
+    cursor: pointer; padding: 0.4rem 0; list-style: none;
+    display: flex; align-items: center; gap: 0.4rem;
+  }
+  .breakdown-toggle summary::before { content: '▸'; transition: transform 0.2s; }
+  .breakdown-toggle[open] summary::before { transform: rotate(90deg); }
+  .breakdown-toggle summary::-webkit-details-marker { display: none; }
+
+  /* ── Step reassurance ───────────────────────────────────── */
+  .step-reassurance {
+    font-size: 0.8rem; color: var(--sa-light, #c4b5fd); text-align: right;
+    margin: 1rem 0 0.25rem; font-style: italic;
+  }
+
+  /* ── Softer result boxes ────────────────────────────────── */
+  .result-box {
+    background: #f8f9fa !important; border-radius: 12px;
+    padding: 1.1rem; text-align: center;
+    border: 1px solid rgba(0,0,0,0.06);
+  }
+  .result-box .r-label { color: var(--slate-light) !important; }
+  .result-box .r-amount { color: var(--navy) !important; }
+  .result-box .r-sub { color: var(--slate-light) !important; }
+  .result-box.sa {
+    background: var(--sa-pale, #f5f3ff) !important;
+    border-color: rgba(124,58,237,0.15) !important;
+  }
+  .result-box.sa .r-amount { color: var(--navy) !important; }
+  .result-box.good {
+    background: #f0fdf4 !important;
+    border-color: #bbf7d0 !important;
+  }
+  .result-box.good .r-amount { color: var(--green) !important; }
+  .result-box.warn {
+    background: #fffbeb !important;
+    border-color: #fde68a !important;
+  }
+  .result-box.warn .r-amount { color: var(--amber) !important; }
+
+  /* ── Active tab text fix ────────────────────────────────── */
+  .step-tab.active.completed { color: white !important; }
 </style>
 </head>
 <body>
@@ -321,23 +400,29 @@
 </div>
 
 <div class="container">
+  <div class="privacy-badge">
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+    <span>Your data stays on your device — nothing is sent to a server or stored in the cloud.</span>
+  </div>
+
   <div class="steps-nav">
-    <div class="step-tab active" onclick="goTo(1)" id="tab1"><span class="step-num">1</span>Do you need to file?</div>
-    <div class="step-tab" onclick="goTo(2)" id="tab2"><span class="step-num">2</span>Your Income</div>
+    <div class="step-tab active" onclick="goTo(1)" id="tab1"><span class="step-num">1</span>Do I need to?</div>
+    <div class="step-tab" onclick="goTo(2)" id="tab2"><span class="step-num">2</span>Income</div>
     <div class="step-tab" onclick="goTo(3)" id="tab3"><span class="step-num">3</span>Deductions</div>
-    <div class="step-tab" onclick="goTo(4)" id="tab4"><span class="step-num">4</span>Tax Estimate</div>
+    <div class="step-tab" onclick="goTo(4)" id="tab4"><span class="step-num">4</span>Estimate</div>
     <div class="step-tab" onclick="goTo(5)" id="tab5"><span class="step-num">5</span>Next Steps</div>
   </div>
 
 <!-- STEP 1: DO I NEED TO FILE -->
   <div class="card active" id="step1">
-    <div class="card-title">Do you need to file a Self Assessment?</div>
-    <p class="card-subtitle">Tick everything that applies to your 2024/25 tax year (6 April 2024 to 5 April 2025). We&#8217;ll tell you if HMRC requires a return from you.</p>
+    <div class="card-title">Do you need to file a <span class="tooltip-wrap">Self Assessment<button class="tooltip-icon" aria-label="Help">?</button><div class="tooltip-bubble">An annual tax return where you tell HMRC about your income and tax.</div></span>?</div>
+    <p class="card-subtitle">Tick what applies. We&#8217;ll tell you if you need to file.</p>
 
     <div class="check-list" id="triggerList"></div>
 
     <div id="filingVerdict" style="margin-top:1.5rem;"></div>
 
+    <div class="step-reassurance">Don't worry, this is simpler than it seems.</div>
     <div class="btn-row">
       <button class="btn-primary" onclick="goTo(2)">Enter my income &#8594;</button>
     </div>
@@ -346,7 +431,7 @@
   <!-- STEP 2: YOUR INCOME -->
   <div class="card" id="step2">
     <div class="card-title">Your income sources</div>
-    <p class="card-subtitle">Enter figures for the 2024/25 tax year. Leave blank anything that doesn&#8217;t apply.</p>
+    <p class="card-subtitle">Leave blank what doesn&#8217;t apply to you.</p>
 
     <div class="two-col">
       <div class="field-group">
@@ -354,10 +439,10 @@
         <div class="input-wrap"><span class="input-prefix">£</span>
           <input type="number" id="empIncome" placeholder="e.g. 55000" min="0" oninput="updateTaxEstimate()">
         </div>
-        <p class="hint">Your total gross salary before tax and NI. Check your P60 or payslip.</p>
+        <p class="hint">From your P60 or payslip.</p>
       </div>
       <div class="field-group">
-        <label>Tax already paid via PAYE</label>
+        <label>Tax already paid via <span class="tooltip-wrap">PAYE<button class="tooltip-icon" aria-label="Help">?</button><div class="tooltip-bubble">Pay As You Earn — tax your employer deducts from your salary.</div></span></label>
         <div class="input-wrap"><span class="input-prefix">£</span>
           <input type="number" id="payeTax" placeholder="e.g. 12000" min="0" oninput="updateTaxEstimate()">
         </div>
@@ -371,14 +456,14 @@
         <div class="input-wrap"><span class="input-prefix">£</span>
           <input type="number" id="selfEmpProfit" placeholder="e.g. 0" min="0" oninput="updateTaxEstimate()">
         </div>
-        <p class="hint">Income minus allowable business expenses. Not turnover.</p>
+        <p class="hint">Income minus expenses.</p>
       </div>
       <div class="field-group">
         <label>Rental income (profit after expenses)</label>
         <div class="input-wrap"><span class="input-prefix">£</span>
           <input type="number" id="rentalProfit" placeholder="e.g. 0" min="0" oninput="updateTaxEstimate()">
         </div>
-        <p class="hint">Total rent received minus allowable expenses (not mortgage capital).</p>
+        <p class="hint">Rent minus expenses.</p>
       </div>
     </div>
 
@@ -388,17 +473,18 @@
         <div class="input-wrap"><span class="input-prefix">£</span>
           <input type="number" id="dividends" placeholder="e.g. 0" min="0" oninput="updateTaxEstimate()">
         </div>
-        <p class="hint">From shares, funds, or a limited company. First £500 is tax-free (2024/25).</p>
+        <p class="hint">First £500 is tax-free.</p>
       </div>
       <div class="field-group">
         <label>Other taxable income</label>
         <div class="input-wrap"><span class="input-prefix">£</span>
           <input type="number" id="otherIncome" placeholder="e.g. 0" min="0" oninput="updateTaxEstimate()">
         </div>
-        <p class="hint">Foreign income, tips, interest above savings allowance, etc.</p>
+        <p class="hint">Abroad income, interest, tips, etc.</p>
       </div>
     </div>
 
+    <div class="step-reassurance">Leaving fields blank is fine if they don't apply.</div>
     <div class="btn-row">
       <button class="btn-secondary" onclick="goTo(1)">&#8592; Back</button>
       <button class="btn-primary" onclick="goTo(3)">Add deductions &#8594;</button>
@@ -408,22 +494,22 @@
   <!-- STEP 3: DEDUCTIONS -->
   <div class="card" id="step3">
     <div class="card-title">Deductions &amp; reliefs</div>
-    <p class="card-subtitle">These reduce your taxable income or the tax you owe. Enter what applies &#8212; leave blank if not relevant.</p>
+    <p class="card-subtitle">Enter what applies to you.</p>
 
     <div class="two-col">
       <div class="field-group">
-        <label>Personal pension contributions (gross)</label>
+        <label><span class="tooltip-wrap">Personal pension<button class="tooltip-icon" aria-label="Help">?</button><div class="tooltip-bubble">Money you put into a personal or workplace pension. Contributions attract tax relief.</div></span> contributions (gross)</label>
         <div class="input-wrap"><span class="input-prefix">£</span>
           <input type="number" id="pensionContribs" placeholder="e.g. 0" min="0" oninput="updateTaxEstimate()">
         </div>
-        <p class="hint">Include relief at source top-up. Higher rate relief is claimed through SA.</p>
+        <p class="hint">Higher rate relief claimed here.</p>
       </div>
       <div class="field-group">
-        <label>Gift Aid donations</label>
+        <label><span class="tooltip-wrap">Gift Aid<button class="tooltip-icon" aria-label="Help">?</button><div class="tooltip-bubble">A scheme where the charity claims 20% tax relief from HMRC. Higher-rate taxpayers can claim additional relief on their return.</div></span> donations</label>
         <div class="input-wrap"><span class="input-prefix">£</span>
           <input type="number" id="giftAid" placeholder="e.g. 0" min="0" oninput="updateTaxEstimate()">
         </div>
-        <p class="hint">Total amount donated &#8212; the charity claims basic rate relief. You claim higher rate via SA.</p>
+        <p class="hint">Amount you donated.</p>
       </div>
     </div>
 
@@ -433,17 +519,18 @@
         <div class="input-wrap"><span class="input-prefix">£</span>
           <input type="number" id="marriageAllowance" placeholder="e.g. 0" min="0" oninput="updateTaxEstimate()">
         </div>
-        <p class="hint">Up to £1,260 transferred from a non-taxpaying spouse. Worth £252 tax reduction.</p>
+        <p class="hint">From a non-earning spouse.</p>
       </div>
       <div class="field-group">
-        <label>Student loan repayments (total paid)</label>
+        <label>Student loan repayments</label>
         <div class="input-wrap"><span class="input-prefix">£</span>
           <input type="number" id="studentLoan" placeholder="e.g. 0" min="0" oninput="updateTaxEstimate()">
         </div>
-        <p class="hint">Declare if self-employed or earning above your plan threshold.</p>
+        <p class="hint">If self-employed.</p>
       </div>
     </div>
 
+    <div class="step-reassurance">Only claim what genuinely applies to you.</div>
     <div class="btn-row">
       <button class="btn-secondary" onclick="goTo(2)">&#8592; Back</button>
       <button class="btn-primary" onclick="goTo(4)">See my tax estimate &#8594;</button>
@@ -452,13 +539,14 @@
 
   <!-- STEP 4: TAX ESTIMATE -->
   <div class="card" id="step4">
-    <div class="card-title">Your illustrative tax estimate</div>
-    <p class="card-subtitle">Based on what you&#8217;ve entered. This is a guide &#8212; your actual liability depends on your specific circumstances.</p>
+    <div class="card-title">Your tax estimate</div>
+    <p class="card-subtitle">Based on your figures. Always verify with HMRC.</p>
 
     <div class="results-grid" id="taxResultGrid"></div>
     <div id="taxBreakdown"></div>
     <div id="taxGuidance"></div>
 
+    <div class="step-reassurance">This estimate uses current 2024/25 rates. Verify with HMRC before filing.</div>
     <div class="btn-row">
       <button class="btn-secondary" onclick="goTo(3)">&#8592; Back</button>
       <button class="btn-primary" onclick="goTo(5)">See next steps &#8594;</button>
@@ -489,26 +577,27 @@
     <hr>
 
     <div class="guidance-box">
-      <h4>What to gather before you file</h4>
+      <h4>Gather these before filing</h4>
       <ul>
-        <li><strong>P60</strong> &#8212; from your employer, shows gross pay and tax paid</li>
-        <li><strong>P11D</strong> &#8212; if you have taxable benefits (company car, private medical etc.)</li>
-        <li><strong>Bank interest statements</strong> &#8212; if above your Personal Savings Allowance</li>
-        <li><strong>Rental income records</strong> &#8212; rent received and all allowable expenses</li>
-        <li><strong>Dividend vouchers / broker statements</strong> &#8212; if you received dividends</li>
-        <li><strong>Pension certificates</strong> &#8212; to claim higher rate relief on contributions</li>
-        <li><strong>Gift Aid records</strong> &#8212; to claim higher rate relief on donations</li>
-        <li><strong>UTR number</strong> &#8212; if registered, your 10-digit Unique Taxpayer Reference</li>
+        <li><strong>P60</strong> — shows your gross pay and tax paid</li>
+        <li><strong>P11D</strong> — if you received taxable benefits</li>
+        <li><strong>Bank interest statements</strong> — if above allowance</li>
+        <li><strong>Rental records</strong> — rent and expenses</li>
+        <li><strong>Dividend statements</strong> — if you received any</li>
+        <li><strong>Pension certificates</strong> — for higher rate relief</li>
+        <li><strong>Gift Aid records</strong> — for higher rate relief</li>
+        <li><strong>UTR number</strong> — your 10-digit taxpayer reference</li>
       </ul>
     </div>
 
     <div class="guidance-box" style="margin-top:1rem;">
-      <h4>Not registered yet?</h4>
-      <p>If this is your first Self Assessment you need to register with HMRC. For the 2024/25 tax year the deadline to register is <strong>5 October 2025</strong>. You can register at gov.uk/register-for-self-assessment. You&#8217;ll receive your UTR number within 10 working days.</p>
+      <h4>First time filing?</h4>
+      <p>Register at gov.uk/register-for-self-assessment by <strong>5 October 2025</strong>. You&#8217;ll get your UTR within 10 days.</p>
     </div>
 
     <div class="summary-panel" id="finalSummary"></div>
 
+    <div class="step-reassurance">You're almost done. Take it one step at a time.</div>
     <div class="btn-row">
       <button class="btn-secondary" onclick="goTo(4)">&#8592; Back</button>
       <button class="btn-primary" onclick="window.open('https://www.gov.uk/self-assessment-tax-returns','_blank')">File on gov.uk &#8594;</button>
@@ -623,11 +712,11 @@
     { id: 'selfEmp',     label: 'Self-employed income',             desc: 'Any income from freelance work, a sole trader business, or a partnership.' },
     { id: 'rental',      label: 'Rental income over £2,500',        desc: 'Income from letting property. Under £2,500 can sometimes be dealt with by HMRC directly.' },
     { id: 'dividends',   label: 'Dividends over £500',              desc: 'From shares, funds, or a limited company you own (2024/25 allowance is £500).' },
-    { id: 'highIncome',  label: 'Income over £100,000',             desc: 'Your Personal Allowance tapers to zero above £100,000. You must file to reconcile this.' },
-    { id: 'hicbc',       label: 'High Income Child Benefit Charge',  desc: 'Adjusted net income over £60,000 with Child Benefit in your household.' },
+    { id: 'highIncome',  label: 'Income over £100,000',             desc: 'Your <span class="tooltip-wrap">Personal Allowance<button class="tooltip-icon" aria-label="Help">?</button><div class="tooltip-bubble">The amount of income you can earn tax-free each year (£12,570 for 2024/25).</div></span> tapers to zero above £100,000. You must file to reconcile this.' },
+    { id: 'hicbc',       label: 'High Income Child Benefit Charge',  desc: '<span class="tooltip-wrap">Adjusted net income<button class="tooltip-icon" aria-label="Help">?</button><div class="tooltip-bubble">Your income after certain deductions but before personal allowance. This is used to calculate if you owe the Child Benefit tax charge.</div></span> over £60,000 with Child Benefit in your household.' },
     { id: 'foreignInc',  label: 'Foreign income',                   desc: 'Salary, rental, or investment income from abroad.' },
-    { id: 'higherRate',  label: 'Higher rate taxpayer with pension', desc: 'Claiming higher rate relief on personal pension contributions not via salary sacrifice.' },
-    { id: 'giftAid',     label: 'Higher rate taxpayer with Gift Aid', desc: 'Claiming the additional relief on Gift Aid donations.' },
+    { id: 'higherRate',  label: 'Higher rate taxpayer with <span class="tooltip-wrap">pension<button class="tooltip-icon" aria-label="Help">?</button><div class="tooltip-bubble">Retirement savings account. Contributions often get automatic or additional tax relief.</div></span>', desc: 'Claiming higher rate relief on personal <span class="tooltip-wrap">pension contributions<button class="tooltip-icon" aria-label="Help">?</button><div class="tooltip-bubble">Money you pay into a retirement account. Basic rate relief (20%) is automatic; higher-rate taxpayers claim the extra 20% relief on their return.</div></span> not via salary sacrifice.' },
+    { id: 'giftAid',     label: 'Higher rate taxpayer with <span class="tooltip-wrap">Gift Aid<button class="tooltip-icon" aria-label="Help">?</button><div class="tooltip-bubble">A scheme where charities claim tax relief. Higher-rate taxpayers can claim additional 20% relief on their return.</div></span>', desc: 'Claiming the additional relief on Gift Aid donations.' },
     { id: 'cg',          label: 'Capital gains over the annual exempt amount', desc: '\u00a33,000 exempt for 2024/25. Gains from selling shares, property (not main home), crypto etc.' },
     { id: 'hmrcAsked',   label: 'HMRC has written to ask you to file', desc: 'If HMRC sends a notice to file a return, you must file even if you have no additional tax to pay.' },
   ];
@@ -836,11 +925,15 @@
     }
     if (totalIncome > 100000 && totalIncome <= 125140) {
       guidance += '<div class="alert-box warning"><h4>Personal Allowance taper applies</h4>' +
-        '<p>Your income is between \u00a3100,000 and \u00a3125,140. Your Personal Allowance reduces by \u00a31 for every \u00a32 above \u00a3100,000, creating an effective 60% tax rate on income in this band. Pension contributions can reduce your adjusted net income and recover your allowance.</p></div>';
+        '<details class="breakdown-toggle"><summary>Why does this matter?</summary>' +
+        '<p>Your income is between \u00a3100,000 and \u00a3125,140. Your Personal Allowance reduces by \u00a31 for every \u00a32 above \u00a3100,000, creating an effective 60% tax rate on income in this band. Pension contributions can reduce your adjusted net income and recover your allowance.</p>' +
+        '</details></div>';
     }
     if (r.balance > 3000 && d.selfEmp > 0) {
       guidance += '<div class="alert-box warning"><h4>Payments on Account may apply</h4>' +
-        '<p>If your Self Assessment tax bill is over \u00a31,000, HMRC typically requires you to make Payments on Account &#8212; advance payments towards next year\u2019s bill due 31 January and 31 July. Budget for this.</p></div>';
+        '<details class="breakdown-toggle"><summary>What does this mean for me?</summary>' +
+        '<p>If your Self Assessment tax bill is over \u00a31,000, HMRC typically requires you to make Payments on Account &#8212; advance payments towards next year\u2019s bill due 31 January and 31 July. Budget for this.</p>' +
+        '</details></div>';
     }
     guidance += '<p style="font-size:0.75rem;color:var(--slate-light);margin-top:1rem;font-style:italic;">This estimate is illustrative only and does not account for all reliefs or circumstances. Figures based on 2024/25 tax rates. Always verify with HMRC or a qualified tax adviser.</p>';
     document.getElementById('taxGuidance').innerHTML = guidance;
@@ -1037,7 +1130,7 @@
       var formatted = text.split('\n\n').map(function(p) {
         return p.replace(/\*\*(.*?)\*\*/g,'<strong>$1</strong>');
       }).join('</p><p>');
-      bubble = '<p>'+formatted+' &nbsp;&middot;&nbsp; <a href="about.html" style="color:rgba(255,255,255,0.4);text-decoration:none;">About</a> &nbsp;&middot;&nbsp; <a href="privacy.html" style="color:rgba(255,255,255,0.4);text-decoration:none;">Privacy</a> &nbsp;&middot;&nbsp; <a href="mailto:hello@mypaypicture.com" style="color:rgba(255,255,255,0.4);text-decoration:none;">hello@mypaypicture.com</a></p>';
+      bubble = '<p>'+formatted+'</p>';
     }
     div.innerHTML = '<div class="msg-av">'+av+'</div><div class="msg-bub">'+bubble+'</div>';
     msgs.appendChild(div); msgs.scrollTop = msgs.scrollHeight;
