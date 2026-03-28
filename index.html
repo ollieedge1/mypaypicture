@@ -288,6 +288,12 @@
     .container { padding: 2rem 1.25rem 3rem; }
     .user-tab { font-size: 0.78rem; padding: 0.85rem 0.25rem; }
   }
+  .email-capture { padding: 2.5rem 1rem; text-align: center; }
+  .ec-inner { max-width: 480px; margin: 0 auto; background: rgba(255,255,255,0.85); border-radius: 16px; padding: 2rem 1.5rem; box-shadow: 0 2px 16px rgba(0,0,0,0.06); }
+  .ec-inner h3 { font-family: 'Playfair Display', serif; font-size: 1.35rem; color: #1e293b; margin: 0 0 0.5rem; }
+  .ec-inner p { font-size: 0.88rem; color: #64748b; margin: 0 0 1.25rem; line-height: 1.5; }
+  .ec-btn { display: inline-block; padding: 0.7rem 2rem; border-radius: 8px; border: none; font-family: 'DM Sans', sans-serif; font-size: 0.95rem; font-weight: 600; color: #fff; background: #0d9488; cursor: pointer; transition: opacity 0.2s; }
+  .ec-btn:hover { opacity: 0.88; }
 </style>
 </head>
 <body>
@@ -334,15 +340,23 @@
         <div class="switcher-item-icon" style="background:rgba(107,114,128,0.15);">&#127749;</div>
         <div class="switcher-item-text"><div class="item-name">MyRetirementHelper</div><div class="item-desc">How long will your money last?</div></div>
       </div>
+      <div class="switcher-group-label">&#8505; Info</div>
+      <div class="switcher-item" onclick="window.location.href='about.html'">
+        <div class="switcher-item-icon" style="background:rgba(255,255,255,0.06);">&#8505;</div>
+        <div class="switcher-item-text"><div class="item-name">About</div><div class="item-desc">Why we built this. How we protect your data.</div></div>
+      </div>
     </div>
   </div>
   <div class="disclaimer-badge">Not financial advice</div>
 </header>
 
 <div class="hero">
-  <div class="hero-eyebrow">MyPayPicture</div>
-  <h1>See your complete<br><em>financial picture.</em></h1>
-  <p>Clear answers. No jargon. Your data stays private.</p>
+  <canvas id="heroCanvas" style="position:absolute;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:0;"></canvas>
+  <div style="position:relative;z-index:1;">
+    <div class="hero-eyebrow">MyPayPicture</div>
+    <h1>See your complete<br><em>financial picture.</em></h1>
+    <p>Clear answers. No jargon. Your data stays private.</p>
+  </div>
 </div>
 
 <div class="container">
@@ -465,10 +479,23 @@
   </div>
 </div>
 
+<section class="email-capture">
+  <div class="ec-inner">
+    <h3>Get free tax-year updates</h3>
+    <p>Join 0 UK taxpayers who get our plain-English pension & tax tips. No spam, unsubscribe anytime.</p>
+    <button class="ec-btn" data-tally-open="wQdo1B" data-tally-layout="modal" data-tally-emoji-animation="none">
+      Subscribe free
+    </button>
+  </div>
+</section>
+
 <footer style="background:var(--navy); border-top:3px solid var(--stone); padding:2rem 1.5rem;">
   <div style="max-width:900px; margin:0 auto; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:1rem;">
     <div style="font-family:'Playfair Display',serif; color:white; font-size:1.1rem;">MyPay<em style="color:var(--stone-light);">Picture</em></div>
     <p style="color:rgba(255,255,255,0.35); font-size:0.78rem; max-width:520px; line-height:1.6; margin:0;">Illustrative scenarios only &mdash; not financial, tax or legal advice. Always consult a qualified adviser before making decisions. No data is stored. &copy; MyPayPicture 2025.</p>
+  </div>
+  <div style="max-width:900px; margin:0.75rem auto 0; text-align:center;">
+    <a href="#" data-tally-open="VLV7pE" data-tally-emoji-animation="wave" style="color:rgba(255,255,255,0.35); font-size:0.75rem; text-decoration:none; transition:color 0.2s;" onmouseover="this.style.color='rgba(255,255,255,0.6)'" onmouseout="this.style.color='rgba(255,255,255,0.35)'">Spotted a bug or have a suggestion? Let us know</a>
   </div>
 </footer>
 
@@ -492,7 +519,7 @@
 
   // CHAT
   const WORKER_URL = 'https://mypaypicture-api.proud-truth-9c88.workers.dev';
-  const SYS_PROMPT = 'You are a helpful UK personal finance assistant for MyPayPicture, a suite of tools helping people understand their pay, pension, and benefits. Help users find the right tool and answer general UK personal finance questions.\n\nTools: MyPensionOptimiser (salary sacrifice, contributions), MyPensionReclaim (missed salary sacrifice on bonuses), MyPensionTop-Up (AVCs and tax relief), MyFamily&Benefits (Child Benefit and Tax-Free Childcare), MyRetirementHelper (State Pension, drawdown, sustainability), MyPayDirector (salary vs dividends for limited company directors).\n\nRules:\n- UK English, 2024/25 rates\n- General information only, not personalised financial advice\n- When recommending a tool, always use its exact name: MyPensionOptimiser, MyPensionReclaim, MyPensionTop-Up, MyRetirementHelper, MyPayDirector\n- Direct users to the right tool\n- Warm, clear, approachable tone';
+  const SYS_PROMPT = 'You are a helpful UK personal finance assistant for MyPayPicture, a suite of tools helping people understand their pay, pension, and benefits. Help users find the right tool and answer general UK personal finance questions.\n\nTools: MyPensionOptimiser (salary sacrifice, contributions), MyPensionReclaim (missed salary sacrifice on bonuses), MyPensionTop-Up (AVCs and tax relief), MyFamily&Benefits (Child Benefit and Tax-Free Childcare), MyRetirementHelper (State Pension, drawdown, sustainability), MyPayDirector (salary vs dividends for limited company directors).\n\nRules:\n- UK English, 2025/26 rates\n- General information only, not personalised financial advice\n- When recommending a tool, always use its exact name: MyPensionOptimiser, MyPensionReclaim, MyPensionTop-Up, MyRetirementHelper, MyPayDirector\n- Direct users to the right tool\n- Warm, clear, approachable tone';
 
   let chatHist = [], chatBusy = false;
 
@@ -569,4 +596,138 @@
     });
   }
 </script>
+<script>
+// ── Hero data-inspired motion graphics ──────────────────────────────────────
+(function() {
+  var canvas = document.getElementById('heroCanvas');
+  if (!canvas) return;
+  var ctx = canvas.getContext('2d');
+  var dpr = window.devicePixelRatio || 1;
+  var W, H;
+
+  function resize() {
+    var rect = canvas.parentElement.getBoundingClientRect();
+    W = rect.width; H = rect.height;
+    canvas.width = W * dpr; canvas.height = H * dpr;
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+  }
+  resize();
+  window.addEventListener('resize', resize);
+
+  var symbols = ['£', '%', '+', '£', '£', '%', '+', '£'];
+  var amounts = ['120', '5', '40', '250', '80', '12', '60', '300'];
+
+  function Particle() {
+    this.reset(true);
+  }
+  Particle.prototype.reset = function(init) {
+    this.x = Math.random() * W;
+    this.y = init ? Math.random() * H : H + 20;
+    this.speed = 0.15 + Math.random() * 0.35;
+    this.opacity = 0;
+    this.maxOpacity = 0.06 + Math.random() * 0.08;
+    this.fadeIn = true;
+    this.size = 10 + Math.random() * 6;
+    var i = Math.floor(Math.random() * symbols.length);
+    this.text = symbols[i] + amounts[i];
+    this.drift = (Math.random() - 0.5) * 0.15;
+  };
+  Particle.prototype.update = function() {
+    this.y -= this.speed;
+    this.x += this.drift;
+    if (this.fadeIn) {
+      this.opacity += 0.002;
+      if (this.opacity >= this.maxOpacity) this.fadeIn = false;
+    }
+    if (this.y < H * 0.15) {
+      this.opacity -= 0.003;
+    }
+    if (this.y < -30 || this.opacity <= 0) this.reset(false);
+  };
+  Particle.prototype.draw = function() {
+    ctx.globalAlpha = Math.max(0, this.opacity);
+    ctx.font = this.size + 'px "DM Sans", sans-serif';
+    ctx.fillStyle = '#2dd4bf';
+    ctx.fillText(this.text, this.x, this.y);
+  };
+
+  var lines = [];
+  function makeLine() {
+    var pts = [];
+    var segments = 6 + Math.floor(Math.random() * 4);
+    var baseY = H * (0.35 + Math.random() * 0.45);
+    for (var j = 0; j <= segments; j++) {
+      pts.push({
+        x: (W / segments) * j,
+        y: baseY + (Math.random() - 0.4) * 40
+      });
+    }
+    return {
+      pts: pts,
+      opacity: 0,
+      maxOpacity: 0.04 + Math.random() * 0.04,
+      phase: 0,
+      speed: 0.003 + Math.random() * 0.004,
+      color: Math.random() > 0.5 ? '#2dd4bf' : '#5eead4'
+    };
+  }
+  for (var l = 0; l < 3; l++) lines.push(makeLine());
+
+  function drawLine(line) {
+    if (line.opacity <= 0.001) return;
+    ctx.globalAlpha = line.opacity;
+    ctx.strokeStyle = line.color;
+    ctx.lineWidth = 1;
+    ctx.beginPath();
+    var p = line.pts;
+    ctx.moveTo(p[0].x, p[0].y);
+    for (var i = 1; i < p.length; i++) {
+      var xc = (p[i - 1].x + p[i].x) / 2;
+      var yc = (p[i - 1].y + p[i].y) / 2;
+      ctx.quadraticCurveTo(p[i - 1].x, p[i - 1].y, xc, yc);
+    }
+    ctx.stroke();
+  }
+
+  var particles = [];
+  var maxParticles = 18;
+  for (var p = 0; p < maxParticles; p++) particles.push(new Particle());
+
+  var paused = false;
+  var observer = new IntersectionObserver(function(entries) {
+    paused = !entries[0].isIntersecting;
+  }, { threshold: 0.1 });
+  observer.observe(canvas.parentElement);
+
+  var prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  function frame() {
+    if (prefersReduced) return;
+    if (!paused) {
+      ctx.clearRect(0, 0, W, H);
+
+      for (var l = 0; l < lines.length; l++) {
+        var ln = lines[l];
+        ln.phase += ln.speed;
+        ln.opacity = ln.maxOpacity * (0.5 + 0.5 * Math.sin(ln.phase));
+        for (var j = 0; j < ln.pts.length; j++) {
+          ln.pts[j].y += Math.sin(ln.phase + j) * 0.08;
+        }
+        drawLine(ln);
+      }
+
+      for (var i = 0; i < particles.length; i++) {
+        particles[i].update();
+        particles[i].draw();
+      }
+
+      ctx.globalAlpha = 1;
+    }
+    requestAnimationFrame(frame);
+  }
+  requestAnimationFrame(frame);
+})();
+</script>
+
+<script src="https://tally.so/widgets/embed.js"></script>
 </body>

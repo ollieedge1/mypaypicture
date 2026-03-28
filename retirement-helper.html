@@ -847,15 +847,23 @@
         <div class="switcher-item-icon" style="background:rgba(107,114,128,0.15);">&#127749;</div>
         <div class="switcher-item-text"><div class="item-name">MyRetirementHelper</div><div class="item-desc">Near or at retirement? See where you stand.</div></div>
       </div>
+      <div class="switcher-group-label">&#8505; Info</div>
+      <div class="switcher-item" onclick="window.location.href='about.html'">
+        <div class="switcher-item-icon" style="background:rgba(255,255,255,0.06);">&#8505;</div>
+        <div class="switcher-item-text"><div class="item-name">About</div><div class="item-desc">Why we built this. How we protect your data.</div></div>
+      </div>
     </div>
   </div>
   <div class="disclaimer-badge">Not financial advice</div>
 </header>
 
 <div class="hero">
-  <div class="hero-eyebrow">MyPayPicture</div>
-  <h1>Near or at retirement?<br><em>Let&#8217;s see where you stand.</em></h1>
-  <p><span class="tooltip-wrap">State Pension<span class="tooltip-icon">?</span><span class="tooltip-bubble">Your government pension, based on your National Insurance record.</span></span>, <span class="tooltip-wrap">drawdown<span class="tooltip-icon">?</span><span class="tooltip-bubble">Taking income directly from your pension pot, with some tax benefits.</span></span>, sustainability and what income you can expect.</p>
+  <canvas id="heroCanvas" style="position:absolute;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:0;"></canvas>
+  <div style="position:relative;z-index:1;">
+    <div class="hero-eyebrow">MyPayPicture</div>
+    <h1>Near or at retirement?<br><em>Let&#8217;s see where you stand.</em></h1>
+    <p><span class="tooltip-wrap">State Pension<span class="tooltip-icon">?</span><span class="tooltip-bubble">Your government pension, based on your National Insurance record.</span></span>, <span class="tooltip-wrap">drawdown<span class="tooltip-icon">?</span><span class="tooltip-bubble">Taking income directly from your pension pot, with some tax benefits.</span></span>, sustainability and what income you can expect.</p>
+  </div>
 </div>
 
 <div class="container">
@@ -1318,9 +1326,12 @@
     <div>
       <div style="font-family:'Playfair Display',serif; color:var(--stone-light); font-size:0.95rem; margin-bottom:0.4rem;">Important — Not Financial or Tax Advice</div>
       <p style="color:rgba(255,255,255,0.5); font-size:0.8rem; line-height:1.7; margin:0;">
-        This tool provides illustrative scenarios only and does not constitute financial, tax, or legal advice. All figures are estimates based on 2024/25 UK rates. Retirement decisions are complex and personal — always consult a qualified financial adviser before making decisions about your pension. No data is stored.
+        This tool provides illustrative scenarios only and does not constitute financial, tax, or legal advice. All figures are estimates based on 2025/26 UK rates. Retirement decisions are complex and personal — always consult a qualified financial adviser before making decisions about your pension. No data is stored.
       </p>
     </div>
+  </div>
+  <div style="max-width:900px; margin:0.75rem auto 0; text-align:center;">
+    <a href="#" data-tally-open="VLV7pE" data-tally-emoji-animation="wave" style="color:rgba(255,255,255,0.35); font-size:0.75rem; text-decoration:none; transition:color 0.2s;" onmouseover="this.style.color='rgba(255,255,255,0.6)'" onmouseout="this.style.color='rgba(255,255,255,0.35)'">Spotted a bug or have a suggestion? Let us know</a>
   </div>
 </footer>
 
@@ -1339,7 +1350,7 @@
   const fmtK = n => n >= 1000000 ? '£' + (n/1000000).toFixed(2) + 'M' : n >= 1000 ? '£' + Math.round(n/1000) + 'k' : fmt(n);
 
   // ── STATE PENSION ──────────────────────────────────────────────────────────
-  const FULL_SP = 11502; // 2024/25
+  const FULL_SP = 11973; // 2025/26: £230.25/wk × 52
   let spMode = 'yes';
 
   function selectSP(v) {
@@ -1586,7 +1597,7 @@
     const withdrawal = parseFloat(document.getElementById('withdrawalSlider').value) || 0;
     document.getElementById('withdrawalLabel').textContent = fmt(withdrawal) + '/yr';
 
-    const PA = 12570, BRT = 50270;
+    const PA = 12570, BRT = 50270, HRT = 125140;
     // 25% of each withdrawal is tax-free
     const taxFreeElement = withdrawal * 0.25;
     const taxableElement = withdrawal * 0.75;
@@ -1594,7 +1605,8 @@
     const totalTaxable = Math.max(0, otherIncome + taxableElement - PA);
     let tax = 0, rem = totalTaxable;
     const basic = Math.min(rem, BRT - PA); tax += Math.max(0, basic) * 0.20; rem -= basic;
-    if (rem > 0) tax += Math.min(rem, 75000) * 0.40;
+    if (rem > 0) { const higher = Math.min(rem, HRT - BRT); tax += higher * 0.40; rem -= higher; }
+    if (rem > 0) tax += rem * 0.45;
 
     const effectiveRate = withdrawal > 0 ? (tax / withdrawal * 100) : 0;
     const netWithdrawal = withdrawal - tax;
@@ -2018,7 +2030,7 @@
 
   // ── MYPAYPICTURE CHAT ─────────────────────────────────────────────────────
   const WORKER_URL = 'https://mypaypicture-api.proud-truth-9c88.workers.dev';
-  const SYS_PROMPT = 'You are a helpful UK personal finance assistant embedded in MyPayPicture\'s Retirement Helper tool. This tool helps people approaching or in retirement understand State Pension, drawdown vs annuity, tax-efficient withdrawals, and pension sustainability.\n\nKey topics: State Pension (11502 per year full 2024/25, 35 qualifying years), drawdown, annuity, flexi-access, 25 percent tax-free cash (capped at 268275), Retirement Living Standards (Minimum 13400, Moderate 31700, Comfortable 43900 for one person), Pension Wise, MoneyHelper.\n\nRules:\n- UK English, 2024/25 rates\n- General information only, major irreversible decisions need regulated advice\n- Always recommend Pension Wise and a regulated financial adviser\n- Calm, clear, reassuring tone';
+  const SYS_PROMPT = 'You are a helpful UK personal finance assistant embedded in MyPayPicture\'s Retirement Helper tool. This tool helps people approaching or in retirement understand State Pension, drawdown vs annuity, tax-efficient withdrawals, and pension sustainability.\n\nKey topics: State Pension (11973 per year full 2025/26, 35 qualifying years), drawdown, annuity, flexi-access, 25 percent tax-free cash (capped at 268275), Retirement Living Standards (Minimum 13400, Moderate 31700, Comfortable 43900 for one person), Pension Wise, MoneyHelper.\n\nRules:\n- UK English, 2025/26 rates\n- General information only, major irreversible decisions need regulated advice\n- Always recommend Pension Wise and a regulated financial adviser\n- Calm, clear, reassuring tone';
   let chatHist = [];
   let chatBusy = false;
 
@@ -2242,7 +2254,7 @@
       var ph = doc.internal.pageSize.height;
       doc.setFillColor(...light); doc.rect(0,ph-18,210,18,'F');
       doc.setFont('helvetica','italic'); doc.setFontSize(7); doc.setTextColor(120,120,140);
-      doc.text('Illustrative only \u2014 not financial advice. Based on 2024/25 UK tax rates. Speak to a qualified financial adviser before making changes.', 14, ph-10);
+      doc.text('Illustrative only \u2014 not financial advice. Based on 2025/26 UK tax rates. Speak to a qualified financial adviser before making changes.', 14, ph-10);
       doc.text('mypaypicture.com', 196, ph-4, {align:'right'});
 
       doc.save('MyPayPicture-MyRetirementHelper-Report.pdf');
@@ -2259,5 +2271,139 @@
     });
   }
 </script>
+<script>
+// ── Hero data-inspired motion graphics ──────────────────────────────────────
+(function() {
+  var canvas = document.getElementById('heroCanvas');
+  if (!canvas) return;
+  var ctx = canvas.getContext('2d');
+  var dpr = window.devicePixelRatio || 1;
+  var W, H;
+
+  function resize() {
+    var rect = canvas.parentElement.getBoundingClientRect();
+    W = rect.width; H = rect.height;
+    canvas.width = W * dpr; canvas.height = H * dpr;
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+  }
+  resize();
+  window.addEventListener('resize', resize);
+
+  var symbols = ['£', '%', '+', '£', '£', '%', '+', '£'];
+  var amounts = ['120', '5', '40', '250', '80', '12', '60', '300'];
+
+  function Particle() {
+    this.reset(true);
+  }
+  Particle.prototype.reset = function(init) {
+    this.x = Math.random() * W;
+    this.y = init ? Math.random() * H : H + 20;
+    this.speed = 0.15 + Math.random() * 0.35;
+    this.opacity = 0;
+    this.maxOpacity = 0.06 + Math.random() * 0.08;
+    this.fadeIn = true;
+    this.size = 10 + Math.random() * 6;
+    var i = Math.floor(Math.random() * symbols.length);
+    this.text = symbols[i] + amounts[i];
+    this.drift = (Math.random() - 0.5) * 0.15;
+  };
+  Particle.prototype.update = function() {
+    this.y -= this.speed;
+    this.x += this.drift;
+    if (this.fadeIn) {
+      this.opacity += 0.002;
+      if (this.opacity >= this.maxOpacity) this.fadeIn = false;
+    }
+    if (this.y < H * 0.15) {
+      this.opacity -= 0.003;
+    }
+    if (this.y < -30 || this.opacity <= 0) this.reset(false);
+  };
+  Particle.prototype.draw = function() {
+    ctx.globalAlpha = Math.max(0, this.opacity);
+    ctx.font = this.size + 'px "DM Sans", sans-serif';
+    ctx.fillStyle = '#2dd4bf';
+    ctx.fillText(this.text, this.x, this.y);
+  };
+
+  var lines = [];
+  function makeLine() {
+    var pts = [];
+    var segments = 6 + Math.floor(Math.random() * 4);
+    var baseY = H * (0.35 + Math.random() * 0.45);
+    for (var j = 0; j <= segments; j++) {
+      pts.push({
+        x: (W / segments) * j,
+        y: baseY + (Math.random() - 0.4) * 40
+      });
+    }
+    return {
+      pts: pts,
+      opacity: 0,
+      maxOpacity: 0.04 + Math.random() * 0.04,
+      phase: 0,
+      speed: 0.003 + Math.random() * 0.004,
+      color: Math.random() > 0.5 ? '#2dd4bf' : '#5eead4'
+    };
+  }
+  for (var l = 0; l < 3; l++) lines.push(makeLine());
+
+  function drawLine(line) {
+    if (line.opacity <= 0.001) return;
+    ctx.globalAlpha = line.opacity;
+    ctx.strokeStyle = line.color;
+    ctx.lineWidth = 1;
+    ctx.beginPath();
+    var p = line.pts;
+    ctx.moveTo(p[0].x, p[0].y);
+    for (var i = 1; i < p.length; i++) {
+      var xc = (p[i - 1].x + p[i].x) / 2;
+      var yc = (p[i - 1].y + p[i].y) / 2;
+      ctx.quadraticCurveTo(p[i - 1].x, p[i - 1].y, xc, yc);
+    }
+    ctx.stroke();
+  }
+
+  var particles = [];
+  var maxParticles = 18;
+  for (var p = 0; p < maxParticles; p++) particles.push(new Particle());
+
+  var paused = false;
+  var observer = new IntersectionObserver(function(entries) {
+    paused = !entries[0].isIntersecting;
+  }, { threshold: 0.1 });
+  observer.observe(canvas.parentElement);
+
+  var prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  function frame() {
+    if (prefersReduced) return;
+    if (!paused) {
+      ctx.clearRect(0, 0, W, H);
+
+      for (var l = 0; l < lines.length; l++) {
+        var ln = lines[l];
+        ln.phase += ln.speed;
+        ln.opacity = ln.maxOpacity * (0.5 + 0.5 * Math.sin(ln.phase));
+        for (var j = 0; j < ln.pts.length; j++) {
+          ln.pts[j].y += Math.sin(ln.phase + j) * 0.08;
+        }
+        drawLine(ln);
+      }
+
+      for (var i = 0; i < particles.length; i++) {
+        particles[i].update();
+        particles[i].draw();
+      }
+
+      ctx.globalAlpha = 1;
+    }
+    requestAnimationFrame(frame);
+  }
+  requestAnimationFrame(frame);
+})();
+</script>
+
+<script src="https://tally.so/widgets/embed.js"></script>
 </body>
 </html>

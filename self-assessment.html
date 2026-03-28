@@ -383,6 +383,12 @@
 
   /* ── Active tab text fix ────────────────────────────────── */
   .step-tab.active.completed { color: white !important; }
+  .email-capture { padding: 2.5rem 1rem; text-align: center; }
+  .ec-inner { max-width: 480px; margin: 0 auto; background: rgba(255,255,255,0.85); border-radius: 16px; padding: 2rem 1.5rem; box-shadow: 0 2px 16px rgba(0,0,0,0.06); }
+  .ec-inner h3 { font-family: 'Playfair Display', serif; font-size: 1.35rem; color: #1e293b; margin: 0 0 0.5rem; }
+  .ec-inner p { font-size: 0.88rem; color: #64748b; margin: 0 0 1.25rem; line-height: 1.5; }
+  .ec-btn { display: inline-block; padding: 0.7rem 2rem; border-radius: 8px; border: none; font-family: 'DM Sans', sans-serif; font-size: 0.95rem; font-weight: 600; color: #fff; background: #7c3aed; cursor: pointer; transition: opacity 0.2s; }
+  .ec-btn:hover { opacity: 0.88; }
 </style>
 </head>
 <body>
@@ -418,15 +424,23 @@
         <div class="switcher-item-icon" style="background:rgba(124,58,237,0.15);">&#128203;</div>
         <div class="switcher-item-text"><div class="item-name">MySelfAssessment</div><div class="item-desc">First time filing? Walk through it.</div></div>
       </div>
+      <div class="switcher-group-label">&#8505; Info</div>
+      <div class="switcher-item" onclick="window.location.href='about.html'">
+        <div class="switcher-item-icon" style="background:rgba(255,255,255,0.06);">&#8505;</div>
+        <div class="switcher-item-text"><div class="item-name">About</div><div class="item-desc">Why we built this. How we protect your data.</div></div>
+      </div>
     </div>
   </div>
   <div class="disclaimer-badge">Not financial advice</div>
 </header>
 
 <div class="hero">
-  <div class="hero-eyebrow">MyPayPicture</div>
-  <h1>Dreading Self Assessment?<br><em>Let&#8217;s make it manageable.</em></h1>
-  <p>Work out if you need to file, estimate your tax bill, and know exactly what to do next.</p>
+  <canvas id="heroCanvas" style="position:absolute;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:0;"></canvas>
+  <div style="position:relative;z-index:1;">
+    <div class="hero-eyebrow">MyPayPicture</div>
+    <h1>Dreading Self Assessment?<br><em>Let&#8217;s make it manageable.</em></h1>
+    <p>Work out if you need to file, estimate your tax bill, and know exactly what to do next.</p>
+  </div>
 </div>
 
 <div class="container">
@@ -576,7 +590,7 @@
     <div id="taxBreakdown"></div>
     <div id="taxGuidance"></div>
 
-    <div class="step-reassurance">This estimate uses current 2024/25 rates. Verify with HMRC before filing.</div>
+    <div class="step-reassurance">This estimate uses current 2025/26 rates. Verify with HMRC before filing.</div>
     <div class="btn-row">
       <button class="btn-secondary" onclick="goTo(3)">&#8592; Back</button>
       <button class="btn-primary" onclick="goTo(5)">See next steps &#8594;</button>
@@ -674,15 +688,28 @@
   </div>
 </div>
 
+<section class="email-capture">
+  <div class="ec-inner">
+    <h3>Get free tax-year updates</h3>
+    <p>Join 0 UK taxpayers who get our plain-English pension & tax tips. No spam, unsubscribe anytime.</p>
+    <button class="ec-btn" data-tally-open="wQdo1B" data-tally-layout="modal" data-tally-emoji-animation="none">
+      Subscribe free
+    </button>
+  </div>
+</section>
+
 <footer style="background:var(--navy); border-top:3px solid var(--sa); padding:2rem 1.5rem;">
   <div style="max-width:860px; margin:0 auto; display:flex; gap:1.25rem; align-items:flex-start;">
     <div style="font-size:1.5rem; line-height:1; flex-shrink:0;">&#9888;&#65039;</div>
     <div>
       <div style="font-family:'Playfair Display',serif; color:var(--sa-light); font-size:0.95rem; margin-bottom:0.4rem;">Important &mdash; Not Financial or Tax Advice</div>
       <p style="color:rgba(255,255,255,0.5); font-size:0.8rem; line-height:1.7; margin:0;">
-        This tool provides illustrative estimates based on 2024/25 UK tax rates and is not a substitute for professional tax advice. Always verify your tax position with HMRC or a qualified tax adviser before filing. No data is stored.
+        This tool provides illustrative estimates based on 2025/26 UK tax rates and is not a substitute for professional tax advice. Always verify your tax position with HMRC or a qualified tax adviser before filing. No data is stored.
       </p>
     </div>
+  </div>
+  <div style="max-width:900px; margin:0.75rem auto 0; text-align:center;">
+    <a href="#" data-tally-open="VLV7pE" data-tally-emoji-animation="wave" style="color:rgba(255,255,255,0.35); font-size:0.75rem; text-decoration:none; transition:color 0.2s;" onmouseover="this.style.color='rgba(255,255,255,0.6)'" onmouseout="this.style.color='rgba(255,255,255,0.35)'">Spotted a bug or have a suggestion? Let us know</a>
   </div>
 </footer>
 
@@ -699,7 +726,7 @@
   // ── HELPERS ────────────────────────────────────────────────────────────────
   var fmt = function(n) { return '\u00a3' + Math.round(Math.abs(n)).toLocaleString('en-GB'); };
 
-  // ── TAX CONSTANTS 2024/25 ──────────────────────────────────────────────────
+  // ── TAX CONSTANTS 2025/26 ──────────────────────────────────────────────────
   var PA        = 12570;
   var BRT       = 50270;
   var HRT       = 125140;
@@ -730,24 +757,24 @@
 
   function calcClass4NI(profit) {
     if (profit <= 12570) return 0;
-    return Math.min(profit - 12570, 50270 - 12570) * 0.09 + Math.max(0, profit - 50270) * 0.02;
+    return Math.min(profit - 12570, 50270 - 12570) * 0.06 + Math.max(0, profit - 50270) * 0.02;
   }
 
   function calcClass2NI(profit) {
-    return profit > 12570 ? 179.40 : 0; // 2024/25 flat rate
+    return profit > 12570 ? 182 : 0; // 2025/26: £3.50/wk × 52 (voluntary but included for completeness)
   }
 
   // ── STEP 1: TRIGGERS ──────────────────────────────────────────────────────
   var TRIGGERS = [
     { id: 'selfEmp',     label: 'Self-employed income',             desc: 'Any income from freelance work, a sole trader business, or a partnership.' },
     { id: 'rental',      label: 'Rental income over £2,500',        desc: 'Income from letting property. Under £2,500 can sometimes be dealt with by HMRC directly.' },
-    { id: 'dividends',   label: 'Dividends over £500',              desc: 'From shares, funds, or a limited company you own (2024/25 allowance is £500).' },
-    { id: 'highIncome',  label: 'Income over £100,000',             desc: 'Your <span class="tooltip-wrap">Personal Allowance<button class="tooltip-icon" aria-label="Help">?</button><div class="tooltip-bubble">The amount of income you can earn tax-free each year (£12,570 for 2024/25).</div></span> tapers to zero above £100,000. You must file to reconcile this.' },
+    { id: 'dividends',   label: 'Dividends over £500',              desc: 'From shares, funds, or a limited company you own (2025/26 allowance is £500).' },
+    { id: 'highIncome',  label: 'Income over £100,000',             desc: 'Your <span class="tooltip-wrap">Personal Allowance<button class="tooltip-icon" aria-label="Help">?</button><div class="tooltip-bubble">The amount of income you can earn tax-free each year (£12,570 for 2025/26).</div></span> tapers to zero above £100,000. You must file to reconcile this.' },
     { id: 'hicbc',       label: 'High Income Child Benefit Charge',  desc: '<span class="tooltip-wrap">Adjusted net income<button class="tooltip-icon" aria-label="Help">?</button><div class="tooltip-bubble">Your income after certain deductions but before personal allowance. This is used to calculate if you owe the Child Benefit tax charge.</div></span> over £60,000 with Child Benefit in your household.' },
     { id: 'foreignInc',  label: 'Foreign income',                   desc: 'Salary, rental, or investment income from abroad.' },
     { id: 'higherRate',  label: 'Higher rate taxpayer with <span class="tooltip-wrap">pension<button class="tooltip-icon" aria-label="Help">?</button><div class="tooltip-bubble">Retirement savings account. Contributions often get automatic or additional tax relief.</div></span>', desc: 'Claiming higher rate relief on personal <span class="tooltip-wrap">pension contributions<button class="tooltip-icon" aria-label="Help">?</button><div class="tooltip-bubble">Money you pay into a retirement account. Basic rate relief (20%) is automatic; higher-rate taxpayers claim the extra 20% relief on their return.</div></span> not via salary sacrifice.' },
     { id: 'giftAid',     label: 'Higher rate taxpayer with <span class="tooltip-wrap">Gift Aid<button class="tooltip-icon" aria-label="Help">?</button><div class="tooltip-bubble">A scheme where charities claim tax relief. Higher-rate taxpayers can claim additional 20% relief on their return.</div></span>', desc: 'Claiming the additional relief on Gift Aid donations.' },
-    { id: 'cg',          label: 'Capital gains over the annual exempt amount', desc: '\u00a33,000 exempt for 2024/25. Gains from selling shares, property (not main home), crypto etc.' },
+    { id: 'cg',          label: 'Capital gains over the annual exempt amount', desc: '\u00a33,000 exempt for 2025/26. Gains from selling shares, property (not main home), crypto etc.' },
     { id: 'hmrcAsked',   label: 'HMRC has written to ask you to file', desc: 'If HMRC sends a notice to file a return, you must file even if you have no additional tax to pay.' },
   ];
 
@@ -792,7 +819,7 @@
         '<div class="filing-banner must-file">' +
           '<div class="filing-banner-icon">&#9940;</div>' +
           '<div><div class="filing-banner-title">You need to file a Self Assessment return</div>' +
-          '<div class="filing-banner-desc">Based on what you\u2019ve ticked, HMRC requires you to file a return for 2024/25. You must register by <strong>5 October 2025</strong> if you haven\u2019t already.</div></div>' +
+          '<div class="filing-banner-desc">Based on what you\u2019ve ticked, HMRC requires you to file a return for 2025/26. You must register by <strong>5 October 2026</strong> if you haven\u2019t already.</div></div>' +
         '</div>';
     } else {
       verdict.innerHTML =
@@ -910,7 +937,7 @@
       '<div class="result-box ' + owingCls + '">' +
         '<div class="r-label">' + (r.balance > 0 ? 'Amount owed to HMRC' : 'Refund due') + '</div>' +
         '<div class="r-amount">' + fmt(r.balance) + '</div>' +
-        '<div class="r-sub">' + (r.balance > 0 ? 'to pay by 31 Jan 2026' : 'HMRC will repay you') + '</div>' +
+        '<div class="r-sub">' + (r.balance > 0 ? 'to pay by 31 Jan 2027' : 'HMRC will repay you') + '</div>' +
       '</div>';
 
     // Breakdown table
@@ -965,7 +992,7 @@
         '<p>If your Self Assessment tax bill is over \u00a31,000, HMRC typically requires you to make Payments on Account &#8212; advance payments towards next year\u2019s bill due 31 January and 31 July. Budget for this.</p>' +
         '</details></div>';
     }
-    guidance += '<p style="font-size:0.75rem;color:var(--slate-light);margin-top:1rem;font-style:italic;">This estimate is illustrative only and does not account for all reliefs or circumstances. Figures based on 2024/25 tax rates. Always verify with HMRC or a qualified tax adviser.</p>';
+    guidance += '<p style="font-size:0.75rem;color:var(--slate-light);margin-top:1rem;font-style:italic;">This estimate is illustrative only and does not account for all reliefs or circumstances. Figures based on 2025/26 tax rates. Always verify with HMRC or a qualified tax adviser.</p>';
     document.getElementById('taxGuidance').innerHTML = guidance;
 
     // Show PDF CTA
@@ -981,14 +1008,14 @@
     var totalIncome = d.emp + d.selfEmp + d.rental + d.dividends + d.other;
 
     var deadlines = [
-      { date: '5 October 2025', desc: 'Register for Self Assessment (if new to SA)', dot: 'next' },
-      { date: '31 October 2025', desc: 'Deadline for paper returns (2024/25 tax year)', dot: 'next' },
-      { date: '30 December 2025', desc: 'Online filing deadline to collect tax via PAYE (if owed \u226a\u00a33,000)', dot: 'next' },
-      { date: '31 January 2026', desc: 'Online filing deadline and any tax owed must be paid', dot: 'urgent' },
-      { date: '31 July 2026', desc: 'Second Payment on Account (if applicable)', dot: 'next' },
+      { date: '5 October 2026', desc: 'Register for Self Assessment (if new to SA)', dot: 'next' },
+      { date: '31 October 2026', desc: 'Deadline for paper returns (2025/26 tax year)', dot: 'next' },
+      { date: '30 December 2026', desc: 'Online filing deadline to collect tax via PAYE (if owed \u226a\u00a33,000)', dot: 'next' },
+      { date: '31 January 2027', desc: 'Online filing deadline and any tax owed must be paid', dot: 'urgent' },
+      { date: '31 July 2027', desc: 'Second Payment on Account (if applicable)', dot: 'next' },
     ];
 
-    var html = '<div style="font-size:0.82rem;font-weight:600;color:var(--navy);margin-bottom:0.5rem;">Key deadlines &#8212; 2024/25 tax year</div><div class="deadline-list">';
+    var html = '<div style="font-size:0.82rem;font-weight:600;color:var(--navy);margin-bottom:0.5rem;">Key deadlines &#8212; 2025/26 tax year</div><div class="deadline-list">';
     deadlines.forEach(function(d) {
       html += '<div class="deadline-item"><div class="deadline-dot ' + d.dot + '"></div><div class="deadline-date">' + d.date + '</div><div class="deadline-desc">' + d.desc + '</div></div>';
     });
@@ -1004,7 +1031,7 @@
       '<div class="summary-row"><span class="s-label">Already paid via PAYE</span><span class="s-val">' + fmt(r.alreadyPaid) + '</span></div>' +
       '<div class="summary-row"><span class="s-label">' + (r.balance > 0 ? 'To pay by 31 Jan 2026' : 'Refund due') + '</span><span class="s-val ' + (r.balance > 0 ? 'warn' : 'good') + '">' + fmt(r.balance) + '</span></div>' +
       (r.extraRelief > 0 ? '<div class="summary-row"><span class="s-label">Higher rate relief to claim</span><span class="s-val good">' + fmt(r.extraRelief) + '</span></div>' : '') +
-      '<div class="summary-row"><span class="s-label">Filing deadline</span><span class="s-val">31 January 2026</span></div>';
+      '<div class="summary-row"><span class="s-label">Filing deadline</span><span class="s-val">31 January 2027</span></div>';
   }
 
   // ── NAVIGATION ─────────────────────────────────────────────────────────────
@@ -1066,12 +1093,12 @@
       doc.setFont('helvetica','bold'); doc.setFontSize(16); doc.setTextColor(...white);
       doc.text('MyPay',14,14); doc.setFont('helvetica','normal'); doc.text('Picture',33,14);
       doc.setFontSize(8); doc.setTextColor(180,180,180);
-      doc.text('MySelfAssessment Report \u2014 2024/25', 14, 22);
+      doc.text('MySelfAssessment Report \u2014 2025/26', 14, 22);
       doc.text('Generated ' + new Date().toLocaleDateString('en-GB',{day:'numeric',month:'long',year:'numeric'}), 196, 22, {align:'right'});
 
       var y = 36;
       doc.setFont('helvetica','bold'); doc.setFontSize(14); doc.setTextColor(...navy);
-      doc.text('Self Assessment Estimate \u2014 2024/25', 14, y); y += 10;
+      doc.text('Self Assessment Estimate \u2014 2025/26', 14, y); y += 10;
 
       function section(title, rows) {
         doc.setFillColor(...sa); doc.rect(14,y,182,7,'F');
@@ -1109,14 +1136,14 @@
       ]);
       section('Key Deadlines', [
         ['Register for SA (if new)', '5 October 2025'],
-        ['Online filing deadline', '31 January 2026'],
-        ['Tax payment deadline', '31 January 2026'],
+        ['Online filing deadline', '31 January 2027'],
+        ['Tax payment deadline', '31 January 2027'],
       ]);
 
       var ph = doc.internal.pageSize.height;
       doc.setFillColor(...light); doc.rect(0,ph-18,210,18,'F');
       doc.setFont('helvetica','italic'); doc.setFontSize(7); doc.setTextColor(120,120,140);
-      doc.text('Illustrative only \u2014 not financial or tax advice. Based on 2024/25 UK tax rates. Verify with HMRC or a qualified tax adviser before filing.', 14, ph-10);
+      doc.text('Illustrative only \u2014 not financial or tax advice. Based on 2025/26 UK tax rates. Verify with HMRC or a qualified tax adviser before filing.', 14, ph-10);
       doc.text('mypaypicture.com', 196, ph-4, {align:'right'});
       doc.save('MyPayPicture-SelfAssessment-Report.pdf');
     });
@@ -1139,7 +1166,7 @@
 
   // ── CHAT ───────────────────────────────────────────────────────────────────
   var WORKER_URL = 'https://mypaypicture-api.proud-truth-9c88.workers.dev';
-  var SYS_PROMPT = 'You are a helpful UK tax assistant embedded in MyPayPicture\'s MySelfAssessment tool. This tool helps people understand whether they need to file a Self Assessment return, estimate their tax liability, and know what to do next.\n\nKey topics: Self Assessment triggers (self-employment, rental income, dividends over \u00a3500, income over \u00a3100k, HICBC, capital gains), 2024/25 tax rates (personal allowance \u00a312,570, basic rate 20% to \u00a350,270, higher rate 40% to \u00a3125,140), Class 2 and 4 NI for self-employed, dividend tax rates (8.75% basic, 33.75% higher), higher rate pension and Gift Aid relief, Payments on Account, key deadlines (registration 5 Oct 2025, online filing 31 Jan 2026).\n\nRules:\n- UK English, 2024/25 rates\n- General information only, not personalised tax advice\n- Always recommend verifying with HMRC or a qualified accountant/tax adviser\n- Plain English, reassuring tone \u2014 Self Assessment is anxiety-inducing for many people';
+  var SYS_PROMPT = 'You are a helpful UK tax assistant embedded in MyPayPicture\'s MySelfAssessment tool. This tool helps people understand whether they need to file a Self Assessment return, estimate their tax liability, and know what to do next.\n\nKey topics: Self Assessment triggers (self-employment, rental income, dividends over \u00a3500, income over \u00a3100k, HICBC, capital gains), 2025/26 tax rates (personal allowance \u00a312,570, basic rate 20% to \u00a350,270, higher rate 40% to \u00a3125,140), Class 2 and 4 NI for self-employed, dividend tax rates (8.75% basic, 33.75% higher), higher rate pension and Gift Aid relief, Payments on Account, key deadlines (registration 5 Oct 2025, online filing 31 Jan 2026).\n\nRules:\n- UK English, 2025/26 rates\n- General information only, not personalised tax advice\n- Always recommend verifying with HMRC or a qualified accountant/tax adviser\n- Plain English, reassuring tone \u2014 Self Assessment is anxiety-inducing for many people';
 
   document.addEventListener('input', function() {
     if (typeof checkAndShowPdfCta === 'function') checkAndShowPdfCta();
@@ -1200,5 +1227,139 @@
     });
   }
 </script>
+<script>
+// ── Hero data-inspired motion graphics ──────────────────────────────────────
+(function() {
+  var canvas = document.getElementById('heroCanvas');
+  if (!canvas) return;
+  var ctx = canvas.getContext('2d');
+  var dpr = window.devicePixelRatio || 1;
+  var W, H;
+
+  function resize() {
+    var rect = canvas.parentElement.getBoundingClientRect();
+    W = rect.width; H = rect.height;
+    canvas.width = W * dpr; canvas.height = H * dpr;
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+  }
+  resize();
+  window.addEventListener('resize', resize);
+
+  var symbols = ['£', '%', '+', '£', '£', '%', '+', '£'];
+  var amounts = ['120', '5', '40', '250', '80', '12', '60', '300'];
+
+  function Particle() {
+    this.reset(true);
+  }
+  Particle.prototype.reset = function(init) {
+    this.x = Math.random() * W;
+    this.y = init ? Math.random() * H : H + 20;
+    this.speed = 0.15 + Math.random() * 0.35;
+    this.opacity = 0;
+    this.maxOpacity = 0.06 + Math.random() * 0.08;
+    this.fadeIn = true;
+    this.size = 10 + Math.random() * 6;
+    var i = Math.floor(Math.random() * symbols.length);
+    this.text = symbols[i] + amounts[i];
+    this.drift = (Math.random() - 0.5) * 0.15;
+  };
+  Particle.prototype.update = function() {
+    this.y -= this.speed;
+    this.x += this.drift;
+    if (this.fadeIn) {
+      this.opacity += 0.002;
+      if (this.opacity >= this.maxOpacity) this.fadeIn = false;
+    }
+    if (this.y < H * 0.15) {
+      this.opacity -= 0.003;
+    }
+    if (this.y < -30 || this.opacity <= 0) this.reset(false);
+  };
+  Particle.prototype.draw = function() {
+    ctx.globalAlpha = Math.max(0, this.opacity);
+    ctx.font = this.size + 'px "DM Sans", sans-serif';
+    ctx.fillStyle = '#2dd4bf';
+    ctx.fillText(this.text, this.x, this.y);
+  };
+
+  var lines = [];
+  function makeLine() {
+    var pts = [];
+    var segments = 6 + Math.floor(Math.random() * 4);
+    var baseY = H * (0.35 + Math.random() * 0.45);
+    for (var j = 0; j <= segments; j++) {
+      pts.push({
+        x: (W / segments) * j,
+        y: baseY + (Math.random() - 0.4) * 40
+      });
+    }
+    return {
+      pts: pts,
+      opacity: 0,
+      maxOpacity: 0.04 + Math.random() * 0.04,
+      phase: 0,
+      speed: 0.003 + Math.random() * 0.004,
+      color: Math.random() > 0.5 ? '#2dd4bf' : '#5eead4'
+    };
+  }
+  for (var l = 0; l < 3; l++) lines.push(makeLine());
+
+  function drawLine(line) {
+    if (line.opacity <= 0.001) return;
+    ctx.globalAlpha = line.opacity;
+    ctx.strokeStyle = line.color;
+    ctx.lineWidth = 1;
+    ctx.beginPath();
+    var p = line.pts;
+    ctx.moveTo(p[0].x, p[0].y);
+    for (var i = 1; i < p.length; i++) {
+      var xc = (p[i - 1].x + p[i].x) / 2;
+      var yc = (p[i - 1].y + p[i].y) / 2;
+      ctx.quadraticCurveTo(p[i - 1].x, p[i - 1].y, xc, yc);
+    }
+    ctx.stroke();
+  }
+
+  var particles = [];
+  var maxParticles = 18;
+  for (var p = 0; p < maxParticles; p++) particles.push(new Particle());
+
+  var paused = false;
+  var observer = new IntersectionObserver(function(entries) {
+    paused = !entries[0].isIntersecting;
+  }, { threshold: 0.1 });
+  observer.observe(canvas.parentElement);
+
+  var prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  function frame() {
+    if (prefersReduced) return;
+    if (!paused) {
+      ctx.clearRect(0, 0, W, H);
+
+      for (var l = 0; l < lines.length; l++) {
+        var ln = lines[l];
+        ln.phase += ln.speed;
+        ln.opacity = ln.maxOpacity * (0.5 + 0.5 * Math.sin(ln.phase));
+        for (var j = 0; j < ln.pts.length; j++) {
+          ln.pts[j].y += Math.sin(ln.phase + j) * 0.08;
+        }
+        drawLine(ln);
+      }
+
+      for (var i = 0; i < particles.length; i++) {
+        particles[i].update();
+        particles[i].draw();
+      }
+
+      ctx.globalAlpha = 1;
+    }
+    requestAnimationFrame(frame);
+  }
+  requestAnimationFrame(frame);
+})();
+</script>
+
+<script src="https://tally.so/widgets/embed.js"></script>
 </body>
 </html>

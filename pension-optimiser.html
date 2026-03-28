@@ -1344,6 +1344,12 @@
     border-radius: 20px; padding: 0.2rem 0.6rem;
     font-size: 0.72rem; color: var(--teal-light); margin: 0.2rem 0.2rem 0.2rem 0;
   }
+  .email-capture { padding: 2.5rem 1rem; text-align: center; }
+  .ec-inner { max-width: 480px; margin: 0 auto; background: rgba(255,255,255,0.85); border-radius: 16px; padding: 2rem 1.5rem; box-shadow: 0 2px 16px rgba(0,0,0,0.06); }
+  .ec-inner h3 { font-family: 'Playfair Display', serif; font-size: 1.35rem; color: #1e293b; margin: 0 0 0.5rem; }
+  .ec-inner p { font-size: 0.88rem; color: #64748b; margin: 0 0 1.25rem; line-height: 1.5; }
+  .ec-btn { display: inline-block; padding: 0.7rem 2rem; border-radius: 8px; border: none; font-family: 'DM Sans', sans-serif; font-size: 0.95rem; font-weight: 600; color: #fff; background: var(--teal); cursor: pointer; transition: opacity 0.2s; }
+  .ec-btn:hover { opacity: 0.88; }
 </style>
 </head>
 <body>
@@ -1381,15 +1387,23 @@
         <div class="switcher-item-icon" style="background:rgba(124,58,237,0.15);">&#128203;</div>
         <div class="switcher-item-text"><div class="item-name">MySelfAssessment</div><div class="item-desc">First time filing? Walk through it.</div></div>
       </div>
+      <div class="switcher-group-label">&#8505; Info</div>
+      <div class="switcher-item" onclick="window.location.href='about.html'">
+        <div class="switcher-item-icon" style="background:rgba(255,255,255,0.06);">&#8505;</div>
+        <div class="switcher-item-text"><div class="item-name">About</div><div class="item-desc">Why we built this. How we protect your data.</div></div>
+      </div>
     </div>
   </div>
   <div class="disclaimer-badge">Not financial advice</div>
 </header>
 
 <div class="hero">
-  <div class="hero-eyebrow">MyPayPicture</div>
-  <h1>Put more into your pension,<br><em>keep more of your pay.</em></h1>
-  <p>Answer a few questions and we'll show you how.</p>
+  <canvas id="heroCanvas" style="position:absolute;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:0;"></canvas>
+  <div style="position:relative;z-index:1;">
+    <div class="hero-eyebrow">MyPayPicture</div>
+    <h1>Put more into your pension,<br><em>keep more of your pay.</em></h1>
+    <p>Answer a few questions and we'll show you how.</p>
+  </div>
 </div>
 
 <div class="container">
@@ -1740,15 +1754,28 @@
   </div>
 </div>
 
+<section class="email-capture">
+  <div class="ec-inner">
+    <h3>Get free tax-year updates</h3>
+    <p>Join 0 UK taxpayers who get our plain-English pension & tax tips. No spam, unsubscribe anytime.</p>
+    <button class="ec-btn" data-tally-open="wQdo1B" data-tally-layout="modal" data-tally-emoji-animation="none">
+      Subscribe free
+    </button>
+  </div>
+</section>
+
 <footer style="background: var(--navy); border-top: 3px solid var(--teal); padding: 2rem 1.5rem;">
   <div style="max-width: 900px; margin: 0 auto; display: flex; gap: 1.25rem; align-items: flex-start;">
     <div style="font-size: 1.5rem; line-height:1; flex-shrink:0;">⚠️</div>
     <div>
       <div style="font-family: 'Playfair Display', serif; color: var(--teal-light); font-size: 0.95rem; margin-bottom: 0.4rem;">Important — Not Financial or Tax Advice</div>
       <p style="color: rgba(255,255,255,0.55); font-size: 0.8rem; line-height: 1.7; margin:0;">
-        This tool is for illustrative and educational purposes only. It does not constitute financial, tax, or legal advice. Calculations are estimates based on standard 2024/25 UK tax rates and may not reflect your individual circumstances. Tax rules are subject to change. Always verify your position with <a href="https://www.gov.uk/contact-hmrc" target="_blank" style="color:var(--teal-light); text-decoration:none;">HMRC</a> or a qualified financial adviser before making decisions.
+        This tool is for illustrative and educational purposes only. It does not constitute financial, tax, or legal advice. Calculations are estimates based on standard 2025/26 UK tax rates and may not reflect your individual circumstances. Tax rules are subject to change. Always verify your position with <a href="https://www.gov.uk/contact-hmrc" target="_blank" style="color:var(--teal-light); text-decoration:none;">HMRC</a> or a qualified financial adviser before making decisions.
       </p>
     </div>
+  </div>
+  <div style="max-width:900px; margin:0.75rem auto 0; text-align:center;">
+    <a href="#" data-tally-open="VLV7pE" data-tally-emoji-animation="wave" style="color:rgba(255,255,255,0.35); font-size:0.75rem; text-decoration:none; transition:color 0.2s;" onmouseover="this.style.color='rgba(255,255,255,0.6)'" onmouseout="this.style.color='rgba(255,255,255,0.35)'">Spotted a bug or have a suggestion? Let us know</a>
   </div>
 </footer>
 
@@ -1785,7 +1812,7 @@
 
   // ── TAX CALC ───────────────────────────────────────────────────────────────
   function calcTakeHome(grossSalary, pensionGross) {
-    // 2024/25 rates
+    // 2025/26 rates
     const PA = 12570, BRT = 50270, HRT = 125140;
     const NI_PT = 12570, NI_UEL = 50270;
     const taxable = Math.max(0, grossSalary - pensionGross - PA);
@@ -2543,7 +2570,7 @@
 
   // ── MYPAYPICTURE CHAT ─────────────────────────────────────────────────────
   const WORKER_URL = 'https://mypaypicture-api.proud-truth-9c88.workers.dev';
-  const SYS_PROMPT = 'You are a helpful UK personal finance assistant embedded in MyPayPicture\'s Pay Optimiser tool. This tool helps employed people find their ideal pension contribution, compare salary sacrifice vs personal contributions, understand take-home pay impact, and project pension growth.\n\nKey topics: salary sacrifice, take-home pay, NI savings, income tax bands, annual allowance, pension pot projection, goal-based optimisation.\n\nRules:\n- UK English, 2024/25 rates\n- General information only, not personalised financial advice\n- Plain English, warm and practical tone\n- Never recommend specific investment products or providers';
+  const SYS_PROMPT = 'You are a helpful UK personal finance assistant embedded in MyPayPicture\'s Pay Optimiser tool. This tool helps employed people find their ideal pension contribution, compare salary sacrifice vs personal contributions, understand take-home pay impact, and project pension growth.\n\nKey topics: salary sacrifice, take-home pay, NI savings, income tax bands, annual allowance, pension pot projection, goal-based optimisation.\n\nRules:\n- UK English, 2025/26 rates\n- General information only, not personalised financial advice\n- Plain English, warm and practical tone\n- Never recommend specific investment products or providers';
   let chatHist = [];
   let chatBusy = false;
 
@@ -2795,7 +2822,7 @@
       var ph = doc.internal.pageSize.height;
       doc.setFillColor(...light); doc.rect(0, ph-18, 210, 18, 'F');
       doc.setFont('helvetica', 'italic'); doc.setFontSize(7); doc.setTextColor(120,120,140);
-      doc.text('Illustrative only \u2014 not financial advice. Figures based on 2024/25 UK tax rates. Speak to a qualified financial adviser before making changes.', 14, ph-10);
+      doc.text('Illustrative only \u2014 not financial advice. Figures based on 2025/26 UK tax rates. Speak to a qualified financial adviser before making changes.', 14, ph-10);
       doc.text('mypaypicture.com', 196, ph-4, {align:'right'});
 
       doc.save('MyPayPicture-PayOptimiser-Report.pdf');
@@ -2813,5 +2840,146 @@
     });
   }
 </script>
+
+<script>
+// ── Hero data-inspired motion graphics ──────────────────────────────────────
+(function() {
+  var canvas = document.getElementById('heroCanvas');
+  if (!canvas) return;
+  var ctx = canvas.getContext('2d');
+  var dpr = window.devicePixelRatio || 1;
+  var W, H;
+
+  function resize() {
+    var rect = canvas.parentElement.getBoundingClientRect();
+    W = rect.width; H = rect.height;
+    canvas.width = W * dpr; canvas.height = H * dpr;
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+  }
+  resize();
+  window.addEventListener('resize', resize);
+
+  // ── Rising numbers ──────────────────────────────────────────────────────
+  var symbols = ['£', '%', '+', '£', '£', '%', '+', '£'];
+  var amounts = ['120', '5', '40', '250', '80', '12', '60', '300'];
+
+  function Particle() {
+    this.reset(true);
+  }
+  Particle.prototype.reset = function(init) {
+    this.x = Math.random() * W;
+    this.y = init ? Math.random() * H : H + 20;
+    this.speed = 0.15 + Math.random() * 0.35;
+    this.opacity = 0;
+    this.maxOpacity = 0.06 + Math.random() * 0.08;
+    this.fadeIn = true;
+    this.size = 10 + Math.random() * 6;
+    var i = Math.floor(Math.random() * symbols.length);
+    this.text = symbols[i] + amounts[i];
+    this.drift = (Math.random() - 0.5) * 0.15;
+  };
+  Particle.prototype.update = function() {
+    this.y -= this.speed;
+    this.x += this.drift;
+    if (this.fadeIn) {
+      this.opacity += 0.002;
+      if (this.opacity >= this.maxOpacity) this.fadeIn = false;
+    }
+    if (this.y < H * 0.15) {
+      this.opacity -= 0.003;
+    }
+    if (this.y < -30 || this.opacity <= 0) this.reset(false);
+  };
+  Particle.prototype.draw = function() {
+    ctx.globalAlpha = Math.max(0, this.opacity);
+    ctx.font = this.size + 'px "DM Sans", sans-serif';
+    ctx.fillStyle = '#2dd4bf';
+    ctx.fillText(this.text, this.x, this.y);
+  };
+
+  // ── Subtle chart lines ──────────────────────────────────────────────────
+  var lines = [];
+  function makeLine() {
+    var pts = [];
+    var segments = 6 + Math.floor(Math.random() * 4);
+    var baseY = H * (0.35 + Math.random() * 0.45);
+    for (var j = 0; j <= segments; j++) {
+      pts.push({
+        x: (W / segments) * j,
+        y: baseY + (Math.random() - 0.4) * 40
+      });
+    }
+    return {
+      pts: pts,
+      opacity: 0,
+      maxOpacity: 0.04 + Math.random() * 0.04,
+      phase: 0,
+      speed: 0.003 + Math.random() * 0.004,
+      color: Math.random() > 0.5 ? '#2dd4bf' : '#5eead4'
+    };
+  }
+  for (var l = 0; l < 3; l++) lines.push(makeLine());
+
+  function drawLine(line) {
+    if (line.opacity <= 0.001) return;
+    ctx.globalAlpha = line.opacity;
+    ctx.strokeStyle = line.color;
+    ctx.lineWidth = 1;
+    ctx.beginPath();
+    var p = line.pts;
+    ctx.moveTo(p[0].x, p[0].y);
+    for (var i = 1; i < p.length; i++) {
+      var xc = (p[i - 1].x + p[i].x) / 2;
+      var yc = (p[i - 1].y + p[i].y) / 2;
+      ctx.quadraticCurveTo(p[i - 1].x, p[i - 1].y, xc, yc);
+    }
+    ctx.stroke();
+  }
+
+  // ── Particles pool ──────────────────────────────────────────────────────
+  var particles = [];
+  var maxParticles = 18;
+  for (var p = 0; p < maxParticles; p++) particles.push(new Particle());
+
+  // ── Animation loop ──────────────────────────────────────────────────────
+  var paused = false;
+  var observer = new IntersectionObserver(function(entries) {
+    paused = !entries[0].isIntersecting;
+  }, { threshold: 0.1 });
+  observer.observe(canvas.parentElement);
+
+  var prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  function frame() {
+    if (prefersReduced) return;
+    if (!paused) {
+      ctx.clearRect(0, 0, W, H);
+
+      // Chart lines — gentle sine drift
+      for (var l = 0; l < lines.length; l++) {
+        var ln = lines[l];
+        ln.phase += ln.speed;
+        ln.opacity = ln.maxOpacity * (0.5 + 0.5 * Math.sin(ln.phase));
+        for (var j = 0; j < ln.pts.length; j++) {
+          ln.pts[j].y += Math.sin(ln.phase + j) * 0.08;
+        }
+        drawLine(ln);
+      }
+
+      // Rising numbers
+      for (var i = 0; i < particles.length; i++) {
+        particles[i].update();
+        particles[i].draw();
+      }
+
+      ctx.globalAlpha = 1;
+    }
+    requestAnimationFrame(frame);
+  }
+  requestAnimationFrame(frame);
+})();
+</script>
+
+<script src="https://tally.so/widgets/embed.js"></script>
 </body>
 </html>

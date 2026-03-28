@@ -623,15 +623,23 @@
         <div class="switcher-item-icon" style="background:rgba(79,70,229,0.15);">&#127962;</div>
         <div class="switcher-item-text"><div class="item-name">MyPayDirector</div><div class="item-desc">Be smart with your pay.</div></div>
       </div>
+      <div class="switcher-group-label">&#8505; Info</div>
+      <div class="switcher-item" onclick="window.location.href='about.html'">
+        <div class="switcher-item-icon" style="background:rgba(255,255,255,0.06);">&#8505;</div>
+        <div class="switcher-item-text"><div class="item-name">About</div><div class="item-desc">Why we built this. How we protect your data.</div></div>
+      </div>
     </div>
   </div>
   <div class="disclaimer-badge">Not financial advice</div>
 </header>
 
 <div class="hero">
-  <div class="hero-eyebrow">MyPayPicture</div>
-  <h1>Running a limited company?<br><em>Be smart with your pay.</em></h1>
-  <p>Find the optimal salary and dividend split for your limited company.</p>
+  <canvas id="heroCanvas" style="position:absolute;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:0;"></canvas>
+  <div style="position:relative;z-index:1;">
+    <div class="hero-eyebrow">MyPayPicture</div>
+    <h1>Running a limited company?<br><em>Be smart with your pay.</em></h1>
+    <p>Find the optimal salary and dividend split for your limited company.</p>
+  </div>
 </div>
 
 <div class="container">
@@ -672,7 +680,7 @@
       <div class="field-group">
         <label>Your current salary from the company</label>
         <div class="input-wrap"><span class="input-prefix">£</span><input type="number" id="currentSalary" placeholder="e.g. 12570" min="0"></div>
-        <p class="hint">Most directors take salary at the <span class="tooltip-wrap">Personal Allowance<span class="tooltip-icon" tabindex="0">?</span><span class="tooltip-bubble">The amount of income you can earn each year without paying income tax. Currently £12,570 for 2024/25.</span></span> (£12,570) or <span class="tooltip-wrap">NI Secondary Threshold<span class="tooltip-icon" tabindex="0">?</span><span class="tooltip-bubble">The point above which your company must pay National Insurance on your salary. Currently £9,100 for 2024/25.</span></span> (£9,100).</p>
+        <p class="hint">Most directors take salary at the <span class="tooltip-wrap">Personal Allowance<span class="tooltip-icon" tabindex="0">?</span><span class="tooltip-bubble">The amount of income you can earn each year without paying income tax. Currently £12,570 for 2025/26.</span></span> (£12,570) or <span class="tooltip-wrap">NI Secondary Threshold<span class="tooltip-icon" tabindex="0">?</span><span class="tooltip-bubble">The point above which your company must pay National Insurance on your salary. Reduced to £5,000 for 2025/26.</span></span> (£5,000).</p>
       </div>
       <div class="field-group">
         <label>Any other personal income (outside company)</label>
@@ -734,7 +742,7 @@
         <div class="explainer-body">
           <div class="explainer-row">
             <div class="explainer-dot salary-dot"></div>
-            <div><strong>Salary</strong> — paid monthly like any employee, processed through payroll. Fixed and predictable. Small amount of NI applies above £9,100.</div>
+            <div><strong>Salary</strong> — paid monthly like any employee, processed through payroll. Fixed and predictable. Employer NI applies above £5,000.</div>
           </div>
           <div class="explainer-row">
             <div class="explainer-dot div-dot"></div>
@@ -915,6 +923,9 @@
       </p>
     </div>
   </div>
+  <div style="max-width:900px; margin:0.75rem auto 0; text-align:center;">
+    <a href="#" data-tally-open="VLV7pE" data-tally-emoji-animation="wave" style="color:rgba(255,255,255,0.35); font-size:0.75rem; text-decoration:none; transition:color 0.2s;" onmouseover="this.style.color='rgba(255,255,255,0.6)'" onmouseout="this.style.color='rgba(255,255,255,0.35)'">Spotted a bug or have a suggestion? Let us know</a>
+  </div>
 </footer>
 
 <script>
@@ -971,9 +982,9 @@
 
   function periodLabel() { return period === 'monthly' ? '/mo' : '/yr'; }
 
-  // ── TAX CONSTANTS 2024/25 ──────────────────────────────────────────────────
+  // ── TAX CONSTANTS 2025/26 ──────────────────────────────────────────────────
   const PA        = 12570;   // Personal allowance
-  const NI_ST     = 9100;    // NI Secondary threshold (employer)
+  const NI_ST     = 5000;    // NI Secondary threshold (employer) — reduced from £9,100 in 2025/26
   const NI_PT     = 12570;   // NI Primary threshold (employee)
   const BRT       = 50270;   // Basic rate threshold
   const HRT       = 125140;  // Higher rate threshold
@@ -1011,7 +1022,7 @@
 
   function calcEmployerNI(salary) {
     if (salary <= NI_ST) return 0;
-    return (salary - NI_ST) * 0.138;
+    return (salary - NI_ST) * 0.15;
   }
 
   function calcDividendTax(divs, otherIncome) {
@@ -1105,11 +1116,11 @@
 const STRATEGIES = [
     {
       id: 'ni_threshold',
-      salary: 9100,
+      salary: 5000,
       label: 'Keep it minimal',
-      name: 'Salary of £9,100 — zero NI',
+      name: 'Salary of £5,000 — zero employer NI',
       desc: 'I want to minimise all deductions. I have other income (e.g. rental, a spouse using their allowance) or I\'m happy to draw more through dividends.',
-      badge: 'No NI at all',
+      badge: 'No employer NI',
       badgeClass: 'green',
       when: 'Best when you have income elsewhere using your Personal Allowance, or want the simplest payroll.',
     },
@@ -1121,7 +1132,7 @@ const STRATEGIES = [
       desc: 'I want to use my full Personal Allowance as salary, pay no income tax on it, and take the rest as dividends.',
       badge: 'Most common',
       badgeClass: '',
-      when: 'The most common choice for directors with no other income. Small NI applies above £9,100 but the CT deduction more than offsets it.',
+      when: 'The most common choice for directors with no other income. Employer NI applies above £5,000 but the CT deduction more than offsets it.',
     },
     {
       id: 'custom',
@@ -1193,7 +1204,7 @@ const STRATEGIES = [
       // Comparison table
       document.getElementById('optimiseComparison').innerHTML =
         '<table class="compare-table">' +
-        '<thead><tr><th>Item</th>' + results.map(function(s){ return '<th' + (s.id===selectedStrategy?' class="col-b"':'') + '>' + (s.id==='custom'?'Custom':s.salary===9100?'&#163;9,100':'&#163;12,570') + '</th>'; }).join('') + '</tr></thead>' +
+        '<thead><tr><th>Item</th>' + results.map(function(s){ return '<th' + (s.id===selectedStrategy?' class="col-b"':'') + '>' + (s.id==='custom'?'Custom':s.salary===5000?'&#163;5,000':'&#163;12,570') + '</th>'; }).join('') + '</tr></thead>' +
         '<tbody>' +
         [
           ['Salary', function(r){ return fmtP(r.sal); }],
@@ -1413,7 +1424,7 @@ const STRATEGIES = [
 
   // ── CHAT ───────────────────────────────────────────────────────────────────
   const WORKER_URL = 'https://mypaypicture-api.proud-truth-9c88.workers.dev';
-  const SYS_PROMPT = 'You are a helpful UK personal finance assistant embedded in MyPayPicture\'s MyPayDirector tool. This tool helps limited company directors optimise their salary and dividend split.\n\nKey topics: salary vs dividends, corporation tax (19-25% 2024/25), dividend tax rates (8.75% basic, 33.75% higher, 39.35% additional), employer pension contributions, NI Secondary Threshold (9100), Personal Allowance (12570), IR35, Making Tax Digital.\n\nOptimal salary levels: 9100 (no NI), 12570 (full personal allowance). Both are common choices depending on whether the director has other income.\n\nRules:\n- UK English, 2024/25 rates\n- General information only, not personalised tax advice\n- Always recommend consulting a qualified accountant for director remuneration decisions\n- Plain English, practical tone';
+  const SYS_PROMPT = 'You are a helpful UK personal finance assistant embedded in MyPayPicture\'s MyPayDirector tool. This tool helps limited company directors optimise their salary and dividend split.\n\nKey topics: salary vs dividends, corporation tax (19-25% 2025/26), dividend tax rates (8.75% basic, 33.75% higher, 39.35% additional), employer pension contributions, NI Secondary Threshold (5000 from April 2025, employer NI now 15%), Personal Allowance (12570), IR35, Making Tax Digital.\n\nOptimal salary levels: 5000 (no employer NI), 12570 (full personal allowance). Both are common choices depending on whether the director has other income.\n\nRules:\n- UK English, 2025/26 rates\n- General information only, not personalised tax advice\n- Always recommend consulting a qualified accountant for director remuneration decisions\n- Plain English, practical tone';
 
   let chatHist = [], chatBusy = false;
 
@@ -1477,5 +1488,139 @@ const STRATEGIES = [
     });
   }
 </script>
+<script>
+// ── Hero data-inspired motion graphics ──────────────────────────────────────
+(function() {
+  var canvas = document.getElementById('heroCanvas');
+  if (!canvas) return;
+  var ctx = canvas.getContext('2d');
+  var dpr = window.devicePixelRatio || 1;
+  var W, H;
+
+  function resize() {
+    var rect = canvas.parentElement.getBoundingClientRect();
+    W = rect.width; H = rect.height;
+    canvas.width = W * dpr; canvas.height = H * dpr;
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+  }
+  resize();
+  window.addEventListener('resize', resize);
+
+  var symbols = ['£', '%', '+', '£', '£', '%', '+', '£'];
+  var amounts = ['120', '5', '40', '250', '80', '12', '60', '300'];
+
+  function Particle() {
+    this.reset(true);
+  }
+  Particle.prototype.reset = function(init) {
+    this.x = Math.random() * W;
+    this.y = init ? Math.random() * H : H + 20;
+    this.speed = 0.15 + Math.random() * 0.35;
+    this.opacity = 0;
+    this.maxOpacity = 0.06 + Math.random() * 0.08;
+    this.fadeIn = true;
+    this.size = 10 + Math.random() * 6;
+    var i = Math.floor(Math.random() * symbols.length);
+    this.text = symbols[i] + amounts[i];
+    this.drift = (Math.random() - 0.5) * 0.15;
+  };
+  Particle.prototype.update = function() {
+    this.y -= this.speed;
+    this.x += this.drift;
+    if (this.fadeIn) {
+      this.opacity += 0.002;
+      if (this.opacity >= this.maxOpacity) this.fadeIn = false;
+    }
+    if (this.y < H * 0.15) {
+      this.opacity -= 0.003;
+    }
+    if (this.y < -30 || this.opacity <= 0) this.reset(false);
+  };
+  Particle.prototype.draw = function() {
+    ctx.globalAlpha = Math.max(0, this.opacity);
+    ctx.font = this.size + 'px "DM Sans", sans-serif';
+    ctx.fillStyle = '#2dd4bf';
+    ctx.fillText(this.text, this.x, this.y);
+  };
+
+  var lines = [];
+  function makeLine() {
+    var pts = [];
+    var segments = 6 + Math.floor(Math.random() * 4);
+    var baseY = H * (0.35 + Math.random() * 0.45);
+    for (var j = 0; j <= segments; j++) {
+      pts.push({
+        x: (W / segments) * j,
+        y: baseY + (Math.random() - 0.4) * 40
+      });
+    }
+    return {
+      pts: pts,
+      opacity: 0,
+      maxOpacity: 0.04 + Math.random() * 0.04,
+      phase: 0,
+      speed: 0.003 + Math.random() * 0.004,
+      color: Math.random() > 0.5 ? '#2dd4bf' : '#5eead4'
+    };
+  }
+  for (var l = 0; l < 3; l++) lines.push(makeLine());
+
+  function drawLine(line) {
+    if (line.opacity <= 0.001) return;
+    ctx.globalAlpha = line.opacity;
+    ctx.strokeStyle = line.color;
+    ctx.lineWidth = 1;
+    ctx.beginPath();
+    var p = line.pts;
+    ctx.moveTo(p[0].x, p[0].y);
+    for (var i = 1; i < p.length; i++) {
+      var xc = (p[i - 1].x + p[i].x) / 2;
+      var yc = (p[i - 1].y + p[i].y) / 2;
+      ctx.quadraticCurveTo(p[i - 1].x, p[i - 1].y, xc, yc);
+    }
+    ctx.stroke();
+  }
+
+  var particles = [];
+  var maxParticles = 18;
+  for (var p = 0; p < maxParticles; p++) particles.push(new Particle());
+
+  var paused = false;
+  var observer = new IntersectionObserver(function(entries) {
+    paused = !entries[0].isIntersecting;
+  }, { threshold: 0.1 });
+  observer.observe(canvas.parentElement);
+
+  var prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  function frame() {
+    if (prefersReduced) return;
+    if (!paused) {
+      ctx.clearRect(0, 0, W, H);
+
+      for (var l = 0; l < lines.length; l++) {
+        var ln = lines[l];
+        ln.phase += ln.speed;
+        ln.opacity = ln.maxOpacity * (0.5 + 0.5 * Math.sin(ln.phase));
+        for (var j = 0; j < ln.pts.length; j++) {
+          ln.pts[j].y += Math.sin(ln.phase + j) * 0.08;
+        }
+        drawLine(ln);
+      }
+
+      for (var i = 0; i < particles.length; i++) {
+        particles[i].update();
+        particles[i].draw();
+      }
+
+      ctx.globalAlpha = 1;
+    }
+    requestAnimationFrame(frame);
+  }
+  requestAnimationFrame(frame);
+})();
+</script>
+
+<script src="https://tally.so/widgets/embed.js"></script>
 </body>
 </html>
