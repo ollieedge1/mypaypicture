@@ -929,6 +929,78 @@
   .switcher-item-text .item-desc { font-size: 0.72rem; color: rgba(255,255,255,0.4); margin-top: 0.1rem; }
   .switcher-item.current .item-name { color: var(--teal-light); }
 
+  /* SLIDER / ADJUSTER */
+  .rec-adjuster {
+    margin: 1.75rem 0 2rem;
+    padding: 1.25rem 1.5rem;
+    background: var(--cream, #f7f5f2);
+    border-radius: 12px;
+    border: 1px solid rgba(0,0,0,0.06);
+  }
+  .rec-adjuster-label {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    margin-bottom: 1rem;
+    font-size: 0.88rem;
+    font-weight: 500;
+    color: var(--navy);
+  }
+  .rec-pct-display {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--teal);
+  }
+  .rec-slider-row {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-bottom: 0.5rem;
+  }
+  .rec-slider-row input[type="range"] {
+    flex: 1;
+    height: 6px;
+    -webkit-appearance: none;
+    appearance: none;
+    background: #dde1e7;
+    border-radius: 3px;
+    outline: none;
+  }
+  .rec-slider-row input[type="range"]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: 22px; height: 22px;
+    border-radius: 50%;
+    background: var(--teal);
+    cursor: pointer;
+    box-shadow: 0 2px 6px rgba(13,148,136,0.3);
+  }
+  .rec-nudge {
+    width: 32px; height: 32px;
+    border-radius: 8px;
+    border: 1.5px solid #dde1e7;
+    background: white;
+    color: var(--slate);
+    font-size: 1rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.15s;
+    flex-shrink: 0;
+  }
+  .rec-nudge:hover {
+    border-color: var(--teal);
+    color: var(--teal);
+  }
+  .rec-slider-hints {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.75rem;
+    color: var(--slate-light);
+    margin-bottom: 0.25rem;
+  }
+
   /* RESET BUTTON */
   .reset-btn {
     display: inline-flex;
@@ -1432,7 +1504,7 @@
     </div>
 
     <!-- LIVE IMPACT GRID -->
-    <h3 style="font-family:'Playfair Display',serif; font-size:1.15rem; color:var(--navy); margin-bottom:1rem;">How it affects your pay</h3>
+    <h3 style="font-family:'Playfair Display',serif; font-size:1.15rem; color:var(--navy); margin:0.5rem 0 1rem;">How it affects your pay</h3>
     <div id="takeHomeGrid"></div>
 
     <hr>
