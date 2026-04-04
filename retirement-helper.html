@@ -638,6 +638,61 @@
   .income-bar-track { height: 8px; background: var(--stone-pale); border-radius: 4px; overflow: hidden; }
   .income-bar-fill { height: 100%; border-radius: 4px; transition: width 0.6s cubic-bezier(0.34,1.56,0.64,1); }
 
+  /* Stacked bar chart */
+  .stacked-chart { margin: 1.5rem 0; }
+  .stacked-chart-title { font-size: 0.72rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.07em; color: var(--slate-light); margin-bottom: 0.6rem; }
+  .stacked-row { margin-bottom: 1.25rem; }
+  .stacked-row-label { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 0.35rem; }
+  .stacked-row-label .sr-name { font-size: 0.85rem; font-weight: 500; color: var(--navy); }
+  .stacked-row-label .sr-total { font-size: 1rem; font-weight: 700; font-family: 'Playfair Display', serif; color: var(--navy); }
+  .stacked-bar-track { height: 28px; background: var(--stone-pale); border-radius: 8px; overflow: hidden; display: flex; position: relative; }
+  .stacked-bar-seg { height: 100%; transition: width 0.6s cubic-bezier(0.34,1.56,0.64,1); position: relative; min-width: 2px; }
+  .stacked-bar-seg:first-child { border-radius: 8px 0 0 8px; }
+  .stacked-bar-seg:last-child { border-radius: 0 8px 8px 0; }
+  .stacked-bar-seg:only-child { border-radius: 8px; }
+  .stacked-legend { display: flex; flex-wrap: wrap; gap: 0.5rem 1rem; margin-top: 0.5rem; }
+  .stacked-legend-item { display: flex; align-items: center; gap: 0.35rem; font-size: 0.72rem; color: var(--slate); }
+  .stacked-legend-dot { width: 10px; height: 10px; border-radius: 3px; flex-shrink: 0; }
+  .spending-marker { position: absolute; top: -6px; bottom: -6px; width: 2.5px; background: var(--red); border-radius: 2px; z-index: 2; transition: left 0.6s cubic-bezier(0.34,1.56,0.64,1); }
+  .spending-marker-label { position: absolute; top: -20px; transform: translateX(-50%); font-size: 0.65rem; font-weight: 600; color: var(--red); white-space: nowrap; }
+  .stacked-verdict { display: flex; align-items: center; gap: 0.5rem; margin-top: 0.75rem; padding: 0.6rem 0.85rem; border-radius: 8px; font-size: 0.85rem; font-weight: 500; }
+  .stacked-verdict.good { background: #f0fdf4; color: var(--green); }
+  .stacked-verdict.short { background: #fef2f2; color: var(--red); }
+
+  /* Tax waterfall chart */
+  .tax-waterfall { margin: 1.5rem 0; }
+  .tw-headline { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 1rem; }
+  .tw-headline .tw-total { font-family: 'Playfair Display', serif; font-size: 1.6rem; font-weight: 700; color: var(--navy); }
+  .tw-headline .tw-sub { font-size: 0.82rem; color: var(--slate-light); }
+  .tw-bar-wrap { position: relative; margin-bottom: 0.5rem; }
+  .tw-bar { height: 36px; border-radius: 10px; overflow: hidden; display: flex; background: var(--stone-pale); }
+  .tw-seg { height: 100%; transition: width 0.5s ease; display: flex; align-items: center; justify-content: center; font-size: 0.7rem; font-weight: 600; color: white; overflow: hidden; white-space: nowrap; min-width: 0; }
+  .tw-seg:first-child { border-radius: 10px 0 0 10px; }
+  .tw-seg:last-child { border-radius: 0 10px 10px 0; }
+  .tw-seg:only-child { border-radius: 10px; }
+  .tw-rows { margin-top: 1rem; }
+  .tw-row { display: flex; align-items: center; gap: 0.75rem; padding: 0.6rem 0; border-bottom: 1px solid rgba(0,0,0,0.05); }
+  .tw-row:last-child { border-bottom: none; }
+  .tw-dot { width: 12px; height: 12px; border-radius: 4px; flex-shrink: 0; }
+  .tw-row-text { flex: 1; }
+  .tw-row-label { font-size: 0.82rem; color: var(--slate); }
+  .tw-row-hint { font-size: 0.7rem; color: var(--slate-light); margin-top: 0.1rem; }
+  .tw-row-val { font-family: 'Playfair Display', serif; font-weight: 600; font-size: 0.95rem; color: var(--navy); white-space: nowrap; }
+  .tw-row-val.green { color: var(--green); }
+  .tw-row-val.red { color: var(--red); }
+  .tw-effective { display: inline-flex; align-items: center; gap: 0.4rem; margin-top: 0.75rem; padding: 0.45rem 0.85rem; border-radius: 20px; font-size: 0.78rem; font-weight: 600; }
+  .tw-effective.low { background: #f0fdf4; color: var(--green); }
+  .tw-effective.mid { background: #fffbeb; color: var(--amber); }
+  .tw-effective.high { background: #fef2f2; color: var(--red); }
+
+  /* Progressive disclosure for breakdown */
+  .breakdown-toggle { border: 1px solid var(--stone-light); border-radius: 10px; margin: 1rem 0; }
+  .breakdown-toggle summary { padding: 0.75rem 1rem; cursor: pointer; font-size: 0.8rem; font-weight: 600; color: var(--slate); list-style: none; display: flex; align-items: center; gap: 0.5rem; }
+  .breakdown-toggle summary::-webkit-details-marker { display: none; }
+  .breakdown-toggle summary::before { content: '▶'; font-size: 0.6rem; transition: transform 0.2s; color: var(--stone-mid); }
+  .breakdown-toggle[open] summary::before { transform: rotate(90deg); }
+  .breakdown-toggle .breakdown-inner { padding: 0 1rem 1rem; }
+
   /* COMPARISON TABLE */
   .compare-table { width: 100%; border-collapse: collapse; font-size: 0.85rem; margin: 1rem 0; }
   .compare-table th { padding: 0.6rem 0.85rem; text-align: left; font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.06em; color: var(--slate-light); border-bottom: 2px solid var(--border); }
@@ -670,6 +725,7 @@
 
   /* SUMMARY PANEL */
   .summary-panel { background: var(--navy); border-radius: 12px; padding: 1.5rem; margin-top: 1.5rem; }
+  .summary-panel:empty { display: none; }
   .summary-title { font-family: 'Playfair Display', serif; color: var(--stone-light); font-size: 1rem; margin-bottom: 1rem; }
   .summary-row { display: flex; justify-content: space-between; padding: 0.45rem 0; border-bottom: 1px solid rgba(255,255,255,0.07); font-size: 0.85rem; }
   .summary-row:last-child { border-bottom: none; }
@@ -740,8 +796,8 @@
   /* BUTTONS */
   .btn-primary { background: var(--stone); color: white; border: none; padding: 0.85rem 2rem; border-radius: 8px; font-family: 'DM Sans', sans-serif; font-size: 0.95rem; font-weight: 600; cursor: pointer; transition: all 0.2s; }
   .btn-primary:hover { background: var(--warm); transform: translateY(-1px); box-shadow: 0 4px 12px rgba(107,114,128,0.3); }
-  .btn-secondary { background: transparent; color: var(--slate); border: 1.5px solid #ddd; padding: 0.85rem 1.5rem; border-radius: 8px; font-family: 'DM Sans', sans-serif; font-size: 0.9rem; font-weight: 500; cursor: pointer; transition: all 0.2s; }
-  .btn-secondary:hover { border-color: var(--navy); color: var(--navy); }
+  .btn-secondary { background: var(--emerald); color: white; border: none; padding: 0.85rem 1.5rem; border-radius: 8px; font-family: 'DM Sans', sans-serif; font-size: 0.9rem; font-weight: 500; cursor: pointer; transition: all 0.2s; opacity: 0.85; }
+  .btn-secondary:hover { opacity: 1; transform: translateY(-1px); box-shadow: 0 4px 14px rgba(5,150,105,0.3); }
   .btn-row { display: flex; gap: 0.75rem; margin-top: 2rem; justify-content: flex-end; flex-wrap: wrap; }
 
   @media (max-width: 600px) {
@@ -785,17 +841,6 @@
     border-radius: 8px; padding: 0.5rem 0.85rem;
     font-size: 0.78rem; color: #166534; margin-bottom: 0.75rem;
   }
-
-  /* ── Breakdown toggle ───────────────────────────────────── */
-  .breakdown-toggle { margin-top: 0.75rem; }
-  .breakdown-toggle summary {
-    font-size: 0.82rem; font-weight: 500; color: var(--slate);
-    cursor: pointer; padding: 0.4rem 0; list-style: none;
-    display: flex; align-items: center; gap: 0.4rem;
-  }
-  .breakdown-toggle summary::before { content: '▸'; transition: transform 0.2s; }
-  .breakdown-toggle[open] summary::before { transform: rotate(90deg); }
-  .breakdown-toggle summary::-webkit-details-marker { display: none; }
 
   /* ── Step reassurance ───────────────────────────────────── */
   .step-reassurance {
@@ -974,18 +1019,11 @@
 
     <hr>
 
-    <div class="field-group">
-      <label>How much do you want to spend each year?</label>
-      <div class="input-wrap">
-        <span class="input-prefix">£</span>
-        <input type="number" id="spending" placeholder="e.g. 30000" min="0">
-      </div>
-      <p class="hint">Not sure? Pick a lifestyle below and we'll fill this in for you.</p>
-    </div>
+    <input type="hidden" id="spending" value="0">
 
     <div class="field-group" style="margin-bottom:0;">
       <label>What kind of lifestyle do you want?</label>
-      <p class="hint" style="margin-bottom:0.75rem;">These are based on <a href="https://www.retirementlivingstandards.org.uk" target="_blank" style="color:var(--stone);">real research into what things cost in retirement</a>. Pick one to fill in your spending, or type your own number above.</p>
+      <p class="hint" style="margin-bottom:0.75rem;">These are based on <a href="https://www.retirementlivingstandards.org.uk" target="_blank" style="color:var(--stone);">real research into what things cost in retirement</a>. Pick one and we'll work out the numbers for you.</p>
 
       <div class="rls-section">
         <div class="rls-toggle">
@@ -1037,9 +1075,14 @@
     <div class="card-title">Your retirement picture</div>
     <p class="card-subtitle">Here's how your money adds up against what you want to spend.</p>
 
-    <div class="results-grid" id="pictureGrid"></div>
+    <div class="stacked-chart" id="stackedChart"></div>
 
-    <div class="income-bar-section" id="incomeBars"></div>
+    <details class="breakdown-toggle">
+      <summary>Where your money comes from</summary>
+      <div class="breakdown-inner">
+        <div class="income-bar-section" id="incomeBars"></div>
+      </div>
+    </details>
 
     <div id="rlsPosition"></div>
     <div id="pictureStatus"></div>
@@ -1056,56 +1099,36 @@
   <!-- STEP 3: DRAWDOWN VS ANNUITY -->
   <div class="card" id="step3">
     <div class="card-title">How do you want to use your pot?</div>
-    <p class="card-subtitle">There are two main ways to turn your pension savings into spending money. You can take money out bit by bit (<span class="tooltip-wrap"><strong>drawdown</strong><span class="tooltip-icon">?</span><span class="tooltip-bubble">You keep your money invested and take out what you need. Flexible, but your pot could run out.</span></span>), or swap it for a guaranteed income for life (<span class="tooltip-wrap"><strong>annuity</strong><span class="tooltip-icon">?</span><span class="tooltip-bubble">You give your pot to an insurance company and they pay you a fixed amount every year for the rest of your life.</span></span>).</p>
+    <p class="card-subtitle">There are two main ways to turn your pension savings into spending money. Pick the one that feels right — we'll show you the numbers and what to do next.</p>
 
-    <div class="field-group">
-      <label>How much do you want to take from your pot each year?</label>
-      <div class="input-wrap">
-        <span class="input-prefix">£</span>
-        <input type="number" id="desiredIncome" placeholder="e.g. 15000" min="0" oninput="renderStep3()">
+    <div class="pref-grid">
+      <div class="pref-card" id="pref_annuity" onclick="selectPref('annuity')">
+        <div class="pref-icon">🔒</div>
+        <div class="pref-label">Guaranteed for life</div>
+        <div class="pref-desc">Swap your pot for a fixed income that's paid to you every year, no matter how long you live</div>
+      </div>
+      <div class="pref-card" id="pref_drawdown" onclick="selectPref('drawdown')">
+        <div class="pref-icon">📊</div>
+        <div class="pref-label">Flexible</div>
+        <div class="pref-desc">Keep your pot invested and take out what you need, when you need it</div>
+      </div>
+      <div class="pref-card" id="pref_blend" onclick="selectPref('blend')">
+        <div class="pref-icon">⚖️</div>
+        <div class="pref-label">A bit of both</div>
+        <div class="pref-desc">Guarantee the essentials, keep the rest flexible for extras</div>
       </div>
     </div>
 
-    <div class="field-group">
-      <label>Annuity rate <span class="tooltip-wrap"><span class="tooltip-icon">?</span><span class="tooltip-bubble">This is the percentage of your pot that an insurance company would pay you each year for life. A higher rate means more income. Rates depend on your age and health.</span></span></label>
-      <div class="range-wrap">
-        <input type="range" id="annuityRate" min="3" max="8" step="0.1" value="5" oninput="renderStep3()">
-        <div class="range-labels">
-          <span>3%</span>
-          <span id="annuityRateLabel" style="color:var(--stone); font-weight:600;">5.0%</span>
-          <span>8%</span>
-        </div>
-      </div>
-      <p class="hint">Today's rates for a 65-year-old are roughly 5–6%. Older or less healthy people often get better rates.</p>
-    </div>
+    <div id="prefInputs" style="display:none;"></div>
+    <div id="prefFeedback"></div>
 
     <div id="comparisonContent"></div>
 
+    <div id="nextStepsContent"></div>
 
-    <hr>
-
-    <div>
-      <div style="font-size:0.85rem; font-weight:600; color:var(--navy); margin-bottom:0.25rem;">What sounds right for you?</div>
-      <p style="font-size:0.8rem; color:var(--slate-light); margin-bottom:0.75rem; line-height:1.5;">Pick the option that appeals most — we'll show you what to do next.</p>
-      <div class="pref-grid">
-        <div class="pref-card" id="pref_annuity" onclick="selectPref('annuity')">
-          <div class="pref-icon">🔒</div>
-          <div class="pref-label">Guaranteed for life</div>
-          <div class="pref-desc">I want to know exactly what I'll get, forever</div>
-        </div>
-        <div class="pref-card" id="pref_drawdown" onclick="selectPref('drawdown')">
-          <div class="pref-icon">📊</div>
-          <div class="pref-label">Flexible</div>
-          <div class="pref-desc">I want to stay in control and adjust as I go</div>
-        </div>
-        <div class="pref-card" id="pref_blend" onclick="selectPref('blend')">
-          <div class="pref-icon">⚖️</div>
-          <div class="pref-label">A bit of both</div>
-          <div class="pref-desc">Guarantee the essentials, keep the rest flexible</div>
-        </div>
-      </div>
-      <div id="nextStepsContent"></div>
-    </div>
+    <!-- Hidden inputs that renderStep3 reads — default values so calculations still work before selection -->
+    <input type="hidden" id="desiredIncome" value="0">
+    <input type="hidden" id="annuityRateHidden" value="5">
 
     <div class="step-reassurance">Your choice isn't locked in — you can change your mind later.</div>
     <div class="btn-row">
@@ -1467,30 +1490,46 @@
     const gap = d.spending - totalIncome;
     const surplus = -gap;
 
-    document.getElementById('pictureGrid').innerHTML = `
-      <div class="result-box stone">
-        <div class="r-label">State Pension</div>
-        <div class="r-amount">${fmt(d.statePension)}</div>
-        <div class="r-sub">per year</div>
-      </div>
-      <div class="result-box">
-        <div class="r-label">Guaranteed income</div>
-        <div class="r-amount">${fmt(guaranteed)}</div>
-        <div class="r-sub">money you'll definitely get</div>
-      </div>
-      <div class="result-box">
-        <div class="r-label">From your pension pot</div>
-        <div class="r-amount">${fmtK(potIncome)}</div>
-        <div class="r-sub">if you take 4% each year</div>
-      </div>
-      <div class="result-box ${surplus >= 0 ? 'good' : 'danger'}">
-        <div class="r-label">${surplus >= 0 ? 'Left over each year' : 'Short each year'}</div>
-        <div class="r-amount">${fmtK(Math.abs(surplus))}</div>
-        <div class="r-sub">compared to your spending</div>
-      </div>`;
+    // Stacked bar segments
+    const segments = [
+      { label: 'State Pension',        val: d.statePension, color: '#6b7280' },
+      { label: 'Workplace pension',    val: d.db,           color: '#78716c' },
+      { label: 'Other income',         val: d.other,        color: '#9ca3af' },
+      { label: 'From pension pot (4%)',val: potIncome,       color: '#374151' },
+    ].filter(s => s.val > 0);
 
-    const maxIncome = Math.max(totalIncome, d.spending, 1);
-    const bars = [
+    const maxVal = Math.max(totalIncome, d.spending, 1);
+    const spendingPct = Math.min(100, (d.spending / maxVal) * 100);
+
+    const segsHtml = segments.map(s => {
+      const w = (s.val / maxVal) * 100;
+      return `<div class="stacked-bar-seg" style="width:${w}%;background:${s.color};" title="${s.label}: ${fmt(s.val)}/yr"></div>`;
+    }).join('');
+
+    const legendHtml = segments.map(s =>
+      `<span class="stacked-legend-item"><span class="stacked-legend-dot" style="background:${s.color};"></span>${s.label}: ${fmt(s.val)}/yr</span>`
+    ).join('');
+
+    const verdictHtml = surplus >= 0
+      ? `<div class="stacked-verdict good">✓ You'd have ${fmt(surplus)} more than you need each year</div>`
+      : `<div class="stacked-verdict short">You'd be ${fmt(Math.abs(surplus))} short each year</div>`;
+
+    document.getElementById('stackedChart').innerHTML = `
+      <div class="stacked-row">
+        <div class="stacked-row-label">
+          <span class="sr-name">Your income</span>
+          <span class="sr-total">${fmt(totalIncome)}/yr</span>
+        </div>
+        <div style="position:relative;">
+          <div class="stacked-bar-track">${segsHtml}</div>
+          ${d.spending > 0 ? `<div class="spending-marker" style="left:${spendingPct}%;"><span class="spending-marker-label">Spending ${fmt(d.spending)}</span></div>` : ''}
+        </div>
+        <div class="stacked-legend">${legendHtml}</div>
+      </div>
+      ${verdictHtml}`;
+
+    // Detailed breakdown bars (inside progressive disclosure)
+    const detailBars = [
       { label: 'State Pension',             val: d.statePension, color: '#6b7280' },
       { label: 'Workplace pension',         val: d.db,           color: '#78716c' },
       { label: 'Other income',              val: d.other,        color: '#9ca3af' },
@@ -1498,15 +1537,15 @@
       { label: 'What you want to spend',    val: d.spending,     color: '#b91c1c', dashed: true },
     ].filter(b => b.val > 0);
 
-    document.getElementById('incomeBars').innerHTML = '<div style="font-size:0.75rem; font-weight:600; text-transform:uppercase; letter-spacing:0.07em; color:var(--slate-light); margin-bottom:0.85rem;">Where your money comes from</div>' +
-      bars.map(b => `
+    document.getElementById('incomeBars').innerHTML =
+      detailBars.map(b => `
         <div class="income-bar-row">
           <div class="income-bar-label">
             <span>${b.label}</span>
             <span>${fmt(b.val)}/yr</span>
           </div>
           <div class="income-bar-track">
-            <div class="income-bar-fill" style="width:${Math.min(100,(b.val/maxIncome)*100)}%; background:${b.color}; ${b.dashed ? 'opacity:0.5;' : ''}"></div>
+            <div class="income-bar-fill" style="width:${Math.min(100,(b.val/maxVal)*100)}%; background:${b.color}; ${b.dashed ? 'opacity:0.5;' : ''}"></div>
           </div>
         </div>`).join('');
 
@@ -1541,85 +1580,168 @@
   }
 
   // ── STEP 3: DRAWDOWN VS ANNUITY ────────────────────────────────────────────
-  function renderStep3() {
+  function showPrefInputs(pref) {
+    const container = document.getElementById('prefInputs');
+    const feedback = document.getElementById('prefFeedback');
     const d = getInputs();
     const pot = d.pot;
-    const desired = parseFloat(document.getElementById('desiredIncome').value) || 0;
-    const rate = parseFloat(document.getElementById('annuityRate').value) || 5;
-    document.getElementById('annuityRateLabel').textContent = rate.toFixed(1) + '%';
 
-    const annuityIncome = pot * rate / 100;
-    const drawdownRate  = pot > 0 ? (desired / pot * 100) : 0;
+    if (pref === 'annuity') {
+      const rate = parseFloat(document.getElementById('annuityRateHidden').value) || 5;
+      const annuityIncome = pot * rate / 100;
+      container.style.display = 'block';
+      container.innerHTML = `
+        <div class="field-group" style="margin-top:1rem;">
+          <label>What rate would you get? <span class="tooltip-wrap"><span class="tooltip-icon">?</span><span class="tooltip-bubble">This is the percentage of your pot an insurance company would pay you each year for life. A higher rate means more income. Rates depend on your age and health.</span></span></label>
+          <div class="range-wrap">
+            <input type="range" id="annuityRate" min="3" max="8" step="0.1" value="${rate}" oninput="document.getElementById('annuityRateHidden').value=this.value; updateStep3Feedback();">
+            <div class="range-labels">
+              <span>3%</span>
+              <span id="annuityRateLabel" style="color:var(--stone); font-weight:600;">${rate.toFixed(1)}%</span>
+              <span>8%</span>
+            </div>
+          </div>
+          <p class="hint">Today's rates for a 65-year-old are roughly 5–6%. Older or less healthy people often get better rates.</p>
+        </div>`;
+      feedback.innerHTML = `<div class="alert-box" style="margin-top:0.75rem;">
+          <h4>You'd get about ${fmt(annuityIncome)} a year for life</h4>
+          <p>Based on your pot of ${fmt(pot)} at a ${rate.toFixed(1)}% rate. This is a fixed amount paid to you every year, no matter how long you live.</p>
+        </div>`;
+    } else if (pref === 'drawdown') {
+      const desired = parseFloat(document.getElementById('desiredIncome').value) || 0;
+      container.style.display = 'block';
+      container.innerHTML = `
+        <div class="field-group" style="margin-top:1rem;">
+          <label>How much do you want to take out each year?</label>
+          <div class="input-wrap">
+            <span class="input-prefix">£</span>
+            <input type="number" id="desiredIncomeInput" placeholder="e.g. 15000" min="0" value="${desired || ''}" oninput="document.getElementById('desiredIncome').value=this.value; updateStep3Feedback();">
+          </div>
+          <p class="hint">A common rule of thumb is to take about 4% of your pot each year (${fmt(pot * 0.04)}). Taking more than that means your pot could run out sooner.</p>
+        </div>`;
+      updateStep3Feedback();
+    } else if (pref === 'blend') {
+      const rate = parseFloat(document.getElementById('annuityRateHidden').value) || 5;
+      const desired = parseFloat(document.getElementById('desiredIncome').value) || 0;
+      container.style.display = 'block';
+      container.innerHTML = `
+        <div class="two-col" style="margin-top:1rem;">
+          <div class="field-group">
+            <label>What rate would you get on the guaranteed part? <span class="tooltip-wrap"><span class="tooltip-icon">?</span><span class="tooltip-bubble">The percentage an insurance company would pay you each year for life on the portion you convert.</span></span></label>
+            <div class="range-wrap">
+              <input type="range" id="annuityRate" min="3" max="8" step="0.1" value="${rate}" oninput="document.getElementById('annuityRateHidden').value=this.value; updateStep3Feedback();">
+              <div class="range-labels">
+                <span>3%</span>
+                <span id="annuityRateLabel" style="color:var(--stone); font-weight:600;">${rate.toFixed(1)}%</span>
+                <span>8%</span>
+              </div>
+            </div>
+          </div>
+          <div class="field-group">
+            <label>How much would you take from the flexible part each year?</label>
+            <div class="input-wrap">
+              <span class="input-prefix">£</span>
+              <input type="number" id="desiredIncomeInput" placeholder="e.g. 8000" min="0" value="${desired || ''}" oninput="document.getElementById('desiredIncome').value=this.value; updateStep3Feedback();">
+            </div>
+          </div>
+        </div>`;
+      feedback.innerHTML = `<div class="guidance-box" style="margin-top:0.75rem;">
+          <h4>How this works</h4>
+          <p>You'd use part of your pot to buy a guaranteed income to cover your essential bills (housing, food, utilities). The rest stays invested so you can dip in for extras like holidays, home repairs, or helping family.</p>
+        </div>`;
+    }
+  }
+
+  function updateStep3Feedback() {
+    const feedback = document.getElementById('prefFeedback');
+    if (!currentPref) return;
+    const d = getInputs();
+    const pot = d.pot;
+    const rate = parseFloat(document.getElementById('annuityRateHidden').value) || 5;
+    const desired = parseFloat(document.getElementById('desiredIncome').value) || 0;
+    const rateLabel = document.getElementById('annuityRateLabel');
+    if (rateLabel) rateLabel.textContent = rate.toFixed(1) + '%';
+
+    if (currentPref === 'annuity') {
+      const annuityIncome = pot * rate / 100;
+      feedback.innerHTML = `<div class="alert-box" style="margin-top:0.75rem;">
+          <h4>You'd get about ${fmt(annuityIncome)} a year for life</h4>
+          <p>Based on your pot of ${fmt(pot)} at a ${rate.toFixed(1)}% rate. This is a fixed amount paid to you every year, no matter how long you live.</p>
+        </div>`;
+    } else if (currentPref === 'drawdown') {
+      const drawdownRate = pot > 0 ? (desired / pot * 100) : 0;
+      feedback.innerHTML = desired > 0 ? `<div class="alert-box ${drawdownRate > 6 ? 'warning' : ''}" style="margin-top:0.75rem;">
+          <h4>${drawdownRate > 6 ? 'That\'s quite a lot — ' : ''}${fmt(desired)} a year is ${drawdownRate.toFixed(1)}% of your pot</h4>
+          <p>${drawdownRate > 6 ? 'Most experts suggest keeping withdrawals around 4% to avoid running out. Check step 5 to see how long your pot would last at this rate.' : 'Your pot stays invested and you take out what you need. Check step 5 to see how long it could last.'}</p>
+        </div>` : '';
+    } else if (currentPref === 'blend') {
+      feedback.innerHTML = `<div class="guidance-box" style="margin-top:0.75rem;">
+          <h4>How this works</h4>
+          <p>You'd use part of your pot to buy a guaranteed income to cover your essential bills (housing, food, utilities). The rest stays invested so you can dip in for extras like holidays, home repairs, or helping family.</p>
+        </div>`;
+    }
+  }
+
+  function renderStep3() {
+    if (!currentPref) { document.getElementById('comparisonContent').innerHTML = ''; return; }
 
     document.getElementById('comparisonContent').innerHTML = `
-      <div class="results-grid" style="margin-bottom:1.5rem;">
-        <div class="result-box stone">
-          <div class="r-label">Guaranteed for life</div>
-          <div class="r-amount">${fmt(annuityIncome)}</div>
-          <div class="r-sub">per year with an annuity</div>
+      <details class="breakdown-toggle" style="margin-top:1rem;">
+        <summary>Compare the two approaches side by side</summary>
+        <div class="breakdown-inner">
+          <table class="compare-table">
+            <thead>
+              <tr>
+                <th></th>
+                <th class="col-a">Guaranteed for life</th>
+                <th class="col-b">Take it out yourself</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Do I know what I'll get?</td>
+                <td class="pro">✓ Yes, fixed amount forever</td>
+                <td class="neutral">It depends on your investments</td>
+              </tr>
+              <tr>
+                <td>Could I run out of money?</td>
+                <td class="pro">✓ No — it's guaranteed for life</td>
+                <td class="con">Yes, if you take too much</td>
+              </tr>
+              <tr>
+                <td>Can I change my mind?</td>
+                <td class="con">✗ No — once you buy it, it's fixed</td>
+                <td class="pro">✓ Yes, change the amount any time</td>
+              </tr>
+              <tr>
+                <td>What happens when I die?</td>
+                <td class="con">✗ Usually nothing left for family</td>
+                <td class="pro">✓ Whatever's left goes to your family</td>
+              </tr>
+              <tr>
+                <td>Do I take any risk?</td>
+                <td class="pro">✓ No risk at all</td>
+                <td class="neutral">Yes — your investments could go down</td>
+              </tr>
+              <tr>
+                <td>What about rising prices?</td>
+                <td class="neutral">You can add this, but it costs more</td>
+                <td class="pro">✓ You can take more as prices go up</td>
+              </tr>
+              <tr>
+                <td>Tax-free money</td>
+                <td class="neutral">Usually taken before you buy</td>
+                <td class="pro">✓ 25% of each withdrawal is tax-free</td>
+              </tr>
+              <tr>
+                <td>Best for people who...</td>
+                <td class="neutral">Want peace of mind and a simple, certain income</td>
+                <td class="neutral">Have other income and are happy managing their money</td>
+              </tr>
+            </tbody>
+          </table>
         </div>
-        <div class="result-box highlight">
-          <div class="r-label">Taking money out yourself</div>
-          <div class="r-amount">${fmt(desired)}</div>
-          <div class="r-sub">${drawdownRate.toFixed(1)}% of your pot each year</div>
-        </div>
-      </div>
-      <table class="compare-table">
-        <thead>
-          <tr>
-            <th></th>
-            <th class="col-a">Guaranteed for life (annuity)</th>
-            <th class="col-b">Take it out yourself (drawdown)</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>Do I know what I'll get?</td>
-            <td class="pro">✓ Yes, fixed amount forever</td>
-            <td class="neutral">It depends on your investments</td>
-          </tr>
-          <tr>
-            <td>Could I run out of money?</td>
-            <td class="pro">✓ No — it's guaranteed for life</td>
-            <td class="con">Yes, if you take too much</td>
-          </tr>
-          <tr>
-            <td>Can I change my mind?</td>
-            <td class="con">✗ No — once you buy it, it's fixed</td>
-            <td class="pro">✓ Yes, change the amount any time</td>
-          </tr>
-          <tr>
-            <td>What happens when I die?</td>
-            <td class="con">✗ Usually nothing left for family</td>
-            <td class="pro">✓ Whatever's left goes to your family</td>
-          </tr>
-          <tr>
-            <td>Do I take any risk?</td>
-            <td class="pro">✓ No risk at all</td>
-            <td class="neutral">Yes — your investments could go down</td>
-          </tr>
-          <tr>
-            <td>What about rising prices?</td>
-            <td class="neutral">You can add this, but it costs more</td>
-            <td class="pro">✓ You can take more as prices go up</td>
-          </tr>
-          <tr>
-            <td>Tax-free money</td>
-            <td class="neutral">Usually taken before you buy</td>
-            <td class="pro">✓ 25% of each withdrawal is tax-free</td>
-          </tr>
-          <tr>
-            <td>Best for people who...</td>
-            <td class="neutral">Want peace of mind and a simple, certain income</td>
-            <td class="neutral">Have other income and are happy managing their money</td>
-          </tr>
-        </tbody>
-      </table>
-      ${drawdownRate > 6 ? `<div class="alert-box warning"><h4>You're taking quite a lot each year</h4><p>Taking ${drawdownRate.toFixed(1)}% of your pot each year is more than the 4% that most experts suggest as a safe amount. Your money could run out sooner than you expect, especially if your investments don't do well. Check step 5 to see how long it could last.</p></div>` : ''}
-      <div class="guidance-box">
-        <h4>Can I do both?</h4>
-        <p>Yes — lots of people use an annuity to cover their essential bills (like housing and food) and keep the rest of their pot in drawdown for extras like holidays and treats. That way you get the security of a guaranteed income plus the flexibility to spend more when you want to.</p>
-      </div>`;
+      </details>`;
   }
 
   // ── STEP 4: TAX & WITHDRAWALS ─────────────────────────────────────────────
@@ -1643,29 +1765,91 @@
     const netWithdrawal = withdrawal - tax;
     const totalNetIncome = netWithdrawal + otherIncome;
 
+    // Bar segments
+    const total = withdrawal > 0 ? withdrawal : 1;
+    const tfPct = (taxFreeElement / total) * 100;
+    const taxPct = (tax / total) * 100;
+    const keepPct = ((withdrawal - taxFreeElement - tax) / total) * 100;
+
+    const effClass = effectiveRate < 10 ? 'low' : effectiveRate < 25 ? 'mid' : 'high';
+
+    // Other income bar
+    const allIncome = totalNetIncome;
+    const otherPct = otherIncome > 0 ? (otherIncome / allIncome) * 100 : 0;
+    const potPct = allIncome > 0 ? (netWithdrawal / allIncome) * 100 : 0;
+
     document.getElementById('taxContent').innerHTML = `
-      <div class="results-grid">
-        <div class="result-box">
-          <div class="r-label">You take out</div>
-          <div class="r-amount">${fmt(withdrawal)}</div>
-          <div class="r-sub">from your pension pot</div>
+      <div class="tax-waterfall">
+        <div class="tw-headline">
+          <div>
+            <div class="tw-total">${fmt(totalNetIncome)}<span style="font-size:0.65em;font-weight:400;color:var(--slate-light);">/yr</span></div>
+            <div class="tw-sub">Total income after tax</div>
+          </div>
+          <div class="tw-effective ${effClass}">${effectiveRate.toFixed(1)}% tax rate</div>
         </div>
-        <div class="result-box stone">
-          <div class="r-label">Tax-free part</div>
-          <div class="r-amount">${fmt(taxFreeElement)}</div>
-          <div class="r-sub">25% is yours tax-free</div>
+
+        <div style="font-size:0.72rem;font-weight:600;text-transform:uppercase;letter-spacing:0.07em;color:var(--slate-light);margin-bottom:0.35rem;">What happens to each £1 you take out</div>
+        <div class="tw-bar-wrap">
+          <div class="tw-bar">
+            ${withdrawal > 0 ? `<div class="tw-seg" style="width:${tfPct}%;background:#2d6a4f;">${tfPct > 12 ? fmt(taxFreeElement) : ''}</div>` : ''}
+            ${keepPct > 0 ? `<div class="tw-seg" style="width:${keepPct}%;background:#374151;">${keepPct > 12 ? fmt(withdrawal - taxFreeElement - tax) : ''}</div>` : ''}
+            ${tax > 0 ? `<div class="tw-seg" style="width:${taxPct}%;background:#b91c1c;">${taxPct > 12 ? fmt(tax) : ''}</div>` : ''}
+          </div>
         </div>
-        <div class="result-box">
-          <div class="r-label">Tax you'd pay</div>
-          <div class="r-amount">${fmt(tax)}</div>
-          <div class="r-sub">${effectiveRate.toFixed(1)}% overall</div>
+
+        <div class="tw-rows">
+          <div class="tw-row">
+            <div class="tw-dot" style="background:#2d6a4f;"></div>
+            <div class="tw-row-text">
+              <div class="tw-row-label">Tax-free part</div>
+              <div class="tw-row-hint">25% of every withdrawal is yours tax-free</div>
+            </div>
+            <div class="tw-row-val green">${fmt(taxFreeElement)}</div>
+          </div>
+          <div class="tw-row">
+            <div class="tw-dot" style="background:#374151;"></div>
+            <div class="tw-row-text">
+              <div class="tw-row-label">Taxed part you keep</div>
+              <div class="tw-row-hint">The remaining 75% after tax is taken off</div>
+            </div>
+            <div class="tw-row-val">${fmt(Math.max(0, withdrawal - taxFreeElement - tax))}</div>
+          </div>
+          <div class="tw-row">
+            <div class="tw-dot" style="background:#b91c1c;"></div>
+            <div class="tw-row-text">
+              <div class="tw-row-label">Tax</div>
+              <div class="tw-row-hint">${effectiveRate.toFixed(1)}% of what you take out</div>
+            </div>
+            <div class="tw-row-val red">${fmt(tax)}</div>
+          </div>
         </div>
-        <div class="result-box ${netWithdrawal + otherIncome >= d.spending ? 'good' : 'warn'}">
-          <div class="r-label">What you actually get</div>
-          <div class="r-amount">${fmt(totalNetIncome)}</div>
-          <div class="r-sub">after tax</div>
+
+        ${otherIncome > 0 ? `
+        <div style="font-size:0.72rem;font-weight:600;text-transform:uppercase;letter-spacing:0.07em;color:var(--slate-light);margin:1.25rem 0 0.35rem;">Your total income after tax</div>
+        <div class="tw-bar-wrap">
+          <div class="tw-bar">
+            <div class="tw-seg" style="width:${otherPct}%;background:#6b7280;">${otherPct > 15 ? fmt(otherIncome) : ''}</div>
+            <div class="tw-seg" style="width:${potPct}%;background:#2d6a4f;">${potPct > 15 ? fmt(netWithdrawal) : ''}</div>
+          </div>
         </div>
+        <div class="tw-rows">
+          <div class="tw-row">
+            <div class="tw-dot" style="background:#6b7280;"></div>
+            <div class="tw-row-text">
+              <div class="tw-row-label">State Pension &amp; other income</div>
+            </div>
+            <div class="tw-row-val">${fmt(otherIncome)}</div>
+          </div>
+          <div class="tw-row">
+            <div class="tw-dot" style="background:#2d6a4f;"></div>
+            <div class="tw-row-text">
+              <div class="tw-row-label">From your pension pot (after tax)</div>
+            </div>
+            <div class="tw-row-val green">${fmt(netWithdrawal)}</div>
+          </div>
+        </div>` : ''}
       </div>
+
       <div class="guidance-box">
         <h4>Your tax-free amount in retirement</h4>
         <p>Everyone can earn £12,570 per year before paying any tax. But your State Pension counts towards this. Since your State Pension is ${fmt(d.statePension)}, you only have ${fmt(Math.max(0, PA - d.statePension))} of tax-free allowance left for other income before you start paying tax.</p>
@@ -1748,7 +1932,7 @@
 
     let pot = d.pot;
     const retirementAge = d.age || 65;
-    if (!baseWithdrawal || !pot) { document.getElementById('sustainContent').innerHTML = ''; return; }
+    if (!baseWithdrawal || !pot) { document.getElementById('sustainContent').innerHTML = ''; document.getElementById('finalSummary').innerHTML = ''; return; }
 
     // Run simulation year by year
     const MAX_YEARS = 50;
@@ -2008,6 +2192,9 @@
     ['annuity','drawdown','blend'].forEach(p =>
       document.getElementById('pref_' + p).classList.toggle('selected', p === pref)
     );
+    showPrefInputs(pref);
+    renderStep3();
+
     const data = NEXT_STEPS[pref];
     document.getElementById('nextStepsContent').innerHTML = `
       <div class="next-steps">
@@ -2051,7 +2238,6 @@
   }
 
   // Wire live inputs
-  document.getElementById('annuityRate').addEventListener('input', renderStep3);
   document.getElementById('withdrawalSlider').addEventListener('input', renderStep4);
 
   // ── MYPAYPICTURE CHAT ─────────────────────────────────────────────────────
