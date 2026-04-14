@@ -62,6 +62,7 @@
   gtag('config', 'G-XY51DX80VL');
 </script>
 <meta charset="UTF-8">
+<link href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,300;0,400;0,600;0,700;0,800;1,300;1,400;1,700&display=swap" rel="stylesheet">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="manifest" href="manifest.json">
   <meta name="theme-color" content="#0f1f38">
@@ -74,7 +75,6 @@
   <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
   <meta name="mobile-web-app-capable" content="yes">
 <title>MyPayPicture — See your complete financial picture</title>
-<link href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,300;0,400;0,600;0,700;0,800;1,300;1,400;1,700&display=swap" rel="stylesheet">
 <style>
   /* ── EMMA-INSPIRED PALETTE ──────────────────────────────────────────────── */
   :root {
@@ -125,7 +125,7 @@
 
   .wordmark {
     font-family: 'Nunito', sans-serif;
-    font-size: 1.4rem; color: var(--white);
+    font-size: 1.4rem; font-weight: 800; color: var(--white);
     text-decoration: none; letter-spacing: -0.01em;
   }
   .wordmark em { font-style: italic; color: var(--yellow); }
@@ -142,6 +142,7 @@
     padding: 7rem 2.5rem 8rem;
     text-align: center;
     position: relative; overflow: hidden;
+    width: 100%; box-sizing: border-box;
   }
 
   .hero::before {
@@ -169,7 +170,7 @@
     font-size: clamp(3rem, 8.5vw, 5.8rem);
     color: white; line-height: 0.95;
     max-width: 800px; margin: 0 auto 1.75rem;
-    font-weight: 400; letter-spacing: -0.03em;
+    font-weight: 800; letter-spacing: -0.03em;
   }
   .hero h1 em {
     font-style: italic;
@@ -194,14 +195,14 @@
 
   /* ── USER TABS ───────────────────────────────────────────────────────────── */
   .user-tabs {
-    display: flex; width: fit-content;
+    display: flex; width: fit-content; max-width: 100%;
     margin: 0 auto 2.75rem;
     background: var(--ink);
     border-radius: 100px; padding: 5px; gap: 4px;
   }
   .user-tab {
     padding: 0.75rem 2rem;
-    font-size: 0.86rem; font-weight: 500;
+    font-size: 0.86rem; font-weight: 600;
     color: rgba(255,255,255,0.45);
     cursor: pointer; border-radius: 100px;
     transition: all 0.2s;
@@ -211,7 +212,7 @@
   .user-tab:hover { color: rgba(255,255,255,0.8); }
   .user-tab.active {
     background: var(--yellow);
-    color: var(--ink); font-weight: 700;
+    color: var(--ink); font-weight: 800;
   }
   .user-tab .tab-emoji { font-size: 1rem; }
   .tab-panel { display: none; }
@@ -267,7 +268,7 @@
   .tool-name {
     font-family: 'Nunito', sans-serif;
     font-size: 1.2rem; margin-bottom: 0.5rem;
-    line-height: 1.2; font-weight: 400;
+    line-height: 1.2; font-weight: 800;
     letter-spacing: -0.01em;
     color: var(--ac);
   }
@@ -393,10 +394,14 @@
 
   @media (max-width: 640px) {
     header { padding: 1rem 1.25rem; }
-    .hero { padding: 4rem 1.25rem 5rem; }
-    .container { padding: 2.5rem 1.25rem 4rem; }
-    .user-tab { font-size: 0.78rem; padding: 0.6rem 1.1rem; }
-    .chat-wrap { padding: 0 1.25rem 2rem; }
+    .hero { padding: 4rem 1.25rem 5rem; width: 100%; }
+    .container { padding: 2rem 1rem 3rem; overflow-x: hidden; }
+    .tabs-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; padding-bottom: 4px; width: 100%; }
+    .user-tabs { width: max-content; margin: 0 0 2.75rem; }
+    .user-tab { font-size: 0.72rem; padding: 0.55rem 0.85rem; white-space: nowrap; }
+    .user-tab .tab-emoji { font-size: 0.85rem; }
+    .chat-wrap { padding: 0 1rem 2rem; }
+    .group-grid-2 { grid-template-columns: 1fr; }
   }
 
   /* SWITCHER */
@@ -467,7 +472,7 @@
 
   <div class="suite-label">Choose your tool</div>
 
-  <div class="user-tabs">
+  <div class="tabs-wrap"><div class="user-tabs">
     <div class="user-tab active" id="utab_buy_home" onclick="switchTab('buy_home')">
       <span class="tab-emoji">&#127968;</span><span>Buy a Home</span>
     </div>
@@ -483,7 +488,7 @@
     <div class="user-tab" id="utab_retirement" onclick="switchTab('retirement')">
       <span class="tab-emoji">&#127749;</span><span>Retirement</span>
     </div>
-  </div>
+  </div></div>
 
 
 
