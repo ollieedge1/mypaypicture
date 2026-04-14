@@ -51,20 +51,20 @@
   header { background: var(--ink); padding: 1.1rem 2rem; display: flex; align-items: center; justify-content: space-between; position: sticky; top: 0; z-index: 50; }
 
   /* APP SWITCHER */
-  .app-switcher { position: relative; }
-  .switcher-trigger { display: flex; align-items: center; gap: 0.5rem; cursor: pointer; padding: 0.4rem 0.75rem; border-radius: 8px; border: 1px solid rgba(255,255,255,0.15); transition: background 0.2s; user-select: none; }
+  
+  
   .switcher-trigger:hover { background: rgba(255,255,255,0.07); }
   .switcher-trigger .app-name { font-family: 'Nunito', sans-serif; font-size: 1.1rem; color: var(--rose-light); }
   .switcher-trigger .app-name span { color: var(--white); font-weight: 300; }
   .switcher-trigger .chevron { color: rgba(255,255,255,0.4); font-size: 0.7rem; transition: transform 0.2s; }
   .app-switcher.open .chevron { transform: rotate(180deg); }
-  .switcher-dropdown { display: none; position: absolute; top: calc(100% + 8px); left: 0; background: #1a2f4e; border: 1px solid rgba(255,255,255,0.1); border-radius: 10px; overflow: hidden; min-width: 240px; box-shadow: 0 8px 24px rgba(0,0,0,0.3); z-index: 100; }
-  .app-switcher.open .switcher-dropdown { display: block; }
-  .switcher-item { display: flex; align-items: center; gap: 0.75rem; padding: 0.85rem 1rem; cursor: pointer; transition: background 0.15s; border-bottom: 1px solid rgba(255,255,255,0.06); }
+  
+  .app-switcher.open 
+  
   .switcher-item:last-child { border-bottom: none; }
   .switcher-item:hover { background: rgba(255,255,255,0.06); }
   .switcher-item.current { background: rgba(155,35,53,0.1); }
-  .switcher-item-icon { width: 32px; height: 32px; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 1rem; flex-shrink: 0; }
+  
   .switcher-item-text .item-name { font-family: 'Nunito', sans-serif; font-size: 0.9rem; color: white; }
   .switcher-item-text .item-desc { font-size: 0.72rem; color: rgba(255,255,255,0.4); margin-top: 0.1rem; }
   .switcher-item.current .item-name { color: var(--rose-light); }
@@ -88,7 +88,7 @@
   .step-tab.active { background: var(--navy); color: var(--rose-light); }
   .step-tab.completed { color: var(--green-light); }
   .step-tab .step-num { display: block; font-family: 'Nunito', sans-serif; font-size: 1.2rem; font-weight: 700; margin-bottom: 0.2rem; color: inherit; }
-  .step-tab.completed .step-num::after { content: ' \u2713'; font-size: 0.9rem; }
+  .step-tab.completed .step-num::after { content: ' ✓'; font-size: 0.9rem; }
 
   /* CARD */
   .card { background: white; border-radius: 0 0 16px 16px; padding: 2rem; border: 1px solid var(--border); border-top: none; box-shadow: 0 4px 24px rgba(15,31,56,0.06); display: none; animation: fadeIn 0.3s ease; }
@@ -230,37 +230,65 @@
     .btn-row { justify-content: stretch; }
     .btn-primary, .btn-secondary { flex: 1; text-align: center; }
   }
+
+  /* SWITCHER */
+  .app-switcher { position: relative; }
+  .switcher-trigger {
+    display: flex; align-items: center; gap: 0.5rem;
+    cursor: pointer; padding: 0.45rem 0.9rem;
+    border-radius: 100px; border: 1px solid rgba(255,255,255,0.15);
+    transition: all 0.18s; user-select: none;
+    background: rgba(255,255,255,0.07);
+  }
+  .switcher-trigger:hover { background: rgba(255,255,255,0.13); border-color: var(--yellow); }
+  .switcher-trigger .app-name { font-family: 'Nunito', sans-serif; font-weight: 800; font-size: 1rem; color: white; }
+  .switcher-trigger .app-name em { font-style: italic; color: var(--yellow); }
+  .switcher-trigger .chevron { color: rgba(255,255,255,0.4); font-size: 0.65rem; transition: transform 0.2s; }
+  .app-switcher.open .chevron { transform: rotate(180deg); }
+  .switcher-dropdown {
+    display: none; position: absolute; top: calc(100% + 10px); left: 0;
+    background: white; border: 1px solid rgba(0,0,0,0.08);
+    border-radius: 14px; overflow: hidden; min-width: 220px;
+    box-shadow: 0 16px 48px rgba(0,0,0,0.12); z-index: 100;
+  }
+  .app-switcher.open .switcher-dropdown { display: block; }
+  .switcher-home {
+    display: flex; align-items: center; gap: 0.75rem;
+    padding: 0.9rem 1.1rem; cursor: pointer;
+    transition: background 0.12s; text-decoration: none;
+  }
+  .switcher-home:hover { background: var(--accent-pale, #f5f3ff); }
+  .switcher-home-icon {
+    width: 32px; height: 32px; border-radius: 9px;
+    background: rgba(0,0,0,0.05);
+    display: flex; align-items: center; justify-content: center; font-size: 1rem;
+  }
+  .switcher-home-label { font-size: 0.84rem; font-weight: 700; color: #314855; }
+  .switcher-home-sub   { font-size: 0.69rem; color: #8ba4b0; margin-top: 0.1rem; }
+  .disclaimer-badge {
+    font-size: 0.65rem; color: rgba(255,255,255,0.4);
+    border: 1px solid rgba(255,255,255,0.15);
+    padding: 0.3rem 0.85rem; border-radius: 100px; letter-spacing: 0.04em;
+  }
+
 </style>
 </head>
 <body>
 
 <header>
   <div class="app-switcher" id="appSwitcher">
-    <div class="switcher-trigger" onclick="toggleSwitcher()">
-      <div class="app-name">MyFamily<span>&Benefits</span></div>
-      <div class="chevron">\u25bc</div>
+    <div class="switcher-trigger" onclick="toggleSwitcher(event)">
+      <div class="app-name">MyFamily<em>&amp;Benefits</em></div>
+      <div class="chevron">&#9660;</div>
     </div>
     <div class="switcher-dropdown">
-      <div class="switcher-item" onclick="window.location.href='index.html'">
-        <div class="switcher-item-icon" style="background:rgba(255,255,255,0.06);">\ud83c\udfe0</div>
-        <div class="switcher-item-text"><div class="item-name" style="color:rgba(255,255,255,0.4); font-size:0.8rem;">\u2190 Suite Home</div></div>
-      </div>
-      <div class="switcher-item" onclick="window.location.href='pay-optimiser.html'">
-        <div class="switcher-item-icon" style="background:rgba(13,148,136,0.15);">\ud83d\udcc8</div>
-        <div class="switcher-item-text"><div class="item-name">MyPayOptimiser</div><div class="item-desc">Make every pound work harder.</div></div>
-      </div>
-      <div class="switcher-item" onclick="window.location.href='pension-reclaim.html'">
-        <div class="switcher-item-icon" style="background:rgba(201,168,76,0.15);">\ud83d\udcb0</div>
-        <div class="switcher-item-text"><div class="item-name">MyPensionReclaim</div><div class="item-desc">Missed salary sacrifice? Get it back.</div></div>
-      </div>
-      <div class="switcher-item" onclick="window.location.href='pension-topup.html'">
-        <div class="switcher-item-icon" style="background:rgba(237,172,0,0.15);">\u2795</div>
-        <div class="switcher-item-text"><div class="item-name">MyPensionTop-Up</div><div class="item-desc">Make AVCs and claim your tax relief.</div></div>
-      </div>
-      <div class="switcher-item current">
-        <div class="switcher-item-icon" style="background:rgba(155,35,53,0.15);">\ud83d\udc68\u200d\ud83d\udc69\u200d\ud83d\udc67</div>
-        <div class="switcher-item-text"><div class="item-name">MyFamily&Benefits</div><div class="item-desc">Child Benefit & TFC optimiser.</div></div>
-      </div>
+      <a class="switcher-home" href="index.html">
+        <div class="switcher-home-icon">&#127968;</div>
+        <div>
+          <div class="switcher-home-label">&#8592; MyPayPicture</div>
+          <div class="switcher-home-sub">Back to all tools</div>
+        </div>
+      </a>
     </div>
   </div>
   <div class="disclaimer-badge">Not financial advice</div>
@@ -287,7 +315,7 @@
     <div class="field-group">
       <label>Your salary (highest earner)</label>
       <div class="input-wrap">
-        <span class="input-prefix">\u00a3</span>
+        <span class="input-prefix">£</span>
         <input type="number" id="salary" placeholder="e.g. 65000" min="0">
       </div>
       <p class="hint">The Child Benefit charge is based on the highest earner's adjusted net income.</p>
@@ -295,14 +323,14 @@
         <span class="tt-icon">i</span><span class="tt-label">What is the High Income charge?</span>
       </div>
       <div class="tooltip-body" id="tt-salary">
-        <p>If the highest earner in your household has an <strong>adjusted net income above \u00a360,000</strong>, HMRC charges a tax called the High Income Child Benefit Charge (HICBC). It gradually claws back Child Benefit between \u00a360,000 and \u00a380,000 \u2014 above \u00a380,000 it's fully withdrawn. Pension contributions reduce your adjusted net income, which can reduce or eliminate the charge.</p>
+        <p>If the highest earner in your household has an <strong>adjusted net income above £60,000</strong>, HMRC charges a tax called the High Income Child Benefit Charge (HICBC). It gradually claws back Child Benefit between £60,000 and £80,000 — above £80,000 it's fully withdrawn. Pension contributions reduce your adjusted net income, which can reduce or eliminate the charge.</p>
       </div>
     </div>
 
     <div class="field-group">
       <label>Partner salary <span style="color:var(--slate-light); font-weight:400;">(optional)</span></label>
       <div class="input-wrap">
-        <span class="input-prefix">\u00a3</span>
+        <span class="input-prefix">£</span>
         <input type="number" id="partnerSalary" placeholder="e.g. 35000" min="0">
       </div>
     </div>
@@ -315,14 +343,14 @@
       <div class="tooltip-body" id="tt-children" style="margin-bottom:0.75rem;">
         <p>Child Benefit is paid to one parent or guardian for children under 16 (or under 20 in approved education). From April 2024:</p>
         <div class="tt-rates">
-          <div class="tt-rate-row"><span class="tt-rate-label">First child</span><span class="tt-rate-val">\u00a325.60/wk \u00b7 \u00a31,331/yr</span></div>
-          <div class="tt-rate-row"><span class="tt-rate-label">Each additional child</span><span class="tt-rate-val">\u00a316.95/wk \u00b7 \u00a3881/yr</span></div>
-          <div class="tt-rate-row"><span class="tt-rate-label">2 children</span><span class="tt-rate-val">\u00a32,212/yr</span></div>
-          <div class="tt-rate-row"><span class="tt-rate-label">3 children</span><span class="tt-rate-val">\u00a33,093/yr</span></div>
+          <div class="tt-rate-row"><span class="tt-rate-label">First child</span><span class="tt-rate-val">£25.60/wk · £1,331/yr</span></div>
+          <div class="tt-rate-row"><span class="tt-rate-label">Each additional child</span><span class="tt-rate-val">£16.95/wk · £881/yr</span></div>
+          <div class="tt-rate-row"><span class="tt-rate-label">2 children</span><span class="tt-rate-val">£2,212/yr</span></div>
+          <div class="tt-rate-row"><span class="tt-rate-label">3 children</span><span class="tt-rate-val">£3,093/yr</span></div>
         </div>
       </div>
       <div class="counter-wrap">
-        <button class="counter-btn" onclick="adjustChildren(-1)">\u2212</button>
+        <button class="counter-btn" onclick="adjustChildren(-1)">−</button>
         <div>
           <div class="counter-display" id="childCount">1</div>
           <div class="counter-label">child</div>
@@ -334,31 +362,31 @@
     <div class="field-group">
       <label>Current pension contributions (annual)</label>
       <div class="input-wrap">
-        <span class="input-prefix">\u00a3</span>
+        <span class="input-prefix">£</span>
         <input type="number" id="pensionContribs" placeholder="e.g. 3000" min="0">
       </div>
-      <p class="hint">Include salary sacrifice contributions \u2014 these reduce your adjusted net income.</p>
+      <p class="hint">Include salary sacrifice contributions — these reduce your adjusted net income.</p>
       <div class="tooltip-trigger" data-show-label="How do pension contributions help?" onclick="toggleTooltip('tt-pension')">
         <span class="tt-icon">i</span><span class="tt-label">How do pension contributions help?</span>
       </div>
       <div class="tooltip-body" id="tt-pension">
-        <p>Salary sacrifice pension contributions reduce your <strong>adjusted net income</strong> \u2014 the figure HMRC uses to calculate both the High Income Child Benefit Charge and Tax-Free Childcare eligibility. Increasing contributions could reduce or eliminate the charge without losing the money \u2014 it goes into your pension instead.</p>
+        <p>Salary sacrifice pension contributions reduce your <strong>adjusted net income</strong> — the figure HMRC uses to calculate both the High Income Child Benefit Charge and Tax-Free Childcare eligibility. Increasing contributions could reduce or eliminate the charge without losing the money — it goes into your pension instead.</p>
       </div>
     </div>
 
     <div class="field-group">
       <label>Annual childcare costs <span style="color:var(--slate-light); font-weight:400;">(optional)</span></label>
       <div class="input-wrap">
-        <span class="input-prefix">\u00a3</span>
+        <span class="input-prefix">£</span>
         <input type="number" id="childcareCosts" placeholder="e.g. 12000" min="0">
       </div>
-      <p class="hint">Paid to registered providers \u2014 nursery, childminder, after-school clubs.</p>
+      <p class="hint">Paid to registered providers — nursery, childminder, after-school clubs.</p>
       <div class="tooltip-trigger" data-show-label="What is Tax-Free Childcare?" onclick="toggleTooltip('tt-tfc')">
         <span class="tt-icon">i</span><span class="tt-label">What is Tax-Free Childcare?</span>
       </div>
       <div class="tooltip-body" id="tt-tfc">
-        <p>Tax-Free Childcare (TFC) is a separate government scheme. For every <strong>\u00a38 you pay</strong> into a TFC account, the government adds <strong>\u00a32</strong> \u2014 up to \u00a3500 per child per quarter (\u00a32,000/year per child). It applies to children under 11 in registered childcare.</p>
-        <p>Either parent earning over <strong>\u00a3100,000</strong> makes the household ineligible. Pension contributions can reduce income below this threshold and restore entitlement.</p>
+        <p>Tax-Free Childcare (TFC) is a separate government scheme. For every <strong>£8 you pay</strong> into a TFC account, the government adds <strong>£2</strong> — up to £500 per child per quarter (£2,000/year per child). It applies to children under 11 in registered childcare.</p>
+        <p>Either parent earning over <strong>£100,000</strong> makes the household ineligible. Pension contributions can reduce income below this threshold and restore entitlement.</p>
       </div>
     </div>
 
@@ -377,7 +405,7 @@
     </div>
 
     <div class="btn-row">
-      <button class="btn-primary" onclick="goTo(2)">See my position \u2192</button>
+      <button class="btn-primary" onclick="goTo(2)">See my position →</button>
     </div>
   </div>
 
@@ -393,17 +421,17 @@
         <div class="zone-green"></div>
         <div class="zone-amber"></div>
         <div class="zone-red"></div>
-        <div class="threshold-marker" id="marker50k" style="left:60%" data-label="\u00a360,000"></div>
-        <div class="threshold-marker" id="marker60k" style="left:80%" data-label="\u00a380,000"></div>
+        <div class="threshold-marker" id="marker50k" style="left:60%" data-label="£60,000"></div>
+        <div class="threshold-marker" id="marker60k" style="left:80%" data-label="£80,000"></div>
         <div class="income-marker" id="incomeMarker">
           <div class="income-marker-label" id="incomeMarkerLabel"></div>
           <div class="income-marker-dot"></div>
         </div>
       </div>
       <div class="zone-labels">
-        <div class="zone-tag green">Full benefit<br>Under \u00a360k</div>
-        <div class="zone-tag amber">Taper zone<br>\u00a360k\u2013\u00a380k</div>
-        <div class="zone-tag red">Benefit lost<br>Over \u00a380k</div>
+        <div class="zone-tag green">Full benefit<br>Under £60k</div>
+        <div class="zone-tag amber">Taper zone<br>£60k–£80k</div>
+        <div class="zone-tag red">Benefit lost<br>Over £80k</div>
       </div>
     </div>
 
@@ -420,39 +448,39 @@
     <div class="results-grid">
       <div class="result-box">
         <div class="r-label">Child Benefit entitlement</div>
-        <div class="r-amount" id="fullEntitlement">\u2014</div>
+        <div class="r-amount" id="fullEntitlement">—</div>
         <div class="r-sub">per year</div>
       </div>
       <div class="result-box highlight">
         <div class="r-label">Currently losing</div>
-        <div class="r-amount" id="amountLost">\u2014</div>
+        <div class="r-amount" id="amountLost">—</div>
         <div class="r-sub">per year</div>
       </div>
       <div class="result-box">
         <div class="r-label">TFC top-up</div>
-        <div class="r-amount" id="tfcTopup">\u2014</div>
+        <div class="r-amount" id="tfcTopup">—</div>
         <div class="r-sub">govt adds per year</div>
       </div>
       <div class="result-box" id="adjIncomeBox">
         <div class="r-label">Adjusted income</div>
-        <div class="r-amount" id="adjustedIncome">\u2014</div>
+        <div class="r-amount" id="adjustedIncome">—</div>
         <div class="r-sub">highest earner</div>
       </div>
       <div class="result-box hidden" id="tfcRiskBox">
         <div class="r-label">TFC at risk</div>
-        <div class="r-amount" id="tfcAtRisk" style="color:#fca5a5;">\u2014</div>
-        <div class="r-sub">income near \u00a3100k cliff</div>
+        <div class="r-amount" id="tfcAtRisk" style="color:#fca5a5;">—</div>
+        <div class="r-sub">income near £100k cliff</div>
       </div>
     </div>
 
     <div class="guidance-box">
       <h4>How the 2024 thresholds work</h4>
-      <p>From April 2024 the taper thresholds changed: the charge now starts at \u00a360,000 (previously \u00a350,000) and Child Benefit is fully withdrawn at \u00a380,000 (previously \u00a360,000). Between these figures, you lose 1% of the benefit for every \u00a3200 of income above \u00a360,000.</p>
+      <p>From April 2024 the taper thresholds changed: the charge now starts at £60,000 (previously £50,000) and Child Benefit is fully withdrawn at £80,000 (previously £60,000). Between these figures, you lose 1% of the benefit for every £200 of income above £60,000.</p>
     </div>
 
     <div class="btn-row">
-      <button class="btn-secondary" onclick="goTo(1)">\u2190 Back</button>
-      <button class="btn-primary" id="optimiseBtn" onclick="goTo(3)">See how to recover it \u2192</button>
+      <button class="btn-secondary" onclick="goTo(1)">← Back</button>
+      <button class="btn-primary" id="optimiseBtn" onclick="goTo(3)">See how to recover it →</button>
     </div>
   </div>
 
@@ -465,9 +493,9 @@
       <div class="optimise-title">Could pension contributions help?</div>
       <div class="optimise-sub">This is an illustrative scenario. Move the slider to model the effect of additional salary sacrifice contributions on your benefits and tax position.</div>
       <div class="slider-field">
-        <label>Additional pension contribution <strong id="sliderValDisplay">\u00a30/yr</strong></label>
+        <label>Additional pension contribution <strong id="sliderValDisplay">£0/yr</strong></label>
         <input type="range" id="pensionSlider" min="0" max="30000" step="100" value="0" oninput="updateSlider()">
-        <div class="slider-range-labels"><span>\u00a30</span><span id="sliderMax">\u00a330,000</span></div>
+        <div class="slider-range-labels"><span>£0</span><span id="sliderMax">£30,000</span></div>
       </div>
       <div class="optimise-result" id="optimiseResult">
         <div style="text-align:center; color:rgba(255,255,255,0.3); font-size:0.8rem; padding:0.5rem;">Move the slider to model a scenario</div>
@@ -485,7 +513,7 @@
     </div>
 
     <div class="btn-row">
-      <button class="btn-secondary" onclick="goTo(2)">\u2190 Back</button>
+      <button class="btn-secondary" onclick="goTo(2)">← Back</button>
     </div>
   </div>
 
@@ -499,8 +527,14 @@
 </footer>
 
 <script data-cfasync="false">
-  function toggleSwitcher(e) { e.stopPropagation(); document.getElementById('appSwitcher').classList.toggle('open'); }
-  document.addEventListener('click', function() { document.getElementById('appSwitcher').classList.remove('open'); });
+  function toggleSwitcher(e) {
+    e.stopPropagation();
+    document.getElementById('appSwitcher').classList.toggle('open');
+  }
+  document.addEventListener('click', function() {
+    document.getElementById('appSwitcher').classList.remove('open');
+  });
+
 
   function toggleTooltip(id) {
     const body = document.getElementById(id);
@@ -522,8 +556,8 @@
   let bothWorking = true;
   let childAges = [];
 
-  const fmt = n => '\u00a3' + Math.round(n).toLocaleString('en-GB');
-  const fmtK = n => n >= 1000 ? '\u00a3' + (n/1000).toFixed(0) + 'k' : fmt(n);
+  const fmt = n => '£' + Math.round(n).toLocaleString('en-GB');
+  const fmtK = n => n >= 1000 ? '£' + (n/1000).toFixed(0) + 'k' : fmt(n);
 
   function adjustChildren(delta) {
     children = Math.max(0, Math.min(10, children + delta));
@@ -563,7 +597,7 @@
 
   function calcTFC(adj, costs) {
     if (!bothWorking) return { eligible: false, reason: 'Both parents need to be working to qualify for Tax-Free Childcare.' };
-    if (adj > TFC_INCOME_LIMIT) return { eligible: false, reason: `Your adjusted net income of ${fmt(adj)} exceeds \u00a3100,000. Either parent earning over \u00a3100,000 makes the household ineligible for Tax-Free Childcare.` };
+    if (adj > TFC_INCOME_LIMIT) return { eligible: false, reason: `Your adjusted net income of ${fmt(adj)} exceeds £100,000. Either parent earning over £100,000 makes the household ineligible for Tax-Free Childcare.` };
     if (!costs) return { eligible: true, topup: 0 };
     const eligible = childAges.length > 0 && childAges.some(a => a !== '') ? childAges.filter(a => a !== '' && a < 11).length : children;
     return { eligible: true, topup: Math.min(eligible * TFC_MAX_PER_CHILD, costs * 0.2), eligibleChildren: eligible };
@@ -600,7 +634,7 @@
     if (r.adj <= TAPER_START) {
       statusCard.className = 'status-card safe';
       headline.textContent = 'You\'re receiving your full Child Benefit';
-      sub.textContent = `Your adjusted net income of ${fmt(r.adj)} is below the \u00a360,000 threshold. You receive the full ${fmt(r.fullBenefit)}/year.`;
+      sub.textContent = `Your adjusted net income of ${fmt(r.adj)} is below the £60,000 threshold. You receive the full ${fmt(r.fullBenefit)}/year.`;
     } else if (r.adj < TAPER_END) {
       statusCard.className = 'status-card partial';
       headline.textContent = `You are currently losing ${fmt(r.lost)}/year in Child Benefit`;
@@ -608,19 +642,19 @@
     } else {
       statusCard.className = 'status-card losing';
       headline.textContent = `You are losing all ${fmt(r.fullBenefit)}/year in Child Benefit`;
-      sub.textContent = `Your adjusted net income of ${fmt(r.adj)} exceeds \u00a380,000 so your Child Benefit is fully withdrawn.`;
+      sub.textContent = `Your adjusted net income of ${fmt(r.adj)} exceeds £80,000 so your Child Benefit is fully withdrawn.`;
     }
 
     const tfcWarn = document.getElementById('tfcWarning');
     if (!r.tfc.eligible) {
       tfcWarn.classList.remove('hidden');
-      document.getElementById('tfcWarningText').textContent = 'Tax-Free Childcare \u2014 not currently eligible';
+      document.getElementById('tfcWarningText').textContent = 'Tax-Free Childcare — not currently eligible';
       document.getElementById('tfcWarningSub').textContent = r.tfc.reason;
     } else { tfcWarn.classList.add('hidden'); }
 
     document.getElementById('fullEntitlement').textContent = fmt(r.fullBenefit);
     document.getElementById('amountLost').textContent = fmt(r.lost);
-    document.getElementById('tfcTopup').textContent = r.tfc.eligible && r.tfc.topup > 0 ? fmt(r.tfc.topup) : '\u2014';
+    document.getElementById('tfcTopup').textContent = r.tfc.eligible && r.tfc.topup > 0 ? fmt(r.tfc.topup) : '—';
     document.getElementById('adjustedIncome').textContent = fmtK(r.adj);
 
     const nearCliff = r.tfc.eligible && r.adj > 90000 && r.costs > 0;
@@ -629,7 +663,7 @@
     if (nearCliff) document.getElementById('tfcAtRisk').textContent = fmt(r.tfc.topup);
 
     const canOptimise = r.lost > 0 || (r.tfc.eligible && r.adj > 90000);
-    document.getElementById('optimiseBtn').textContent = canOptimise ? 'See how to recover it \u2192' : 'See optimisation \u2192';
+    document.getElementById('optimiseBtn').textContent = canOptimise ? 'See how to recover it →' : 'See optimisation →';
 
     // Set slider max
     const needed = Math.max(0, r.adj - TAPER_START, r.adj > TFC_INCOME_LIMIT ? r.adj - TFC_INCOME_LIMIT + 1 : 0);
@@ -666,11 +700,11 @@
 
     result.innerHTML = `
       <div class="or-row"><span class="or-label">New adjusted income</span><span class="or-val">${fmt(newAdj)}</span></div>
-      <div class="or-row"><span class="or-label">Child Benefit recovered</span><span class="or-val ${cbRecovered > 0 ? 'green' : ''}">${cbRecovered > 0 ? '+' + fmt(cbRecovered) + '/yr' : '\u2014'}</span></div>
-      ${r.costs > 0 ? `<div class="or-row"><span class="or-label">Tax-Free Childcare ${tfcRestored ? 'restored' : 'change'}</span><span class="or-val ${tfcRecovered > 0 || tfcRestored ? 'green' : ''}">${tfcRestored ? '\u2713 Now eligible \u00b7 +' + fmt(newTFC.topup||0) + '/yr' : tfcRecovered > 0 ? '+' + fmt(tfcRecovered) + '/yr' : '\u2014'}</span></div>` : ''}
+      <div class="or-row"><span class="or-label">Child Benefit recovered</span><span class="or-val ${cbRecovered > 0 ? 'green' : ''}">${cbRecovered > 0 ? '+' + fmt(cbRecovered) + '/yr' : '—'}</span></div>
+      ${r.costs > 0 ? `<div class="or-row"><span class="or-label">Tax-Free Childcare ${tfcRestored ? 'restored' : 'change'}</span><span class="or-val ${tfcRecovered > 0 || tfcRestored ? 'green' : ''}">${tfcRestored ? '✓ Now eligible · +' + fmt(newTFC.topup||0) + '/yr' : tfcRecovered > 0 ? '+' + fmt(tfcRecovered) + '/yr' : '—'}</span></div>` : ''}
       <div class="or-row"><span class="or-label">Approx income tax saving</span><span class="or-val green">+${fmt(taxSaving)}/yr</span></div>
       <div class="or-row"><span class="or-label">Approx NI saving (salary sacrifice)</span><span class="or-val green">+${fmt(niSaving)}/yr</span></div>
-      <div class="or-row"><span class="or-label">Additional pension contribution</span><span class="or-val amber">\u2212${fmt(extra)}/yr</span></div>
+      <div class="or-row"><span class="or-label">Additional pension contribution</span><span class="or-val amber">−${fmt(extra)}/yr</span></div>
       <div class="or-row" style="margin-top:0.25rem; padding-top:0.5rem; border-top:1px solid rgba(255,255,255,0.1);">
         <span class="or-label" style="font-weight:600; color:rgba(255,255,255,0.75);">Illustrative net impact</span>
         <span class="or-val ${netImpact >= 0 ? 'green' : 'amber'}" style="font-size:1.2rem;">${netImpact >= 0 ? '+' : ''}${fmt(netImpact)}/yr</span>

@@ -50,22 +50,22 @@
   body { font-family: 'Nunito', sans-serif; background: var(--bg); color: var(--ink); min-height: 100vh; }
 
   /* HEADER */
-  .switcher-group-label { padding: 0.5rem 1rem 0.25rem; font-size: 0.6rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: rgba(255,255,255,0.3); border-top: 1px solid rgba(255,255,255,0.08); margin-top: 0.15rem; }
+  
   header { background: var(--ink); padding: 1.1rem 2rem; display: flex; align-items: center; justify-content: space-between; position: sticky; top: 0; z-index: 50; }
-  .app-switcher { position: relative; }
-  .switcher-trigger { display: flex; align-items: center; gap: 0.5rem; cursor: pointer; padding: 0.4rem 0.85rem; border-radius: 100px; border: 1px solid rgba(255,255,255,0.15); transition: all 0.18s; user-select: none; background: rgba(255,255,255,0.07); }
+  
+  
   .switcher-trigger:hover { background: rgba(255,255,255,0.13); border-color: var(--mint); }
   .switcher-trigger .app-name { font-family: 'Nunito', sans-serif; font-weight: 800; font-size: 1rem; color: white; }
   .switcher-trigger .app-name span { color: var(--yellow); font-style: italic; }
   .switcher-trigger .chevron { color: rgba(255,255,255,0.4); font-size: 0.65rem; transition: transform 0.2s; }
   .app-switcher.open .chevron { transform: rotate(180deg); }
-  .switcher-dropdown { display: none; position: absolute; top: calc(100% + 10px); left: 0; background: var(--surface); border: 1px solid var(--border); border-radius: 16px; overflow: hidden; min-width: 272px; box-shadow: 0 20px 56px rgba(26,58,42,0.15); z-index: 100; }
-  .app-switcher.open .switcher-dropdown { display: block; }
-  .switcher-item { display: flex; align-items: center; gap: 0.75rem; padding: 0.8rem 1rem; cursor: pointer; transition: background 0.12s; border-bottom: 1px solid var(--border); }
+  
+  .app-switcher.open 
+  
   .switcher-item:last-child { border-bottom: none; }
   .switcher-item:hover { background: var(--mint-pale); }
   .switcher-item.current { background: var(--forest-pale); }
-  .switcher-item-icon { width: 32px; height: 32px; border-radius: 9px; display: flex; align-items: center; justify-content: center; font-size: 0.95rem; flex-shrink: 0; }
+  
   .switcher-item-text .item-name { font-size: 0.84rem; font-weight: 700; color: var(--ink); }
   .switcher-item-text .item-desc { font-size: 0.69rem; color: var(--slate-soft); margin-top: 0.1rem; }
   .switcher-item.current .item-name { color: var(--forest); }
@@ -310,6 +310,47 @@
     .step-tab { font-size: 0.58rem; padding: 0.7rem 0.2rem; }
     .card { padding: 1.5rem 1.25rem; }
   }
+
+  /* SWITCHER */
+  .app-switcher { position: relative; }
+  .switcher-trigger {
+    display: flex; align-items: center; gap: 0.5rem;
+    cursor: pointer; padding: 0.45rem 0.9rem;
+    border-radius: 100px; border: 1px solid rgba(255,255,255,0.15);
+    transition: all 0.18s; user-select: none;
+    background: rgba(255,255,255,0.07);
+  }
+  .switcher-trigger:hover { background: rgba(255,255,255,0.13); border-color: var(--yellow); }
+  .switcher-trigger .app-name { font-family: 'Nunito', sans-serif; font-weight: 800; font-size: 1rem; color: white; }
+  .switcher-trigger .app-name em { font-style: italic; color: var(--yellow); }
+  .switcher-trigger .chevron { color: rgba(255,255,255,0.4); font-size: 0.65rem; transition: transform 0.2s; }
+  .app-switcher.open .chevron { transform: rotate(180deg); }
+  .switcher-dropdown {
+    display: none; position: absolute; top: calc(100% + 10px); left: 0;
+    background: white; border: 1px solid rgba(0,0,0,0.08);
+    border-radius: 14px; overflow: hidden; min-width: 220px;
+    box-shadow: 0 16px 48px rgba(0,0,0,0.12); z-index: 100;
+  }
+  .app-switcher.open .switcher-dropdown { display: block; }
+  .switcher-home {
+    display: flex; align-items: center; gap: 0.75rem;
+    padding: 0.9rem 1.1rem; cursor: pointer;
+    transition: background 0.12s; text-decoration: none;
+  }
+  .switcher-home:hover { background: var(--accent-pale, #f5f3ff); }
+  .switcher-home-icon {
+    width: 32px; height: 32px; border-radius: 9px;
+    background: rgba(0,0,0,0.05);
+    display: flex; align-items: center; justify-content: center; font-size: 1rem;
+  }
+  .switcher-home-label { font-size: 0.84rem; font-weight: 700; color: #314855; }
+  .switcher-home-sub   { font-size: 0.69rem; color: #8ba4b0; margin-top: 0.1rem; }
+  .disclaimer-badge {
+    font-size: 0.65rem; color: rgba(255,255,255,0.4);
+    border: 1px solid rgba(255,255,255,0.15);
+    padding: 0.3rem 0.85rem; border-radius: 100px; letter-spacing: 0.04em;
+  }
+
 </style>
 </head>
 <body>
@@ -317,28 +358,17 @@
 <header>
   <div class="app-switcher" id="appSwitcher">
     <div class="switcher-trigger" onclick="toggleSwitcher(event)">
-      <div class="app-name">MyProperty<span>Decision</span></div>
+      <div class="app-name">MyProperty<em>Decision</em></div>
       <div class="chevron">&#9660;</div>
     </div>
     <div class="switcher-dropdown">
-      <div class="switcher-item" onclick="window.location.href='index.html'">
-        <div class="switcher-item-icon" style="background:rgba(255,255,255,0.06);">&#127968;</div>
-        <div class="switcher-item-text"><div class="item-name" style="color:rgba(26,58,42,0.4);font-size:0.8rem;">&#8592; MyPayPicture</div></div>
-      </div>
-      <div class="switcher-group-label">&#128084; Employed</div>
-      <div class="switcher-item" onclick="window.location.href='pension-optimiser.html'"><div class="switcher-item-icon" style="background:rgba(13,148,136,0.12);">&#128200;</div><div class="switcher-item-text"><div class="item-name">MyPensionOptimiser</div><div class="item-desc">Optimising your pension? Pay less tax.</div></div></div>
-      <div class="switcher-item" onclick="window.location.href='pension-reclaim.html'"><div class="switcher-item-icon" style="background:rgba(201,168,76,0.12);">&#128176;</div><div class="switcher-item-text"><div class="item-name">MyPensionReclaim</div><div class="item-desc">Missed salary sacrifice? Get it back.</div></div></div>
-      <div class="switcher-item" onclick="window.location.href='pension-topup.html'"><div class="switcher-item-icon" style="background:rgba(237,172,0,0.12);">&#10133;</div><div class="switcher-item-text"><div class="item-name">MyPensionTop-Up</div><div class="item-desc">The government helps pay for it.</div></div></div>
-      <div class="switcher-item" onclick="window.location.href='family-benefits.html'"><div class="switcher-item-icon" style="background:rgba(244,167,185,0.18);">&#128106;</div><div class="switcher-item-text"><div class="item-name">MyFamily&amp;Benefits</div><div class="item-desc">Paying the Child Benefit charge? Reduce it.</div></div></div>
-      <div class="switcher-item" onclick="window.location.href='self-assessment.html'"><div class="switcher-item-icon" style="background:rgba(124,58,237,0.12);">&#128203;</div><div class="switcher-item-text"><div class="item-name">MySelfAssessment</div><div class="item-desc">First time filing? Walk through it.</div></div></div>
-      <div class="switcher-item current">
-        <div class="switcher-item-icon" style="background:rgba(45,106,79,0.15);">&#127968;</div>
-        <div class="switcher-item-text"><div class="item-name">MyPropertyDecision</div><div class="item-desc">Got a deposit? See where it works hardest.</div></div>
-      </div>
-      <div class="switcher-group-label">&#127962; Director</div>
-      <div class="switcher-item" onclick="window.location.href='pay-director.html'"><div class="switcher-item-icon" style="background:rgba(79,70,229,0.12);">&#127962;</div><div class="switcher-item-text"><div class="item-name">MyPayDirector</div><div class="item-desc">Be smart with your pay.</div></div></div>
-      <div class="switcher-group-label">&#127749; Retired</div>
-      <div class="switcher-item" onclick="window.location.href='retirement-helper.html'"><div class="switcher-item-icon" style="background:rgba(107,114,128,0.12);">&#127749;</div><div class="switcher-item-text"><div class="item-name">MyRetirementHelper</div><div class="item-desc">Near or at retirement? Let's see where you stand.</div></div></div>
+      <a class="switcher-home" href="index.html">
+        <div class="switcher-home-icon">&#127968;</div>
+        <div>
+          <div class="switcher-home-label">&#8592; MyPayPicture</div>
+          <div class="switcher-home-sub">Back to all tools</div>
+        </div>
+      </a>
     </div>
   </div>
   <div class="disclaimer-badge">Not financial advice</div>
@@ -862,8 +892,6 @@
   function trackStart(){if(!_started){_started=true;gaEvent('tool_started',{tool:'MyPropertyDecision'});}}
 
   // ── SWITCHER ──────────────────────────────────────────────────────────────
-  function toggleSwitcher(e){e.stopPropagation();document.getElementById('appSwitcher').classList.toggle('open');}
-  document.addEventListener('click',function(){document.getElementById('appSwitcher').classList.remove('open');});
 
   // ── STATE ─────────────────────────────────────────────────────────────────
   var isFTB=true, ownershipType='personal', projYears=10;
@@ -1256,6 +1284,14 @@
   document.getElementById('deposit').addEventListener('input',updateLTV);
 </script>
 <script>
+  function toggleSwitcher(e) {
+    e.stopPropagation();
+    document.getElementById('appSwitcher').classList.toggle('open');
+  }
+  document.addEventListener('click', function() {
+    document.getElementById('appSwitcher').classList.remove('open');
+  });
+
   if('serviceWorker' in navigator){
     window.addEventListener('load',function(){
       navigator.serviceWorker.register('/sw.js').catch(function(){});

@@ -4,6 +4,14 @@
 <!-- Google tag (gtag.js) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-XY51DX80VL"></script>
 <script data-cfasync="false">
+  function toggleSwitcher(e) {
+    e.stopPropagation();
+    document.getElementById('appSwitcher').classList.toggle('open');
+  }
+  document.addEventListener('click', function() {
+    document.getElementById('appSwitcher').classList.remove('open');
+  });
+
   // ── ANALYTICS ──────────────────────────────────────────────────────────────
   var GA_ID = 'G-XY51DX80VL';
 
@@ -101,22 +109,22 @@
   body { font-family: 'Nunito', sans-serif; background: var(--bg); color: var(--ink); min-height: 100vh; }
 
   /* HEADER */
-  .switcher-group-label { padding: 0.5rem 1rem 0.25rem; font-size: 0.6rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: rgba(255,255,255,0.3); border-top: 1px solid rgba(255,255,255,0.08); margin-top: 0.15rem; }
+  
   header { background: var(--ink); padding: 1.1rem 2rem; display: flex; align-items: center; justify-content: space-between; position: sticky; top: 0; z-index: 50; }
-  .app-switcher { position: relative; }
-  .switcher-trigger { display: flex; align-items: center; gap: 0.5rem; cursor: pointer; padding: 0.4rem 0.85rem; border-radius: 100px; border: 1px solid rgba(255,255,255,0.15); transition: all 0.18s; user-select: none; background: rgba(255,255,255,0.07); }
+  
+  
   .switcher-trigger:hover { background: rgba(255,255,255,0.13); border-color: var(--accent-light); }
   .switcher-trigger .app-name { font-family: 'Nunito', sans-serif; font-weight: 800; font-size: 1rem; color: white; }
   .switcher-trigger .app-name span { color: var(--yellow); font-style: italic; }
   .switcher-trigger .chevron { color: rgba(255,255,255,0.4); font-size: 0.65rem; transition: transform 0.2s; }
   .app-switcher.open .chevron { transform: rotate(180deg); }
-  .switcher-dropdown { display: none; position: absolute; top: calc(100% + 10px); left: 0; background: var(--surface); border: 1px solid var(--border); border-radius: 16px; overflow: hidden; min-width: 272px; box-shadow: 0 20px 56px rgba(0,0,0,0.12); z-index: 100; }
-  .app-switcher.open .switcher-dropdown { display: block; }
-  .switcher-item { display: flex; align-items: center; gap: 0.75rem; padding: 0.8rem 1rem; cursor: pointer; transition: background 0.12s; border-bottom: 1px solid var(--border); }
+  
+  .app-switcher.open 
+  
   .switcher-item:last-child { border-bottom: none; }
   .switcher-item:hover { background: var(--accent-xpale); }
   .switcher-item.current { background: var(--accent-pale); }
-  .switcher-item-icon { width: 32px; height: 32px; border-radius: 9px; display: flex; align-items: center; justify-content: center; font-size: 0.95rem; flex-shrink: 0; }
+  
   .switcher-item-text .item-name { font-size: 0.84rem; font-weight: 700; color: var(--ink); }
   .switcher-item-text .item-desc { font-size: 0.69rem; color: var(--slate-soft); margin-top: 0.1rem; }
   .switcher-item.current .item-name { color: var(--accent); }
@@ -313,6 +321,47 @@
     .step-tab { font-size: 0.58rem; padding: 0.7rem 0.2rem; }
     .card { padding: 1.5rem 1.25rem; }
   }
+
+  /* SWITCHER */
+  .app-switcher { position: relative; }
+  .switcher-trigger {
+    display: flex; align-items: center; gap: 0.5rem;
+    cursor: pointer; padding: 0.45rem 0.9rem;
+    border-radius: 100px; border: 1px solid rgba(255,255,255,0.15);
+    transition: all 0.18s; user-select: none;
+    background: rgba(255,255,255,0.07);
+  }
+  .switcher-trigger:hover { background: rgba(255,255,255,0.13); border-color: var(--yellow); }
+  .switcher-trigger .app-name { font-family: 'Nunito', sans-serif; font-weight: 800; font-size: 1rem; color: white; }
+  .switcher-trigger .app-name em { font-style: italic; color: var(--yellow); }
+  .switcher-trigger .chevron { color: rgba(255,255,255,0.4); font-size: 0.65rem; transition: transform 0.2s; }
+  .app-switcher.open .chevron { transform: rotate(180deg); }
+  .switcher-dropdown {
+    display: none; position: absolute; top: calc(100% + 10px); left: 0;
+    background: white; border: 1px solid rgba(0,0,0,0.08);
+    border-radius: 14px; overflow: hidden; min-width: 220px;
+    box-shadow: 0 16px 48px rgba(0,0,0,0.12); z-index: 100;
+  }
+  .app-switcher.open .switcher-dropdown { display: block; }
+  .switcher-home {
+    display: flex; align-items: center; gap: 0.75rem;
+    padding: 0.9rem 1.1rem; cursor: pointer;
+    transition: background 0.12s; text-decoration: none;
+  }
+  .switcher-home:hover { background: var(--accent-pale, #f5f3ff); }
+  .switcher-home-icon {
+    width: 32px; height: 32px; border-radius: 9px;
+    background: rgba(0,0,0,0.05);
+    display: flex; align-items: center; justify-content: center; font-size: 1rem;
+  }
+  .switcher-home-label { font-size: 0.84rem; font-weight: 700; color: #314855; }
+  .switcher-home-sub   { font-size: 0.69rem; color: #8ba4b0; margin-top: 0.1rem; }
+  .disclaimer-badge {
+    font-size: 0.65rem; color: rgba(255,255,255,0.4);
+    border: 1px solid rgba(255,255,255,0.15);
+    padding: 0.3rem 0.85rem; border-radius: 100px; letter-spacing: 0.04em;
+  }
+
 </style>
 </head>
 <body>
@@ -320,22 +369,17 @@
 <header>
   <div class="app-switcher" id="appSwitcher">
     <div class="switcher-trigger" onclick="toggleSwitcher(event)">
-      <div class="app-name">MyRetirement<span>Helper</span></div>
-      <div class="chevron">▼</div>
+      <div class="app-name">MyRetirement<em>Helper</em></div>
+      <div class="chevron">&#9660;</div>
     </div>
     <div class="switcher-dropdown">
-      <div class="switcher-item" onclick="window.location.href='index.html'">
-        <div class="switcher-item-icon" style="background:rgba(255,255,255,0.06);">&#127968;</div>
-        <div class="switcher-item-text"><div class="item-name" style="color:rgba(255,255,255,0.4);font-size:0.8rem;">&#8592; MyPayPicture</div></div>
-      </div>
-      <div class="switcher-item" onclick="window.location.href='property-decision.html'">
-        <div class="switcher-item-icon" style="background:rgba(45,106,79,0.15);">&#127968;</div>
-        <div class="switcher-item-text"><div class="item-name">MyPropertyDecision</div><div class="item-desc">Got a deposit? See where it works hardest.</div></div>
-      </div>
-      <div class="switcher-item current" style="cursor:default;">
-        <div class="switcher-item-icon" style="background:rgba(107,114,128,0.15);">&#127749;</div>
-        <div class="switcher-item-text"><div class="item-name">MyRetirementHelper</div><div class="item-desc">Near or at retirement? See where you stand.</div></div>
-      </div>
+      <a class="switcher-home" href="index.html">
+        <div class="switcher-home-icon">&#127968;</div>
+        <div>
+          <div class="switcher-home-label">&#8592; MyPayPicture</div>
+          <div class="switcher-home-sub">Back to all tools</div>
+        </div>
+      </a>
     </div>
   </div>
   <div class="disclaimer-badge">Not financial advice</div>
@@ -814,13 +858,6 @@
 
 
   // ── SWITCHER ───────────────────────────────────────────────────────────────
-  function toggleSwitcher(e) {
-    e.stopPropagation();
-    document.getElementById('appSwitcher').classList.toggle('open');
-  }
-  document.addEventListener('click', function() {
-    document.getElementById('appSwitcher').classList.remove('open');
-  });
 
   // ── HELPERS ────────────────────────────────────────────────────────────────
   const fmt  = n => '£' + Math.round(n).toLocaleString('en-GB');
@@ -1324,11 +1361,11 @@
         const y = pad.t + (g / 4) * cH;
         ctx.beginPath(); ctx.moveTo(pad.l, y); ctx.lineTo(pad.l + cW, y); ctx.stroke();
         const val = maxPot * (1 - g / 4);
-        ctx.fillStyle = 'rgba(255,255,255,0.3)'; ctx.font = '9px 'Nunito', sans-serif, sans-serif'; ctx.textAlign = 'right';
+        ctx.fillStyle = 'rgba(255,255,255,0.3)'; ctx.font = '9px "Nunito", sans-serif'; ctx.textAlign = 'right';
         ctx.fillText(val >= 1000000 ? (val/1000000).toFixed(1)+'M' : val >= 1000 ? Math.round(val/1000)+'k' : Math.round(val), pad.l - 4, y + 3);
       }
       // X labels
-      ctx.fillStyle = 'rgba(255,255,255,0.25)'; ctx.font = '9px 'Nunito', sans-serif, sans-serif'; ctx.textAlign = 'center';
+      ctx.fillStyle = 'rgba(255,255,255,0.25)'; ctx.font = '9px "Nunito", sans-serif'; ctx.textAlign = 'center';
       [0, Math.floor((years-1)/3), Math.floor(2*(years-1)/3), years-1].forEach(i => {
         ctx.fillText('Age ' + (retirementAge + i), xPos(i), H - pad.b + 14);
       });
