@@ -1,317 +1,234 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+<meta charset="UTF-8">
+<link rel="manifest" href="manifest.json">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="MyPayPicture">
+<link rel="apple-touch-icon" href="icon-192.png">
+<link rel="icon" type="image/x-icon" href="favicon.ico">
+<link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="favicon-16.png">
+<meta name="theme-color" content="#2e0a1a">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MyFamily&Benefits — MyPayPicture</title>
 <!-- Google tag (gtag.js) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-XY51DX80VL"></script>
-<script>
-  // ── ANALYTICS ──────────────────────────────────────────────────────────────
-  var GA_ID = 'G-XY51DX80VL';
-
-  function gaEvent(name, params) {
-    if (typeof gtag !== 'undefined') {
-      gtag('event', name, params || {});
-    }
-  }
-
-  // Track tool started (step 2+)
-  var _gaToolStarted = false;
-  function trackToolStart(toolName) {
-    if (!_gaToolStarted) {
-      _gaToolStarted = true;
-      gaEvent('tool_started', { tool: toolName });
-    }
-  }
-
-  // Track tool completed (final step)
-  function trackToolComplete(toolName) {
-    gaEvent('tool_completed', { tool: toolName });
-  }
-
-  // Track PDF CTA shown
-  function trackPdfCtaShown(toolName) {
-    gaEvent('pdf_cta_shown', { tool: toolName });
-  }
-
-  // Track PDF purchased (paid=true on load)
-  function trackPdfPurchased(toolName) {
-    gaEvent('pdf_purchased', { tool: toolName });
-  }
-
-  // Track adviser CTA clicked
-  document.addEventListener('click', function(e) {
-    var el = e.target.closest('.adviser-cta-btn');
-    if (el) gaEvent('adviser_cta_clicked', { tool: document.title });
-  });
-
-  // Track chat messages sent
-  function trackChatSent(toolName) {
-    gaEvent('chat_message_sent', { tool: toolName });
-  }
-
-  // Check for paid=true on load
-  if (window.location.search.includes('paid=true')) {
-    window.addEventListener('DOMContentLoaded', function() {
-      trackPdfPurchased(document.title);
-    });
-  }
-</script>
 <script>
   window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}
   gtag('js', new Date());
   gtag('config', 'G-XY51DX80VL');
 </script>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="manifest" href="manifest.json">
-  <meta name="theme-color" content="#0f1f38">
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-  <meta name="apple-mobile-web-app-title" content="MyPayPicture">
-  <link rel="icon" type="image/x-icon" href="favicon.ico">
-  <link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png">
-  <link rel="icon" type="image/png" sizes="16x16" href="favicon-16.png">
-  <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
-  <meta name="mobile-web-app-capable" content="yes">
-<title>My Family & Benefits Optimiser — MyPayPicture</title>
-<link href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,300;0,400;0,600;0,700;0,800;1,300;1,400;1,700&display=swap" rel="stylesheet">
+
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
   :root {
     --ink:         #2e0a1a;
     --ink-mid:     #3d1025;
     --accent:      #be4b72;
     --accent-dark: #9d3a5a;
-    --accent-pale: #fff0f5;
     --accent-light:#f9a8d4;
-    --accent-xpale:#fff0f5;
+    --accent-pale: #fff0f5;
+    --rose-light:  #e05c80;
+    --cream:       #fdf5f8;
+    --slate:       #4a5568;
+    --slate-light: #718096;
+    --green-light: #40916c;
+    --white:       #ffffff;
+    --border:      rgba(190,75,114,0.15);
     --yellow:      #ffdb00;
-    --sky:         #5cc3e8;
-    --slate:       #314855;
-    --slate-soft:  #5a7282;
-    --stone:       #78716c;
-    --stone-pale:  #f5f4f2;
-    --red:         #b91c1c;
-    --amber:       #d97706;
-    --bg:          #fdf5f8;
-    --surface:     #ffffff;
-    --border:      rgba(190,75,114,0.12);
+    --navy:        #2e0a1a;
+    --rose:        #be4b72;
+    --rose-pale:   #fff0f5;
+    --red:         #be4b72;
   }
 
   * { box-sizing: border-box; margin: 0; padding: 0; }
-  body { font-family: 'Nunito', sans-serif; background: var(--bg); color: var(--ink); min-height: 100vh; }
+  body { font-family: 'Nunito', sans-serif; background: var(--cream); color: var(--ink); min-height: 100vh; }
 
   /* HEADER */
-  .switcher-group-label { padding: 0.5rem 1rem 0.25rem; font-size: 0.6rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: rgba(255,255,255,0.3); border-top: 1px solid rgba(255,255,255,0.08); margin-top: 0.15rem; }
   header { background: var(--ink); padding: 1.1rem 2rem; display: flex; align-items: center; justify-content: space-between; position: sticky; top: 0; z-index: 50; }
+
+  /* APP SWITCHER */
   .app-switcher { position: relative; }
-  .switcher-trigger { display: flex; align-items: center; gap: 0.5rem; cursor: pointer; padding: 0.4rem 0.85rem; border-radius: 100px; border: 1px solid rgba(255,255,255,0.15); transition: all 0.18s; user-select: none; background: rgba(255,255,255,0.07); }
-  .switcher-trigger:hover { background: rgba(255,255,255,0.13); border-color: var(--accent-light); }
-  .switcher-trigger .app-name { font-family: 'Nunito', sans-serif; font-weight: 800; font-size: 1rem; color: white; }
-  .switcher-trigger .app-name span { color: var(--yellow); font-style: italic; }
-  .switcher-trigger .chevron { color: rgba(255,255,255,0.4); font-size: 0.65rem; transition: transform 0.2s; }
+  .switcher-trigger { display: flex; align-items: center; gap: 0.5rem; cursor: pointer; padding: 0.4rem 0.75rem; border-radius: 8px; border: 1px solid rgba(255,255,255,0.15); transition: background 0.2s; user-select: none; }
+  .switcher-trigger:hover { background: rgba(255,255,255,0.07); }
+  .switcher-trigger .app-name { font-family: 'Nunito', sans-serif; font-size: 1.1rem; color: var(--rose-light); }
+  .switcher-trigger .app-name span { color: var(--white); font-weight: 300; }
+  .switcher-trigger .chevron { color: rgba(255,255,255,0.4); font-size: 0.7rem; transition: transform 0.2s; }
   .app-switcher.open .chevron { transform: rotate(180deg); }
-  .switcher-dropdown { display: none; position: absolute; top: calc(100% + 10px); left: 0; background: var(--surface); border: 1px solid var(--border); border-radius: 16px; overflow: hidden; min-width: 272px; box-shadow: 0 20px 56px rgba(0,0,0,0.12); z-index: 100; }
+  .switcher-dropdown { display: none; position: absolute; top: calc(100% + 8px); left: 0; background: #1a2f4e; border: 1px solid rgba(255,255,255,0.1); border-radius: 10px; overflow: hidden; min-width: 240px; box-shadow: 0 8px 24px rgba(0,0,0,0.3); z-index: 100; }
   .app-switcher.open .switcher-dropdown { display: block; }
-  .switcher-item { display: flex; align-items: center; gap: 0.75rem; padding: 0.8rem 1rem; cursor: pointer; transition: background 0.12s; border-bottom: 1px solid var(--border); }
+  .switcher-item { display: flex; align-items: center; gap: 0.75rem; padding: 0.85rem 1rem; cursor: pointer; transition: background 0.15s; border-bottom: 1px solid rgba(255,255,255,0.06); }
   .switcher-item:last-child { border-bottom: none; }
-  .switcher-item:hover { background: var(--accent-xpale); }
-  .switcher-item.current { background: var(--accent-pale); }
-  .switcher-item-icon { width: 32px; height: 32px; border-radius: 9px; display: flex; align-items: center; justify-content: center; font-size: 0.95rem; flex-shrink: 0; }
-  .switcher-item-text .item-name { font-size: 0.84rem; font-weight: 700; color: var(--ink); }
-  .switcher-item-text .item-desc { font-size: 0.69rem; color: var(--slate-soft); margin-top: 0.1rem; }
-  .switcher-item.current .item-name { color: var(--accent); }
-  .disclaimer-badge { font-size: 0.65rem; color: rgba(255,255,255,0.4); border: 1px solid rgba(255,255,255,0.15); padding: 0.3rem 0.85rem; border-radius: 100px; letter-spacing: 0.04em; }
+  .switcher-item:hover { background: rgba(255,255,255,0.06); }
+  .switcher-item.current { background: rgba(155,35,53,0.1); }
+  .switcher-item-icon { width: 32px; height: 32px; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 1rem; flex-shrink: 0; }
+  .switcher-item-text .item-name { font-family: 'Nunito', sans-serif; font-size: 0.9rem; color: white; }
+  .switcher-item-text .item-desc { font-size: 0.72rem; color: rgba(255,255,255,0.4); margin-top: 0.1rem; }
+  .switcher-item.current .item-name { color: var(--rose-light); }
+
+  .disclaimer-badge { font-size: 0.7rem; color: rgba(255,255,255,0.4); border: 1px solid rgba(255,255,255,0.15); padding: 0.3rem 0.7rem; border-radius: 20px; letter-spacing: 0.05em; text-transform: uppercase; }
 
   /* HERO */
-  .hero { background: var(--ink); padding: 5rem 2rem 6.5rem; text-align: center; position: relative; overflow: hidden; }
-  .hero::before { content: ''; position: absolute; inset: 0; background: radial-gradient(ellipse 60% 70% at 15% 50%, rgba(244,167,185,0.2) 0%, transparent 60%), radial-gradient(ellipse 50% 60% at 85% 20%, rgba(249,168,212,0.1) 0%, transparent 55%), radial-gradient(ellipse 40% 40% at 55% 90%, rgba(46,10,26,0.3) 0%, transparent 50%); pointer-events: none; }
-  .hero-eyebrow { display: inline-flex; align-items: center; gap: 0.5rem; font-size: 0.7rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.2em; color: var(--accent-light); margin-bottom: 1.75rem; padding: 0.35rem 1.1rem; border-radius: 100px; border: 1px solid rgba(149,213,178,0.25); background: rgba(149,213,178,0.08); }
-  .hero h1 { font-family: 'Nunito', sans-serif; font-size: clamp(2.6rem, 7vw, 5rem); color: white; line-height: 1.0; max-width: 780px; margin: 0 auto 1.5rem; font-weight: 800; letter-spacing: -0.03em; }
-  .hero h1 em { font-style: italic; color: var(--accent-light); font-weight: 300; display: block; }
-  .hero p { color: rgba(255,255,255,0.45); font-size: 1rem; max-width: 460px; margin: 0 auto; line-height: 1.75; }
+  .hero { background: var(--navy); padding: 3rem 2rem 4rem; text-align: center; position: relative; overflow: hidden; }
+  .hero::before { content: ''; position: absolute; top: -80px; right: -80px; width: 300px; height: 300px; border-radius: 50%; background: radial-gradient(circle, rgba(155,35,53,0.12) 0%, transparent 70%); pointer-events: none; }
+  .hero h1 { font-family: 'Nunito', sans-serif; font-size: clamp(1.9rem, 5vw, 3rem); color: var(--white); line-height: 1.15; max-width: 580px; margin: 0 auto 1rem; }
+  .hero h1 em { font-style: italic; color: var(--rose-light); }
+  .hero p { color: rgba(255,255,255,0.55); font-size: 1rem; max-width: 460px; margin: 0 auto; line-height: 1.65; }
 
   /* CONTAINER */
-  .container { max-width: 900px; margin: 0 auto; padding: 2.5rem 1.5rem 5rem; }
+  .container { max-width: 860px; margin: 0 auto; padding: 2.5rem 1.5rem 4rem; }
 
-  /* STEPS */
-  .steps-nav { display: flex; border-radius: 14px 14px 0 0; overflow: hidden; border: 1.5px solid var(--border); border-bottom: none; background: var(--surface); }
-  .step-tab { flex: 1; padding: 0.85rem 0.4rem; text-align: center; font-size: 0.68rem; font-weight: 600; letter-spacing: 0.04em; text-transform: uppercase; color: var(--slate-soft); cursor: pointer; transition: all 0.2s; border-right: 1.5px solid var(--border); }
+  /* STEPS NAV */
+  .steps-nav { display: flex; border-radius: 12px 12px 0 0; overflow: hidden; border: 1px solid var(--border); border-bottom: none; background: white; }
+  .step-tab { flex: 1; padding: 0.9rem 0.5rem; text-align: center; font-size: 0.73rem; font-weight: 500; letter-spacing: 0.04em; text-transform: uppercase; color: var(--slate-light); cursor: pointer; transition: all 0.2s; border-right: 1px solid var(--border); }
   .step-tab:last-child { border-right: none; }
-  .step-tab.active { background: var(--ink); color: var(--accent-light); }
-  .step-tab.completed { color: var(--accent-dark); }
-  .step-tab .step-num { display: block; font-size: 1.1rem; font-weight: 800; margin-bottom: 0.15rem; color: inherit; }
-  .step-tab.completed .step-num::after { content: ' ✓'; font-size: 0.8rem; }
+  .step-tab.active { background: var(--navy); color: var(--rose-light); }
+  .step-tab.completed { color: var(--green-light); }
+  .step-tab .step-num { display: block; font-family: 'Nunito', sans-serif; font-size: 1.2rem; font-weight: 700; margin-bottom: 0.2rem; color: inherit; }
+  .step-tab.completed .step-num::after { content: ' \u2713'; font-size: 0.9rem; }
 
   /* CARD */
-  .card { background: var(--surface); border-radius: 0 0 16px 16px; padding: 2rem; border: 1.5px solid var(--border); border-top: none; box-shadow: 0 4px 24px rgba(0,0,0,0.06); display: none; animation: fadeIn 0.3s ease; }
+  .card { background: white; border-radius: 0 0 16px 16px; padding: 2rem; border: 1px solid var(--border); border-top: none; box-shadow: 0 4px 24px rgba(15,31,56,0.06); display: none; animation: fadeIn 0.3s ease; }
   .card.active { display: block; }
-  @keyframes fadeIn { from { opacity:0; transform:translateY(8px); } to { opacity:1; transform:translateY(0); } }
-  .card-title { font-size: 1.5rem; font-weight: 800; color: var(--ink); margin-bottom: 0.4rem; letter-spacing: -0.02em; }
-  .card-subtitle { color: var(--slate-soft); font-size: 0.9rem; margin-bottom: 2rem; line-height: 1.65; max-width: 560px; }
+  @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+  .card-title { font-family: 'Nunito', sans-serif; font-size: 1.5rem; color: var(--navy); margin-bottom: 0.4rem; }
+  .card-subtitle { color: var(--slate); font-size: 0.9rem; margin-bottom: 2rem; line-height: 1.6; }
 
   /* FORM */
-  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 1.25rem; }
-  @media (max-width: 580px) { .two-col { grid-template-columns: 1fr; } }
   .field-group { margin-bottom: 1.5rem; }
   .field-group:last-child { margin-bottom: 0; }
-  label { display: block; font-size: 0.85rem; font-weight: 700; color: var(--ink); margin-bottom: 0.5rem; }
+  label { display: block; font-size: 0.85rem; font-weight: 500; color: var(--navy); margin-bottom: 0.5rem; }
   .input-wrap { position: relative; }
-  .input-prefix { position: absolute; left: 14px; top: 50%; transform: translateY(-50%); color: var(--slate-soft); font-size: 0.95rem; pointer-events: none; }
-  .input-suffix { position: absolute; right: 14px; top: 50%; transform: translateY(-50%); color: var(--slate-soft); font-size: 0.9rem; pointer-events: none; }
-  input[type="number"], select { width: 100%; padding: 0.75rem 1rem 0.75rem 2rem; border: 1.5px solid #ddd; border-radius: 10px; font-family: 'Nunito', sans-serif; font-size: 1rem; font-weight: 600; color: var(--ink); background: var(--surface); transition: border-color 0.2s; appearance: none; }
-  input[type="number"]:focus, select:focus { outline: none; border-color: var(--accent); box-shadow: 0 0 0 3px rgba(190,75,114,0.1); }
+  .input-prefix { position: absolute; left: 14px; top: 50%; transform: translateY(-50%); color: var(--slate); font-size: 1rem; pointer-events: none; }
+  input[type="number"] { width: 100%; padding: 0.75rem 1rem 0.75rem 2rem; border: 1.5px solid #ddd; border-radius: 8px; font-family: 'Nunito', sans-serif; font-size: 1rem; color: var(--navy); background: white; transition: border-color 0.2s; appearance: none; -webkit-appearance: none; }
+  input[type="number"]:focus { outline: none; border-color: var(--rose); box-shadow: 0 0 0 3px rgba(155,35,53,0.1); }
   input.no-prefix { padding-left: 1rem; }
-  input.has-suffix { padding-right: 2.5rem; }
-  .hint { font-size: 0.76rem; color: var(--slate-soft); margin-top: 0.4rem; line-height: 1.5; }
+  .hint { font-size: 0.78rem; color: var(--slate-light); margin-top: 0.4rem; line-height: 1.4; }
+
+  /* COUNTER */
+  .counter-wrap { display: flex; align-items: center; gap: 0.75rem; }
+  .counter-btn { width: 36px; height: 36px; border-radius: 50%; border: 1.5px solid #ddd; background: var(--cream); color: var(--navy); font-size: 1.2rem; cursor: pointer; display: flex; align-items: center; justify-content: center; flex-shrink: 0; transition: all 0.15s; line-height: 1; }
+  .counter-btn:hover { border-color: var(--rose); color: var(--rose); }
+  .counter-display { font-family: 'Nunito', sans-serif; font-size: 1.8rem; font-weight: 700; color: var(--navy); min-width: 2rem; text-align: center; }
+  .counter-label { font-size: 0.8rem; color: var(--slate-light); }
 
   /* RADIO */
   .radio-group { display: flex; gap: 0.75rem; flex-wrap: wrap; }
-  .radio-btn { flex: 1; min-width: 80px; padding: 0.65rem 0.75rem; border: 1.5px solid #ddd; border-radius: 10px; text-align: center; cursor: pointer; font-size: 0.83rem; font-weight: 600; transition: all 0.18s; color: var(--slate-soft); }
-  .radio-btn:hover { border-color: var(--accent); }
-  .radio-btn.selected { border-color: var(--accent); background: var(--accent-xpale); color: var(--ink); }
+  .radio-btn { flex: 1; min-width: 120px; padding: 0.7rem 1rem; border: 1.5px solid #ddd; border-radius: 8px; text-align: center; cursor: pointer; font-size: 0.88rem; font-weight: 500; transition: all 0.2s; color: var(--slate); }
+  .radio-btn:hover { border-color: var(--rose); }
+  .radio-btn.selected { border-color: var(--rose); background: var(--rose-pale); color: var(--navy); }
 
-  /* TOGGLE */
-  .toggle-row { display: flex; align-items: center; justify-content: space-between; padding: 1rem 1.25rem; background: var(--stone-pale); border-radius: 10px; margin-bottom: 1rem; }
-  .toggle-label { font-size: 0.88rem; font-weight: 700; color: var(--ink); }
-  .toggle-desc { font-size: 0.76rem; color: var(--slate-soft); margin-top: 0.15rem; }
-  .toggle-switch { position: relative; width: 44px; height: 24px; flex-shrink: 0; }
-  .toggle-switch input { opacity: 0; width: 0; height: 0; }
-  .toggle-slider { position: absolute; inset: 0; background: #ddd; border-radius: 100px; cursor: pointer; transition: 0.2s; }
-  .toggle-slider::before { content: ''; position: absolute; width: 18px; height: 18px; border-radius: 50%; background: white; left: 3px; top: 3px; transition: 0.2s; }
-  input:checked + .toggle-slider { background: var(--accent); }
-  input:checked + .toggle-slider::before { transform: translateX(20px); }
+  /* TOOLTIPS */
+  .tooltip-trigger { display: inline-flex; align-items: center; gap: 0.3rem; font-size: 0.72rem; color: var(--rose); cursor: pointer; margin-top: 0.35rem; font-weight: 500; user-select: none; width: fit-content; }
+  .tooltip-trigger .tt-icon { width: 16px; height: 16px; border-radius: 50%; background: var(--rose); color: white; font-size: 0.6rem; font-weight: 700; display: inline-flex; align-items: center; justify-content: center; flex-shrink: 0; }
+  .tooltip-body { display: none; background: var(--navy); border-radius: 10px; padding: 0.9rem 1rem; margin-top: 0.5rem; animation: fadeIn 0.2s ease; }
+  .tooltip-body.open { display: block; }
+  .tooltip-body p { font-size: 0.78rem; color: rgba(255,255,255,0.7); line-height: 1.65; }
+  .tooltip-body p strong { color: var(--rose-light); font-weight: 500; }
+  .tooltip-body p + p { margin-top: 0.5rem; }
+  .tt-rates { display: flex; flex-direction: column; gap: 0.4rem; margin-top: 0.6rem; }
+  .tt-rate-row { display: flex; justify-content: space-between; align-items: center; font-size: 0.75rem; padding: 0.35rem 0; border-bottom: 1px solid rgba(255,255,255,0.07); }
+  .tt-rate-row:last-child { border-bottom: none; }
+  .tt-rate-row .tt-rate-label { color: rgba(255,255,255,0.5); }
+  .tt-rate-row .tt-rate-val { color: var(--rose-light); font-weight: 600; font-family: 'Nunito', sans-serif; }
+
+  /* AGE PILLS */
+  .age-pill { display: flex; align-items: center; gap: 0.4rem; background: var(--cream); border: 1.5px solid #ddd; border-radius: 8px; padding: 0.35rem 0.6rem; font-size: 0.78rem; }
+  .age-pill label { color: var(--slate); font-size: 0.75rem; margin: 0; font-weight: 400; }
+  .age-pill input[type="number"] { width: 52px; padding: 0.2rem 0.3rem 0.2rem 0.4rem; font-size: 0.82rem; border: none; background: transparent; text-align: center; box-shadow: none; }
+  .age-pill input[type="number"]:focus { outline: none; box-shadow: none; border: none; }
+  #childAges { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 0.25rem; }
 
   /* RESULTS */
-  .results-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 0.85rem; margin: 1.5rem 0; }
-  .result-box { background: var(--ink); border-radius: 14px; padding: 1.1rem; text-align: center; }
-  .result-box.forest { background: linear-gradient(135deg, var(--accent) 0%, var(--accent-dark) 100%); }
-  .result-box.sky    { background: linear-gradient(135deg, #2a7a9a 0%, var(--sky) 100%); }
-  .result-box.warn   { background: linear-gradient(135deg, #92400e 0%, var(--amber) 100%); }
-  .result-box.good   { background: linear-gradient(135deg, #065f46 0%, #059669 100%); }
-  .result-box.highlight { background: linear-gradient(135deg, #374151 0%, var(--ink) 100%); border: 1px solid rgba(149,213,178,0.2); }
-  .result-box.danger { background: linear-gradient(135deg, #7f1d1d 0%, var(--red) 100%); }
-  .r-label { font-size: 0.65rem; text-transform: uppercase; letter-spacing: 0.08em; color: rgba(255,255,255,0.55); margin-bottom: 0.4rem; font-weight: 700; }
-  .r-amount { font-size: 1.55rem; font-weight: 800; color: white; line-height: 1; letter-spacing: -0.02em; }
-  .r-sub { font-size: 0.67rem; color: rgba(255,255,255,0.45); margin-top: 0.25rem; }
+  .results-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 1rem; margin: 1.5rem 0; }
+  .result-box { background: var(--navy); border-radius: 12px; padding: 1.25rem; text-align: center; }
+  .result-box.highlight { background: linear-gradient(135deg, var(--rose) 0%, var(--rose-light) 100%); }
+  .result-box.safe-box { background: linear-gradient(135deg, #2d6a4f 0%, var(--green-light) 100%); }
+  .result-box .r-label { font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.07em; color: rgba(255,255,255,0.6); margin-bottom: 0.5rem; }
+  .result-box .r-amount { font-family: 'Nunito', sans-serif; font-size: 1.8rem; font-weight: 700; color: white; line-height: 1; }
+  .result-box .r-sub { font-size: 0.72rem; color: rgba(255,255,255,0.45); margin-top: 0.3rem; }
 
-  /* SCENARIO CARDS */
-  .scenario-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; margin: 1.5rem 0; }
-  @media (max-width: 640px) { .scenario-grid { grid-template-columns: 1fr; } }
-  .scenario-card { border-radius: 14px; padding: 1.5rem; border: 2px solid var(--border); background: var(--surface); transition: all 0.2s; position: relative; }
-  .scenario-card.best { border-color: var(--accent); background: var(--accent-xpale); }
-  .scenario-card.best::before { content: '★ Best financial return'; position: absolute; top: 0; left: 50%; transform: translateX(-50%) translateY(-50%); background: var(--accent); color: white; font-size: 0.65rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.06em; padding: 0.2rem 0.7rem; border-radius: 100px; white-space: nowrap; }
-  .sc-icon { font-size: 1.8rem; margin-bottom: 0.75rem; }
-  .sc-title { font-size: 0.95rem; font-weight: 800; color: var(--ink); margin-bottom: 0.25rem; }
-  .sc-subtitle { font-size: 0.75rem; color: var(--slate-soft); margin-bottom: 1rem; line-height: 1.5; }
-  .sc-metric { display: flex; justify-content: space-between; padding: 0.35rem 0; border-bottom: 1px solid rgba(0,0,0,0.06); font-size: 0.8rem; }
-  .sc-metric:last-child { border-bottom: none; }
-  .sc-metric-label { color: var(--slate-soft); }
-  .sc-metric-val { font-weight: 700; color: var(--ink); }
-  .sc-metric-val.green { color: var(--accent); }
-  .sc-metric-val.red   { color: var(--red); }
-  .sc-metric-val.amber { color: var(--amber); }
+  /* STATUS */
+  .status-card { border-radius: 12px; padding: 1.25rem; margin-bottom: 1rem; }
+  .status-card.losing { background: #fef2f2; border: 1.5px solid #fecaca; }
+  .status-card.partial { background: #fffbeb; border: 1.5px solid #fde68a; }
+  .status-card.safe { background: #f0fdf4; border: 1.5px solid #bbf7d0; }
+  .status-headline { font-family: 'Nunito', sans-serif; font-size: 1.3rem; font-weight: 700; line-height: 1.2; margin-bottom: 0.4rem; }
+  .status-card.losing .status-headline { color: var(--rose); }
+  .status-card.partial .status-headline { color: #92400e; }
+  .status-card.safe .status-headline { color: #2d6a4f; }
+  .status-sub { font-size: 0.83rem; color: var(--slate); line-height: 1.6; }
 
-  /* COMPARE TABLE */
-  .compare-table { width: 100%; border-collapse: collapse; font-size: 0.84rem; margin: 1rem 0; }
-  .compare-table th { padding: 0.6rem 0.85rem; text-align: left; font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.06em; color: var(--slate-soft); border-bottom: 2px solid var(--border); font-weight: 700; }
-  .compare-table th.c1 { color: var(--accent); }
-  .compare-table th.c2 { color: #2a7a9a; }
-  .compare-table th.c3 { color: var(--amber); }
-  .compare-table td { padding: 0.65rem 0.85rem; border-bottom: 1px solid rgba(0,0,0,0.05); color: var(--slate-soft); }
-  .compare-table tr:last-child td { border-bottom: none; }
-  .compare-table td:first-child { font-weight: 700; color: var(--ink); font-size: 0.82rem; }
-  .compare-table td.win  { color: var(--accent); font-weight: 700; }
-  .compare-table td.lose { color: var(--red); }
-  .compare-table tr.total-row td { font-weight: 800; border-top: 2px solid var(--border); color: var(--ink); }
+  /* THRESHOLD VISUAL */
+  .threshold-visual { background: white; border-radius: 12px; border: 1px solid var(--border); padding: 1.25rem; margin-bottom: 1rem; }
+  .threshold-track { position: relative; height: 10px; border-radius: 5px; overflow: hidden; display: flex; margin: 1.25rem 0 0.5rem; }
+  .zone-green { background: var(--green-light); flex: 60; }
+  .zone-amber { background: #f59e0b; flex: 20; }
+  .zone-red { background: var(--rose-light); flex: 20; }
+  .threshold-marker { position: absolute; top: -6px; width: 2px; height: 22px; background: var(--navy); border-radius: 2px; transform: translateX(-50%); }
+  .threshold-marker::after { content: attr(data-label); position: absolute; top: 24px; left: 50%; transform: translateX(-50%); font-size: 0.62rem; color: var(--slate-light); white-space: nowrap; font-weight: 500; }
+  .income-marker { position: absolute; top: -10px; transform: translateX(-50%); z-index: 2; }
+  .income-marker-dot { width: 14px; height: 14px; border-radius: 50%; background: var(--navy); border: 2.5px solid white; box-shadow: 0 2px 6px rgba(0,0,0,0.2); margin: 0 auto; }
+  .income-marker-label { position: absolute; bottom: 22px; left: 50%; transform: translateX(-50%); font-size: 0.65rem; font-weight: 600; color: var(--navy); white-space: nowrap; background: white; padding: 0.1rem 0.3rem; border-radius: 4px; border: 1px solid var(--border); }
+  .zone-labels { display: flex; justify-content: space-between; margin-top: 1.25rem; gap: 0.5rem; }
+  .zone-tag { font-size: 0.65rem; text-align: center; flex: 1; padding: 0.25rem 0.4rem; border-radius: 4px; font-weight: 500; line-height: 1.3; }
+  .zone-tag.green { background: #d8f3dc; color: #2d6a4f; }
+  .zone-tag.amber { background: #fef3c7; color: #92400e; }
+  .zone-tag.red { background: #fde8e8; color: var(--rose); }
 
   /* GUIDANCE */
-  .guidance-box { border-left: 3px solid var(--accent); background: var(--accent-xpale); border-radius: 0 10px 10px 0; padding: 1rem 1.25rem; margin: 1rem 0; }
-  .guidance-box h4 { font-size: 0.85rem; font-weight: 800; color: var(--ink); margin-bottom: 0.4rem; }
-  .guidance-box p, .guidance-box li { font-size: 0.84rem; color: var(--slate-soft); line-height: 1.65; }
-  .guidance-box ul { padding-left: 1.1rem; margin-top: 0.4rem; }
-  .guidance-box li { margin-bottom: 0.3rem; }
-  .alert-box { border-left: 3px solid var(--accent-dark); background: rgba(64,145,108,0.06); border-radius: 0 10px 10px 0; padding: 0.9rem 1.1rem; margin: 0.75rem 0; }
-  .alert-box.warning { border-left-color: var(--amber); background: #fffbeb; }
-  .alert-box.info    { border-left-color: var(--sky); background: #f0f9ff; }
-  .alert-box h4 { font-size: 0.83rem; font-weight: 800; color: var(--ink); margin-bottom: 0.3rem; }
-  .alert-box p  { font-size: 0.83rem; color: var(--slate-soft); line-height: 1.6; }
+  .guidance-box { border-left: 3px solid var(--rose); background: var(--rose-pale); border-radius: 0 8px 8px 0; padding: 1rem 1.25rem; margin: 1rem 0; }
+  .guidance-box h4 { font-size: 0.85rem; font-weight: 600; color: var(--navy); margin-bottom: 0.4rem; }
+  .guidance-box p, .guidance-box li { font-size: 0.85rem; color: var(--slate); line-height: 1.6; }
+  .guidance-box ul { padding-left: 1.1rem; }
 
-  /* SUMMARY */
-  .summary-panel { background: var(--ink); border-radius: 14px; padding: 1.5rem; margin-top: 1.5rem; }
-  .summary-title { font-size: 1rem; font-weight: 800; color: var(--accent-light); margin-bottom: 1rem; }
-  .summary-row { display: flex; justify-content: space-between; padding: 0.45rem 0; border-bottom: 1px solid rgba(255,255,255,0.07); font-size: 0.85rem; }
-  .summary-row:last-child { border-bottom: none; }
-  .summary-row .s-label { color: rgba(255,255,255,0.45); }
-  .summary-row .s-val   { color: white; font-weight: 700; }
-  .summary-row .s-val.green { color: var(--accent-light); }
-  .summary-row .s-val.warn  { color: #fbbf24; }
+  .alert-box { border-left: 3px solid var(--green-light); background: rgba(64,145,108,0.06); border-radius: 0 8px 8px 0; padding: 1rem 1.25rem; margin: 1rem 0; }
+  .alert-box.warning { border-left-color: #f59e0b; background: #fffbeb; }
+  .alert-box h4 { font-size: 0.85rem; font-weight: 600; color: var(--navy); margin-bottom: 0.35rem; }
+  .alert-box p { font-size: 0.85rem; color: var(--slate); line-height: 1.6; }
 
-  /* PDF & ADVISER */
-  .pdf-inline-cta { display: none; margin-top: 1.5rem; background: var(--stone-pale); border: 1.5px solid var(--border); border-radius: 14px; padding: 1.1rem 1.25rem; }
-  .pdf-inline-cta.visible { display: block; }
-  .pdf-inline-inner { display: flex; align-items: center; justify-content: space-between; gap: 1rem; flex-wrap: wrap; }
-  .pdf-inline-text strong { display: block; font-size: 0.95rem; font-weight: 800; color: var(--ink); margin-bottom: 0.2rem; }
-  .pdf-inline-text span   { font-size: 0.75rem; color: var(--slate-soft); }
-  .pdf-inline-right { display: flex; align-items: center; gap: 0.75rem; flex-shrink: 0; }
-  .pdf-inline-price { font-size: 1.1rem; font-weight: 800; color: var(--ink); }
-  .pdf-inline-btn { padding: 0.65rem 1.25rem; border-radius: 100px; font-family: 'Nunito', sans-serif; font-size: 0.88rem; font-weight: 700; text-decoration: none; white-space: nowrap; transition: all 0.2s; background: var(--ink); color: white; border: none; cursor: pointer; display: inline-block; }
-  .pdf-inline-btn:hover { opacity: 0.85; }
-  .pdf-inline-btn.paid { background: var(--accent); }
-  .adviser-cta { background: linear-gradient(135deg, var(--ink) 0%, var(--ink-mid) 100%); border-radius: 14px; padding: 1.1rem 1.5rem; margin-top: 0.75rem; display: block; border: 1px solid rgba(255,255,255,0.07); }
-  .adviser-cta-inner { display: flex; align-items: center; justify-content: space-between; gap: 1rem; flex-wrap: wrap; }
-  .adviser-cta-text strong { display: block; font-size: 0.95rem; font-weight: 800; color: white; margin-bottom: 0.2rem; }
-  .adviser-cta-text span   { font-size: 0.75rem; color: rgba(255,255,255,0.4); }
-  .adviser-cta-btn { padding: 0.65rem 1.25rem; border-radius: 100px; font-family: 'Nunito', sans-serif; font-size: 0.85rem; font-weight: 700; text-decoration: none; white-space: nowrap; background: var(--yellow); color: var(--ink); flex-shrink: 0; transition: all 0.2s; }
-  .adviser-cta-btn:hover { background: #e0c000; }
+  /* OPTIMISE PANEL */
+  .optimise-panel { background: var(--navy); border-radius: 12px; padding: 1.5rem; margin-top: 1.5rem; }
+  .optimise-title { font-family: 'Nunito', sans-serif; font-size: 1.1rem; color: white; margin-bottom: 0.3rem; }
+  .optimise-sub { font-size: 0.78rem; color: rgba(255,255,255,0.45); margin-bottom: 1.1rem; line-height: 1.5; }
+  .slider-field { margin-bottom: 1rem; }
+  .slider-field label { display: flex; justify-content: space-between; font-size: 0.78rem; color: rgba(255,255,255,0.65); margin-bottom: 0.5rem; }
+  .slider-field label strong { color: var(--rose-light); font-family: 'Nunito', sans-serif; font-size: 1rem; }
+  input[type="range"] { width: 100%; accent-color: var(--rose-light); height: 4px; cursor: pointer; }
+  .slider-range-labels { display: flex; justify-content: space-between; font-size: 0.65rem; color: rgba(255,255,255,0.3); margin-top: 0.2rem; }
+  .optimise-result { background: rgba(255,255,255,0.06); border-radius: 10px; padding: 1rem; margin-top: 0.75rem; }
+  .or-row { display: flex; justify-content: space-between; align-items: baseline; padding: 0.35rem 0; border-bottom: 1px solid rgba(255,255,255,0.06); font-size: 0.82rem; }
+  .or-row:last-child { border-bottom: none; }
+  .or-row .or-label { color: rgba(255,255,255,0.5); }
+  .or-row .or-val { color: white; font-weight: 500; font-family: 'Nunito', sans-serif; font-size: 1rem; }
+  .or-row .or-val.green { color: #52b788; }
+  .or-row .or-val.amber { color: #fbbf24; }
+  .illustrative-note { background: rgba(255,255,255,0.04); border-left: 2px solid rgba(255,255,255,0.12); border-radius: 0 6px 6px 0; padding: 0.6rem 0.75rem; margin-top: 0.75rem; font-size: 0.72rem; color: rgba(255,255,255,0.3); line-height: 1.5; }
 
-  /* CHAT */
-  .chat-wrap { max-width: 900px; margin: 0 auto; padding: 0 1.5rem 2.5rem; }
-  .chat-divider { display: flex; align-items: center; gap: 0.75rem; margin-bottom: 1rem; font-size: 0.65rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--slate-soft); }
-  .chat-divider::before, .chat-divider::after { content: ''; flex: 1; height: 1px; background: var(--border); }
-  .chat-box { background: var(--surface); border-radius: 16px; border: 1.5px solid var(--border); box-shadow: 0 4px 24px rgba(0,0,0,0.05); overflow: hidden; }
-  .chat-head { background: var(--ink); padding: 0.9rem 1.25rem; display: flex; align-items: center; gap: 0.75rem; }
-  .chat-head-icon { width: 30px; height: 30px; border-radius: 50%; background: rgba(149,213,178,0.2); display: flex; align-items: center; justify-content: center; font-size: 0.9rem; flex-shrink: 0; }
-  .chat-head-title { font-size: 0.95rem; font-weight: 800; color: white; }
-  .chat-head-sub { font-size: 0.68rem; color: rgba(255,255,255,0.4); margin-top: 0.05rem; }
-  .chat-msgs { padding: 1rem 1.25rem; max-height: 340px; overflow-y: auto; display: flex; flex-direction: column; gap: 0.85rem; scroll-behavior: smooth; }
-  .chat-msg { display: flex; gap: 0.6rem; align-items: flex-start; animation: fadeIn 0.2s ease; }
-  .chat-msg.user { flex-direction: row-reverse; }
-  .msg-av { width: 26px; height: 26px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.7rem; font-weight: 700; flex-shrink: 0; margin-top: 2px; }
-  .chat-msg.ai   .msg-av { background: var(--ink); color: rgba(255,255,255,0.7); }
-  .chat-msg.user .msg-av { background: var(--accent); color: white; }
-  .msg-bub { max-width: 80%; padding: 0.65rem 0.9rem; border-radius: 12px; font-size: 0.84rem; line-height: 1.65; }
-  .chat-msg.ai   .msg-bub { background: var(--stone-pale); color: var(--ink); border-radius: 4px 12px 12px 12px; }
-  .chat-msg.user .msg-bub { background: var(--ink); color: white; border-radius: 12px 4px 12px 12px; }
-  .msg-bub p { margin-bottom: 0.4rem; } .msg-bub p:last-child { margin-bottom: 0; }
-  .chat-typing { display: flex; gap: 3px; align-items: center; padding: 0.2rem 0; }
-  .chat-typing span { width: 6px; height: 6px; border-radius: 50%; background: var(--slate-soft); animation: typeBounce 1.2s infinite; }
-  .chat-typing span:nth-child(2) { animation-delay: 0.2s; }
-  .chat-typing span:nth-child(3) { animation-delay: 0.4s; }
-  @keyframes typeBounce { 0%,60%,100%{transform:translateY(0);opacity:0.4;} 30%{transform:translateY(-4px);opacity:1;} }
-  .chat-chips { padding: 0 1.25rem 0.6rem; display: flex; gap: 0.4rem; flex-wrap: wrap; }
-  .chat-chip { font-size: 0.73rem; padding: 0.28rem 0.7rem; border-radius: 100px; border: 1.5px solid var(--border); background: var(--surface); color: var(--slate-soft); cursor: pointer; transition: all 0.15s; white-space: nowrap; font-weight: 600; }
-  .chat-chip:hover { border-color: var(--accent); color: var(--ink); background: var(--accent-xpale); }
-  .chat-input-wrap { display: flex; gap: 0.5rem; padding: 0.75rem 1.25rem 1rem; border-top: 1px solid var(--border); align-items: flex-end; }
-  .chat-textarea { flex: 1; padding: 0.6rem 0.85rem; border: 1.5px solid #ddd; border-radius: 100px; font-family: 'Nunito', sans-serif; font-size: 0.88rem; color: var(--ink); resize: none; min-height: 40px; max-height: 110px; line-height: 1.5; transition: border-color 0.2s; background: var(--stone-pale); }
-  .chat-textarea:focus { outline: none; border-color: var(--accent); }
-  .chat-send { width: 40px; height: 40px; border-radius: 100px; background: var(--yellow); border: none; color: var(--ink); cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 1rem; font-weight: 800; flex-shrink: 0; transition: all 0.15s; }
-  .chat-send:hover { background: #e0c000; transform: scale(1.08); }
-  .chat-send:disabled { opacity: 0.3; cursor: not-allowed; transform: none; }
-  .chat-footer-note { text-align: center; font-size: 0.68rem; color: var(--slate-soft); padding: 0 1.25rem 0.85rem; line-height: 1.5; }
+  /* EMPTY STATE */
+  .empty-state { text-align: center; padding: 3rem 1rem; color: var(--slate-light); }
+  .empty-state .es-icon { font-size: 2.5rem; margin-bottom: 0.75rem; }
+  .empty-state p { font-size: 0.85rem; line-height: 1.6; }
 
-  hr { border: none; border-top: 1px solid var(--border); margin: 1.5rem 0; }
-  .btn-primary { background: var(--accent); color: white; border: none; padding: 0.85rem 2rem; border-radius: 100px; font-family: 'Nunito', sans-serif; font-size: 0.95rem; font-weight: 800; cursor: pointer; transition: all 0.2s; }
-  .btn-primary:hover { background: var(--ink); transform: translateY(-1px); box-shadow: 0 4px 14px rgba(190,75,114,0.3); }
-  .btn-secondary { background: transparent; color: var(--slate-soft); border: 1.5px solid #ddd; padding: 0.85rem 1.5rem; border-radius: 100px; font-family: 'Nunito', sans-serif; font-size: 0.9rem; font-weight: 700; cursor: pointer; transition: all 0.2s; }
-  .btn-secondary:hover { border-color: var(--ink); color: var(--ink); }
+  /* BUTTONS */
+  .btn-primary { background: var(--rose); color: white; border: none; padding: 0.85rem 2rem; border-radius: 8px; font-family: 'Nunito', sans-serif; font-size: 0.95rem; font-weight: 600; cursor: pointer; transition: all 0.2s; }
+  .btn-primary:hover { background: var(--rose-light); transform: translateY(-1px); box-shadow: 0 4px 12px rgba(155,35,53,0.3); }
+  .btn-secondary { background: transparent; color: var(--slate); border: 1.5px solid #ddd; padding: 0.85rem 1.5rem; border-radius: 8px; font-family: 'Nunito', sans-serif; font-size: 0.9rem; font-weight: 500; cursor: pointer; transition: all 0.2s; }
+  .btn-secondary:hover { border-color: var(--navy); color: var(--navy); }
   .btn-row { display: flex; gap: 0.75rem; margin-top: 2rem; justify-content: flex-end; flex-wrap: wrap; }
 
+  hr { border: none; border-top: 1px solid rgba(0,0,0,0.08); margin: 1.5rem 0; }
+  .hidden { display: none; }
+
   @media (max-width: 600px) {
-    header { padding: 1rem 1.25rem; }
-    .hero { padding: 3rem 1.25rem 4rem; }
-    .container { padding: 2rem 1.25rem 3rem; }
-    .step-tab { font-size: 0.58rem; padding: 0.7rem 0.2rem; }
+    .hero { padding: 2rem 1.25rem 3rem; }
     .card { padding: 1.5rem 1.25rem; }
+    .step-tab { font-size: 0.65rem; padding: 0.75rem 0.2rem; }
+    .btn-row { justify-content: stretch; }
+    .btn-primary, .btn-secondary { flex: 1; text-align: center; }
   }
 </style>
 </head>
@@ -319,58 +236,50 @@
 
 <header>
   <div class="app-switcher" id="appSwitcher">
-    <div class="switcher-trigger" onclick="toggleSwitcher(event)">
-      <div class="app-name">MyFamily<span>&amp;Benefits</span></div>
-      <div class="chevron">▼</div>
+    <div class="switcher-trigger" onclick="toggleSwitcher()">
+      <div class="app-name">MyFamily<span>&Benefits</span></div>
+      <div class="chevron">\u25bc</div>
     </div>
     <div class="switcher-dropdown">
       <div class="switcher-item" onclick="window.location.href='index.html'">
-        <div class="switcher-item-icon" style="background:rgba(255,255,255,0.06);">&#127968;</div>
-        <div class="switcher-item-text"><div class="item-name" style="color:rgba(255,255,255,0.4);font-size:0.8rem;">&#8592; MyPayPicture</div></div>
+        <div class="switcher-item-icon" style="background:rgba(255,255,255,0.06);">\ud83c\udfe0</div>
+        <div class="switcher-item-text"><div class="item-name" style="color:rgba(255,255,255,0.4); font-size:0.8rem;">\u2190 Suite Home</div></div>
       </div>
-      <div class="switcher-item" onclick="window.location.href='pension-optimiser.html'">
-        <div class="switcher-item-icon" style="background:rgba(13,148,136,0.15);">&#128200;</div>
-        <div class="switcher-item-text"><div class="item-name">MyPensionOptimiser</div><div class="item-desc">Optimising your pension? Pay less tax.</div></div>
+      <div class="switcher-item" onclick="window.location.href='pay-optimiser.html'">
+        <div class="switcher-item-icon" style="background:rgba(13,148,136,0.15);">\ud83d\udcc8</div>
+        <div class="switcher-item-text"><div class="item-name">MyPayOptimiser</div><div class="item-desc">Make every pound work harder.</div></div>
       </div>
       <div class="switcher-item" onclick="window.location.href='pension-reclaim.html'">
-        <div class="switcher-item-icon" style="background:rgba(201,168,76,0.15);">&#128176;</div>
+        <div class="switcher-item-icon" style="background:rgba(201,168,76,0.15);">\ud83d\udcb0</div>
         <div class="switcher-item-text"><div class="item-name">MyPensionReclaim</div><div class="item-desc">Missed salary sacrifice? Get it back.</div></div>
       </div>
       <div class="switcher-item" onclick="window.location.href='pension-topup.html'">
-        <div class="switcher-item-icon" style="background:rgba(237,172,0,0.15);">&#10133;</div>
-        <div class="switcher-item-text"><div class="item-name">MyPensionTop-Up</div><div class="item-desc">The government helps pay for it.</div></div>
+        <div class="switcher-item-icon" style="background:rgba(237,172,0,0.15);">\u2795</div>
+        <div class="switcher-item-text"><div class="item-name">MyPensionTop-Up</div><div class="item-desc">Make AVCs and claim your tax relief.</div></div>
       </div>
-      <div class="switcher-item current" style="cursor:default;">
-        <div class="switcher-item-icon" style="background:rgba(244,167,185,0.2);">&#128106;</div>
-        <div class="switcher-item-text"><div class="item-name">MyFamily&amp;Benefits</div><div class="item-desc">Paying the Child Benefit charge? Reduce it.</div></div>
-      </div>
-      <div class="switcher-item" onclick="window.location.href='self-assessment.html'">
-        <div class="switcher-item-icon" style="background:rgba(124,58,237,0.15);">&#128203;</div>
-        <div class="switcher-item-text"><div class="item-name">MySelfAssessment</div><div class="item-desc">First time filing? Walk through it.</div></div>
-      </div>
-      <div class="switcher-item" onclick="window.location.href='property-decision.html'">
-        <div class="switcher-item-icon" style="background:rgba(45,106,79,0.15);">&#127968;</div>
-        <div class="switcher-item-text"><div class="item-name">MyPropertyDecision</div><div class="item-desc">Got a deposit? See where it works hardest.</div></div>
+      <div class="switcher-item current">
+        <div class="switcher-item-icon" style="background:rgba(155,35,53,0.15);">\ud83d\udc68\u200d\ud83d\udc69\u200d\ud83d\udc67</div>
+        <div class="switcher-item-text"><div class="item-name">MyFamily&Benefits</div><div class="item-desc">Child Benefit & TFC optimiser.</div></div>
       </div>
     </div>
   </div>
   <div class="disclaimer-badge">Not financial advice</div>
 </header>
 
-<div class="hero">
-  <div class="hero-eyebrow">MyPayPicture</div>
-  <h1>Paying the Child Benefit charge?<br><em>You can reduce it.</em></h1>
-  <p>See how pension contributions can reduce your adjusted net income and protect your Child Benefit.</p>
+<div class="hero" style="background:var(--ink); padding:4rem 2rem 5rem; text-align:center; position:relative; overflow:hidden;">
+  <h1>Are you losing<br><em>Child Benefit</em><br>you're entitled to?</h1>
+  <p>See exactly how much you're losing and whether pension contributions could restore it.</p>
 </div>
 
 <div class="container">
+
   <div class="steps-nav">
-    <div class="step-tab active" onclick="goTo(1)" id="tab1"><span class="step-num">1</span>Your Household</div>
+    <div class="step-tab active" onclick="goTo(1)" id="tab1"><span class="step-num">1</span>Household</div>
     <div class="step-tab" onclick="goTo(2)" id="tab2"><span class="step-num">2</span>Your Position</div>
     <div class="step-tab" onclick="goTo(3)" id="tab3"><span class="step-num">3</span>Optimise</div>
   </div>
 
-<!-- STEP 1 -->
+  <!-- STEP 1 -->
   <div class="card active" id="step1">
     <div class="card-title">Your household</div>
     <p class="card-subtitle">Enter your details to see your Child Benefit position and what you could be missing out on.</p>
@@ -378,7 +287,7 @@
     <div class="field-group">
       <label>Your salary (highest earner)</label>
       <div class="input-wrap">
-        <span class="input-prefix">£</span>
+        <span class="input-prefix">\u00a3</span>
         <input type="number" id="salary" placeholder="e.g. 65000" min="0">
       </div>
       <p class="hint">The Child Benefit charge is based on the highest earner's adjusted net income.</p>
@@ -386,14 +295,14 @@
         <span class="tt-icon">i</span><span class="tt-label">What is the High Income charge?</span>
       </div>
       <div class="tooltip-body" id="tt-salary">
-        <p>If the highest earner in your household has an <strong>adjusted net income above £60,000</strong>, HMRC charges a tax called the High Income Child Benefit Charge (HICBC). It gradually claws back Child Benefit between £60,000 and £80,000 — above £80,000 it's fully withdrawn. Pension contributions reduce your adjusted net income, which can reduce or eliminate the charge.</p>
+        <p>If the highest earner in your household has an <strong>adjusted net income above \u00a360,000</strong>, HMRC charges a tax called the High Income Child Benefit Charge (HICBC). It gradually claws back Child Benefit between \u00a360,000 and \u00a380,000 \u2014 above \u00a380,000 it's fully withdrawn. Pension contributions reduce your adjusted net income, which can reduce or eliminate the charge.</p>
       </div>
     </div>
 
     <div class="field-group">
       <label>Partner salary <span style="color:var(--slate-light); font-weight:400;">(optional)</span></label>
       <div class="input-wrap">
-        <span class="input-prefix">£</span>
+        <span class="input-prefix">\u00a3</span>
         <input type="number" id="partnerSalary" placeholder="e.g. 35000" min="0">
       </div>
     </div>
@@ -406,14 +315,14 @@
       <div class="tooltip-body" id="tt-children" style="margin-bottom:0.75rem;">
         <p>Child Benefit is paid to one parent or guardian for children under 16 (or under 20 in approved education). From April 2024:</p>
         <div class="tt-rates">
-          <div class="tt-rate-row"><span class="tt-rate-label">First child</span><span class="tt-rate-val">£25.60/wk · £1,331/yr</span></div>
-          <div class="tt-rate-row"><span class="tt-rate-label">Each additional child</span><span class="tt-rate-val">£16.95/wk · £881/yr</span></div>
-          <div class="tt-rate-row"><span class="tt-rate-label">2 children</span><span class="tt-rate-val">£2,212/yr</span></div>
-          <div class="tt-rate-row"><span class="tt-rate-label">3 children</span><span class="tt-rate-val">£3,093/yr</span></div>
+          <div class="tt-rate-row"><span class="tt-rate-label">First child</span><span class="tt-rate-val">\u00a325.60/wk \u00b7 \u00a31,331/yr</span></div>
+          <div class="tt-rate-row"><span class="tt-rate-label">Each additional child</span><span class="tt-rate-val">\u00a316.95/wk \u00b7 \u00a3881/yr</span></div>
+          <div class="tt-rate-row"><span class="tt-rate-label">2 children</span><span class="tt-rate-val">\u00a32,212/yr</span></div>
+          <div class="tt-rate-row"><span class="tt-rate-label">3 children</span><span class="tt-rate-val">\u00a33,093/yr</span></div>
         </div>
       </div>
       <div class="counter-wrap">
-        <button class="counter-btn" onclick="adjustChildren(-1)">−</button>
+        <button class="counter-btn" onclick="adjustChildren(-1)">\u2212</button>
         <div>
           <div class="counter-display" id="childCount">1</div>
           <div class="counter-label">child</div>
@@ -425,31 +334,31 @@
     <div class="field-group">
       <label>Current pension contributions (annual)</label>
       <div class="input-wrap">
-        <span class="input-prefix">£</span>
+        <span class="input-prefix">\u00a3</span>
         <input type="number" id="pensionContribs" placeholder="e.g. 3000" min="0">
       </div>
-      <p class="hint">Include salary sacrifice contributions — these reduce your adjusted net income.</p>
+      <p class="hint">Include salary sacrifice contributions \u2014 these reduce your adjusted net income.</p>
       <div class="tooltip-trigger" data-show-label="How do pension contributions help?" onclick="toggleTooltip('tt-pension')">
         <span class="tt-icon">i</span><span class="tt-label">How do pension contributions help?</span>
       </div>
       <div class="tooltip-body" id="tt-pension">
-        <p>Salary sacrifice pension contributions reduce your <strong>adjusted net income</strong> — the figure HMRC uses to calculate both the High Income Child Benefit Charge and Tax-Free Childcare eligibility. Increasing contributions could reduce or eliminate the charge without losing the money — it goes into your pension instead.</p>
+        <p>Salary sacrifice pension contributions reduce your <strong>adjusted net income</strong> \u2014 the figure HMRC uses to calculate both the High Income Child Benefit Charge and Tax-Free Childcare eligibility. Increasing contributions could reduce or eliminate the charge without losing the money \u2014 it goes into your pension instead.</p>
       </div>
     </div>
 
     <div class="field-group">
       <label>Annual childcare costs <span style="color:var(--slate-light); font-weight:400;">(optional)</span></label>
       <div class="input-wrap">
-        <span class="input-prefix">£</span>
+        <span class="input-prefix">\u00a3</span>
         <input type="number" id="childcareCosts" placeholder="e.g. 12000" min="0">
       </div>
-      <p class="hint">Paid to registered providers — nursery, childminder, after-school clubs.</p>
+      <p class="hint">Paid to registered providers \u2014 nursery, childminder, after-school clubs.</p>
       <div class="tooltip-trigger" data-show-label="What is Tax-Free Childcare?" onclick="toggleTooltip('tt-tfc')">
         <span class="tt-icon">i</span><span class="tt-label">What is Tax-Free Childcare?</span>
       </div>
       <div class="tooltip-body" id="tt-tfc">
-        <p>Tax-Free Childcare (TFC) is a separate government scheme. For every <strong>£8 you pay</strong> into a TFC account, the government adds <strong>£2</strong> — up to £500 per child per quarter (£2,000/year per child). It applies to children under 11 in registered childcare.</p>
-        <p>Either parent earning over <strong>£100,000</strong> makes the household ineligible. Pension contributions can reduce income below this threshold and restore entitlement.</p>
+        <p>Tax-Free Childcare (TFC) is a separate government scheme. For every <strong>\u00a38 you pay</strong> into a TFC account, the government adds <strong>\u00a32</strong> \u2014 up to \u00a3500 per child per quarter (\u00a32,000/year per child). It applies to children under 11 in registered childcare.</p>
+        <p>Either parent earning over <strong>\u00a3100,000</strong> makes the household ineligible. Pension contributions can reduce income below this threshold and restore entitlement.</p>
       </div>
     </div>
 
@@ -468,7 +377,7 @@
     </div>
 
     <div class="btn-row">
-      <button class="btn-primary" onclick="goTo(2)">See my position →</button>
+      <button class="btn-primary" onclick="goTo(2)">See my position \u2192</button>
     </div>
   </div>
 
@@ -484,17 +393,17 @@
         <div class="zone-green"></div>
         <div class="zone-amber"></div>
         <div class="zone-red"></div>
-        <div class="threshold-marker" id="marker50k" style="left:60%" data-label="£60,000"></div>
-        <div class="threshold-marker" id="marker60k" style="left:80%" data-label="£80,000"></div>
+        <div class="threshold-marker" id="marker50k" style="left:60%" data-label="\u00a360,000"></div>
+        <div class="threshold-marker" id="marker60k" style="left:80%" data-label="\u00a380,000"></div>
         <div class="income-marker" id="incomeMarker">
           <div class="income-marker-label" id="incomeMarkerLabel"></div>
           <div class="income-marker-dot"></div>
         </div>
       </div>
       <div class="zone-labels">
-        <div class="zone-tag green">Full benefit<br>Under £60k</div>
-        <div class="zone-tag amber">Taper zone<br>£60k–£80k</div>
-        <div class="zone-tag red">Benefit lost<br>Over £80k</div>
+        <div class="zone-tag green">Full benefit<br>Under \u00a360k</div>
+        <div class="zone-tag amber">Taper zone<br>\u00a360k\u2013\u00a380k</div>
+        <div class="zone-tag red">Benefit lost<br>Over \u00a380k</div>
       </div>
     </div>
 
@@ -511,39 +420,39 @@
     <div class="results-grid">
       <div class="result-box">
         <div class="r-label">Child Benefit entitlement</div>
-        <div class="r-amount" id="fullEntitlement">—</div>
+        <div class="r-amount" id="fullEntitlement">\u2014</div>
         <div class="r-sub">per year</div>
       </div>
       <div class="result-box highlight">
         <div class="r-label">Currently losing</div>
-        <div class="r-amount" id="amountLost">—</div>
+        <div class="r-amount" id="amountLost">\u2014</div>
         <div class="r-sub">per year</div>
       </div>
       <div class="result-box">
         <div class="r-label">TFC top-up</div>
-        <div class="r-amount" id="tfcTopup">—</div>
+        <div class="r-amount" id="tfcTopup">\u2014</div>
         <div class="r-sub">govt adds per year</div>
       </div>
       <div class="result-box" id="adjIncomeBox">
         <div class="r-label">Adjusted income</div>
-        <div class="r-amount" id="adjustedIncome">—</div>
+        <div class="r-amount" id="adjustedIncome">\u2014</div>
         <div class="r-sub">highest earner</div>
       </div>
       <div class="result-box hidden" id="tfcRiskBox">
         <div class="r-label">TFC at risk</div>
-        <div class="r-amount" id="tfcAtRisk" style="color:#fca5a5;">—</div>
-        <div class="r-sub">income near £100k cliff</div>
+        <div class="r-amount" id="tfcAtRisk" style="color:#fca5a5;">\u2014</div>
+        <div class="r-sub">income near \u00a3100k cliff</div>
       </div>
     </div>
 
     <div class="guidance-box">
       <h4>How the 2024 thresholds work</h4>
-      <p>From April 2024 the taper thresholds changed: the charge now starts at £60,000 (previously £50,000) and Child Benefit is fully withdrawn at £80,000 (previously £60,000). Between these figures, you lose 1% of the benefit for every £200 of income above £60,000.</p>
+      <p>From April 2024 the taper thresholds changed: the charge now starts at \u00a360,000 (previously \u00a350,000) and Child Benefit is fully withdrawn at \u00a380,000 (previously \u00a360,000). Between these figures, you lose 1% of the benefit for every \u00a3200 of income above \u00a360,000.</p>
     </div>
 
     <div class="btn-row">
-      <button class="btn-secondary" onclick="goTo(1)">← Back</button>
-      <button class="btn-primary" id="optimiseBtn" onclick="goTo(3)">See how to recover it →</button>
+      <button class="btn-secondary" onclick="goTo(1)">\u2190 Back</button>
+      <button class="btn-primary" id="optimiseBtn" onclick="goTo(3)">See how to recover it \u2192</button>
     </div>
   </div>
 
@@ -556,9 +465,9 @@
       <div class="optimise-title">Could pension contributions help?</div>
       <div class="optimise-sub">This is an illustrative scenario. Move the slider to model the effect of additional salary sacrifice contributions on your benefits and tax position.</div>
       <div class="slider-field">
-        <label>Additional pension contribution <strong id="sliderValDisplay">£0/yr</strong></label>
+        <label>Additional pension contribution <strong id="sliderValDisplay">\u00a30/yr</strong></label>
         <input type="range" id="pensionSlider" min="0" max="30000" step="100" value="0" oninput="updateSlider()">
-        <div class="slider-range-labels"><span>£0</span><span id="sliderMax">£30,000</span></div>
+        <div class="slider-range-labels"><span>\u00a30</span><span id="sliderMax">\u00a330,000</span></div>
       </div>
       <div class="optimise-result" id="optimiseResult">
         <div style="text-align:center; color:rgba(255,255,255,0.3); font-size:0.8rem; padding:0.5rem;">Move the slider to model a scenario</div>
@@ -575,77 +484,23 @@
       <p>If you think you could benefit from increasing pension contributions, speak to your employer's HR team about salary sacrifice, or consult a qualified financial adviser who can model your full tax position accurately.</p>
     </div>
 
-        <div class="btn-row">
-      <button class="btn-secondary" onclick="goTo(2)">&#8592; Back</button>
-    </div>
-
-    <!-- PDF INLINE CTA -->
-    <div class="pdf-inline-cta" id="pdfInlineCta">
-      <div class="pdf-inline-inner">
-        <div class="pdf-inline-text">
-          <strong>&#128196; Download your personalised PDF report</strong>
-          <span>A branded summary of your results to take to an adviser or share with a partner.</span>
-        </div>
-        <div class="pdf-inline-right">
-          <div class="pdf-inline-price" id="pdfInlinePrice">&#163;4.99</div>
-          <a class="pdf-inline-btn" id="pdfInlineBuyBtn" href="https://buy.stripe.com/4gM8wP2IV4l0gPn9D353O00" target="_blank">Buy report &#8594;</a>
-          <button class="pdf-inline-btn paid" id="pdfInlineDlBtn" style="display:none;" onclick="generateReport()">&#8595; Download PDF</button>
-        </div>
-      </div>
-    </div>
-        <button class="lead-dismiss" onclick="dismissLead()" title="Dismiss">×</button>
-      </div>
+    <div class="btn-row">
+      <button class="btn-secondary" onclick="goTo(2)">\u2190 Back</button>
     </div>
   </div>
 
 </div>
-      </div>
-    </div>
-        </div>
-      </div>
-    </div>
-<div class="chat-wrap">
-  <div class="chat-divider">Ask MyPayPicture Assistant</div>
-  <div class="chat-box">
-    <div class="chat-head">
-      <div class="chat-head-icon">✦</div>
-      <div>
-        <div class="chat-head-title">MyPayPicture Assistant</div>
-        <div class="chat-head-sub">General information only · Not financial advice</div>
-      </div>
-    </div>
-    <div class="chat-msgs" id="chatMsgs"></div>
-    <div class="chat-chips" id="chatChips"><div class="chat-chip" onclick="chatChip(this)">Am I affected by the High Income charge?</div><div class="chat-chip" onclick="chatChip(this)">How does Tax-Free Childcare work?</div><div class="chat-chip" onclick="chatChip(this)">Can pension contributions help?</div><div class="chat-chip" onclick="chatChip(this)">What are the 2024 thresholds?</div></div>
-    <div class="chat-input-wrap">
-      <textarea class="chat-textarea" id="chatInput" placeholder="Ask a question about your finances..." rows="1"
-        onkeydown="if(event.key==='Enter'&&!event.shiftKey){event.preventDefault();chatSend();}"
-        oninput="this.style.height='auto';this.style.height=Math.min(this.scrollHeight,110)+'px'"></textarea>
-      <button class="chat-send" id="chatSendBtn" onclick="chatSend()">&#8594;</button>
-    </div>
-    <div class="chat-footer-note">General information only. Always consult a qualified financial adviser before making decisions.</div>
-  </div>
-</div>
 
-<footer style="background: var(--navy); border-top: 3px solid var(--rose); padding: 2rem 1.5rem;">
-  <div style="max-width: 860px; margin: 0 auto; display: flex; gap: 1.25rem; align-items: flex-start;">
-    <div style="font-size: 1.5rem; line-height:1; flex-shrink:0;">⚠️</div>
-    <div>
-      <div style="font-family: 'Nunito', sans-serif; color: var(--rose-light); font-size: 0.95rem; margin-bottom: 0.4rem;">Important — Not Financial or Tax Advice</div>
-      <p style="color: rgba(255,255,255,0.55); font-size: 0.8rem; line-height: 1.7; margin:0;">
-        This tool provides illustrative scenarios only and does not constitute financial, tax, or legal advice. Calculations are estimates based on 2024/25 UK rates. Tax rules are subject to change. Always verify with <a href="https://www.gov.uk/contact-hmrc" target="_blank" style="color:var(--rose-light); text-decoration:none;">HMRC</a> or a qualified adviser. No data is stored — all calculations run locally.
-      </p>
-    </div>
+<footer style="background:var(--ink); border-top:3px solid var(--yellow); padding:2rem 1.5rem; margin-top:1rem;">
+  <div style="max-width:860px; margin:0 auto; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:1rem;">
+    <div style="font-family:'Nunito',sans-serif; font-weight:800; color:white; font-size:1.1rem;">MyPay<em style="font-style:italic;color:var(--yellow);">Picture</em></div>
+    <p style="color:rgba(255,255,255,0.3); font-size:0.78rem; max-width:520px; line-height:1.6; margin:0;">Illustrative scenarios only &mdash; not financial or tax advice. Always verify with HMRC or a qualified adviser. No data stored. &nbsp;&middot;&nbsp; <a href="about.html" style="color:rgba(255,255,255,0.35);text-decoration:none;">About</a> &nbsp;&middot;&nbsp; <a href="privacy.html" style="color:rgba(255,255,255,0.35);text-decoration:none;">Privacy</a> &nbsp;&middot;&nbsp; <span style="color:rgba(255,255,255,0.35);">hello&#64;mypaypicture&#46;com</span></p>
   </div>
 </footer>
 
-<script>
-  function toggleSwitcher(e) {
-    e.stopPropagation();
-    document.getElementById('appSwitcher').classList.toggle('open');
-  }
-  document.addEventListener('click', function() {
-    document.getElementById('appSwitcher').classList.remove('open');
-  });
+<script data-cfasync="false">
+  function toggleSwitcher(e) { e.stopPropagation(); document.getElementById('appSwitcher').classList.toggle('open'); }
+  document.addEventListener('click', function() { document.getElementById('appSwitcher').classList.remove('open'); });
 
   function toggleTooltip(id) {
     const body = document.getElementById(id);
@@ -667,8 +522,8 @@
   let bothWorking = true;
   let childAges = [];
 
-  const fmt = n => '£' + Math.round(n).toLocaleString('en-GB');
-  const fmtK = n => n >= 1000 ? '£' + (n/1000).toFixed(0) + 'k' : fmt(n);
+  const fmt = n => '\u00a3' + Math.round(n).toLocaleString('en-GB');
+  const fmtK = n => n >= 1000 ? '\u00a3' + (n/1000).toFixed(0) + 'k' : fmt(n);
 
   function adjustChildren(delta) {
     children = Math.max(0, Math.min(10, children + delta));
@@ -708,7 +563,7 @@
 
   function calcTFC(adj, costs) {
     if (!bothWorking) return { eligible: false, reason: 'Both parents need to be working to qualify for Tax-Free Childcare.' };
-    if (adj > TFC_INCOME_LIMIT) return { eligible: false, reason: `Your adjusted net income of ${fmt(adj)} exceeds £100,000. Either parent earning over £100,000 makes the household ineligible for Tax-Free Childcare.` };
+    if (adj > TFC_INCOME_LIMIT) return { eligible: false, reason: `Your adjusted net income of ${fmt(adj)} exceeds \u00a3100,000. Either parent earning over \u00a3100,000 makes the household ineligible for Tax-Free Childcare.` };
     if (!costs) return { eligible: true, topup: 0 };
     const eligible = childAges.length > 0 && childAges.some(a => a !== '') ? childAges.filter(a => a !== '' && a < 11).length : children;
     return { eligible: true, topup: Math.min(eligible * TFC_MAX_PER_CHILD, costs * 0.2), eligibleChildren: eligible };
@@ -745,7 +600,7 @@
     if (r.adj <= TAPER_START) {
       statusCard.className = 'status-card safe';
       headline.textContent = 'You\'re receiving your full Child Benefit';
-      sub.textContent = `Your adjusted net income of ${fmt(r.adj)} is below the £60,000 threshold. You receive the full ${fmt(r.fullBenefit)}/year.`;
+      sub.textContent = `Your adjusted net income of ${fmt(r.adj)} is below the \u00a360,000 threshold. You receive the full ${fmt(r.fullBenefit)}/year.`;
     } else if (r.adj < TAPER_END) {
       statusCard.className = 'status-card partial';
       headline.textContent = `You are currently losing ${fmt(r.lost)}/year in Child Benefit`;
@@ -753,19 +608,19 @@
     } else {
       statusCard.className = 'status-card losing';
       headline.textContent = `You are losing all ${fmt(r.fullBenefit)}/year in Child Benefit`;
-      sub.textContent = `Your adjusted net income of ${fmt(r.adj)} exceeds £80,000 so your Child Benefit is fully withdrawn.`;
+      sub.textContent = `Your adjusted net income of ${fmt(r.adj)} exceeds \u00a380,000 so your Child Benefit is fully withdrawn.`;
     }
 
     const tfcWarn = document.getElementById('tfcWarning');
     if (!r.tfc.eligible) {
       tfcWarn.classList.remove('hidden');
-      document.getElementById('tfcWarningText').textContent = 'Tax-Free Childcare — not currently eligible';
+      document.getElementById('tfcWarningText').textContent = 'Tax-Free Childcare \u2014 not currently eligible';
       document.getElementById('tfcWarningSub').textContent = r.tfc.reason;
     } else { tfcWarn.classList.add('hidden'); }
 
     document.getElementById('fullEntitlement').textContent = fmt(r.fullBenefit);
     document.getElementById('amountLost').textContent = fmt(r.lost);
-    document.getElementById('tfcTopup').textContent = r.tfc.eligible && r.tfc.topup > 0 ? fmt(r.tfc.topup) : '—';
+    document.getElementById('tfcTopup').textContent = r.tfc.eligible && r.tfc.topup > 0 ? fmt(r.tfc.topup) : '\u2014';
     document.getElementById('adjustedIncome').textContent = fmtK(r.adj);
 
     const nearCliff = r.tfc.eligible && r.adj > 90000 && r.costs > 0;
@@ -774,7 +629,7 @@
     if (nearCliff) document.getElementById('tfcAtRisk').textContent = fmt(r.tfc.topup);
 
     const canOptimise = r.lost > 0 || (r.tfc.eligible && r.adj > 90000);
-    document.getElementById('optimiseBtn').textContent = canOptimise ? 'See how to recover it →' : 'See optimisation →';
+    document.getElementById('optimiseBtn').textContent = canOptimise ? 'See how to recover it \u2192' : 'See optimisation \u2192';
 
     // Set slider max
     const needed = Math.max(0, r.adj - TAPER_START, r.adj > TFC_INCOME_LIMIT ? r.adj - TFC_INCOME_LIMIT + 1 : 0);
@@ -811,11 +666,11 @@
 
     result.innerHTML = `
       <div class="or-row"><span class="or-label">New adjusted income</span><span class="or-val">${fmt(newAdj)}</span></div>
-      <div class="or-row"><span class="or-label">Child Benefit recovered</span><span class="or-val ${cbRecovered > 0 ? 'green' : ''}">${cbRecovered > 0 ? '+' + fmt(cbRecovered) + '/yr' : '—'}</span></div>
-      ${r.costs > 0 ? `<div class="or-row"><span class="or-label">Tax-Free Childcare ${tfcRestored ? 'restored' : 'change'}</span><span class="or-val ${tfcRecovered > 0 || tfcRestored ? 'green' : ''}">${tfcRestored ? '✓ Now eligible · +' + fmt(newTFC.topup||0) + '/yr' : tfcRecovered > 0 ? '+' + fmt(tfcRecovered) + '/yr' : '—'}</span></div>` : ''}
+      <div class="or-row"><span class="or-label">Child Benefit recovered</span><span class="or-val ${cbRecovered > 0 ? 'green' : ''}">${cbRecovered > 0 ? '+' + fmt(cbRecovered) + '/yr' : '\u2014'}</span></div>
+      ${r.costs > 0 ? `<div class="or-row"><span class="or-label">Tax-Free Childcare ${tfcRestored ? 'restored' : 'change'}</span><span class="or-val ${tfcRecovered > 0 || tfcRestored ? 'green' : ''}">${tfcRestored ? '\u2713 Now eligible \u00b7 +' + fmt(newTFC.topup||0) + '/yr' : tfcRecovered > 0 ? '+' + fmt(tfcRecovered) + '/yr' : '\u2014'}</span></div>` : ''}
       <div class="or-row"><span class="or-label">Approx income tax saving</span><span class="or-val green">+${fmt(taxSaving)}/yr</span></div>
       <div class="or-row"><span class="or-label">Approx NI saving (salary sacrifice)</span><span class="or-val green">+${fmt(niSaving)}/yr</span></div>
-      <div class="or-row"><span class="or-label">Additional pension contribution</span><span class="or-val amber">−${fmt(extra)}/yr</span></div>
+      <div class="or-row"><span class="or-label">Additional pension contribution</span><span class="or-val amber">\u2212${fmt(extra)}/yr</span></div>
       <div class="or-row" style="margin-top:0.25rem; padding-top:0.5rem; border-top:1px solid rgba(255,255,255,0.1);">
         <span class="or-label" style="font-weight:600; color:rgba(255,255,255,0.75);">Illustrative net impact</span>
         <span class="or-val ${netImpact >= 0 ? 'green' : 'amber'}" style="font-size:1.2rem;">${netImpact >= 0 ? '+' : ''}${fmt(netImpact)}/yr</span>
@@ -837,246 +692,14 @@
     if (step === 2) renderStep2();
     if (step === 3) { renderStep2(); updateSlider(); }
     window.scrollTo({ top: 0, behavior: 'smooth' });
-    if (step >= 3) { checkAndShowPdfCta(); showAdviserCta(); } else if (hasEnoughData && hasEnoughData()) { showAdviserCta(); }
   }
 
   renderChildAges();
-
-  // ── MYPAYPICTURE CHAT ─────────────────────────────────────────────────────
-  const WORKER_URL = 'https://mypaypicture-api.proud-truth-9c88.workers.dev';
-  const SYS_PROMPT = 'You are a helpful UK personal finance assistant embedded in MyPayPicture\'s Family and Benefits tool. This tool helps UK families understand Child Benefit, the High Income Child Benefit Charge, and Tax-Free Childcare, and how pension contributions can help.\n\nKey topics: Child Benefit rates (25.60 per week first child, 16.95 per week additional from April 2024), HICBC taper (60000 to 80000 from April 2024), Tax-Free Childcare (2000 per year per child under 11, lost above 100k adjusted income), salary sacrifice to reduce adjusted net income.\n\nRules:\n- UK English, 2024/25 rates\n- General information only, not personalised advice\n- Suggest users check HMRC Child Benefit Tax Calculator\n- Warm, family-friendly tone';
-  let chatHist = [];
-  let chatBusy = false;
-
-  function chatAddMsg(role, text, typing) {
-    const msgs = document.getElementById('chatMsgs');
-    const div = document.createElement('div');
-    div.className = 'chat-msg ' + (role === 'user' ? 'user' : 'ai');
-    if (typing) div.id = 'chatTyping';
-    const av = role === 'user' ? 'You' : '✦';
-    let bubble;
-    if (typing) {
-      bubble = '<div class="chat-typing"><span></span><span></span><span></span></div>';
-    } else {
-      const toolLinks = {
-        'MyPensionOptimiser': 'pension-optimiser.html',
-        'MyPensionReclaim': 'pension-reclaim.html',
-        'MyPensionTop-Up': 'pension-topup.html',
-        'MyRetirementHelper': 'retirement-helper.html',
-      };
-      const formatted = text.split('\n\n').map(function(p) {
-        var line = p.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
-        Object.keys(toolLinks).forEach(function(name) {
-          line = line.split(name).join('<a href="' + toolLinks[name] + '" style="color:var(--navy,#0f1f38);font-weight:600;text-decoration:underline;">' + name + '</a>');
-        });
-        return line;
-      }).join('</p><p>');
-      // Render markdown links [text](url)
-      const linkedFormatted = formatted.replace(/\[([^\]]+)\]\((https?:\/\/[^)]+)\)/g, '<a href="$2" target="_blank" style="color:var(--navy,#0f1f38);font-weight:600;text-decoration:underline;">$1</a>');
-      bubble = '<p>' + linkedFormatted + ' &nbsp;&middot;&nbsp; <a href="about.html" style="color:rgba(255,255,255,0.4);text-decoration:none;">About</a> &nbsp;&middot;&nbsp; <a href="privacy.html" style="color:rgba(255,255,255,0.4);text-decoration:none;">Privacy</a> &nbsp;&middot;&nbsp; <a href="mailto:hello@mypaypicture.com" style="color:rgba(255,255,255,0.4);text-decoration:none;">hello@mypaypicture.com</a></p>';
-    }
-    div.innerHTML = '<div class="msg-av">' + av + '</div><div class="msg-bub">' + bubble + '</div>';
-    msgs.appendChild(div);
-    msgs.scrollTop = msgs.scrollHeight;
-  }
-
-  async function chatSend() {
-    const input = document.getElementById('chatInput');
-    const btn = document.getElementById('chatSendBtn');
-    const text = input.value.trim();
-    if (!text || chatBusy) return;
-    document.getElementById('chatChips').style.display = 'none';
-    chatAddMsg('user', text);
-    chatHist.push({ role: 'user', content: text });
-    input.value = '';
-    input.style.height = 'auto';
-    chatBusy = true;
-    btn.disabled = true;
-    chatAddMsg('ai', '', true);
-    try {
-      const res = await fetch(WORKER_URL, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ messages: chatHist, system: SYS_PROMPT }),
-      });
-      const data = await res.json();
-      const reply = (data.content && data.content[0] && data.content[0].text)
-        ? data.content[0].text
-        : (data.error || 'Sorry, something went wrong. Please try again.');
-      var t = document.getElementById('chatTyping');
-      if (t) t.remove();
-      if (isComplex) {
-        const ctaNote = '\n\n---\n**Want personalised advice?** A regulated financial adviser can help with your specific situation. [Speak to an adviser →](https://tally.so/r/xX2YP5)';
-        chatAddMsg('ai', reply + ctaNote);
-      } else {
-        chatAddMsg('ai', reply);
-      }
-      // Show adviser CTA after any response
-      showAdviserCta();
-      chatHist.push({ role: 'assistant', content: reply });
-    } catch (err) {
-      var t = document.getElementById('chatTyping');
-      if (t) t.remove();
-      chatAddMsg('ai', 'Unable to connect. Please check your connection and try again.');
-    }
-    chatBusy = false;
-    btn.disabled = false;
-    input.focus();
-  }
-
-  function chatChip(el) {
-    document.getElementById('chatInput').value = el.textContent;
-    chatSend();
-  }
-
-
-  // ── ADVISER CTA ───────────────────────────────────────────────────────────
-  function showAdviserCta() {
-    const el = document.getElementById('adviserCta');
-    if (el) el.classList.add('visible');
-  }
-
-  function adviserCtaClick() {
-    // Track click if analytics available
-    if (typeof gtag !== 'undefined') {
-      gtag('event', 'adviser_cta_click', { event_category: 'engagement' });
-    }
-  }
-
-
-  // ── PDF REPORT CTA ────────────────────────────────────────────────────────
-
-  function hasEnoughData() {
-    var salary = parseFloat(document.getElementById('salary') && document.getElementById('salary').value) || 0;
-    return salary > 0 && children > 0;
-  }
-
-  // Also wire up live input checking — show bar as soon as data is complete
-  document.addEventListener('input', function() {
-    if (typeof hasEnoughData === 'function' && hasEnoughData()) {
-      showAdviserCta();
-    }
-    if (typeof checkAndShowPdfCta === 'function') checkAndShowPdfCta();
-  });
-
-
-  function checkAndShowPdfCta() {
-    var ready = (document.getElementById('salary') && parseFloat(document.getElementById('salary').value) > 0);
-    var cta = document.getElementById('pdfInlineCta');
-    if (cta) cta.classList.toggle('visible', ready);
-  }
-
-
-  // Show download button if already paid
-  (function() {
-    if (window.location.search.includes('paid=true')) {
-      window.addEventListener('DOMContentLoaded', function() {
-        var buy = document.getElementById('pdfInlineBuyBtn');
-        var dl = document.getElementById('pdfInlineDlBtn');
-        var price = document.getElementById('pdfInlinePrice');
-        var cta = document.getElementById('pdfInlineCta');
-        if (cta) cta.classList.add('visible');
-        if (buy) buy.style.display = 'none';
-        if (dl) dl.style.display = 'inline-block';
-        if (price) price.textContent = '\u2713 Paid';
-      });
-    }
-  })();
-
-
-  function loadJsPDF(cb) {
-    if (window.jspdf) { cb(); return; }
-    var s = document.createElement('script');
-    s.src = 'https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js';
-    s.onload = cb; document.head.appendChild(s);
-  }
-
-  function generateReport() {
-    loadJsPDF(function() {
-      var doc = new window.jspdf.jsPDF();
-      var navy = [15,31,56], accent = [13,148,136], white = [255,255,255], grey = [74,85,104], light = [245,245,248];
-
-      // Header
-      doc.setFillColor(...navy); doc.rect(0,0,210,28,'F');
-      doc.setFont('helvetica','bold'); doc.setFontSize(16); doc.setTextColor(...white);
-      doc.text('MyPay',14,14);
-      doc.setFont('helvetica','normal'); doc.text('Picture',33,14);
-      doc.setFontSize(8); doc.setTextColor(180,180,180);
-      doc.text('MyFamily&Benefits Report', 14, 22);
-      doc.text('Generated ' + new Date().toLocaleDateString('en-GB',{day:'numeric',month:'long',year:'numeric'}), 196, 22, {align:'right'});
-
-      function fmtN(n) { return '\u00a3' + Math.round(n).toLocaleString('en-GB'); }
-
-      function section(title, rows) {
-        var y = doc.previousAutoTable ? doc.previousAutoTable.finalY + 8 : 36;
-        if (!doc._sectionY) doc._sectionY = 36;
-        var sy = doc._sectionY;
-        doc.setFillColor(...accent); doc.rect(14,sy,182,7,'F');
-        doc.setFont('helvetica','bold'); doc.setFontSize(9); doc.setTextColor(...white);
-        doc.text(title.toUpperCase(), 17, sy+5); sy += 11;
-        rows.forEach(function(row,i) {
-          if (i%2===0) { doc.setFillColor(...light); doc.rect(14,sy-3,182,8,'F'); }
-          doc.setFont('helvetica','normal'); doc.setFontSize(9); doc.setTextColor(...grey);
-          doc.text(row[0], 17, sy+2);
-          doc.setFont('helvetica','bold'); doc.setTextColor(...navy);
-          doc.text(row[1], 193, sy+2, {align:'right'});
-          sy += 8;
-        });
-        doc._sectionY = sy + 4;
-      }
-
-      
-      var salary = parseFloat(document.getElementById('salary') && document.getElementById('salary').value) || 0;
-      var pension = parseFloat(document.getElementById('pensionContribs') && document.getElementById('pensionContribs').value) || 0;
-      var adj = Math.max(0, salary - pension);
-      var childCount = typeof children !== 'undefined' ? children : 1;
-      var CB_FIRST = 25.60 * 52;
-      var CB_ADD = 16.95 * 52;
-      var fullBenefit = childCount > 0 ? CB_FIRST + (childCount - 1) * CB_ADD : 0;
-      var charge = adj <= 60000 ? 0 : adj >= 80000 ? fullBenefit : fullBenefit * (adj - 60000) / 20000;
-      var received = Math.max(0, fullBenefit - charge);
-
-      doc.setFont('helvetica','bold'); doc.setFontSize(14); doc.setTextColor(...navy);
-      doc.text('Child Benefit & Family Benefits Summary', 14, 36);
-      doc._sectionY = 46;
-
-      section('Your Position', [
-        ['Highest earner salary', fmtN(salary)],
-        ['Pension contributions', fmtN(pension)],
-        ['Adjusted net income', fmtN(adj)],
-        ['Number of children', String(childCount)],
-      ]);
-      section('Child Benefit', [
-        ['Full entitlement', fmtN(fullBenefit) + '/yr'],
-        ['High Income charge', fmtN(charge) + '/yr'],
-        ['Amount received', fmtN(received) + '/yr'],
-        ['HICBC taper range', '\u00a360,000 \u2013 \u00a380,000'],
-      ]);
-      section('To Reduce the Charge', [
-        ['Pension contributions reduce adjusted income', fmtN(pension) + '/yr'],
-        ['Target adjusted income to keep full benefit', '\u00a360,000 or below'],
-        ['Further contribution needed', fmtN(Math.max(0, adj - 60000)) + '/yr'],
-      ]);
-
-
-      // Disclaimer
-      var ph = doc.internal.pageSize.height;
-      doc.setFillColor(...light); doc.rect(0,ph-18,210,18,'F');
-      doc.setFont('helvetica','italic'); doc.setFontSize(7); doc.setTextColor(120,120,140);
-      doc.text('Illustrative only \u2014 not financial advice. Based on 2024/25 UK tax rates. Speak to a qualified financial adviser before making changes.', 14, ph-10);
-      doc.text('mypaypicture.com', 196, ph-4, {align:'right'});
-
-      doc.save('MyPayPicture-MyFamily&Benefits-Report.pdf');
-    });
-  }
-
 </script>
 <script>
-  if ('serviceWorker' in navigator) {
-    window.addEventListener('load', function() {
-      navigator.serviceWorker.register('/sw.js').catch(function(err) {
-        console.log('SW registration failed:', err);
-      });
+  if('serviceWorker' in navigator){
+    window.addEventListener('load',function(){
+      navigator.serviceWorker.register('/sw.js').catch(function(){});
     });
   }
 </script>

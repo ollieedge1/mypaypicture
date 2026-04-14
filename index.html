@@ -3,7 +3,7 @@
 <head>
 <!-- Google tag (gtag.js) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-XY51DX80VL"></script>
-<script>
+<script data-cfasync="false">
   // ── ANALYTICS ──────────────────────────────────────────────────────────────
   var GA_ID = 'G-XY51DX80VL';
 
@@ -668,7 +668,7 @@
   </div>
 </footer>
 
-<script>
+<script data-cfasync="false">
   // SWITCHER
   function toggleSwitcher(e) {
     e.stopPropagation();
@@ -718,7 +718,7 @@
         });
         return line;
       }).join('</p><p>');
-      bubble = '<p>' + formatted + ' &nbsp;&middot;&nbsp; <a href="about.html" style="color:rgba(255,255,255,0.4);text-decoration:none;">About</a> &nbsp;&middot;&nbsp; <a href="privacy.html" style="color:rgba(255,255,255,0.4);text-decoration:none;">Privacy</a> &nbsp;&middot;&nbsp; <a href="mailto:hello@mypaypicture.com" style="color:rgba(255,255,255,0.4);text-decoration:none;">hello@mypaypicture.com</a></p>';
+      bubble = '<p>' + formatted + ' &nbsp;&middot;&nbsp; <a href="about.html" style="color:rgba(255,255,255,0.4);text-decoration:none;">About</a> &nbsp;&middot;&nbsp; <a href="privacy.html" style="color:rgba(255,255,255,0.4);text-decoration:none;">Privacy</a> &nbsp;&middot;&nbsp; <span>hello&#64;mypaypicture&#46;com</span></p>';
     }
     div.innerHTML = '<div class="msg-av">' + av + '</div><div class="msg-bub">' + bubble + '</div>';
     msgs.appendChild(div);

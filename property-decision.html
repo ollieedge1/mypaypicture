@@ -1,0 +1,1266 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="manifest" href="manifest.json">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="MyPayPicture">
+<link rel="apple-touch-icon" href="icon-192.png">
+<link rel="icon" type="image/x-icon" href="favicon.ico">
+<link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="favicon-16.png">
+<meta name="theme-color" content="#1a3a2a">
+<title>MyPropertyDecision — MyPayPicture</title>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,300;0,400;0,600;0,700;0,800;1,300;1,400;1,700&display=swap" rel="stylesheet">
+
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-XY51DX80VL"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-XY51DX80VL');
+</script>
+
+<style>
+  :root {
+    --ink:         #1a3a2a;
+    --ink-mid:     #254d39;
+    --forest:      #2d6a4f;
+    --forest-light:#40916c;
+    --forest-pale: #d8f3dc;
+    --mint:        #95d5b2;
+    --mint-pale:   #f0faf4;
+    --yellow:      #ffdb00;
+    --sky:         #5cc3e8;
+    --slate:       #314855;
+    --slate-soft:  #5a7282;
+    --stone:       #78716c;
+    --stone-pale:  #f5f4f2;
+    --red:         #b91c1c;
+    --amber:       #d97706;
+    --bg:          #f4f8f5;
+    --surface:     #ffffff;
+    --border:      rgba(26,58,42,0.1);
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Nunito', sans-serif; background: var(--bg); color: var(--ink); min-height: 100vh; }
+
+  /* HEADER */
+  .switcher-group-label { padding: 0.5rem 1rem 0.25rem; font-size: 0.6rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: rgba(255,255,255,0.3); border-top: 1px solid rgba(255,255,255,0.08); margin-top: 0.15rem; }
+  header { background: var(--ink); padding: 1.1rem 2rem; display: flex; align-items: center; justify-content: space-between; position: sticky; top: 0; z-index: 50; }
+  .app-switcher { position: relative; }
+  .switcher-trigger { display: flex; align-items: center; gap: 0.5rem; cursor: pointer; padding: 0.4rem 0.85rem; border-radius: 100px; border: 1px solid rgba(255,255,255,0.15); transition: all 0.18s; user-select: none; background: rgba(255,255,255,0.07); }
+  .switcher-trigger:hover { background: rgba(255,255,255,0.13); border-color: var(--mint); }
+  .switcher-trigger .app-name { font-family: 'Nunito', sans-serif; font-weight: 800; font-size: 1rem; color: white; }
+  .switcher-trigger .app-name span { color: var(--yellow); font-style: italic; }
+  .switcher-trigger .chevron { color: rgba(255,255,255,0.4); font-size: 0.65rem; transition: transform 0.2s; }
+  .app-switcher.open .chevron { transform: rotate(180deg); }
+  .switcher-dropdown { display: none; position: absolute; top: calc(100% + 10px); left: 0; background: var(--surface); border: 1px solid var(--border); border-radius: 16px; overflow: hidden; min-width: 272px; box-shadow: 0 20px 56px rgba(26,58,42,0.15); z-index: 100; }
+  .app-switcher.open .switcher-dropdown { display: block; }
+  .switcher-item { display: flex; align-items: center; gap: 0.75rem; padding: 0.8rem 1rem; cursor: pointer; transition: background 0.12s; border-bottom: 1px solid var(--border); }
+  .switcher-item:last-child { border-bottom: none; }
+  .switcher-item:hover { background: var(--mint-pale); }
+  .switcher-item.current { background: var(--forest-pale); }
+  .switcher-item-icon { width: 32px; height: 32px; border-radius: 9px; display: flex; align-items: center; justify-content: center; font-size: 0.95rem; flex-shrink: 0; }
+  .switcher-item-text .item-name { font-size: 0.84rem; font-weight: 700; color: var(--ink); }
+  .switcher-item-text .item-desc { font-size: 0.69rem; color: var(--slate-soft); margin-top: 0.1rem; }
+  .switcher-item.current .item-name { color: var(--forest); }
+  .disclaimer-badge { font-size: 0.65rem; color: rgba(255,255,255,0.4); border: 1px solid rgba(255,255,255,0.15); padding: 0.3rem 0.85rem; border-radius: 100px; letter-spacing: 0.04em; }
+
+  /* HERO */
+  .hero { background: var(--ink); padding: 5rem 2rem 6.5rem; text-align: center; position: relative; overflow: hidden; }
+  .hero::before { content: ''; position: absolute; inset: 0; background: radial-gradient(ellipse 60% 70% at 15% 50%, rgba(45,106,79,0.3) 0%, transparent 60%), radial-gradient(ellipse 50% 60% at 85% 20%, rgba(149,213,178,0.1) 0%, transparent 55%), radial-gradient(ellipse 40% 40% at 55% 90%, rgba(255,219,0,0.06) 0%, transparent 50%); pointer-events: none; }
+  .hero-eyebrow { display: inline-flex; align-items: center; gap: 0.5rem; font-size: 0.7rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.2em; color: var(--mint); margin-bottom: 1.75rem; padding: 0.35rem 1.1rem; border-radius: 100px; border: 1px solid rgba(149,213,178,0.25); background: rgba(149,213,178,0.08); }
+  .hero h1 { font-family: 'Nunito', sans-serif; font-size: clamp(2.6rem, 7vw, 5rem); color: white; line-height: 1.0; max-width: 780px; margin: 0 auto 1.5rem; font-weight: 800; letter-spacing: -0.03em; }
+  .hero h1 em { font-style: italic; color: var(--mint); font-weight: 300; display: block; }
+  .hero p { color: rgba(255,255,255,0.45); font-size: 1rem; max-width: 460px; margin: 0 auto; line-height: 1.75; }
+
+  /* CONTAINER */
+  .container { max-width: 900px; margin: 0 auto; padding: 2.5rem 1.5rem 5rem; }
+
+  /* STEPS */
+  .steps-nav { display: flex; border-radius: 14px 14px 0 0; overflow: hidden; border: 1.5px solid var(--border); border-bottom: none; background: var(--surface); }
+  .step-tab { flex: 1; padding: 0.85rem 0.4rem; text-align: center; font-size: 0.68rem; font-weight: 600; letter-spacing: 0.04em; text-transform: uppercase; color: var(--slate-soft); cursor: pointer; transition: all 0.2s; border-right: 1.5px solid var(--border); }
+  .step-tab:last-child { border-right: none; }
+  .step-tab.active { background: var(--ink); color: var(--mint); }
+  .step-tab.completed { color: var(--forest-light); }
+  .step-tab .step-num { display: block; font-size: 1.1rem; font-weight: 800; margin-bottom: 0.15rem; color: inherit; }
+  .step-tab.completed .step-num::after { content: ' ✓'; font-size: 0.8rem; }
+
+  /* CARD */
+  .card { background: var(--surface); border-radius: 0 0 16px 16px; padding: 2rem; border: 1.5px solid var(--border); border-top: none; box-shadow: 0 4px 24px rgba(26,58,42,0.07); display: none; animation: fadeIn 0.3s ease; }
+  .card.active { display: block; }
+  @keyframes fadeIn { from { opacity:0; transform:translateY(8px); } to { opacity:1; transform:translateY(0); } }
+  .card-title { font-size: 1.5rem; font-weight: 800; color: var(--ink); margin-bottom: 0.4rem; letter-spacing: -0.02em; }
+  .card-subtitle { color: var(--slate-soft); font-size: 0.9rem; margin-bottom: 2rem; line-height: 1.65; max-width: 560px; }
+
+  /* FORM */
+  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 1.25rem; }
+  @media (max-width: 580px) { .two-col { grid-template-columns: 1fr; } }
+  .field-group { margin-bottom: 1.5rem; }
+  .field-group:last-child { margin-bottom: 0; }
+  label { display: block; font-size: 0.85rem; font-weight: 700; color: var(--ink); margin-bottom: 0.5rem; }
+  .input-wrap { position: relative; }
+  .input-prefix { position: absolute; left: 14px; top: 50%; transform: translateY(-50%); color: var(--slate-soft); font-size: 0.95rem; pointer-events: none; }
+  .input-suffix { position: absolute; right: 14px; top: 50%; transform: translateY(-50%); color: var(--slate-soft); font-size: 0.9rem; pointer-events: none; }
+  input[type="number"], select { width: 100%; padding: 0.75rem 1rem 0.75rem 2rem; border: 1.5px solid #ddd; border-radius: 10px; font-family: 'Nunito', sans-serif; font-size: 1rem; font-weight: 600; color: var(--ink); background: var(--surface); transition: border-color 0.2s; appearance: none; }
+  input[type="number"]:focus, select:focus { outline: none; border-color: var(--forest); box-shadow: 0 0 0 3px rgba(45,106,79,0.1); }
+  input.no-prefix { padding-left: 1rem; }
+  input.has-suffix { padding-right: 2.5rem; }
+  .hint { font-size: 0.76rem; color: var(--slate-soft); margin-top: 0.4rem; line-height: 1.5; }
+
+  /* RADIO */
+  .radio-group { display: flex; gap: 0.75rem; flex-wrap: wrap; }
+  .radio-btn { flex: 1; min-width: 80px; padding: 0.65rem 0.75rem; border: 1.5px solid #ddd; border-radius: 10px; text-align: center; cursor: pointer; font-size: 0.83rem; font-weight: 600; transition: all 0.18s; color: var(--slate-soft); }
+  .radio-btn:hover { border-color: var(--forest); }
+  .radio-btn.selected { border-color: var(--forest); background: var(--mint-pale); color: var(--ink); }
+
+  /* TOGGLE */
+  .toggle-row { display: flex; align-items: center; justify-content: space-between; padding: 1rem 1.25rem; background: var(--stone-pale); border-radius: 10px; margin-bottom: 1rem; }
+  .toggle-label { font-size: 0.88rem; font-weight: 700; color: var(--ink); }
+  .toggle-desc { font-size: 0.76rem; color: var(--slate-soft); margin-top: 0.15rem; }
+  .toggle-switch { position: relative; width: 44px; height: 24px; flex-shrink: 0; }
+  .toggle-switch input { opacity: 0; width: 0; height: 0; }
+  .toggle-slider { position: absolute; inset: 0; background: #ddd; border-radius: 100px; cursor: pointer; transition: 0.2s; }
+  .toggle-slider::before { content: ''; position: absolute; width: 18px; height: 18px; border-radius: 50%; background: white; left: 3px; top: 3px; transition: 0.2s; }
+  input:checked + .toggle-slider { background: var(--forest); }
+  input:checked + .toggle-slider::before { transform: translateX(20px); }
+
+  /* RESULTS */
+  .results-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 0.85rem; margin: 1.5rem 0; }
+  .result-box { background: var(--ink); border-radius: 14px; padding: 1.1rem; text-align: center; }
+  .result-box.forest { background: linear-gradient(135deg, var(--forest) 0%, var(--forest-light) 100%); }
+  .result-box.sky    { background: linear-gradient(135deg, #2a7a9a 0%, var(--sky) 100%); }
+  .result-box.warn   { background: linear-gradient(135deg, #92400e 0%, var(--amber) 100%); }
+  .result-box.good   { background: linear-gradient(135deg, #065f46 0%, #059669 100%); }
+  .result-box.highlight { background: linear-gradient(135deg, #374151 0%, var(--ink) 100%); border: 1px solid rgba(149,213,178,0.2); }
+  .result-box.danger { background: linear-gradient(135deg, #7f1d1d 0%, var(--red) 100%); }
+  .r-label { font-size: 0.65rem; text-transform: uppercase; letter-spacing: 0.08em; color: rgba(255,255,255,0.55); margin-bottom: 0.4rem; font-weight: 700; }
+  .r-amount { font-size: 1.55rem; font-weight: 800; color: white; line-height: 1; letter-spacing: -0.02em; }
+  .r-sub { font-size: 0.67rem; color: rgba(255,255,255,0.45); margin-top: 0.25rem; }
+
+  /* SCENARIO CARDS */
+  .scenario-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; margin: 1.5rem 0; }
+  @media (max-width: 640px) { .scenario-grid { grid-template-columns: 1fr; } }
+  .scenario-card { border-radius: 14px; padding: 1.5rem; border: 2px solid var(--border); background: var(--surface); transition: all 0.2s; position: relative; }
+  .scenario-card.best { border-color: var(--forest); background: var(--mint-pale); }
+  .scenario-card.best::before { content: '★ Best financial return'; position: absolute; top: 0; left: 50%; transform: translateX(-50%) translateY(-50%); background: var(--forest); color: white; font-size: 0.65rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.06em; padding: 0.2rem 0.7rem; border-radius: 100px; white-space: nowrap; }
+  .sc-icon { font-size: 1.8rem; margin-bottom: 0.75rem; }
+  .sc-title { font-size: 0.95rem; font-weight: 800; color: var(--ink); margin-bottom: 0.25rem; }
+  .sc-subtitle { font-size: 0.75rem; color: var(--slate-soft); margin-bottom: 1rem; line-height: 1.5; }
+  .sc-metric { display: flex; justify-content: space-between; padding: 0.35rem 0; border-bottom: 1px solid rgba(0,0,0,0.06); font-size: 0.8rem; }
+  .sc-metric:last-child { border-bottom: none; }
+  .sc-metric-label { color: var(--slate-soft); }
+  .sc-metric-val { font-weight: 700; color: var(--ink); }
+  .sc-metric-val.green { color: var(--forest); }
+  .sc-metric-val.red   { color: var(--red); }
+  .sc-metric-val.amber { color: var(--amber); }
+
+  /* COMPARE TABLE */
+  .compare-table { width: 100%; border-collapse: collapse; font-size: 0.84rem; margin: 1rem 0; }
+  .compare-table th { padding: 0.6rem 0.85rem; text-align: left; font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.06em; color: var(--slate-soft); border-bottom: 2px solid var(--border); font-weight: 700; }
+  .compare-table th.c1 { color: var(--forest); }
+  .compare-table th.c2 { color: #2a7a9a; }
+  .compare-table th.c3 { color: var(--amber); }
+  .compare-table td { padding: 0.65rem 0.85rem; border-bottom: 1px solid rgba(0,0,0,0.05); color: var(--slate-soft); }
+  .compare-table tr:last-child td { border-bottom: none; }
+  .compare-table td:first-child { font-weight: 700; color: var(--ink); font-size: 0.82rem; }
+  .compare-table td.win  { color: var(--forest); font-weight: 700; }
+  .compare-table td.lose { color: var(--red); }
+  .compare-table tr.total-row td { font-weight: 800; border-top: 2px solid var(--border); color: var(--ink); }
+
+  /* GUIDANCE */
+  .guidance-box { border-left: 3px solid var(--forest); background: var(--mint-pale); border-radius: 0 10px 10px 0; padding: 1rem 1.25rem; margin: 1rem 0; }
+  .guidance-box h4 { font-size: 0.85rem; font-weight: 800; color: var(--ink); margin-bottom: 0.4rem; }
+  .guidance-box p, .guidance-box li { font-size: 0.84rem; color: var(--slate-soft); line-height: 1.65; }
+  .guidance-box ul { padding-left: 1.1rem; margin-top: 0.4rem; }
+  .guidance-box li { margin-bottom: 0.3rem; }
+  .alert-box { border-left: 3px solid var(--forest-light); background: rgba(64,145,108,0.06); border-radius: 0 10px 10px 0; padding: 0.9rem 1.1rem; margin: 0.75rem 0; }
+  .alert-box.warning { border-left-color: var(--amber); background: #fffbeb; }
+  .alert-box.info    { border-left-color: var(--sky); background: #f0f9ff; }
+  .alert-box h4 { font-size: 0.83rem; font-weight: 800; color: var(--ink); margin-bottom: 0.3rem; }
+  .alert-box p  { font-size: 0.83rem; color: var(--slate-soft); line-height: 1.6; }
+
+  /* SUMMARY */
+  .summary-panel { background: var(--ink); border-radius: 14px; padding: 1.5rem; margin-top: 1.5rem; }
+  .summary-title { font-size: 1rem; font-weight: 800; color: var(--mint); margin-bottom: 1rem; }
+  .summary-row { display: flex; justify-content: space-between; padding: 0.45rem 0; border-bottom: 1px solid rgba(255,255,255,0.07); font-size: 0.85rem; }
+  .summary-row:last-child { border-bottom: none; }
+  .summary-row .s-label { color: rgba(255,255,255,0.45); }
+  .summary-row .s-val   { color: white; font-weight: 700; }
+  .summary-row .s-val.green { color: var(--mint); }
+  .summary-row .s-val.warn  { color: #fbbf24; }
+
+  /* PDF & ADVISER */
+  .pdf-inline-cta { display: none; margin-top: 1.5rem; background: var(--stone-pale); border: 1.5px solid var(--border); border-radius: 14px; padding: 1.1rem 1.25rem; }
+  .pdf-inline-cta.visible { display: block; }
+  .pdf-inline-inner { display: flex; align-items: center; justify-content: space-between; gap: 1rem; flex-wrap: wrap; }
+  .pdf-inline-text strong { display: block; font-size: 0.95rem; font-weight: 800; color: var(--ink); margin-bottom: 0.2rem; }
+  .pdf-inline-text span   { font-size: 0.75rem; color: var(--slate-soft); }
+  .pdf-inline-right { display: flex; align-items: center; gap: 0.75rem; flex-shrink: 0; }
+  .pdf-inline-price { font-size: 1.1rem; font-weight: 800; color: var(--ink); }
+  .pdf-inline-btn { padding: 0.65rem 1.25rem; border-radius: 100px; font-family: 'Nunito', sans-serif; font-size: 0.88rem; font-weight: 700; text-decoration: none; white-space: nowrap; transition: all 0.2s; background: var(--ink); color: white; border: none; cursor: pointer; display: inline-block; }
+  .pdf-inline-btn:hover { opacity: 0.85; }
+  .pdf-inline-btn.paid { background: var(--forest); }
+  .adviser-cta { background: linear-gradient(135deg, var(--ink) 0%, var(--ink-mid) 100%); border-radius: 14px; padding: 1.1rem 1.5rem; margin-top: 0.75rem; display: block; border: 1px solid rgba(255,255,255,0.07); }
+  .adviser-cta-inner { display: flex; align-items: center; justify-content: space-between; gap: 1rem; flex-wrap: wrap; }
+  .adviser-cta-text strong { display: block; font-size: 0.95rem; font-weight: 800; color: white; margin-bottom: 0.2rem; }
+  .adviser-cta-text span   { font-size: 0.75rem; color: rgba(255,255,255,0.4); }
+  .adviser-cta-btn { padding: 0.65rem 1.25rem; border-radius: 100px; font-family: 'Nunito', sans-serif; font-size: 0.85rem; font-weight: 700; text-decoration: none; white-space: nowrap; background: var(--yellow); color: var(--ink); flex-shrink: 0; transition: all 0.2s; }
+  .adviser-cta-btn:hover { background: #e0c000; }
+
+
+  /* MORTGAGE BREAKDOWN */
+  .mort-breakdown { background: var(--ink); border-radius: 14px; padding: 1.5rem; margin-top: 1.5rem; }
+  .mort-breakdown-title { font-size: 0.85rem; font-weight: 800; color: var(--accent-light, #95d5b2); margin-bottom: 1.25rem; text-transform: uppercase; letter-spacing: 0.08em; }
+
+  .mort-slider-wrap { margin-bottom: 1.5rem; }
+  .mort-slider-label { display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.6rem; }
+  .mort-slider-label span { font-size: 0.8rem; color: rgba(255,255,255,0.5); font-weight: 600; }
+  .mort-year-display { font-size: 1.4rem; font-weight: 800; color: white; font-family: 'Nunito', sans-serif; }
+  input[type="range"]#mortYearSlider {
+    width: 100%; accent-color: var(--accent, #2d6a4f);
+    height: 6px; border-radius: 100px;
+    background: rgba(255,255,255,0.15); border: none; padding: 0;
+    cursor: pointer;
+  }
+  .mort-slider-hints { display: flex; justify-content: space-between; font-size: 0.68rem; color: rgba(255,255,255,0.3); margin-top: 0.3rem; }
+
+  .mort-split-bar { margin: 1.25rem 0; }
+  .mort-split-bar-track { height: 14px; border-radius: 100px; background: rgba(255,255,255,0.1); overflow: hidden; display: flex; }
+  .mort-split-equity   { height: 100%; background: var(--accent, #2d6a4f); border-radius: 100px 0 0 100px; transition: width 0.4s ease; }
+  .mort-split-interest { height: 100%; background: rgba(255,255,255,0.25); border-radius: 0 100px 100px 0; transition: width 0.4s ease; }
+  .mort-split-legend { display: flex; gap: 1.5rem; margin-top: 0.65rem; }
+  .mort-legend-item { display: flex; align-items: center; gap: 0.4rem; font-size: 0.75rem; color: rgba(255,255,255,0.6); }
+  .mort-legend-dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
+
+  .mort-stats-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 0.75rem; margin-top: 1.25rem; }
+  @media (max-width: 580px) { .mort-stats-grid { grid-template-columns: 1fr 1fr; } }
+  .mort-stat { background: rgba(255,255,255,0.06); border-radius: 10px; padding: 0.85rem; text-align: center; }
+  .mort-stat-label { font-size: 0.65rem; text-transform: uppercase; letter-spacing: 0.07em; color: rgba(255,255,255,0.4); margin-bottom: 0.3rem; font-weight: 700; }
+  .mort-stat-val { font-size: 1.1rem; font-weight: 800; color: white; letter-spacing: -0.01em; }
+  .mort-stat-val.equity   { color: var(--accent-light, #95d5b2); }
+  .mort-stat-val.interest { color: rgba(255,255,255,0.6); }
+  .mort-stat-val.total    { color: #fbbf24; }
+
+  .mort-schedule-toggle { display: flex; align-items: center; gap: 0.5rem; margin-top: 1.1rem; cursor: pointer; font-size: 0.78rem; color: rgba(255,255,255,0.45); font-weight: 600; user-select: none; width: fit-content; }
+  .mort-schedule-toggle:hover { color: rgba(255,255,255,0.7); }
+  .mort-schedule { display: none; margin-top: 1rem; overflow-x: auto; }
+  .mort-schedule.open { display: block; }
+  .mort-schedule table { width: 100%; border-collapse: collapse; font-size: 0.78rem; min-width: 340px; }
+  .mort-schedule th { padding: 0.5rem 0.75rem; text-align: right; font-size: 0.65rem; text-transform: uppercase; letter-spacing: 0.06em; color: rgba(255,255,255,0.3); border-bottom: 1px solid rgba(255,255,255,0.08); font-weight: 700; }
+  .mort-schedule th:first-child { text-align: left; }
+  .mort-schedule td { padding: 0.45rem 0.75rem; text-align: right; color: rgba(255,255,255,0.5); border-bottom: 1px solid rgba(255,255,255,0.05); }
+  .mort-schedule td:first-child { text-align: left; color: rgba(255,255,255,0.7); font-weight: 700; }
+  .mort-schedule tr.highlight-row td { color: white; background: rgba(255,255,255,0.06); }
+  .mort-schedule tr.highlight-row td:first-child { color: var(--accent-light, #95d5b2); }
+  .mort-schedule td.eq-col { color: var(--accent-light, #95d5b2); font-weight: 700; }
+  .mort-schedule td.int-col { color: rgba(255,255,255,0.45); }
+
+  /* CHAT */
+  .chat-wrap { max-width: 900px; margin: 0 auto; padding: 0 1.5rem 2.5rem; }
+  .chat-divider { display: flex; align-items: center; gap: 0.75rem; margin-bottom: 1rem; font-size: 0.65rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--slate-soft); }
+  .chat-divider::before, .chat-divider::after { content: ''; flex: 1; height: 1px; background: var(--border); }
+  .chat-box { background: var(--surface); border-radius: 16px; border: 1.5px solid var(--border); box-shadow: 0 4px 24px rgba(26,58,42,0.06); overflow: hidden; }
+  .chat-head { background: var(--ink); padding: 0.9rem 1.25rem; display: flex; align-items: center; gap: 0.75rem; }
+  .chat-head-icon { width: 30px; height: 30px; border-radius: 50%; background: rgba(149,213,178,0.2); display: flex; align-items: center; justify-content: center; font-size: 0.9rem; flex-shrink: 0; }
+  .chat-head-title { font-size: 0.95rem; font-weight: 800; color: white; }
+  .chat-head-sub { font-size: 0.68rem; color: rgba(255,255,255,0.4); margin-top: 0.05rem; }
+  .chat-msgs { padding: 1rem 1.25rem; max-height: 340px; overflow-y: auto; display: flex; flex-direction: column; gap: 0.85rem; scroll-behavior: smooth; }
+  .chat-msg { display: flex; gap: 0.6rem; align-items: flex-start; animation: fadeIn 0.2s ease; }
+  .chat-msg.user { flex-direction: row-reverse; }
+  .msg-av { width: 26px; height: 26px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.7rem; font-weight: 700; flex-shrink: 0; margin-top: 2px; }
+  .chat-msg.ai   .msg-av { background: var(--ink); color: rgba(255,255,255,0.7); }
+  .chat-msg.user .msg-av { background: var(--forest); color: white; }
+  .msg-bub { max-width: 80%; padding: 0.65rem 0.9rem; border-radius: 12px; font-size: 0.84rem; line-height: 1.65; }
+  .chat-msg.ai   .msg-bub { background: var(--stone-pale); color: var(--ink); border-radius: 4px 12px 12px 12px; }
+  .chat-msg.user .msg-bub { background: var(--ink); color: white; border-radius: 12px 4px 12px 12px; }
+  .msg-bub p { margin-bottom: 0.4rem; } .msg-bub p:last-child { margin-bottom: 0; }
+  .chat-typing { display: flex; gap: 3px; align-items: center; padding: 0.2rem 0; }
+  .chat-typing span { width: 6px; height: 6px; border-radius: 50%; background: var(--slate-soft); animation: typeBounce 1.2s infinite; }
+  .chat-typing span:nth-child(2) { animation-delay: 0.2s; }
+  .chat-typing span:nth-child(3) { animation-delay: 0.4s; }
+  @keyframes typeBounce { 0%,60%,100%{transform:translateY(0);opacity:0.4;} 30%{transform:translateY(-4px);opacity:1;} }
+  .chat-chips { padding: 0 1.25rem 0.6rem; display: flex; gap: 0.4rem; flex-wrap: wrap; }
+  .chat-chip { font-size: 0.73rem; padding: 0.28rem 0.7rem; border-radius: 100px; border: 1.5px solid var(--border); background: var(--surface); color: var(--slate-soft); cursor: pointer; transition: all 0.15s; white-space: nowrap; font-weight: 600; }
+  .chat-chip:hover { border-color: var(--forest); color: var(--ink); background: var(--mint-pale); }
+  .chat-input-wrap { display: flex; gap: 0.5rem; padding: 0.75rem 1.25rem 1rem; border-top: 1px solid var(--border); align-items: flex-end; }
+  .chat-textarea { flex: 1; padding: 0.6rem 0.85rem; border: 1.5px solid #ddd; border-radius: 100px; font-family: 'Nunito', sans-serif; font-size: 0.88rem; color: var(--ink); resize: none; min-height: 40px; max-height: 110px; line-height: 1.5; transition: border-color 0.2s; background: var(--stone-pale); }
+  .chat-textarea:focus { outline: none; border-color: var(--forest); }
+  .chat-send { width: 40px; height: 40px; border-radius: 100px; background: var(--yellow); border: none; color: var(--ink); cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 1rem; font-weight: 800; flex-shrink: 0; transition: all 0.15s; }
+  .chat-send:hover { background: #e0c000; transform: scale(1.08); }
+  .chat-send:disabled { opacity: 0.3; cursor: not-allowed; transform: none; }
+  .chat-footer-note { text-align: center; font-size: 0.68rem; color: var(--slate-soft); padding: 0 1.25rem 0.85rem; line-height: 1.5; }
+
+  hr { border: none; border-top: 1px solid var(--border); margin: 1.5rem 0; }
+  .btn-primary { background: var(--forest); color: white; border: none; padding: 0.85rem 2rem; border-radius: 100px; font-family: 'Nunito', sans-serif; font-size: 0.95rem; font-weight: 800; cursor: pointer; transition: all 0.2s; }
+  .btn-primary:hover { background: var(--ink); transform: translateY(-1px); box-shadow: 0 4px 14px rgba(45,106,79,0.35); }
+  .btn-secondary { background: transparent; color: var(--slate-soft); border: 1.5px solid #ddd; padding: 0.85rem 1.5rem; border-radius: 100px; font-family: 'Nunito', sans-serif; font-size: 0.9rem; font-weight: 700; cursor: pointer; transition: all 0.2s; }
+  .btn-secondary:hover { border-color: var(--ink); color: var(--ink); }
+  .btn-row { display: flex; gap: 0.75rem; margin-top: 2rem; justify-content: flex-end; flex-wrap: wrap; }
+
+  @media (max-width: 600px) {
+    header { padding: 1rem 1.25rem; }
+    .hero { padding: 3rem 1.25rem 4rem; }
+    .container { padding: 2rem 1.25rem 3rem; }
+    .step-tab { font-size: 0.58rem; padding: 0.7rem 0.2rem; }
+    .card { padding: 1.5rem 1.25rem; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="app-switcher" id="appSwitcher">
+    <div class="switcher-trigger" onclick="toggleSwitcher(event)">
+      <div class="app-name">MyProperty<span>Decision</span></div>
+      <div class="chevron">&#9660;</div>
+    </div>
+    <div class="switcher-dropdown">
+      <div class="switcher-item" onclick="window.location.href='index.html'">
+        <div class="switcher-item-icon" style="background:rgba(255,255,255,0.06);">&#127968;</div>
+        <div class="switcher-item-text"><div class="item-name" style="color:rgba(26,58,42,0.4);font-size:0.8rem;">&#8592; MyPayPicture</div></div>
+      </div>
+      <div class="switcher-group-label">&#128084; Employed</div>
+      <div class="switcher-item" onclick="window.location.href='pension-optimiser.html'"><div class="switcher-item-icon" style="background:rgba(13,148,136,0.12);">&#128200;</div><div class="switcher-item-text"><div class="item-name">MyPensionOptimiser</div><div class="item-desc">Optimising your pension? Pay less tax.</div></div></div>
+      <div class="switcher-item" onclick="window.location.href='pension-reclaim.html'"><div class="switcher-item-icon" style="background:rgba(201,168,76,0.12);">&#128176;</div><div class="switcher-item-text"><div class="item-name">MyPensionReclaim</div><div class="item-desc">Missed salary sacrifice? Get it back.</div></div></div>
+      <div class="switcher-item" onclick="window.location.href='pension-topup.html'"><div class="switcher-item-icon" style="background:rgba(237,172,0,0.12);">&#10133;</div><div class="switcher-item-text"><div class="item-name">MyPensionTop-Up</div><div class="item-desc">The government helps pay for it.</div></div></div>
+      <div class="switcher-item" onclick="window.location.href='family-benefits.html'"><div class="switcher-item-icon" style="background:rgba(244,167,185,0.18);">&#128106;</div><div class="switcher-item-text"><div class="item-name">MyFamily&amp;Benefits</div><div class="item-desc">Paying the Child Benefit charge? Reduce it.</div></div></div>
+      <div class="switcher-item" onclick="window.location.href='self-assessment.html'"><div class="switcher-item-icon" style="background:rgba(124,58,237,0.12);">&#128203;</div><div class="switcher-item-text"><div class="item-name">MySelfAssessment</div><div class="item-desc">First time filing? Walk through it.</div></div></div>
+      <div class="switcher-item current">
+        <div class="switcher-item-icon" style="background:rgba(45,106,79,0.15);">&#127968;</div>
+        <div class="switcher-item-text"><div class="item-name">MyPropertyDecision</div><div class="item-desc">Got a deposit? See where it works hardest.</div></div>
+      </div>
+      <div class="switcher-group-label">&#127962; Director</div>
+      <div class="switcher-item" onclick="window.location.href='pay-director.html'"><div class="switcher-item-icon" style="background:rgba(79,70,229,0.12);">&#127962;</div><div class="switcher-item-text"><div class="item-name">MyPayDirector</div><div class="item-desc">Be smart with your pay.</div></div></div>
+      <div class="switcher-group-label">&#127749; Retired</div>
+      <div class="switcher-item" onclick="window.location.href='retirement-helper.html'"><div class="switcher-item-icon" style="background:rgba(107,114,128,0.12);">&#127749;</div><div class="switcher-item-text"><div class="item-name">MyRetirementHelper</div><div class="item-desc">Near or at retirement? Let's see where you stand.</div></div></div>
+    </div>
+  </div>
+  <div class="disclaimer-badge">Not financial advice</div>
+</header>
+
+<div class="hero">
+  <div class="hero-eyebrow">&#127968; MyPayPicture</div>
+  <h1>Got a deposit?
+    <em>See where it works hardest for you.</em>
+  </h1>
+  <p>Buy to live in it, buy to rent it out, or stay renting and invest instead. We run the full numbers across all three — so you can decide with confidence.</p>
+</div>
+
+<div class="container">
+  <div class="steps-nav">
+    <div class="step-tab active" onclick="goTo(1)" id="tab1"><span class="step-num">1</span>Your Situation</div>
+    <div class="step-tab" onclick="goTo(2)" id="tab2"><span class="step-num">2</span>Buy to Live</div>
+    <div class="step-tab" onclick="goTo(3)" id="tab3"><span class="step-num">3</span>Buy to Let</div>
+    <div class="step-tab" onclick="goTo(4)" id="tab4"><span class="step-num">4</span>Stay Renting</div>
+    <div class="step-tab" onclick="goTo(5)" id="tab5"><span class="step-num">5</span>Your Picture</div>
+  </div>
+
+  <!-- STEP 1: YOUR SITUATION -->
+  <div class="card active" id="step1">
+    <div class="card-title">Your situation</div>
+    <p class="card-subtitle">Start with the basics. We'll use these across all three scenarios.</p>
+
+    <div class="two-col">
+      <div class="field-group">
+        <label>How much deposit do you have?</label>
+        <div class="input-wrap"><span class="input-prefix">£</span>
+          <input type="number" id="deposit" placeholder="e.g. 60000" min="0">
+        </div>
+        <p class="hint">This is the money you'd put into a property — or invest if you stay renting.</p>
+      </div>
+      <div class="field-group">
+        <label>Property price you're considering</label>
+        <div class="input-wrap"><span class="input-prefix">£</span>
+          <input type="number" id="propPrice" placeholder="e.g. 300000" min="0" oninput="updateLTV()">
+        </div>
+        <p id="ltvHint" class="hint">We'll use this across all three scenarios.</p>
+      </div>
+    </div>
+
+    <div class="two-col">
+      <div class="field-group">
+        <label>Your annual salary</label>
+        <div class="input-wrap"><span class="input-prefix">£</span>
+          <input type="number" id="income" placeholder="e.g. 55000" min="0">
+        </div>
+        <p class="hint">Used to estimate tax on rental income and affordability.</p>
+      </div>
+      <div class="field-group">
+        <label>Is this your first home?</label>
+        <div class="radio-group">
+          <div class="radio-btn selected" id="ftb_yes" onclick="selectFTB(true)">Yes</div>
+          <div class="radio-btn" id="ftb_no" onclick="selectFTB(false)">No</div>
+        </div>
+        <p class="hint">First-time buyers pay less stamp duty.</p>
+      </div>
+    </div>
+
+    <div class="two-col">
+      <div class="field-group">
+        <label>How far ahead do you want to look?</label>
+        <div class="radio-group">
+          <div class="radio-btn" id="yr5"  onclick="setYears(5)">5 years</div>
+          <div class="radio-btn selected" id="yr10" onclick="setYears(10)">10 years</div>
+          <div class="radio-btn" id="yr20" onclick="setYears(20)">20 years</div>
+        </div>
+      </div>
+      <div class="field-group">
+        <label>Expected annual property price growth</label>
+        <div class="input-wrap">
+          <input type="number" id="growthRate" placeholder="e.g. 3" min="0" max="15" class="has-suffix no-prefix" value="3" step="0.5">
+          <span class="input-suffix">%</span>
+        </div>
+        <p class="hint">UK average is around 3% per year historically.</p>
+      </div>
+    </div>
+
+    <div class="btn-row">
+      <button class="btn-primary" onclick="goTo(2)">Next: buying to live in it &#8594;</button>
+    </div>
+  </div>
+
+  <!-- STEP 2: BUY TO LIVE -->
+  <div class="card" id="step2">
+    <div class="card-title">Buying to live in it</div>
+    <p class="card-subtitle">Your home. You own it, you live in it, you build equity over time.</p>
+
+    <div class="two-col">
+      <div class="field-group">
+        <label>Mortgage interest rate</label>
+        <div class="input-wrap">
+          <input type="number" id="mortRate" placeholder="e.g. 4.5" min="0" max="20" class="has-suffix no-prefix" step="0.1" value="4.5">
+          <span class="input-suffix">%</span>
+        </div>
+        <p class="hint">Check MoneySupermarket or Habito for today's rates. Typical: 4–5.5%.</p>
+      </div>
+      <div class="field-group">
+        <label>Mortgage term</label>
+        <div class="input-wrap">
+          <input type="number" id="mortTerm" placeholder="e.g. 25" min="5" max="40" class="has-suffix no-prefix" value="25">
+          <span class="input-suffix">yrs</span>
+        </div>
+        <p class="hint">Longer term = lower monthly payments but more interest overall.</p>
+      </div>
+    </div>
+
+    <div class="two-col">
+      <div class="field-group">
+        <label>Yearly maintenance &amp; insurance</label>
+        <div class="input-wrap"><span class="input-prefix">£</span>
+          <input type="number" id="maintenanceCost" placeholder="e.g. 2400" min="0" value="2400">
+        </div>
+        <p class="hint">Budget roughly 0.5–1% of the property value per year.</p>
+      </div>
+      <div class="field-group">
+        <label>Buying costs <span style="font-weight:400;color:var(--slate-soft);">(solicitor, survey etc)</span></label>
+        <div class="input-wrap"><span class="input-prefix">£</span>
+          <input type="number" id="buyCosts" placeholder="e.g. 3500" min="0" value="3500">
+        </div>
+        <p class="hint">Typically £2,500–£5,000.</p>
+      </div>
+    </div>
+
+
+    <!-- MORTGAGE BREAKDOWN PANEL -->
+    <div class="mort-breakdown" id="mortBreakdown" style="display:none;">
+      <div class="mort-breakdown-title">&#128200; How your payments split — equity vs interest</div>
+
+      <div class="mort-slider-wrap">
+        <div class="mort-slider-label">
+          <span>Drag to see any year of your mortgage</span>
+          <span class="mort-year-display">Year <span id="mortYearVal">1</span></span>
+        </div>
+        <input type="range" id="mortYearSlider" min="1" max="25" value="1" oninput="updateMortBreakdown()">
+        <div class="mort-slider-hints">
+          <span>Year 1</span>
+          <span id="mortYearMax">Year 25</span>
+        </div>
+      </div>
+
+      <div class="mort-split-bar">
+        <div class="mort-split-bar-track">
+          <div class="mort-split-equity"   id="mortEquityBar"   style="width:0%"></div>
+          <div class="mort-split-interest" id="mortInterestBar" style="width:100%"></div>
+        </div>
+        <div class="mort-split-legend">
+          <div class="mort-legend-item"><div class="mort-legend-dot" style="background:var(--accent, #2d6a4f);"></div>Going to equity</div>
+          <div class="mort-legend-item"><div class="mort-legend-dot" style="background:rgba(255,255,255,0.25);"></div>Going to interest</div>
+        </div>
+      </div>
+
+      <div class="mort-stats-grid">
+        <div class="mort-stat">
+          <div class="mort-stat-label">This year's equity</div>
+          <div class="mort-stat-val equity" id="statYearEquity">—</div>
+        </div>
+        <div class="mort-stat">
+          <div class="mort-stat-label">This year's interest</div>
+          <div class="mort-stat-val interest" id="statYearInterest">—</div>
+        </div>
+        <div class="mort-stat">
+          <div class="mort-stat-label">Balance remaining</div>
+          <div class="mort-stat-val" id="statBalance">—</div>
+        </div>
+        <div class="mort-stat">
+          <div class="mort-stat-label">Equity built so far</div>
+          <div class="mort-stat-val equity" id="statTotalEquity">—</div>
+        </div>
+        <div class="mort-stat">
+          <div class="mort-stat-label">Interest paid so far</div>
+          <div class="mort-stat-val interest" id="statTotalInterest">—</div>
+        </div>
+        <div class="mort-stat">
+          <div class="mort-stat-label">Total cost so far</div>
+          <div class="mort-stat-val total" id="statTotalCost">—</div>
+        </div>
+      </div>
+
+      <div class="mort-schedule-toggle" onclick="toggleSchedule()">
+        <span id="scheduleToggleIcon">&#9660;</span>
+        <span>See full year-by-year schedule</span>
+      </div>
+      <div class="mort-schedule" id="mortSchedule">
+        <table>
+          <thead>
+            <tr>
+              <th>Year</th>
+              <th>Annual payment</th>
+              <th>To equity</th>
+              <th>To interest</th>
+              <th>Balance</th>
+              <th>Equity %</th>
+            </tr>
+          </thead>
+          <tbody id="mortScheduleBody"></tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="btn-row">
+      <button class="btn-secondary" onclick="goTo(1)">&#8592; Back</button>
+      <button class="btn-primary" onclick="goTo(3)">Next: buying to let &#8594;</button>
+    </div>
+  </div>
+
+  <!-- STEP 3: BUY TO LET -->
+  <div class="card" id="step3">
+    <div class="card-title">Buying to rent out</div>
+    <p class="card-subtitle">You own it, tenants pay rent. We model the income, tax and net return — personally and via a limited company.</p>
+
+    <div class="two-col">
+      <div class="field-group">
+        <label>Expected monthly rental income</label>
+        <div class="input-wrap"><span class="input-prefix">£</span>
+          <input type="number" id="rentalIncome" placeholder="e.g. 1400" min="0">
+        </div>
+        <p class="hint">The gross rent tenants would pay each month.</p>
+      </div>
+      <div class="field-group">
+        <label>Buy-to-let mortgage rate</label>
+        <div class="input-wrap">
+          <input type="number" id="btlRate" placeholder="e.g. 5.5" min="0" max="20" class="has-suffix no-prefix" step="0.1" value="5.5">
+          <span class="input-suffix">%</span>
+        </div>
+        <p class="hint">BTL mortgages are typically interest-only and 1–2% above residential rates.</p>
+      </div>
+    </div>
+
+    <div class="two-col">
+      <div class="field-group">
+        <label>Annual management &amp; maintenance costs</label>
+        <div class="input-wrap"><span class="input-prefix">£</span>
+          <input type="number" id="btlCosts" placeholder="e.g. 2400" min="0" value="2400">
+        </div>
+        <p class="hint">Letting agent (~10% of rent), repairs, insurance, voids.</p>
+      </div>
+      <div class="field-group">
+        <label>How do you want to own it?</label>
+        <div class="radio-group">
+          <div class="radio-btn selected" id="own_personal" onclick="selectOwnership('personal')">Personally</div>
+          <div class="radio-btn" id="own_ltd" onclick="selectOwnership('ltd')">Ltd company</div>
+        </div>
+        <p class="hint" id="ownershipHint">Personal: simpler, but mortgage interest relief restricted to 20% (Section 24).</p>
+      </div>
+    </div>
+
+    <div id="ltdInfoBox" style="display:none;">
+      <div class="alert-box info">
+        <h4>&#127962; Limited company (SPV)</h4>
+        <p>Mortgage interest is fully deductible against rental income — no Section 24 restriction. Corporation tax applies at 25% on profit. Stamp duty has an extra 3% surcharge. Best suited to higher-rate taxpayers building a portfolio. You'll need a specialist BTL mortgage and accountant.</p>
+      </div>
+    </div>
+
+    <div class="btn-row">
+      <button class="btn-secondary" onclick="goTo(2)">&#8592; Back</button>
+      <button class="btn-primary" onclick="goTo(4)">Next: staying renting &#8594;</button>
+    </div>
+  </div>
+
+  <!-- STEP 4: STAY RENTING -->
+  <div class="card" id="step4">
+    <div class="card-title">Staying in rental</div>
+    <p class="card-subtitle">What if you didn't buy at all? Your deposit stays invested. Here's what that could look like.</p>
+
+    <div class="two-col">
+      <div class="field-group">
+        <label>What would you pay in rent per month?</label>
+        <div class="input-wrap"><span class="input-prefix">£</span>
+          <input type="number" id="monthlyRent" placeholder="e.g. 1400" min="0">
+        </div>
+        <p class="hint">For a similar property to the one you'd buy.</p>
+      </div>
+      <div class="field-group">
+        <label>Expected annual rent increase</label>
+        <div class="input-wrap">
+          <input type="number" id="rentIncrease" placeholder="e.g. 3" min="0" max="15" class="has-suffix no-prefix" value="3" step="0.5">
+          <span class="input-suffix">%</span>
+        </div>
+        <p class="hint">Rents have risen fast recently. 3% is a cautious assumption.</p>
+      </div>
+    </div>
+
+    <div class="field-group">
+      <label>If you invested your deposit, what return would you expect?</label>
+      <div class="input-wrap">
+        <input type="number" id="investReturn" placeholder="e.g. 6" min="0" max="20" class="has-suffix no-prefix" value="6" step="0.5">
+        <span class="input-suffix">%</span>
+      </div>
+      <p class="hint">Stocks have averaged ~7–10%/yr historically. 6% is a realistic after-tax estimate.</p>
+    </div>
+
+    <div class="guidance-box">
+      <h4>What happens to your deposit if you keep renting?</h4>
+      <p>Instead of going into a property, your deposit stays liquid and can be invested. The question is whether that grows faster than the equity you'd build by buying. We show you both sides so you can compare fairly.</p>
+    </div>
+
+    <div class="btn-row">
+      <button class="btn-secondary" onclick="goTo(3)">&#8592; Back</button>
+      <button class="btn-primary" onclick="goTo(5)">Show me my picture &#8594;</button>
+    </div>
+  </div>
+
+  <!-- STEP 5: YOUR PICTURE -->
+  <div class="card" id="step5">
+    <div class="card-title">Your property decision picture</div>
+    <p class="card-subtitle">Three options, one clear view. Here's what your deposit does in each scenario.</p>
+
+    <div id="resultsContent"></div>
+
+    <div class="guidance-box" style="margin-top:1.5rem;">
+      <h4>Beyond the numbers</h4>
+      <ul>
+        <li><strong>Buy to live</strong> — stability, no landlord, yours to decorate. But illiquid and expensive to exit.</li>
+        <li><strong>Buy to let</strong> — rental income and capital growth, but you're a landlord. Voids, repairs, tenants, tax returns.</li>
+        <li><strong>Stay renting</strong> — maximum flexibility, no maintenance headaches. But rent rises, no equity, and you're at the landlord's mercy.</li>
+        <li><strong>Limited company BTL</strong> — best for higher-rate taxpayers building a portfolio. Needs specialist advice before setting up.</li>
+        <li><strong>These are projections, not guarantees</strong> — property markets, stock markets and interest rates all move. The best decision depends on your life, not just the maths.</li>
+      </ul>
+    </div>
+
+    <div class="pdf-inline-cta visible" id="pdfInlineCta">
+      <div class="pdf-inline-inner">
+        <div class="pdf-inline-text">
+          <strong>&#128196; Download your personalised PDF report</strong>
+          <span>All three scenarios side by side — clear enough to share with a mortgage adviser.</span>
+        </div>
+        <div class="pdf-inline-right">
+          <div class="pdf-inline-price" id="pdfInlinePrice">&#163;4.99</div>
+          <a class="pdf-inline-btn" id="pdfInlineBuyBtn" href="https://buy.stripe.com/4gM8wP2IV4l0gPn9D353O00" target="_blank">Buy report &#8594;</a>
+          <button class="pdf-inline-btn paid" id="pdfInlineDlBtn" style="display:none;" onclick="generateReport()">&#8595; Download PDF</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="adviser-cta">
+      <div class="adviser-cta-inner">
+        <div class="adviser-cta-text">
+          <strong>Want expert guidance on this decision?</strong>
+          <span>A mortgage broker or financial adviser can review your full situation.</span>
+        </div>
+        <a class="adviser-cta-btn" href="https://tally.so/r/xX2YP5" target="_blank">Get advice &#8594;</a>
+      </div>
+    </div>
+
+    <div class="btn-row">
+      <button class="btn-secondary" onclick="goTo(4)">&#8592; Back</button>
+    </div>
+  </div>
+</div>
+
+<!-- CHAT -->
+<div class="chat-wrap">
+  <div class="chat-divider">Ask MyPayPicture Assistant</div>
+  <div class="chat-box">
+    <div class="chat-head">
+      <div class="chat-head-icon">&#10022;</div>
+      <div>
+        <div class="chat-head-title">MyPayPicture Assistant</div>
+        <div class="chat-head-sub">General information only &middot; Not financial advice</div>
+      </div>
+    </div>
+    <div class="chat-msgs" id="chatMsgs"></div>
+    <div class="chat-chips" id="chatChips">
+      <div class="chat-chip" onclick="chatChip(this)">Is buy to let still worth it in 2025?</div>
+      <div class="chat-chip" onclick="chatChip(this)">What is Section 24?</div>
+      <div class="chat-chip" onclick="chatChip(this)">Should I use a limited company for BTL?</div>
+      <div class="chat-chip" onclick="chatChip(this)">What stamp duty will I pay?</div>
+      <div class="chat-chip" onclick="chatChip(this)">What is a good rental yield?</div>
+    </div>
+    <div class="chat-input-wrap">
+      <textarea class="chat-textarea" id="chatInput" placeholder="Ask about buying, renting or investing..." rows="1"
+        onkeydown="if(event.key==='Enter'&&!event.shiftKey){event.preventDefault();chatSend();}"
+        oninput="this.style.height='auto';this.style.height=Math.min(this.scrollHeight,110)+'px'"></textarea>
+      <button class="chat-send" id="chatSendBtn" onclick="chatSend()">&#8594;</button>
+    </div>
+    <div class="chat-footer-note">General information only. Always consult a qualified mortgage adviser or financial adviser before making property decisions.</div>
+  </div>
+</div>
+
+<footer style="background:var(--ink); border-top:3px solid var(--yellow); padding:2rem 1.5rem; margin-top:1rem;">
+  <div style="max-width:900px; margin:0 auto; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:1rem;">
+    <div style="font-family:'Nunito',sans-serif; font-weight:800; color:white; font-size:1.1rem;">MyPay<em style="font-style:italic;color:var(--yellow);">Picture</em></div>
+    <p style="color:rgba(255,255,255,0.3); font-size:0.78rem; max-width:520px; line-height:1.6; margin:0;">Illustrative scenarios only &mdash; not financial, mortgage or legal advice. Always speak to a qualified adviser before making property decisions. No data stored. &nbsp;&middot;&nbsp; <a href="about.html" style="color:rgba(255,255,255,0.35);text-decoration:none;">About</a> &nbsp;&middot;&nbsp; <a href="privacy.html" style="color:rgba(255,255,255,0.35);text-decoration:none;">Privacy</a> &nbsp;&middot;&nbsp; <span style="color:rgba(255,255,255,0.35);">hello&#64;mypaypicture&#46;com</span></p>
+  </div>
+</footer>
+
+<script>
+  // ── MORTGAGE BREAKDOWN ────────────────────────────────────────────────────
+  function renderMortBreakdown() {
+    var price   = parseFloat(document.getElementById('propPrice').value) || 0;
+    var dep     = parseFloat(document.getElementById('deposit').value)   || 0;
+    var rate    = (parseFloat(document.getElementById('mortRate').value) || 4.5) / 100;
+    var term    = parseFloat(document.getElementById('mortTerm').value)  || 25;
+    var loan    = price - dep;
+
+    if (loan <= 0 || price <= 0) {
+      document.getElementById('mortBreakdown').style.display = 'none';
+      return;
+    }
+
+    document.getElementById('mortBreakdown').style.display = 'block';
+
+    // Update slider max to match term
+    var slider = document.getElementById('mortYearSlider');
+    slider.max = term;
+    slider.value = Math.min(parseInt(slider.value), term);
+    document.getElementById('mortYearMax').textContent = 'Year ' + term;
+
+    updateMortBreakdown();
+    buildScheduleTable(loan, rate, term);
+  }
+
+  function updateMortBreakdown() {
+    var price   = parseFloat(document.getElementById('propPrice').value) || 0;
+    var dep     = parseFloat(document.getElementById('deposit').value)   || 0;
+    var rate    = (parseFloat(document.getElementById('mortRate').value) || 4.5) / 100;
+    var term    = parseFloat(document.getElementById('mortTerm').value)  || 25;
+    var loan    = price - dep;
+    if (loan <= 0) return;
+
+    var mo      = monthlyMortgage(loan, rate, term);
+    var yr      = parseInt(document.getElementById('mortYearSlider').value);
+    document.getElementById('mortYearVal').textContent = yr;
+
+    var r = rate / 12;
+    var balance = loan;
+    var totalEquity = 0, totalInterest = 0;
+
+    // Run amortisation to end of selected year
+    for (var month = 1; month <= yr * 12; month++) {
+      var intPart = balance * r;
+      var eqPart  = mo - intPart;
+      balance     = Math.max(0, balance - eqPart);
+      totalInterest += intPart;
+      totalEquity   += eqPart;
+    }
+
+    // This year's split
+    var balanceAtStartOfYear = balance + totalEquity - 0; // recalc year
+    // Simpler: recalculate just year yr
+    var yearEquity = 0, yearInterest = 0;
+    var balStart = loan;
+    for (var m2 = 1; m2 <= (yr-1)*12; m2++) {
+      var ip = balStart * r;
+      var ep = mo - ip;
+      balStart = Math.max(0, balStart - ep);
+    }
+    for (var m3 = 1; m3 <= 12; m3++) {
+      var ip2 = balStart * r;
+      var ep2 = mo - ip2;
+      balStart = Math.max(0, balStart - ep2);
+      yearEquity   += ep2;
+      yearInterest += ip2;
+    }
+
+    var equityPct   = Math.round(yearEquity   / (mo * 12) * 100);
+    var interestPct = 100 - equityPct;
+
+    document.getElementById('mortEquityBar').style.width   = equityPct + '%';
+    document.getElementById('mortInterestBar').style.width = interestPct + '%';
+
+    var fmt2 = function(n) { return '£' + Math.round(n).toLocaleString('en-GB'); };
+
+    document.getElementById('statYearEquity').textContent   = fmt2(yearEquity);
+    document.getElementById('statYearInterest').textContent = fmt2(yearInterest);
+    document.getElementById('statBalance').textContent       = fmt2(balance);
+    document.getElementById('statTotalEquity').textContent   = fmt2(totalEquity);
+    document.getElementById('statTotalInterest').textContent = fmt2(totalInterest);
+    document.getElementById('statTotalCost').textContent     = fmt2(totalEquity + totalInterest);
+
+    // Highlight row in schedule
+    var rows = document.querySelectorAll('#mortScheduleBody tr');
+    rows.forEach(function(row, i) {
+      row.classList.toggle('highlight-row', i === yr - 1);
+    });
+  }
+
+  function buildScheduleTable(loan, rate, term) {
+    var mo = monthlyMortgage(loan, rate, term);
+    var r  = rate / 12;
+    var balance = loan;
+    var fmt2 = function(n) { return '£' + Math.round(n).toLocaleString('en-GB'); };
+    var rows = '';
+
+    for (var yr = 1; yr <= term; yr++) {
+      var yearEq = 0, yearInt = 0;
+      for (var m = 0; m < 12; m++) {
+        var ip = balance * r;
+        var ep = mo - ip;
+        balance = Math.max(0, balance - ep);
+        yearEq  += ep;
+        yearInt += ip;
+      }
+      var eqPct = Math.round(yearEq / (mo * 12) * 100);
+      rows += '<tr><td>Year ' + yr + '</td>' +
+        '<td>' + fmt2(mo * 12) + '</td>' +
+        '<td class="eq-col">' + fmt2(yearEq) + '</td>' +
+        '<td class="int-col">' + fmt2(yearInt) + '</td>' +
+        '<td>' + fmt2(balance) + '</td>' +
+        '<td class="eq-col">' + eqPct + '%</td>' +
+        '</tr>';
+    }
+    document.getElementById('mortScheduleBody').innerHTML = rows;
+  }
+
+  function toggleSchedule() {
+    var el  = document.getElementById('mortSchedule');
+    var ico = document.getElementById('scheduleToggleIcon');
+    var open = el.classList.toggle('open');
+    ico.textContent = open ? '▲' : '▼';
+  }
+
+
+  // ── ANALYTICS ─────────────────────────────────────────────────────────────
+  function gaEvent(n,p){if(typeof gtag!=='undefined')gtag('event',n,p||{});}
+  var _started=false;
+  function trackStart(){if(!_started){_started=true;gaEvent('tool_started',{tool:'MyPropertyDecision'});}}
+
+  // ── SWITCHER ──────────────────────────────────────────────────────────────
+  function toggleSwitcher(e){e.stopPropagation();document.getElementById('appSwitcher').classList.toggle('open');}
+  document.addEventListener('click',function(){document.getElementById('appSwitcher').classList.remove('open');});
+
+  // ── STATE ─────────────────────────────────────────────────────────────────
+  var isFTB=true, ownershipType='personal', projYears=10;
+  var fmt=function(n){return '\u00a3'+Math.round(Math.abs(n)).toLocaleString('en-GB');};
+  var fmtK=function(n){return n>=1000000?'\u00a3'+(n/1000000).toFixed(1)+'m':n>=1000?'\u00a3'+Math.round(n/1000)+'k':'\u00a3'+Math.round(n);};
+
+  // ── INPUTS ────────────────────────────────────────────────────────────────
+  function selectFTB(v){
+    isFTB=v;
+    document.getElementById('ftb_yes').classList.toggle('selected',v);
+    document.getElementById('ftb_no').classList.toggle('selected',!v);
+  }
+
+  function setYears(y){
+    projYears=y;
+    [5,10,20].forEach(function(yr){document.getElementById('yr'+yr).classList.toggle('selected',yr===y);});
+  }
+
+  function updateLTV(){
+    var price=parseFloat(document.getElementById('propPrice').value)||0;
+    var dep=parseFloat(document.getElementById('deposit').value)||0;
+    if(price>0&&dep>0){
+      var ltv=Math.round((1-dep/price)*100);
+      document.getElementById('ltvHint').textContent='LTV: '+ltv+'% — '+(ltv<=60?'excellent rates available':ltv<=75?'good':ltv<=85?'standard':'higher LTV, fewer lenders');
+    }
+  }
+
+  function selectOwnership(type){
+    ownershipType=type;
+    document.getElementById('own_personal').classList.toggle('selected',type==='personal');
+    document.getElementById('own_ltd').classList.toggle('selected',type==='ltd');
+    document.getElementById('ownershipHint').textContent=type==='personal'
+      ?'Personal: simpler, but mortgage interest relief restricted to 20% (Section 24).'
+      :'Ltd company: full mortgage interest deduction, but extra stamp duty (3%) and corporation tax at 25%.';
+    document.getElementById('ltdInfoBox').style.display=type==='ltd'?'block':'none';
+  }
+
+  // ── STAMP DUTY 2025 ───────────────────────────────────────────────────────
+  function calcStampDuty(price,ftb,ltd){
+    if(ltd){
+      var b=[[0,250000,0.03],[250000,925000,0.08],[925000,1500000,0.13],[1500000,Infinity,0.15]];
+      return b.reduce(function(t,x){return t+Math.max(0,Math.min(price,x[1])-x[0])*x[2];},0);
+    }
+    if(ftb){
+      if(price<=300000)return 0;
+      if(price<=500000)return(price-300000)*0.05;
+    }
+    var s=[[0,125000,0],[125000,250000,0.02],[250000,925000,0.05],[925000,1500000,0.10],[1500000,Infinity,0.12]];
+    return s.reduce(function(t,x){return t+Math.max(0,Math.min(price,x[1])-x[0])*x[2];},0);
+  }
+
+  // ── INCOME TAX ────────────────────────────────────────────────────────────
+  function marginalRate(salary){
+    if(salary<=12570)return 0;
+    if(salary<=50270)return 0.20;
+    if(salary<=125140)return 0.40;
+    return 0.45;
+  }
+
+  // ── MORTGAGE ─────────────────────────────────────────────────────────────
+  function monthlyMortgage(loan,rate,term){
+    if(loan<=0)return 0;
+    var r=rate/12,n=term*12;
+    return loan*r*Math.pow(1+r,n)/(Math.pow(1+r,n)-1);
+  }
+
+  // ── MAIN CALCULATIONS ─────────────────────────────────────────────────────
+  function calcAll(){
+    var dep       = parseFloat(document.getElementById('deposit').value)||0;
+    var price     = parseFloat(document.getElementById('propPrice').value)||0;
+    var income    = parseFloat(document.getElementById('income').value)||0;
+    var growth    = (parseFloat(document.getElementById('growthRate').value)||3)/100;
+    var mortRate  = (parseFloat(document.getElementById('mortRate').value)||4.5)/100;
+    var mortTerm  = parseFloat(document.getElementById('mortTerm').value)||25;
+    var maint     = parseFloat(document.getElementById('maintenanceCost').value)||2400;
+    var buyCosts  = parseFloat(document.getElementById('buyCosts').value)||3500;
+    var rental    = parseFloat(document.getElementById('rentalIncome').value)||0;
+    var btlRate   = (parseFloat(document.getElementById('btlRate').value)||5.5)/100;
+    var btlCosts  = parseFloat(document.getElementById('btlCosts').value)||2400;
+    var monthRent = parseFloat(document.getElementById('monthlyRent').value)||0;
+    var rentRise  = (parseFloat(document.getElementById('rentIncrease').value)||3)/100;
+    var investRet = (parseFloat(document.getElementById('investReturn').value)||6)/100;
+    var yrs       = projYears;
+    var mRate     = marginalRate(income);
+
+    var loan = price - dep;
+    var sdLive = calcStampDuty(price,isFTB,false);
+    var sdLtd  = calcStampDuty(price,false,true);
+    var upfrontLive = dep + sdLive + buyCosts;
+    var upfrontBTL  = dep + (ownershipType==='ltd'?sdLtd:calcStampDuty(price,false,false)) + buyCosts;
+
+    // ── SCENARIO A: BUY TO LIVE ───────────────────────────────────────────
+    var mo = monthlyMortgage(loan,mortRate,mortTerm);
+    var annualOwning = mo*12 + maint;
+    var propVal = price*Math.pow(1+growth,yrs);
+    // Remaining loan after N years
+    var r=mortRate/12,n=mortTerm*12,paid=Math.min(n,yrs*12);
+    var remLoan = paid<n ? mo*(1-Math.pow(1+r,-(n-paid)))/r : 0;
+    var equity = propVal - remLoan;
+    var totalSpentLive = upfrontLive + annualOwning*yrs;
+    var liveNetPos = equity - loan; // equity gained vs starting loan
+
+    // ── SCENARIO B: BUY TO LET ────────────────────────────────────────────
+    var btlMo = loan * btlRate / 12; // interest only
+    var annualInterest = loan * btlRate;
+    var annualRental = rental * 12;
+    var annualProfit, annualTax;
+
+    if(ownershipType==='ltd'){
+      // Full deduction
+      annualProfit = annualRental - annualInterest - btlCosts;
+      annualTax = Math.max(0,annualProfit*0.25);
+    } else {
+      // Section 24: tax on income minus costs (not interest), then 20% credit
+      var taxableRental = annualRental - btlCosts;
+      var taxOnRental = Math.max(0,taxableRental*mRate);
+      var s24Credit = annualInterest*0.20;
+      annualTax = Math.max(0,taxOnRental-s24Credit);
+      annualProfit = annualRental - annualInterest - btlCosts - annualTax;
+    }
+
+    var totalRentalNet = annualProfit * yrs;
+    var btlPropVal = propVal; // same capital growth
+    var btlEquity = btlPropVal - loan; // IO: still owe full loan
+    var btlNetPos = btlEquity + totalRentalNet - (upfrontBTL - dep); // net gain on deposit
+    var grossYield = price>0 ? (annualRental/price)*100 : 0;
+    var netYield   = price>0 ? ((annualRental-annualInterest-btlCosts)/price)*100 : 0;
+
+    // ── SCENARIO C: STAY RENTING + INVEST ────────────────────────────────
+    var totalRentPaid = 0;
+    for(var i=0;i<yrs;i++) totalRentPaid += monthRent*12*Math.pow(1+rentRise,i);
+    var investedDep = dep * Math.pow(1+investRet,yrs);
+    // Also invest monthly savings vs owning
+    var monthlySavingVsLive = (annualOwning/12) - monthRent;
+    var extraInvested = 0;
+    if(monthlySavingVsLive>0){
+      var rm=investRet/12,nm=yrs*12;
+      extraInvested = monthlySavingVsLive*(Math.pow(1+rm,nm)-1)/rm;
+    }
+    var rentNetPos = investedDep + extraInvested - totalRentPaid;
+
+    return {
+      dep,price,loan,yrs,mRate,
+      mo,btlMo,
+      sdLive,sdLtd,upfrontLive,upfrontBTL,
+      propVal,remLoan,equity,annualOwning,totalSpentLive,liveNetPos,
+      annualRental,annualProfit,annualTax,totalRentalNet,btlEquity,btlNetPos,grossYield,netYield,
+      investedDep,extraInvested,totalRentPaid,rentNetPos,
+      monthRent,rental,ownershipType,
+    };
+  }
+
+  // ── STEP 5: RENDER ────────────────────────────────────────────────────────
+  function renderStep5(){
+    var d = calcAll();
+    var yrs = d.yrs;
+
+    // Winner
+    var scores = [
+      {key:'live', val:d.liveNetPos,  label:'Buy to live'},
+      {key:'btl',  val:d.btlNetPos,   label:'Buy to let'},
+      {key:'rent', val:d.rentNetPos,  label:'Stay renting'},
+    ];
+    scores.sort(function(a,b){return b.val-a.val;});
+    var winner = scores[0].key;
+
+    // Result boxes
+    var boxes =
+      '<div class="results-grid">' +
+        '<div class="result-box forest"><div class="r-label">Buy to live — equity in '+yrs+'yrs</div><div class="r-amount">'+fmtK(d.equity)+'</div><div class="r-sub">property value minus remaining mortgage</div></div>' +
+        '<div class="result-box sky"><div class="r-label">Buy to let — net gain in '+yrs+'yrs</div><div class="r-amount">'+(d.btlNetPos>=0?'+':'')+fmtK(d.btlNetPos)+'</div><div class="r-sub">equity + rental profit after tax</div></div>' +
+        '<div class="result-box highlight"><div class="r-label">Stay renting — invested deposit in '+yrs+'yrs</div><div class="r-amount">'+fmtK(d.investedDep+d.extraInvested)+'</div><div class="r-sub">minus total rent paid: '+fmtK(d.totalRentPaid)+'</div></div>' +
+      '</div>';
+
+    // Scenario cards
+    var cards =
+      '<div class="scenario-grid">' +
+
+      // LIVE
+      '<div class="scenario-card'+(winner==='live'?' best':'')+'">' +
+        '<div class="sc-icon">&#127968;</div>' +
+        '<div class="sc-title">Buy to live in</div>' +
+        '<div class="sc-subtitle">Own it, live in it, build equity</div>' +
+        '<div class="sc-metric"><span class="sc-metric-label">Stamp duty</span><span class="sc-metric-val">'+fmt(d.sdLive)+'</span></div>' +
+        '<div class="sc-metric"><span class="sc-metric-label">Monthly mortgage</span><span class="sc-metric-val">'+fmt(d.mo)+'/mo</span></div>' +
+        '<div class="sc-metric"><span class="sc-metric-label">Property value in '+yrs+'yrs</span><span class="sc-metric-val green">'+fmt(d.propVal)+'</span></div>' +
+        '<div class="sc-metric"><span class="sc-metric-label">Remaining mortgage</span><span class="sc-metric-val">'+fmt(d.remLoan)+'</span></div>' +
+        '<div class="sc-metric"><span class="sc-metric-label">Your equity</span><span class="sc-metric-val green">'+fmt(d.equity)+'</span></div>' +
+      '</div>' +
+
+      // BTL
+      '<div class="scenario-card'+(winner==='btl'?' best':'')+'">' +
+        '<div class="sc-icon">&#127968;&#128176;</div>' +
+        '<div class="sc-title">Buy to let '+(d.ownershipType==='ltd'?'(Ltd co)':'(personally)')+'</div>' +
+        '<div class="sc-subtitle">Own it, tenants pay rent</div>' +
+        '<div class="sc-metric"><span class="sc-metric-label">Stamp duty</span><span class="sc-metric-val amber">'+fmt(d.ownershipType==='ltd'?d.sdLtd:calcStampDuty(d.price,false,false))+'</span></div>' +
+        '<div class="sc-metric"><span class="sc-metric-label">Monthly mortgage (IO)</span><span class="sc-metric-val">'+fmt(d.btlMo)+'/mo</span></div>' +
+        '<div class="sc-metric"><span class="sc-metric-label">Gross yield</span><span class="sc-metric-val '+(d.grossYield>=5?'green':'red')+'">'+d.grossYield.toFixed(1)+'%</span></div>' +
+        '<div class="sc-metric"><span class="sc-metric-label">Annual profit after tax</span><span class="sc-metric-val '+(d.annualProfit>=0?'green':'red')+'">'+fmt(d.annualProfit)+'/yr</span></div>' +
+        '<div class="sc-metric"><span class="sc-metric-label">Net position in '+yrs+'yrs</span><span class="sc-metric-val '+(d.btlNetPos>=0?'green':'red')+'">'+(d.btlNetPos>=0?'+':'')+fmt(d.btlNetPos)+'</span></div>' +
+      '</div>' +
+
+      // RENT
+      '<div class="scenario-card'+(winner==='rent'?' best':'')+'">' +
+        '<div class="sc-icon">&#128082;</div>' +
+        '<div class="sc-title">Stay renting</div>' +
+        '<div class="sc-subtitle">Deposit invested, maximum flexibility</div>' +
+        '<div class="sc-metric"><span class="sc-metric-label">Monthly rent (now)</span><span class="sc-metric-val">'+fmt(d.monthRent)+'/mo</span></div>' +
+        '<div class="sc-metric"><span class="sc-metric-label">Total rent over '+yrs+'yrs</span><span class="sc-metric-val red">'+fmt(d.totalRentPaid)+'</span></div>' +
+        '<div class="sc-metric"><span class="sc-metric-label">Deposit invested</span><span class="sc-metric-val green">'+fmt(d.investedDep)+'</span></div>' +
+        '<div class="sc-metric"><span class="sc-metric-label">Extra savings invested</span><span class="sc-metric-val green">'+fmt(d.extraInvested)+'</span></div>' +
+        '<div class="sc-metric"><span class="sc-metric-label">Net position in '+yrs+'yrs</span><span class="sc-metric-val '+(d.rentNetPos>=0?'green':'red')+'">'+(d.rentNetPos>=0?'+':'')+fmt(d.rentNetPos)+'</span></div>' +
+      '</div>' +
+
+      '</div>';
+
+    // Comparison table
+    var table =
+      '<table class="compare-table" style="margin-top:1.5rem;">' +
+        '<thead><tr>' +
+          '<th>Factor</th>' +
+          '<th class="c1">Buy to live</th>' +
+          '<th class="c2">Buy to let</th>' +
+          '<th class="c3">Stay renting</th>' +
+        '</tr></thead><tbody>' +
+        '<tr><td>Upfront cost</td><td>'+fmt(d.upfrontLive)+'</td><td>'+fmt(d.upfrontBTL)+'</td><td class="win">Deposit stays invested</td></tr>' +
+        '<tr><td>Monthly outgoing</td><td>'+fmt(d.mo)+'/mo</td><td>'+fmt(d.btlMo)+'/mo (offset by rent)</td><td>'+fmt(d.monthRent)+'/mo</td></tr>' +
+        '<tr><td>Builds equity?</td><td class="win">Yes — home ownership</td><td class="win">Yes — investment property</td><td class="lose">No</td></tr>' +
+        '<tr><td>Rental income?</td><td class="lose">No</td><td class="win">'+fmt(d.annualRental)+'/yr gross</td><td class="lose">No</td></tr>' +
+        '<tr><td>Tax on income?</td><td class="lose">No rental tax, but no income</td><td>Yes — '+(d.ownershipType==='ltd'?'25% corp tax':'income tax at '+Math.round(d.mRate*100)+'%')+'</td><td class="win">Tax on investment returns only</td></tr>' +
+        '<tr><td>Flexibility</td><td>Low — expensive to move</td><td>Medium — can sell</td><td class="win">High — can move anytime</td></tr>' +
+        '<tr class="total-row"><td>Net position in '+yrs+' yrs</td>' +
+          '<td class="'+(winner==='live'?'win':'')+'">'+fmt(d.equity)+'</td>' +
+          '<td class="'+(winner==='btl'?'win':'')+'">'+( d.btlNetPos>=0?'+':'')+fmt(d.btlNetPos)+'</td>' +
+          '<td class="'+(winner==='rent'?'win':'')+'">'+( d.rentNetPos>=0?'+':'')+fmt(d.rentNetPos)+'</td>' +
+        '</tr>' +
+      '</tbody></table>';
+
+    // Affordability note
+    var income = parseFloat(document.getElementById('income').value)||0;
+    var afford = '';
+    if(income>0){
+      var maxLoan = income*4.5;
+      var ok = d.loan <= maxLoan;
+      afford = '<div class="alert-box'+(ok?'':' warning')+'" style="margin-top:1rem;">' +
+        '<h4>'+(ok?'✓ Residential mortgage looks affordable':'⚠ Affordability may be tight')+'</h4>' +
+        '<p>The loan of '+fmt(d.loan)+' is '+(ok?'within':'above')+' the typical 4.5× income limit of '+fmt(maxLoan)+' on your salary of '+fmt(income)+'. Speak to a mortgage broker for a Decision in Principle.</p>' +
+        '</div>';
+    }
+
+    document.getElementById('resultsContent').innerHTML = boxes + cards + table + afford;
+    gaEvent('tool_completed',{tool:'MyPropertyDecision'});
+  }
+
+  // ── NAVIGATION ────────────────────────────────────────────────────────────
+  function goTo(step){
+    for(var i=1;i<=5;i++){
+      document.getElementById('step'+i).classList.toggle('active',i===step);
+      var tab=document.getElementById('tab'+i);
+      tab.classList.toggle('active',i===step);
+      if(i<step)tab.classList.add('completed');
+      else if(i>step)tab.classList.remove('completed');
+    }
+    if(step===2)renderMortBreakdown();
+    if(step===5)renderStep5();
+    if(step>1)trackStart();
+    window.scrollTo({top:0,behavior:'smooth'});
+  }
+
+  // ── PDF ───────────────────────────────────────────────────────────────────
+  function loadJsPDF(cb){if(window.jspdf){cb();return;}var s=document.createElement('script');s.src='https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js';s.onload=cb;document.head.appendChild(s);}
+
+  function generateReport(){
+    loadJsPDF(function(){
+      var d=calcAll();
+      var doc=new window.jspdf.jsPDF();
+      var navy=[26,58,42],green=[45,106,79],white=[255,255,255],grey=[74,85,104],light=[244,248,245];
+
+      doc.setFillColor(...navy);doc.rect(0,0,210,28,'F');
+      doc.setFont('helvetica','bold');doc.setFontSize(16);doc.setTextColor(...white);
+      doc.text('MyPay',14,14);doc.setFont('helvetica','normal');doc.text('Picture',33,14);
+      doc.setFontSize(8);doc.setTextColor(180,200,180);
+      doc.text('MyPropertyDecision Report',14,22);
+      doc.text('Generated '+new Date().toLocaleDateString('en-GB',{day:'numeric',month:'long',year:'numeric'}),196,22,{align:'right'});
+
+      var y=36;
+      doc.setFont('helvetica','bold');doc.setFontSize(13);doc.setTextColor(...navy);
+      doc.text('Property Decision — '+d.yrs+' Year Comparison',14,y);y+=10;
+
+      function section(title,rows){
+        doc.setFillColor(...green);doc.rect(14,y,182,7,'F');
+        doc.setFont('helvetica','bold');doc.setFontSize(9);doc.setTextColor(...white);
+        doc.text(title.toUpperCase(),17,y+5);y+=11;
+        rows.forEach(function(row,i){
+          if(i%2===0){doc.setFillColor(...light);doc.rect(14,y-3,182,8,'F');}
+          doc.setFont('helvetica','normal');doc.setFontSize(9);doc.setTextColor(...grey);
+          doc.text(row[0],17,y+2);
+          doc.setFont('helvetica','bold');doc.setTextColor(...navy);
+          doc.text(row[1],193,y+2,{align:'right'});
+          y+=8;
+        });y+=4;
+      }
+
+      section('Your Situation',[
+        ['Deposit',fmt(d.dep)],
+        ['Property price',fmt(d.price)],
+        ['Loan required',fmt(d.loan)],
+        ['Projection period',d.yrs+' years'],
+        ['Property growth assumed','3%/yr'],
+      ]);
+      section('Buy to Live',[
+        ['Stamp duty (FTB)',fmt(d.sdLive)],
+        ['Total upfront cost',fmt(d.upfrontLive)],
+        ['Monthly mortgage',fmt(d.mo)+'/mo'],
+        ['Property value in '+d.yrs+'yrs',fmt(d.propVal)],
+        ['Remaining mortgage',fmt(d.remLoan)],
+        ['Your equity',fmt(d.equity)],
+      ]);
+      section('Buy to Let ('+(d.ownershipType==='ltd'?'Ltd company':'Personal')+')',[
+        ['Stamp duty',fmt(d.ownershipType==='ltd'?d.sdLtd:calcStampDuty(d.price,false,false))],
+        ['Monthly mortgage (interest only)',fmt(d.btlMo)+'/mo'],
+        ['Annual rental income',fmt(d.annualRental)+'/yr'],
+        ['Gross yield',d.grossYield.toFixed(1)+'%'],
+        ['Annual profit after tax',fmt(d.annualProfit)+'/yr'],
+        ['Net position in '+d.yrs+'yrs',(d.btlNetPos>=0?'+':'')+fmt(d.btlNetPos)],
+      ]);
+      section('Stay Renting + Invest',[
+        ['Monthly rent',fmt(d.monthRent)+'/mo'],
+        ['Total rent over '+d.yrs+'yrs',fmt(d.totalRentPaid)],
+        ['Deposit invested',fmt(d.investedDep)],
+        ['Net position in '+d.yrs+'yrs',(d.rentNetPos>=0?'+':'')+fmt(d.rentNetPos)],
+      ]);
+
+      var ph=doc.internal.pageSize.height;
+      doc.setFillColor(...light);doc.rect(0,ph-18,210,18,'F');
+      doc.setFont('helvetica','italic');doc.setFontSize(7);doc.setTextColor(120,130,120);
+      doc.text('Illustrative only \u2014 not financial, mortgage or legal advice. Always consult a qualified adviser before making property decisions.',14,ph-10);
+      doc.text('mypaypicture.com',196,ph-4,{align:'right'});
+      doc.save('MyPayPicture-PropertyDecision-Report.pdf');
+    });
+  }
+
+  // ── CHAT ──────────────────────────────────────────────────────────────────
+  var WORKER_URL='https://mypaypicture-api.proud-truth-9c88.workers.dev';
+  var SYS='You are a helpful UK personal finance assistant embedded in MyPayPicture\'s MyPropertyDecision tool. This tool helps people compare three options for their deposit: buying a home to live in, buying a property to rent out (personally or via a limited company SPV), or staying in rental and investing the deposit instead.\n\nKey topics: stamp duty (2025 rates, BTL 3% surcharge), mortgage affordability (4.5x income), buy-to-let yields, Section 24 mortgage interest restriction, limited company SPV structure, corporation tax (25%), opportunity cost, capital growth assumptions, rental income taxation.\n\nAlways: UK English, 2024/25 rates, general information only (not personalised advice), recommend a mortgage broker or financial adviser for personalised guidance.';
+  var chatHist=[],chatBusy=false;
+
+  function chatAddMsg(role,text,typing){
+    var msgs=document.getElementById('chatMsgs');
+    var div=document.createElement('div');
+    div.className='chat-msg '+(role==='user'?'user':'ai');
+    if(typing)div.id='chatTyping';
+    var bubble=typing?'<div class="chat-typing"><span></span><span></span><span></span></div>':'<p>'+text.split('\n\n').map(function(p){return p.replace(/\*\*(.*?)\*\*/g,'<strong>$1</strong>');}).join('</p><p>')+'</p>';
+    div.innerHTML='<div class="msg-av">'+(role==='user'?'You':'\u2726')+'</div><div class="msg-bub">'+bubble+'</div>';
+    msgs.appendChild(div);msgs.scrollTop=msgs.scrollHeight;
+  }
+
+  async function chatSend(){
+    var input=document.getElementById('chatInput');
+    var btn=document.getElementById('chatSendBtn');
+    var text=input.value.trim();
+    if(!text||chatBusy)return;
+    document.getElementById('chatChips').style.display='none';
+    chatAddMsg('user',text);
+    chatHist.push({role:'user',content:text});
+    input.value='';input.style.height='auto';
+    chatBusy=true;btn.disabled=true;
+    chatAddMsg('ai','',true);
+    gaEvent('chat_message_sent',{tool:'MyPropertyDecision'});
+    try{
+      var res=await fetch(WORKER_URL,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({messages:chatHist,system:SYS})});
+      var data=await res.json();
+      var reply=(data.content&&data.content[0]&&data.content[0].text)?data.content[0].text:'Sorry, something went wrong.';
+      var t=document.getElementById('chatTyping');if(t)t.remove();
+      chatAddMsg('ai',reply);
+      chatHist.push({role:'assistant',content:reply});
+    }catch(err){
+      var t=document.getElementById('chatTyping');if(t)t.remove();
+      chatAddMsg('ai','Unable to connect. Please check your connection and try again.');
+    }
+    chatBusy=false;btn.disabled=false;input.focus();
+  }
+
+  function chatChip(el){document.getElementById('chatInput').value=el.textContent;chatSend();}
+
+  document.getElementById('propPrice').addEventListener('input', function(){updateLTV(); if(document.getElementById('step2').classList.contains('active')) renderMortBreakdown();});
+  document.getElementById('mortRate').addEventListener('input', renderMortBreakdown);
+  document.getElementById('mortTerm').addEventListener('input', function(){renderMortBreakdown(); var s=document.getElementById('mortYearSlider'); if(s) s.max=this.value;});
+  document.getElementById('propPrice').addEventListener('input',updateLTV);
+  document.getElementById('deposit').addEventListener('input',updateLTV);
+</script>
+<script>
+  if('serviceWorker' in navigator){
+    window.addEventListener('load',function(){
+      navigator.serviceWorker.register('/sw.js').catch(function(){});
+    });
+  }
+</script>
+</body>
+</html>
