@@ -62,343 +62,256 @@
   gtag('config', 'G-XY51DX80VL');
 </script>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" type="image/x-icon" href="favicon.ico">
+  <link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="favicon-16.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link rel="manifest" href="manifest.json">
 <meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-title" content="My Pay Picture">
+<meta name="apple-mobile-web-app-title" content="MyPayPicture">
 <link rel="apple-touch-icon" href="icon-192.png">
 <meta name="theme-color" content="#0f1f38">
-<title>Self Assessment Tax Calculator UK 2025/26 — Estimate Your Tax Bill | My Pay Picture</title>
-<meta name="description" content="Free Self Assessment tax calculator for UK taxpayers. Estimate your income tax, National Insurance, and payments on account. No sign-up, no data stored — perfect for first-time filers.">
-<meta name="keywords" content="Self Assessment calculator UK, tax return calculator, income tax calculator self employed, how much tax do I owe, Self Assessment tax calculator 2025, first time Self Assessment, HMRC tax calculator, payments on account calculator">
-<link rel="canonical" href="https://mypaypicture.com/self-assessment.html">
-<meta property="og:type" content="website">
-<meta property="og:url" content="https://mypaypicture.com/self-assessment.html">
-<meta property="og:title" content="Self Assessment Tax Calculator — Estimate Your Tax Bill">
-<meta property="og:description" content="Estimate your Self Assessment tax bill in minutes. Free, private calculator — perfect for first-time filers.">
-<meta property="og:image" content="https://mypaypicture.com/og-selfassessment.png">
-<meta property="og:site_name" content="My Pay Picture">
-<meta property="og:locale" content="en_GB">
-<meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="Self Assessment Tax Calculator — Estimate Your Tax Bill">
-<meta name="twitter:description" content="Estimate your Self Assessment tax bill in minutes. Free, private calculator — perfect for first-time filers.">
-<meta name="twitter:image" content="https://mypaypicture.com/og-selfassessment.png">
-<meta name="robots" content="index, follow">
-<meta name="author" content="My Pay Picture">
-<script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "WebApplication",
-  "name": "My Self Assessment — Tax Return Calculator",
-  "url": "https://mypaypicture.com/self-assessment.html",
-  "description": "Free UK Self Assessment tax calculator. Estimate income tax, NI, and payments on account. Designed for first-time filers.",
-  "applicationCategory": "FinanceApplication",
-  "operatingSystem": "Any",
-  "offers": { "@type": "Offer", "price": "0", "priceCurrency": "GBP" },
-  "author": { "@type": "Organization", "name": "My Pay Picture", "url": "https://mypaypicture.com" },
-  "inLanguage": "en-GB"
-}
-</script>
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<title>MySelfAssessment — MyPayPicture</title>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,300;0,400;0,600;0,700;0,800;1,300;1,400;1,700&display=swap" rel="stylesheet">
 <style>
   :root {
-    --navy:#0f1f38; --sa:#7c3aed; --sa-light:#c4b5fd; --sa-pale:#f5f3ff; --sa-dark:#5b21b6;
-    --cream:#f7f5f2; --slate:#4a5568; --slate-light:#718096; --stone-pale:#f3f4f6;
-    --green:#2d6a4f; --green-light:#40916c; --amber:#b45309; --red:#b91c1c;
-    --border:rgba(124,58,237,0.15); --white:#ffffff;
+    --ink:         #1a0933;
+    --ink-mid:     #240e45;
+    --accent:      #5b21b6;
+    --accent-dark: #4c1a99;
+    --accent-pale: #f5f3ff;
+    --accent-light:#c4b5fd;
+    --accent-xpale:#f5f3ff;
+    --yellow:      #ffdb00;
+    --sky:         #5cc3e8;
+    --slate:       #314855;
+    --slate-soft:  #5a7282;
+    --stone:       #78716c;
+    --stone-pale:  #f5f4f2;
+    --red:         #b91c1c;
+    --amber:       #d97706;
+    --bg:          #f7f5ff;
+    --surface:     #ffffff;
+    --border:      rgba(91,33,182,0.12);
   }
-  * { box-sizing:border-box; margin:0; padding:0; }
-  body { font-family:'DM Sans',sans-serif; background:var(--cream); color:var(--navy); min-height:100vh; }
 
-  .switcher-group-label { padding:0.5rem 1rem 0.25rem; font-size:0.6rem; font-weight:700; text-transform:uppercase; letter-spacing:0.1em; color:rgba(255,255,255,0.25); border-top:1px solid rgba(255,255,255,0.06); margin-top:0.15rem; }
-  header { background:var(--navy); padding:1.25rem 2rem; display:flex; align-items:center; justify-content:space-between; }
-  .app-switcher { position:relative; }
-  .switcher-trigger { display:flex; align-items:center; gap:0.5rem; cursor:pointer; padding:0.4rem 0.75rem; border-radius:8px; border:1px solid rgba(255,255,255,0.15); transition:background 0.2s; user-select:none; }
-  .switcher-trigger:hover { background:rgba(255,255,255,0.07); }
-  .switcher-trigger .app-name { font-family:'Playfair Display',serif; font-size:1.1rem; color:var(--sa-light); }
-  .switcher-trigger .app-name span { color:white; font-weight:300; }
-  .switcher-trigger .chevron { color:rgba(255,255,255,0.4); font-size:0.7rem; transition:transform 0.2s; }
-  .app-switcher.open .chevron { transform:rotate(180deg); }
-  .switcher-dropdown { display:none; position:absolute; top:calc(100% + 8px); left:0; background:#1a2f4e; border:1px solid rgba(255,255,255,0.1); border-radius:10px; overflow:hidden; min-width:260px; box-shadow:0 8px 24px rgba(0,0,0,0.3); z-index:100; }
-  .app-switcher.open .switcher-dropdown { display:block; }
-  .switcher-item { display:flex; align-items:center; gap:0.75rem; padding:0.75rem 1rem; cursor:pointer; transition:background 0.15s; border-bottom:1px solid rgba(255,255,255,0.05); }
-  .switcher-item:last-child { border-bottom:none; }
-  .switcher-item:hover { background:rgba(255,255,255,0.06); }
-  .switcher-item.current { background:rgba(124,58,237,0.1); }
-  .switcher-item-icon { width:30px; height:30px; border-radius:7px; display:flex; align-items:center; justify-content:center; font-size:0.9rem; flex-shrink:0; }
-  .switcher-item-text .item-name { font-size:0.85rem; font-weight:600; color:white; }
-  .switcher-item-text .item-desc { font-size:0.7rem; color:rgba(255,255,255,0.35); margin-top:0.1rem; }
-  .switcher-item.current .item-name { color:var(--sa-light); }
-  .disclaimer-badge { font-size:0.7rem; color:rgba(255,255,255,0.4); border:1px solid rgba(255,255,255,0.15); padding:0.3rem 0.7rem; border-radius:20px; letter-spacing:0.05em; text-transform:uppercase; }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Nunito', sans-serif; background: var(--bg); color: var(--ink); min-height: 100vh; }
 
-  .hero { background:var(--navy); padding:3.5rem 2rem 4.5rem; text-align:center; position:relative; overflow:hidden; }
-  .hero::before { content:''; position:absolute; top:-60px; right:-60px; width:400px; height:400px; background:radial-gradient(circle, rgba(124,58,237,0.1) 0%, transparent 70%); pointer-events:none; }
-  .hero-eyebrow { font-size:0.65rem; text-transform:uppercase; letter-spacing:0.15em; color:rgba(255,255,255,0.3); margin-bottom:1.25rem; }
-  .hero h1 { font-family:'Playfair Display',serif; font-size:clamp(2rem,5.5vw,3.2rem); color:white; line-height:1.1; max-width:600px; margin:0 auto 1rem; font-weight:700; }
-  .hero h1 em { font-style:italic; color:var(--sa-light); }
-  .hero p { color:rgba(255,255,255,0.45); font-size:0.95rem; max-width:440px; margin:0 auto; line-height:1.65; }
+  /* HEADER */
+  .switcher-group-label { padding: 0.5rem 1rem 0.25rem; font-size: 0.6rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: rgba(255,255,255,0.3); border-top: 1px solid rgba(255,255,255,0.08); margin-top: 0.15rem; }
+  header { background: var(--ink); padding: 1.1rem 2rem; display: flex; align-items: center; justify-content: space-between; position: sticky; top: 0; z-index: 50; }
+  .app-switcher { position: relative; }
+  .switcher-trigger { display: flex; align-items: center; gap: 0.5rem; cursor: pointer; padding: 0.4rem 0.85rem; border-radius: 100px; border: 1px solid rgba(255,255,255,0.15); transition: all 0.18s; user-select: none; background: rgba(255,255,255,0.07); }
+  .switcher-trigger:hover { background: rgba(255,255,255,0.13); border-color: var(--accent-light); }
+  .switcher-trigger .app-name { font-family: 'Nunito', sans-serif; font-weight: 800; font-size: 1rem; color: white; }
+  .switcher-trigger .app-name span { color: var(--yellow); font-style: italic; }
+  .switcher-trigger .chevron { color: rgba(255,255,255,0.4); font-size: 0.65rem; transition: transform 0.2s; }
+  .app-switcher.open .chevron { transform: rotate(180deg); }
+  .switcher-dropdown { display: none; position: absolute; top: calc(100% + 10px); left: 0; background: var(--surface); border: 1px solid var(--border); border-radius: 16px; overflow: hidden; min-width: 272px; box-shadow: 0 20px 56px rgba(0,0,0,0.12); z-index: 100; }
+  .app-switcher.open .switcher-dropdown { display: block; }
+  .switcher-item { display: flex; align-items: center; gap: 0.75rem; padding: 0.8rem 1rem; cursor: pointer; transition: background 0.12s; border-bottom: 1px solid var(--border); }
+  .switcher-item:last-child { border-bottom: none; }
+  .switcher-item:hover { background: var(--accent-xpale); }
+  .switcher-item.current { background: var(--accent-pale); }
+  .switcher-item-icon { width: 32px; height: 32px; border-radius: 9px; display: flex; align-items: center; justify-content: center; font-size: 0.95rem; flex-shrink: 0; }
+  .switcher-item-text .item-name { font-size: 0.84rem; font-weight: 700; color: var(--ink); }
+  .switcher-item-text .item-desc { font-size: 0.69rem; color: var(--slate-soft); margin-top: 0.1rem; }
+  .switcher-item.current .item-name { color: var(--accent); }
+  .disclaimer-badge { font-size: 0.65rem; color: rgba(255,255,255,0.4); border: 1px solid rgba(255,255,255,0.15); padding: 0.3rem 0.85rem; border-radius: 100px; letter-spacing: 0.04em; }
 
-  .container { max-width:860px; margin:0 auto; padding:2.5rem 1.5rem 4rem; }
-  .steps-nav { display:flex; border-radius:12px 12px 0 0; overflow:hidden; border:1px solid var(--border); border-bottom:none; background:white; }
-  .step-tab { flex:1; padding:0.85rem 0.4rem; text-align:center; font-size:0.68rem; font-weight:500; letter-spacing:0.04em; text-transform:uppercase; color:var(--slate-light); cursor:pointer; transition:all 0.2s; border-right:1px solid var(--border); }
-  .step-tab:last-child { border-right:none; }
-  .step-tab.active { background:var(--navy); color:var(--sa-light); }
-  .step-tab.completed { color:var(--green-light); }
-  .step-tab .step-num { display:block; font-family:'Playfair Display',serif; font-size:1.15rem; font-weight:700; margin-bottom:0.15rem; color:inherit; }
-  .step-tab.completed .step-num::after { content:' ✓'; font-size:0.85rem; }
-  .card { background:white; border-radius:0 0 16px 16px; padding:2rem; border:1px solid var(--border); border-top:none; box-shadow:0 4px 24px rgba(15,31,56,0.06); display:none; animation:fadeIn 0.3s ease; }
-  .card.active { display:block; }
-  @keyframes fadeIn { from{opacity:0;transform:translateY(8px);}to{opacity:1;transform:translateY(0);} }
-  .card-title { font-family:'Playfair Display',serif; font-size:1.5rem; color:var(--navy); margin-bottom:0.4rem; }
-  .card-subtitle { color:var(--slate); font-size:0.9rem; margin-bottom:2rem; line-height:1.65; max-width:560px; }
+  /* HERO */
+  .hero { background: var(--ink); padding: 5rem 2rem 6.5rem; text-align: center; position: relative; overflow: hidden; }
+  .hero::before { content: ''; position: absolute; inset: 0; background: radial-gradient(ellipse 60% 70% at 15% 50%, rgba(91,33,182,0.2) 0%, transparent 60%), radial-gradient(ellipse 50% 60% at 85% 20%, rgba(196,181,253,0.1) 0%, transparent 55%), radial-gradient(ellipse 40% 40% at 55% 90%, rgba(26,9,51,0.3) 0%, transparent 50%); pointer-events: none; }
+  .hero-eyebrow { display: inline-flex; align-items: center; gap: 0.5rem; font-size: 0.7rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.2em; color: var(--accent-light); margin-bottom: 1.75rem; padding: 0.35rem 1.1rem; border-radius: 100px; border: 1px solid rgba(149,213,178,0.25); background: rgba(149,213,178,0.08); }
+  .hero h1 { font-family: 'Nunito', sans-serif; font-size: clamp(2.6rem, 7vw, 5rem); color: white; line-height: 1.0; max-width: 780px; margin: 0 auto 1.5rem; font-weight: 800; letter-spacing: -0.03em; }
+  .hero h1 em { font-style: italic; color: var(--accent-light); font-weight: 300; display: block; }
+  .hero p { color: rgba(255,255,255,0.45); font-size: 1rem; max-width: 460px; margin: 0 auto; line-height: 1.75; }
 
-  .two-col { display:grid; grid-template-columns:1fr 1fr; gap:1.25rem; }
-  @media (max-width:580px) { .two-col { grid-template-columns:1fr; } }
-  .field-group { margin-bottom:1.5rem; }
-  .field-group:last-child { margin-bottom:0; }
-  label { display:block; font-size:0.85rem; font-weight:500; color:var(--navy); margin-bottom:0.5rem; }
-  .input-wrap { position:relative; }
-  .input-prefix { position:absolute; left:14px; top:50%; transform:translateY(-50%); color:var(--slate-light); font-size:0.95rem; pointer-events:none; }
-  input[type="number"], select { width:100%; padding:0.75rem 1rem 0.75rem 2rem; border:1.5px solid #ddd; border-radius:8px; font-family:'DM Sans',sans-serif; font-size:1rem; color:var(--navy); background:white; transition:border-color 0.2s; appearance:none; }
-  input[type="number"]:focus, select:focus { outline:none; border-color:var(--sa); box-shadow:0 0 0 3px rgba(124,58,237,0.1); }
-  select { padding-left:1rem; }
-  input.no-prefix { padding-left:1rem; }
-  .hint { font-size:0.78rem; color:var(--slate-light); margin-top:0.4rem; line-height:1.45; }
+  /* CONTAINER */
+  .container { max-width: 900px; margin: 0 auto; padding: 2.5rem 1.5rem 5rem; }
 
-  /* CHECKLIST */
-  .check-list { display:flex; flex-direction:column; gap:0.6rem; }
-  .check-item { display:flex; align-items:flex-start; gap:0.75rem; padding:0.85rem 1rem; border:1.5px solid #ddd; border-radius:10px; cursor:pointer; transition:all 0.18s; }
-  .check-item:hover { border-color:var(--sa); }
-  .check-item.checked { border-color:var(--sa); background:var(--sa-pale); }
-  .check-item-box { width:20px; height:20px; border-radius:5px; border:1.5px solid #ddd; flex-shrink:0; margin-top:2px; display:flex; align-items:center; justify-content:center; transition:all 0.15s; font-size:0.75rem; color:white; }
-  .check-item.checked .check-item-box { background:var(--sa); border-color:var(--sa); }
-  .check-item-label { font-size:0.88rem; font-weight:500; color:var(--navy); margin-bottom:0.15rem; }
-  .check-item-desc { font-size:0.75rem; color:var(--slate-light); line-height:1.4; }
+  /* STEPS */
+  .steps-nav { display: flex; border-radius: 14px 14px 0 0; overflow: hidden; border: 1.5px solid var(--border); border-bottom: none; background: var(--surface); }
+  .step-tab { flex: 1; padding: 0.85rem 0.4rem; text-align: center; font-size: 0.68rem; font-weight: 600; letter-spacing: 0.04em; text-transform: uppercase; color: var(--slate-soft); cursor: pointer; transition: all 0.2s; border-right: 1.5px solid var(--border); }
+  .step-tab:last-child { border-right: none; }
+  .step-tab.active { background: var(--ink); color: var(--accent-light); }
+  .step-tab.completed { color: var(--accent-dark); }
+  .step-tab .step-num { display: block; font-size: 1.1rem; font-weight: 800; margin-bottom: 0.15rem; color: inherit; }
+  .step-tab.completed .step-num::after { content: ' ✓'; font-size: 0.8rem; }
 
-  /* FILING BANNER */
-  .filing-banner { border-radius:12px; padding:1.1rem 1.4rem; margin-bottom:1.25rem; display:flex; align-items:flex-start; gap:0.85rem; }
-  .filing-banner.must-file { background:#fef2f2; border:1.5px solid #fca5a5; }
-  .filing-banner.maybe    { background:#fffbeb; border:1.5px solid #fde68a; }
-  .filing-banner.clear    { background:#f0fdf4; border:1.5px solid #6ee7b7; }
-  .filing-banner-icon { font-size:1.3rem; flex-shrink:0; line-height:1.2; }
-  .filing-banner-title { font-family:'Playfair Display',serif; font-size:1rem; color:var(--navy); margin-bottom:0.25rem; }
-  .filing-banner-desc { font-size:0.82rem; color:var(--slate); line-height:1.55; }
+  /* CARD */
+  .card { background: var(--surface); border-radius: 0 0 16px 16px; padding: 2rem; border: 1.5px solid var(--border); border-top: none; box-shadow: 0 4px 24px rgba(0,0,0,0.06); display: none; animation: fadeIn 0.3s ease; }
+  .card.active { display: block; }
+  @keyframes fadeIn { from { opacity:0; transform:translateY(8px); } to { opacity:1; transform:translateY(0); } }
+  .card-title { font-size: 1.5rem; font-weight: 800; color: var(--ink); margin-bottom: 0.4rem; letter-spacing: -0.02em; }
+  .card-subtitle { color: var(--slate-soft); font-size: 0.9rem; margin-bottom: 2rem; line-height: 1.65; max-width: 560px; }
+
+  /* FORM */
+  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 1.25rem; }
+  @media (max-width: 580px) { .two-col { grid-template-columns: 1fr; } }
+  .field-group { margin-bottom: 1.5rem; }
+  .field-group:last-child { margin-bottom: 0; }
+  label { display: block; font-size: 0.85rem; font-weight: 700; color: var(--ink); margin-bottom: 0.5rem; }
+  .input-wrap { position: relative; }
+  .input-prefix { position: absolute; left: 14px; top: 50%; transform: translateY(-50%); color: var(--slate-soft); font-size: 0.95rem; pointer-events: none; }
+  .input-suffix { position: absolute; right: 14px; top: 50%; transform: translateY(-50%); color: var(--slate-soft); font-size: 0.9rem; pointer-events: none; }
+  input[type="number"], select { width: 100%; padding: 0.75rem 1rem 0.75rem 2rem; border: 1.5px solid #ddd; border-radius: 10px; font-family: 'Nunito', sans-serif; font-size: 1rem; font-weight: 600; color: var(--ink); background: var(--surface); transition: border-color 0.2s; appearance: none; }
+  input[type="number"]:focus, select:focus { outline: none; border-color: var(--accent); box-shadow: 0 0 0 3px rgba(91,33,182,0.1); }
+  input.no-prefix { padding-left: 1rem; }
+  input.has-suffix { padding-right: 2.5rem; }
+  .hint { font-size: 0.76rem; color: var(--slate-soft); margin-top: 0.4rem; line-height: 1.5; }
+
+  /* RADIO */
+  .radio-group { display: flex; gap: 0.75rem; flex-wrap: wrap; }
+  .radio-btn { flex: 1; min-width: 80px; padding: 0.65rem 0.75rem; border: 1.5px solid #ddd; border-radius: 10px; text-align: center; cursor: pointer; font-size: 0.83rem; font-weight: 600; transition: all 0.18s; color: var(--slate-soft); }
+  .radio-btn:hover { border-color: var(--accent); }
+  .radio-btn.selected { border-color: var(--accent); background: var(--accent-xpale); color: var(--ink); }
+
+  /* TOGGLE */
+  .toggle-row { display: flex; align-items: center; justify-content: space-between; padding: 1rem 1.25rem; background: var(--stone-pale); border-radius: 10px; margin-bottom: 1rem; }
+  .toggle-label { font-size: 0.88rem; font-weight: 700; color: var(--ink); }
+  .toggle-desc { font-size: 0.76rem; color: var(--slate-soft); margin-top: 0.15rem; }
+  .toggle-switch { position: relative; width: 44px; height: 24px; flex-shrink: 0; }
+  .toggle-switch input { opacity: 0; width: 0; height: 0; }
+  .toggle-slider { position: absolute; inset: 0; background: #ddd; border-radius: 100px; cursor: pointer; transition: 0.2s; }
+  .toggle-slider::before { content: ''; position: absolute; width: 18px; height: 18px; border-radius: 50%; background: white; left: 3px; top: 3px; transition: 0.2s; }
+  input:checked + .toggle-slider { background: var(--accent); }
+  input:checked + .toggle-slider::before { transform: translateX(20px); }
 
   /* RESULTS */
-  .results-grid { display:grid; grid-template-columns:repeat(auto-fit, minmax(150px,1fr)); gap:0.85rem; margin:1.5rem 0; }
-  .result-box { background:var(--navy); border-radius:12px; padding:1.1rem; text-align:center; }
-  .result-box.sa   { background:linear-gradient(135deg,var(--sa-dark) 0%,var(--sa) 100%); }
-  .result-box.good { background:linear-gradient(135deg,var(--green) 0%,var(--green-light) 100%); }
-  .result-box.warn { background:linear-gradient(135deg,#92400e 0%,#b45309 100%); }
-  .result-box.highlight { background:linear-gradient(135deg,#374151 0%,var(--navy) 100%); border:1px solid rgba(124,58,237,0.2); }
-  .result-box .r-label { font-size:0.68rem; text-transform:uppercase; letter-spacing:0.07em; color:rgba(255,255,255,0.55); margin-bottom:0.4rem; }
-  .result-box .r-amount { font-family:'Playfair Display',serif; font-size:1.65rem; font-weight:700; color:white; line-height:1; }
-  .result-box .r-sub { font-size:0.68rem; color:rgba(255,255,255,0.4); margin-top:0.25rem; }
+  .results-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 0.85rem; margin: 1.5rem 0; }
+  .result-box { background: var(--ink); border-radius: 14px; padding: 1.1rem; text-align: center; }
+  .result-box.forest { background: linear-gradient(135deg, var(--accent) 0%, var(--accent-dark) 100%); }
+  .result-box.sky    { background: linear-gradient(135deg, #2a7a9a 0%, var(--sky) 100%); }
+  .result-box.warn   { background: linear-gradient(135deg, #92400e 0%, var(--amber) 100%); }
+  .result-box.good   { background: linear-gradient(135deg, #065f46 0%, #059669 100%); }
+  .result-box.highlight { background: linear-gradient(135deg, #374151 0%, var(--ink) 100%); border: 1px solid rgba(149,213,178,0.2); }
+  .result-box.danger { background: linear-gradient(135deg, #7f1d1d 0%, var(--red) 100%); }
+  .r-label { font-size: 0.65rem; text-transform: uppercase; letter-spacing: 0.08em; color: rgba(255,255,255,0.55); margin-bottom: 0.4rem; font-weight: 700; }
+  .r-amount { font-size: 1.55rem; font-weight: 800; color: white; line-height: 1; letter-spacing: -0.02em; }
+  .r-sub { font-size: 0.67rem; color: rgba(255,255,255,0.45); margin-top: 0.25rem; }
 
-  /* BREAKDOWN TABLE */
-  .breakdown-table { width:100%; border-collapse:collapse; font-size:0.85rem; margin:1rem 0; }
-  .breakdown-table th { padding:0.6rem 0.85rem; text-align:left; font-size:0.7rem; text-transform:uppercase; letter-spacing:0.06em; color:var(--slate-light); border-bottom:2px solid rgba(124,58,237,0.15); }
-  .breakdown-table th.sa-col { color:var(--sa-dark); }
-  .breakdown-table td { padding:0.65rem 0.85rem; border-bottom:1px solid rgba(0,0,0,0.05); color:var(--slate); }
-  .breakdown-table tr:last-child td { border-bottom:none; }
-  .breakdown-table td:first-child { font-weight:500; color:var(--navy); font-size:0.82rem; }
-  .breakdown-table td.positive { color:var(--green); font-weight:600; }
-  .breakdown-table td.negative { color:var(--red); font-weight:600; }
-  .breakdown-table tr.total-row td { font-weight:700; color:var(--navy); border-top:2px solid rgba(124,58,237,0.2); font-size:0.9rem; }
+  /* SCENARIO CARDS */
+  .scenario-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; margin: 1.5rem 0; }
+  @media (max-width: 640px) { .scenario-grid { grid-template-columns: 1fr; } }
+  .scenario-card { border-radius: 14px; padding: 1.5rem; border: 2px solid var(--border); background: var(--surface); transition: all 0.2s; position: relative; }
+  .scenario-card.best { border-color: var(--accent); background: var(--accent-xpale); }
+  .scenario-card.best::before { content: '★ Best financial return'; position: absolute; top: 0; left: 50%; transform: translateX(-50%) translateY(-50%); background: var(--accent); color: white; font-size: 0.65rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.06em; padding: 0.2rem 0.7rem; border-radius: 100px; white-space: nowrap; }
+  .sc-icon { font-size: 1.8rem; margin-bottom: 0.75rem; }
+  .sc-title { font-size: 0.95rem; font-weight: 800; color: var(--ink); margin-bottom: 0.25rem; }
+  .sc-subtitle { font-size: 0.75rem; color: var(--slate-soft); margin-bottom: 1rem; line-height: 1.5; }
+  .sc-metric { display: flex; justify-content: space-between; padding: 0.35rem 0; border-bottom: 1px solid rgba(0,0,0,0.06); font-size: 0.8rem; }
+  .sc-metric:last-child { border-bottom: none; }
+  .sc-metric-label { color: var(--slate-soft); }
+  .sc-metric-val { font-weight: 700; color: var(--ink); }
+  .sc-metric-val.green { color: var(--accent); }
+  .sc-metric-val.red   { color: var(--red); }
+  .sc-metric-val.amber { color: var(--amber); }
 
-  .guidance-box { border-left:3px solid var(--sa); background:var(--sa-pale); border-radius:0 8px 8px 0; padding:1rem 1.25rem; margin:1rem 0; }
-  .guidance-box h4 { font-size:0.85rem; font-weight:600; color:var(--navy); margin-bottom:0.4rem; }
-  .guidance-box p, .guidance-box li { font-size:0.84rem; color:var(--slate); line-height:1.65; }
-  .guidance-box ul { padding-left:1.1rem; margin-top:0.3rem; }
-  .guidance-box li { margin-bottom:0.3rem; }
-  .alert-box { border-left:3px solid var(--green-light); background:rgba(64,145,108,0.06); border-radius:0 8px 8px 0; padding:0.9rem 1.1rem; margin:0.75rem 0; }
-  .alert-box.warning { border-left-color:#d97706; background:#fffbeb; }
-  .alert-box.danger  { border-left-color:var(--red); background:#fef2f2; }
-  .alert-box h4 { font-size:0.83rem; font-weight:600; color:var(--navy); margin-bottom:0.3rem; }
-  .alert-box p { font-size:0.83rem; color:var(--slate); line-height:1.6; }
+  /* COMPARE TABLE */
+  .compare-table { width: 100%; border-collapse: collapse; font-size: 0.84rem; margin: 1rem 0; }
+  .compare-table th { padding: 0.6rem 0.85rem; text-align: left; font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.06em; color: var(--slate-soft); border-bottom: 2px solid var(--border); font-weight: 700; }
+  .compare-table th.c1 { color: var(--accent); }
+  .compare-table th.c2 { color: #2a7a9a; }
+  .compare-table th.c3 { color: var(--amber); }
+  .compare-table td { padding: 0.65rem 0.85rem; border-bottom: 1px solid rgba(0,0,0,0.05); color: var(--slate-soft); }
+  .compare-table tr:last-child td { border-bottom: none; }
+  .compare-table td:first-child { font-weight: 700; color: var(--ink); font-size: 0.82rem; }
+  .compare-table td.win  { color: var(--accent); font-weight: 700; }
+  .compare-table td.lose { color: var(--red); }
+  .compare-table tr.total-row td { font-weight: 800; border-top: 2px solid var(--border); color: var(--ink); }
 
-  /* DEADLINE TIMELINE */
-  .deadline-list { display:flex; flex-direction:column; gap:0; margin:1rem 0; }
-  .deadline-item { display:flex; gap:1rem; align-items:flex-start; padding:0.85rem 0; border-bottom:1px solid rgba(0,0,0,0.06); }
-  .deadline-item:last-child { border-bottom:none; }
-  .deadline-dot { width:10px; height:10px; border-radius:50%; flex-shrink:0; margin-top:5px; }
-  .deadline-dot.done   { background:var(--slate-light); }
-  .deadline-dot.next   { background:var(--sa); box-shadow:0 0 0 3px rgba(124,58,237,0.2); }
-  .deadline-dot.urgent { background:var(--red); box-shadow:0 0 0 3px rgba(185,28,28,0.2); }
-  .deadline-date { font-size:0.82rem; font-weight:700; color:var(--navy); min-width:120px; flex-shrink:0; }
-  .deadline-desc { font-size:0.82rem; color:var(--slate); line-height:1.5; }
+  /* GUIDANCE */
+  .guidance-box { border-left: 3px solid var(--accent); background: var(--accent-xpale); border-radius: 0 10px 10px 0; padding: 1rem 1.25rem; margin: 1rem 0; }
+  .guidance-box h4 { font-size: 0.85rem; font-weight: 800; color: var(--ink); margin-bottom: 0.4rem; }
+  .guidance-box p, .guidance-box li { font-size: 0.84rem; color: var(--slate-soft); line-height: 1.65; }
+  .guidance-box ul { padding-left: 1.1rem; margin-top: 0.4rem; }
+  .guidance-box li { margin-bottom: 0.3rem; }
+  .alert-box { border-left: 3px solid var(--accent-dark); background: rgba(64,145,108,0.06); border-radius: 0 10px 10px 0; padding: 0.9rem 1.1rem; margin: 0.75rem 0; }
+  .alert-box.warning { border-left-color: var(--amber); background: #fffbeb; }
+  .alert-box.info    { border-left-color: var(--sky); background: #f0f9ff; }
+  .alert-box h4 { font-size: 0.83rem; font-weight: 800; color: var(--ink); margin-bottom: 0.3rem; }
+  .alert-box p  { font-size: 0.83rem; color: var(--slate-soft); line-height: 1.6; }
 
   /* SUMMARY */
-  .summary-panel { background:var(--navy); border-radius:12px; padding:1.5rem; margin-top:1.5rem; }
-  .summary-title { font-family:'Playfair Display',serif; color:var(--sa-light); font-size:1rem; margin-bottom:1rem; }
-  .summary-row { display:flex; justify-content:space-between; padding:0.45rem 0; border-bottom:1px solid rgba(255,255,255,0.07); font-size:0.85rem; }
-  .summary-row:last-child { border-bottom:none; }
-  .summary-row .s-label { color:rgba(255,255,255,0.5); }
-  .summary-row .s-val { color:white; font-weight:500; }
-  .summary-row .s-val.sa   { color:var(--sa-light); font-weight:600; }
-  .summary-row .s-val.good { color:#6ee7b7; }
-  .summary-row .s-val.warn { color:#fbbf24; }
+  .summary-panel { background: var(--ink); border-radius: 14px; padding: 1.5rem; margin-top: 1.5rem; }
+  .summary-title { font-size: 1rem; font-weight: 800; color: var(--accent-light); margin-bottom: 1rem; }
+  .summary-row { display: flex; justify-content: space-between; padding: 0.45rem 0; border-bottom: 1px solid rgba(255,255,255,0.07); font-size: 0.85rem; }
+  .summary-row:last-child { border-bottom: none; }
+  .summary-row .s-label { color: rgba(255,255,255,0.45); }
+  .summary-row .s-val   { color: white; font-weight: 700; }
+  .summary-row .s-val.green { color: var(--accent-light); }
+  .summary-row .s-val.warn  { color: #fbbf24; }
 
-  .pdf-inline-cta { display:none; margin-top:1.5rem; background:var(--cream); border:1.5px solid var(--border); border-radius:12px; padding:1.1rem 1.25rem; }
-  .pdf-inline-cta.visible { display:block; }
-  .pdf-inline-inner { display:flex; align-items:center; justify-content:space-between; gap:1rem; flex-wrap:wrap; }
-  .pdf-inline-text strong { display:block; font-family:'Playfair Display',serif; font-size:0.95rem; color:var(--navy); margin-bottom:0.2rem; }
-  .pdf-inline-text span { font-size:0.75rem; color:var(--slate-light); }
-  .pdf-inline-right { display:flex; align-items:center; gap:0.75rem; flex-shrink:0; }
-  .pdf-inline-price { font-family:'Playfair Display',serif; font-size:1.1rem; font-weight:700; color:var(--navy); }
-  .pdf-inline-btn { padding:0.65rem 1.25rem; border-radius:8px; font-family:'DM Sans',sans-serif; font-size:0.88rem; font-weight:600; text-decoration:none; white-space:nowrap; transition:all 0.2s; background:var(--navy); color:white; border:none; cursor:pointer; display:inline-block; }
-  .pdf-inline-btn:hover { opacity:0.85; }
-  .pdf-inline-btn.paid { background:#40916c; }
+  /* PDF & ADVISER */
+  .pdf-inline-cta { display: none; margin-top: 1.5rem; background: var(--stone-pale); border: 1.5px solid var(--border); border-radius: 14px; padding: 1.1rem 1.25rem; }
+  .pdf-inline-cta.visible { display: block; }
+  .pdf-inline-inner { display: flex; align-items: center; justify-content: space-between; gap: 1rem; flex-wrap: wrap; }
+  .pdf-inline-text strong { display: block; font-size: 0.95rem; font-weight: 800; color: var(--ink); margin-bottom: 0.2rem; }
+  .pdf-inline-text span   { font-size: 0.75rem; color: var(--slate-soft); }
+  .pdf-inline-right { display: flex; align-items: center; gap: 0.75rem; flex-shrink: 0; }
+  .pdf-inline-price { font-size: 1.1rem; font-weight: 800; color: var(--ink); }
+  .pdf-inline-btn { padding: 0.65rem 1.25rem; border-radius: 100px; font-family: 'Nunito', sans-serif; font-size: 0.88rem; font-weight: 700; text-decoration: none; white-space: nowrap; transition: all 0.2s; background: var(--ink); color: white; border: none; cursor: pointer; display: inline-block; }
+  .pdf-inline-btn:hover { opacity: 0.85; }
+  .pdf-inline-btn.paid { background: var(--accent); }
+  .adviser-cta { background: linear-gradient(135deg, var(--ink) 0%, var(--ink-mid) 100%); border-radius: 14px; padding: 1.1rem 1.5rem; margin-top: 0.75rem; display: block; border: 1px solid rgba(255,255,255,0.07); }
+  .adviser-cta-inner { display: flex; align-items: center; justify-content: space-between; gap: 1rem; flex-wrap: wrap; }
+  .adviser-cta-text strong { display: block; font-size: 0.95rem; font-weight: 800; color: white; margin-bottom: 0.2rem; }
+  .adviser-cta-text span   { font-size: 0.75rem; color: rgba(255,255,255,0.4); }
+  .adviser-cta-btn { padding: 0.65rem 1.25rem; border-radius: 100px; font-family: 'Nunito', sans-serif; font-size: 0.85rem; font-weight: 700; text-decoration: none; white-space: nowrap; background: var(--yellow); color: var(--ink); flex-shrink: 0; transition: all 0.2s; }
+  .adviser-cta-btn:hover { background: #e0c000; }
 
-  .adviser-cta { background:linear-gradient(135deg,var(--navy) 0%,#162d4f 100%); border-radius:12px; padding:1.1rem 1.5rem; margin:0.75rem 0 0; border:1px solid rgba(255,255,255,0.08); display:none; }
-  .adviser-cta.visible { display:block; }
-  .adviser-cta-inner { display:flex; align-items:center; justify-content:space-between; gap:1rem; flex-wrap:wrap; }
-  .adviser-cta-text strong { display:block; font-family:'Playfair Display',serif; font-size:0.95rem; color:white; margin-bottom:0.2rem; }
-  .adviser-cta-text span { font-size:0.75rem; color:rgba(255,255,255,0.45); }
-  .adviser-cta-btn { padding:0.65rem 1.25rem; border-radius:8px; font-family:'DM Sans',sans-serif; font-size:0.85rem; font-weight:600; text-decoration:none; white-space:nowrap; transition:all 0.2s; flex-shrink:0; background:white; color:var(--navy); }
+  /* CHAT */
+  .chat-wrap { max-width: 900px; margin: 0 auto; padding: 0 1.5rem 2.5rem; }
+  .chat-divider { display: flex; align-items: center; gap: 0.75rem; margin-bottom: 1rem; font-size: 0.65rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--slate-soft); }
+  .chat-divider::before, .chat-divider::after { content: ''; flex: 1; height: 1px; background: var(--border); }
+  .chat-box { background: var(--surface); border-radius: 16px; border: 1.5px solid var(--border); box-shadow: 0 4px 24px rgba(0,0,0,0.05); overflow: hidden; }
+  .chat-head { background: var(--ink); padding: 0.9rem 1.25rem; display: flex; align-items: center; gap: 0.75rem; }
+  .chat-head-icon { width: 30px; height: 30px; border-radius: 50%; background: rgba(149,213,178,0.2); display: flex; align-items: center; justify-content: center; font-size: 0.9rem; flex-shrink: 0; }
+  .chat-head-title { font-size: 0.95rem; font-weight: 800; color: white; }
+  .chat-head-sub { font-size: 0.68rem; color: rgba(255,255,255,0.4); margin-top: 0.05rem; }
+  .chat-msgs { padding: 1rem 1.25rem; max-height: 340px; overflow-y: auto; display: flex; flex-direction: column; gap: 0.85rem; scroll-behavior: smooth; }
+  .chat-msg { display: flex; gap: 0.6rem; align-items: flex-start; animation: fadeIn 0.2s ease; }
+  .chat-msg.user { flex-direction: row-reverse; }
+  .msg-av { width: 26px; height: 26px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.7rem; font-weight: 700; flex-shrink: 0; margin-top: 2px; }
+  .chat-msg.ai   .msg-av { background: var(--ink); color: rgba(255,255,255,0.7); }
+  .chat-msg.user .msg-av { background: var(--accent); color: white; }
+  .msg-bub { max-width: 80%; padding: 0.65rem 0.9rem; border-radius: 12px; font-size: 0.84rem; line-height: 1.65; }
+  .chat-msg.ai   .msg-bub { background: var(--stone-pale); color: var(--ink); border-radius: 4px 12px 12px 12px; }
+  .chat-msg.user .msg-bub { background: var(--ink); color: white; border-radius: 12px 4px 12px 12px; }
+  .msg-bub p { margin-bottom: 0.4rem; } .msg-bub p:last-child { margin-bottom: 0; }
+  .chat-typing { display: flex; gap: 3px; align-items: center; padding: 0.2rem 0; }
+  .chat-typing span { width: 6px; height: 6px; border-radius: 50%; background: var(--slate-soft); animation: typeBounce 1.2s infinite; }
+  .chat-typing span:nth-child(2) { animation-delay: 0.2s; }
+  .chat-typing span:nth-child(3) { animation-delay: 0.4s; }
+  @keyframes typeBounce { 0%,60%,100%{transform:translateY(0);opacity:0.4;} 30%{transform:translateY(-4px);opacity:1;} }
+  .chat-chips { padding: 0 1.25rem 0.6rem; display: flex; gap: 0.4rem; flex-wrap: wrap; }
+  .chat-chip { font-size: 0.73rem; padding: 0.28rem 0.7rem; border-radius: 100px; border: 1.5px solid var(--border); background: var(--surface); color: var(--slate-soft); cursor: pointer; transition: all 0.15s; white-space: nowrap; font-weight: 600; }
+  .chat-chip:hover { border-color: var(--accent); color: var(--ink); background: var(--accent-xpale); }
+  .chat-input-wrap { display: flex; gap: 0.5rem; padding: 0.75rem 1.25rem 1rem; border-top: 1px solid var(--border); align-items: flex-end; }
+  .chat-textarea { flex: 1; padding: 0.6rem 0.85rem; border: 1.5px solid #ddd; border-radius: 100px; font-family: 'Nunito', sans-serif; font-size: 0.88rem; color: var(--ink); resize: none; min-height: 40px; max-height: 110px; line-height: 1.5; transition: border-color 0.2s; background: var(--stone-pale); }
+  .chat-textarea:focus { outline: none; border-color: var(--accent); }
+  .chat-send { width: 40px; height: 40px; border-radius: 100px; background: var(--yellow); border: none; color: var(--ink); cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 1rem; font-weight: 800; flex-shrink: 0; transition: all 0.15s; }
+  .chat-send:hover { background: #e0c000; transform: scale(1.08); }
+  .chat-send:disabled { opacity: 0.3; cursor: not-allowed; transform: none; }
+  .chat-footer-note { text-align: center; font-size: 0.68rem; color: var(--slate-soft); padding: 0 1.25rem 0.85rem; line-height: 1.5; }
 
-  .chat-wrap { max-width:860px; margin:0 auto; padding:0 1.5rem 2.5rem; }
-  .chat-divider { display:flex; align-items:center; gap:0.75rem; margin-bottom:1rem; font-size:0.65rem; text-transform:uppercase; letter-spacing:0.1em; color:var(--slate-light); }
-  .chat-divider::before, .chat-divider::after { content:''; flex:1; height:1px; background:rgba(0,0,0,0.08); }
-  .chat-box { background:white; border-radius:16px; border:1px solid var(--border); box-shadow:0 4px 24px rgba(15,31,56,0.06); overflow:hidden; }
-  .chat-head { background:var(--navy); padding:0.9rem 1.25rem; display:flex; align-items:center; gap:0.75rem; }
-  .chat-head-icon { width:30px; height:30px; border-radius:50%; background:rgba(255,255,255,0.12); display:flex; align-items:center; justify-content:center; font-size:0.9rem; flex-shrink:0; }
-  .chat-head-title { font-family:'Playfair Display',serif; font-size:0.9rem; color:white; }
-  .chat-head-sub { font-size:0.68rem; color:rgba(255,255,255,0.4); margin-top:0.05rem; }
-  .chat-msgs { padding:1rem 1.25rem; max-height:380px; overflow-y:auto; display:flex; flex-direction:column; gap:0.85rem; scroll-behavior:smooth; }
-  .chat-msg { display:flex; gap:0.6rem; align-items:flex-start; animation:fadeIn 0.2s ease; }
-  .chat-msg.user { flex-direction:row-reverse; }
-  .msg-av { width:26px; height:26px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:0.7rem; font-weight:600; flex-shrink:0; margin-top:2px; }
-  .chat-msg.ai .msg-av { background:var(--navy); color:rgba(255,255,255,0.7); }
-  .chat-msg.user .msg-av { background:#f3f4f6; color:var(--slate); }
-  .msg-bub { max-width:80%; padding:0.65rem 0.9rem; border-radius:12px; font-size:0.84rem; line-height:1.65; }
-  .chat-msg.ai .msg-bub { background:#f3f4f6; color:var(--navy); border-radius:4px 12px 12px 12px; }
-  .chat-msg.user .msg-bub { background:var(--navy); color:white; border-radius:12px 4px 12px 12px; }
-  .msg-bub p { margin-bottom:0.4rem; } .msg-bub p:last-child { margin-bottom:0; }
-  .chat-typing { display:flex; gap:3px; align-items:center; padding:0.2rem 0; }
-  .chat-typing span { width:6px; height:6px; border-radius:50%; background:var(--slate-light); animation:typeBounce 1.2s infinite; }
-  .chat-typing span:nth-child(2) { animation-delay:0.2s; }
-  .chat-typing span:nth-child(3) { animation-delay:0.4s; }
-  @keyframes typeBounce { 0%,60%,100%{transform:translateY(0);opacity:0.4;}30%{transform:translateY(-4px);opacity:1;} }
-  .chat-chips { padding:0 1.25rem 0.6rem; display:flex; gap:0.4rem; flex-wrap:wrap; }
-  .chat-chip { font-size:0.73rem; padding:0.28rem 0.65rem; border-radius:20px; border:1px solid var(--border); background:white; color:var(--slate); cursor:pointer; transition:all 0.15s; white-space:nowrap; }
-  .chat-chip:hover { border-color:var(--sa); color:var(--navy); background:var(--sa-pale); }
-  .chat-input-wrap { display:flex; gap:0.5rem; padding:0.75rem 1.25rem 1rem; border-top:1px solid rgba(0,0,0,0.07); align-items:flex-end; }
-  .chat-textarea { flex:1; padding:0.6rem 0.85rem; border:1.5px solid #ddd; border-radius:10px; font-family:'DM Sans',sans-serif; font-size:0.88rem; color:var(--navy); resize:none; min-height:40px; max-height:110px; line-height:1.5; transition:border-color 0.2s; background:white; }
-  .chat-textarea:focus { outline:none; border-color:var(--sa); box-shadow:0 0 0 3px rgba(124,58,237,0.1); }
-  .chat-send { width:40px; height:40px; border-radius:10px; background:var(--navy); border:none; color:white; cursor:pointer; display:flex; align-items:center; justify-content:center; font-size:1rem; flex-shrink:0; transition:opacity 0.15s; }
-  .chat-send:hover { opacity:0.85; } .chat-send:disabled { opacity:0.3; cursor:not-allowed; }
-  .chat-footer-note { text-align:center; font-size:0.68rem; color:var(--slate-light); padding:0 1.25rem 0.85rem; line-height:1.5; }
+  hr { border: none; border-top: 1px solid var(--border); margin: 1.5rem 0; }
+  .btn-primary { background: var(--accent); color: white; border: none; padding: 0.85rem 2rem; border-radius: 100px; font-family: 'Nunito', sans-serif; font-size: 0.95rem; font-weight: 800; cursor: pointer; transition: all 0.2s; }
+  .btn-primary:hover { background: var(--ink); transform: translateY(-1px); box-shadow: 0 4px 14px rgba(91,33,182,0.3); }
+  .btn-secondary { background: transparent; color: var(--slate-soft); border: 1.5px solid #ddd; padding: 0.85rem 1.5rem; border-radius: 100px; font-family: 'Nunito', sans-serif; font-size: 0.9rem; font-weight: 700; cursor: pointer; transition: all 0.2s; }
+  .btn-secondary:hover { border-color: var(--ink); color: var(--ink); }
+  .btn-row { display: flex; gap: 0.75rem; margin-top: 2rem; justify-content: flex-end; flex-wrap: wrap; }
 
-  hr { border:none; border-top:1px solid rgba(0,0,0,0.08); margin:1.5rem 0; }
-  .btn-primary { background:var(--sa); color:white; border:none; padding:0.85rem 2rem; border-radius:8px; font-family:'DM Sans',sans-serif; font-size:0.95rem; font-weight:600; cursor:pointer; transition:all 0.2s; }
-  .btn-primary:hover { background:var(--sa-dark); transform:translateY(-1px); box-shadow:0 4px 12px rgba(124,58,237,0.3); }
-  .btn-secondary { background:transparent; color:var(--slate); border:1.5px solid #ddd; padding:0.85rem 1.5rem; border-radius:8px; font-family:'DM Sans',sans-serif; font-size:0.9rem; font-weight:500; cursor:pointer; transition:all 0.2s; }
-  .btn-secondary:hover { border-color:var(--navy); color:var(--navy); }
-  .btn-row { display:flex; gap:0.75rem; margin-top:2rem; justify-content:flex-end; flex-wrap:wrap; }
-
-  @media (max-width:600px) {
-    header { padding:1rem 1.25rem; }
-    .hero { padding:2.5rem 1.25rem 3.5rem; }
-    .container { padding:2rem 1.25rem 3rem; }
-    .card { padding:1.5rem 1.25rem; }
-    .step-tab { font-size:0.6rem; padding:0.7rem 0.2rem; }
+  @media (max-width: 600px) {
+    header { padding: 1rem 1.25rem; }
+    .hero { padding: 3rem 1.25rem 4rem; }
+    .container { padding: 2rem 1.25rem 3rem; }
+    .step-tab { font-size: 0.58rem; padding: 0.7rem 0.2rem; }
+    .card { padding: 1.5rem 1.25rem; }
   }
-
-  /* ── Tooltip system ─────────────────────────────────────── */
-  .tooltip-wrap { position: relative; display: inline; }
-  .tooltip-icon {
-    display: inline-flex; align-items: center; justify-content: center;
-    width: 1.1rem; height: 1.1rem; border-radius: 50%;
-    background: var(--sa-pale, #f5f3ff); color: var(--navy);
-    font-size: 0.65rem; font-weight: 700; cursor: help;
-    vertical-align: middle; margin-left: 0.3rem; border: none;
-    font-family: 'DM Sans', sans-serif;
-  }
-  .tooltip-bubble {
-    display: none; position: absolute; bottom: calc(100% + 8px); left: 50%;
-    transform: translateX(-50%); background: var(--navy); color: #fff;
-    padding: 0.6rem 0.85rem; border-radius: 8px; font-size: 0.78rem;
-    line-height: 1.5; width: max-content; max-width: 280px;
-    box-shadow: 0 4px 16px rgba(0,0,0,0.18); z-index: 100;
-    font-family: 'DM Sans', sans-serif; font-weight: 400;
-  }
-  .tooltip-bubble::after {
-    content: ''; position: absolute; top: 100%; left: 50%;
-    transform: translateX(-50%); border: 6px solid transparent;
-    border-top-color: var(--navy);
-  }
-  .tooltip-wrap:hover .tooltip-bubble,
-  .tooltip-wrap:focus-within .tooltip-bubble { display: block; }
-
-  /* ── Privacy badge ──────────────────────────────────────── */
-  .privacy-badge {
-    display: flex; align-items: center; gap: 0.5rem;
-    background: #f0fdf4; border: 1px solid #bbf7d0;
-    border-radius: 8px; padding: 0.5rem 0.85rem;
-    font-size: 0.78rem; color: #166534; margin-bottom: 0.75rem;
-  }
-
-  /* ── Breakdown toggle ───────────────────────────────────── */
-  .breakdown-toggle { margin-top: 0.75rem; }
-  .breakdown-toggle summary {
-    font-size: 0.82rem; font-weight: 500; color: var(--slate);
-    cursor: pointer; padding: 0.4rem 0; list-style: none;
-    display: flex; align-items: center; gap: 0.4rem;
-  }
-  .breakdown-toggle summary::before { content: '▸'; transition: transform 0.2s; }
-  .breakdown-toggle[open] summary::before { transform: rotate(90deg); }
-  .breakdown-toggle summary::-webkit-details-marker { display: none; }
-
-  /* ── Step reassurance ───────────────────────────────────── */
-  .step-reassurance {
-    font-size: 0.8rem; color: var(--sa-light, #c4b5fd); text-align: right;
-    margin: 1rem 0 0.25rem; font-style: italic;
-  }
-
-  /* ── Softer result boxes ────────────────────────────────── */
-  .result-box {
-    background: #f8f9fa !important; border-radius: 12px;
-    padding: 1.1rem; text-align: center;
-    border: 1px solid rgba(0,0,0,0.06);
-  }
-  .result-box .r-label { color: var(--slate-light) !important; }
-  .result-box .r-amount { color: var(--navy) !important; }
-  .result-box .r-sub { color: var(--slate-light) !important; }
-  .result-box.sa {
-    background: var(--sa-pale, #f5f3ff) !important;
-    border-color: rgba(124,58,237,0.15) !important;
-  }
-  .result-box.sa .r-amount { color: var(--navy) !important; }
-  .result-box.good {
-    background: #f0fdf4 !important;
-    border-color: #bbf7d0 !important;
-  }
-  .result-box.good .r-amount { color: var(--green) !important; }
-  .result-box.warn {
-    background: #fffbeb !important;
-    border-color: #fde68a !important;
-  }
-  .result-box.warn .r-amount { color: var(--amber) !important; }
-
-  /* ── Active tab text fix ────────────────────────────────── */
-  .step-tab.active.completed { color: white !important; }
-  .email-capture { padding: 2.5rem 1rem; text-align: center; }
-  .ec-inner { max-width: 480px; margin: 0 auto; background: rgba(255,255,255,0.85); border-radius: 16px; padding: 2rem 1.5rem; box-shadow: 0 2px 16px rgba(0,0,0,0.06); }
-  .ec-inner h3 { font-family: 'Playfair Display', serif; font-size: 1.35rem; color: #1e293b; margin: 0 0 0.5rem; }
-  .ec-inner p { font-size: 0.88rem; color: #64748b; margin: 0 0 1.25rem; line-height: 1.5; }
-  .ec-btn { display: inline-block; padding: 0.7rem 2rem; border-radius: 8px; border: none; font-family: 'DM Sans', sans-serif; font-size: 0.95rem; font-weight: 600; color: #fff; background: #7c3aed; cursor: pointer; transition: opacity 0.2s; }
-  .ec-btn:hover { opacity: 0.88; }
-
-  /* ── Action plan checklist ──────────── */
-  .action-plan { background: var(--stone-pale); border-radius: 12px; border: 1px solid rgba(0,0,0,0.06); padding: 1.25rem 1.25rem 1rem; }
-  .action-plan-title { font-family: 'Playfair Display', serif; font-size: 1rem; font-weight: 600; color: var(--navy); margin-bottom: 0.25rem; }
-  .action-plan-subtitle { font-size: 0.78rem; color: var(--slate); margin-bottom: 1rem; line-height: 1.4; }
-  .action-item { display: flex; align-items: flex-start; gap: 0.6rem; padding: 0.6rem 0; border-bottom: 1px solid rgba(0,0,0,0.06); }
-  .action-item:last-child { border-bottom: none; }
-  .action-item input[type="checkbox"] { width: 18px; height: 18px; margin-top: 2px; accent-color: var(--sa, #7c3aed); flex-shrink: 0; cursor: pointer; }
-  .action-item-text { font-size: 0.85rem; color: var(--navy); line-height: 1.45; }
-  .action-item-text .action-hint { display: block; font-size: 0.72rem; color: var(--slate); margin-top: 0.15rem; }
 </style>
 </head>
 <body>
@@ -406,35 +319,37 @@
 <header>
   <div class="app-switcher" id="appSwitcher">
     <div class="switcher-trigger" onclick="toggleSwitcher(event)">
-      <div class="app-name">My Self <span>Assessment</span></div>
+      <div class="app-name">MySelf<span>Assessment</span></div>
       <div class="chevron">&#9660;</div>
     </div>
     <div class="switcher-dropdown">
       <div class="switcher-item" onclick="window.location.href='index.html'">
         <div class="switcher-item-icon" style="background:rgba(255,255,255,0.06);">&#127968;</div>
-        <div class="switcher-item-text"><div class="item-name" style="color:rgba(255,255,255,0.4);font-size:0.8rem;">&#8592; My Pay Picture</div></div>
+        <div class="switcher-item-text"><div class="item-name" style="color:rgba(255,255,255,0.4);font-size:0.8rem;">&#8592; MyPayPicture</div></div>
       </div>
       <div class="switcher-item" onclick="window.location.href='pension-optimiser.html'">
         <div class="switcher-item-icon" style="background:rgba(13,148,136,0.15);">&#128200;</div>
-        <div class="switcher-item-text"><div class="item-name">My Pension Optimiser</div><div class="item-desc">Put more in your pension, pay less tax.</div></div>
+        <div class="switcher-item-text"><div class="item-name">MyPensionOptimiser</div><div class="item-desc">Optimising your pension? Pay less tax.</div></div>
       </div>
-      <!-- Pension Reclaim and Pension Top-Up hidden -->
+      <div class="switcher-item" onclick="window.location.href='pension-reclaim.html'">
+        <div class="switcher-item-icon" style="background:rgba(201,168,76,0.15);">&#128176;</div>
+        <div class="switcher-item-text"><div class="item-name">MyPensionReclaim</div><div class="item-desc">Missed salary sacrifice? Get it back.</div></div>
+      </div>
+      <div class="switcher-item" onclick="window.location.href='pension-topup.html'">
+        <div class="switcher-item-icon" style="background:rgba(237,172,0,0.15);">&#10133;</div>
+        <div class="switcher-item-text"><div class="item-name">MyPensionTop-Up</div><div class="item-desc">The government helps pay for it.</div></div>
+      </div>
       <div class="switcher-item" onclick="window.location.href='family-benefits.html'">
         <div class="switcher-item-icon" style="background:rgba(244,167,185,0.2);">&#128106;</div>
-        <div class="switcher-item-text"><div class="item-name">My Family &amp; Benefits</div><div class="item-desc">Earn over £50k with kids? Keep your benefits.</div></div>
+        <div class="switcher-item-text"><div class="item-name">MyFamily&amp;Benefits</div><div class="item-desc">Paying the Child Benefit charge? Reduce it.</div></div>
       </div>
       <div class="switcher-item current" style="cursor:default;">
         <div class="switcher-item-icon" style="background:rgba(124,58,237,0.15);">&#128203;</div>
-        <div class="switcher-item-text"><div class="item-name">My Self Assessment</div><div class="item-desc">First time filing? Walk through it.</div></div>
+        <div class="switcher-item-text"><div class="item-name">MySelfAssessment</div><div class="item-desc">First time filing? Walk through it.</div></div>
       </div>
-      <div class="switcher-item" onclick="window.location.href='mortgage-vs-pension.html'">
-        <div class="switcher-item-icon" style="background:rgba(5,150,105,0.15);">&#127968;</div>
-        <div class="switcher-item-text"><div class="item-name">My Mortgage &amp; Pension</div><div class="item-desc">Build more wealth: mortgage or pension?</div></div>
-      </div>
-      <div class="switcher-group-label">&#8505; Info</div>
-      <div class="switcher-item" onclick="window.location.href='about.html'">
-        <div class="switcher-item-icon" style="background:rgba(255,255,255,0.06);">&#8505;</div>
-        <div class="switcher-item-text"><div class="item-name">About</div><div class="item-desc">Why we built this. How we protect your data.</div></div>
+      <div class="switcher-item" onclick="window.location.href='property-decision.html'">
+        <div class="switcher-item-icon" style="background:rgba(45,106,79,0.15);">&#127968;</div>
+        <div class="switcher-item-text"><div class="item-name">MyPropertyDecision</div><div class="item-desc">Got a deposit? See where it works hardest.</div></div>
       </div>
     </div>
   </div>
@@ -442,37 +357,29 @@
 </header>
 
 <div class="hero">
-<div style="position:relative;z-index:1;">
-    <div class="hero-eyebrow">My Pay Picture</div>
-    <h1>Dreading Self Assessment?<br><em>Let&#8217;s make it manageable.</em></h1>
-    <p>Work out if you need to file, estimate your tax bill, and know exactly what to do next.</p>
-  </div>
+  <div class="hero-eyebrow">MyPayPicture</div>
+  <h1>Dreading Self Assessment?<br><em>Let&#8217;s make it manageable.</em></h1>
+  <p>Work out if you need to file, estimate your tax bill, and know exactly what to do next.</p>
 </div>
 
 <div class="container">
-  <div class="privacy-badge">
-    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
-    <span>Your data stays on your device — nothing is sent to a server or stored in the cloud.</span>
-  </div>
-
   <div class="steps-nav">
-    <div class="step-tab active" onclick="goTo(1)" id="tab1"><span class="step-num">1</span>Do I need to?</div>
-    <div class="step-tab" onclick="goTo(2)" id="tab2"><span class="step-num">2</span>Income</div>
+    <div class="step-tab active" onclick="goTo(1)" id="tab1"><span class="step-num">1</span>Do you need to file?</div>
+    <div class="step-tab" onclick="goTo(2)" id="tab2"><span class="step-num">2</span>Your Income</div>
     <div class="step-tab" onclick="goTo(3)" id="tab3"><span class="step-num">3</span>Deductions</div>
-    <div class="step-tab" onclick="goTo(4)" id="tab4"><span class="step-num">4</span>Estimate</div>
+    <div class="step-tab" onclick="goTo(4)" id="tab4"><span class="step-num">4</span>Tax Estimate</div>
     <div class="step-tab" onclick="goTo(5)" id="tab5"><span class="step-num">5</span>Next Steps</div>
   </div>
 
 <!-- STEP 1: DO I NEED TO FILE -->
   <div class="card active" id="step1">
-    <div class="card-title">Do you need to file a <span class="tooltip-wrap">Self Assessment<button class="tooltip-icon" aria-label="Help">?</button><div class="tooltip-bubble">An annual tax return where you tell HMRC about your income and tax.</div></span>?</div>
-    <p class="card-subtitle">Tick what applies. We&#8217;ll tell you if you need to file.</p>
+    <div class="card-title">Do you need to file a Self Assessment?</div>
+    <p class="card-subtitle">Tick everything that applies to your 2024/25 tax year (6 April 2024 to 5 April 2025). We&#8217;ll tell you if HMRC requires a return from you.</p>
 
     <div class="check-list" id="triggerList"></div>
 
     <div id="filingVerdict" style="margin-top:1.5rem;"></div>
 
-    <div class="step-reassurance">Don't worry, this is simpler than it seems.</div>
     <div class="btn-row">
       <button class="btn-primary" onclick="goTo(2)">Enter my income &#8594;</button>
     </div>
@@ -481,18 +388,18 @@
   <!-- STEP 2: YOUR INCOME -->
   <div class="card" id="step2">
     <div class="card-title">Your income sources</div>
-    <p class="card-subtitle">Leave blank what doesn&#8217;t apply to you.</p>
+    <p class="card-subtitle">Enter figures for the 2024/25 tax year. Leave blank anything that doesn&#8217;t apply.</p>
 
     <div class="two-col">
       <div class="field-group">
-        <label>Salary before tax</label>
+        <label>Employment income (gross salary)</label>
         <div class="input-wrap"><span class="input-prefix">£</span>
           <input type="number" id="empIncome" placeholder="e.g. 55000" min="0" oninput="updateTaxEstimate()">
         </div>
-        <p class="hint">From your P60 or payslip.</p>
+        <p class="hint">Your total gross salary before tax and NI. Check your P60 or payslip.</p>
       </div>
       <div class="field-group">
-        <label>Tax already paid via <span class="tooltip-wrap">PAYE<button class="tooltip-icon" aria-label="Help">?</button><div class="tooltip-bubble">Pay As You Earn — tax your employer deducts from your salary.</div></span></label>
+        <label>Tax already paid via PAYE</label>
         <div class="input-wrap"><span class="input-prefix">£</span>
           <input type="number" id="payeTax" placeholder="e.g. 12000" min="0" oninput="updateTaxEstimate()">
         </div>
@@ -506,14 +413,14 @@
         <div class="input-wrap"><span class="input-prefix">£</span>
           <input type="number" id="selfEmpProfit" placeholder="e.g. 0" min="0" oninput="updateTaxEstimate()">
         </div>
-        <p class="hint">Income minus expenses.</p>
+        <p class="hint">Income minus allowable business expenses. Not turnover.</p>
       </div>
       <div class="field-group">
         <label>Rental income (profit after expenses)</label>
         <div class="input-wrap"><span class="input-prefix">£</span>
           <input type="number" id="rentalProfit" placeholder="e.g. 0" min="0" oninput="updateTaxEstimate()">
         </div>
-        <p class="hint">Rent minus expenses.</p>
+        <p class="hint">Total rent received minus allowable expenses (not mortgage capital).</p>
       </div>
     </div>
 
@@ -523,18 +430,17 @@
         <div class="input-wrap"><span class="input-prefix">£</span>
           <input type="number" id="dividends" placeholder="e.g. 0" min="0" oninput="updateTaxEstimate()">
         </div>
-        <p class="hint">First £500 is tax-free.</p>
+        <p class="hint">From shares, funds, or a limited company. First £500 is tax-free (2024/25).</p>
       </div>
       <div class="field-group">
         <label>Other taxable income</label>
         <div class="input-wrap"><span class="input-prefix">£</span>
           <input type="number" id="otherIncome" placeholder="e.g. 0" min="0" oninput="updateTaxEstimate()">
         </div>
-        <p class="hint">Abroad income, interest, tips, etc.</p>
+        <p class="hint">Foreign income, tips, interest above savings allowance, etc.</p>
       </div>
     </div>
 
-    <div class="step-reassurance">Leaving fields blank is fine if they don't apply.</div>
     <div class="btn-row">
       <button class="btn-secondary" onclick="goTo(1)">&#8592; Back</button>
       <button class="btn-primary" onclick="goTo(3)">Add deductions &#8594;</button>
@@ -544,22 +450,22 @@
   <!-- STEP 3: DEDUCTIONS -->
   <div class="card" id="step3">
     <div class="card-title">Deductions &amp; reliefs</div>
-    <p class="card-subtitle">Enter what applies to you.</p>
+    <p class="card-subtitle">These reduce your taxable income or the tax you owe. Enter what applies &#8212; leave blank if not relevant.</p>
 
     <div class="two-col">
       <div class="field-group">
-        <label><span class="tooltip-wrap">Personal pension<button class="tooltip-icon" aria-label="Help">?</button><div class="tooltip-bubble">Money you put into a personal or workplace pension. Contributions attract tax relief.</div></span> contributions (gross)</label>
+        <label>Personal pension contributions (gross)</label>
         <div class="input-wrap"><span class="input-prefix">£</span>
           <input type="number" id="pensionContribs" placeholder="e.g. 0" min="0" oninput="updateTaxEstimate()">
         </div>
-        <p class="hint">Higher rate relief claimed here.</p>
+        <p class="hint">Include relief at source top-up. Higher rate relief is claimed through SA.</p>
       </div>
       <div class="field-group">
-        <label><span class="tooltip-wrap">Gift Aid<button class="tooltip-icon" aria-label="Help">?</button><div class="tooltip-bubble">A scheme where the charity claims 20% tax relief from HMRC. Higher-rate taxpayers can claim additional relief on their return.</div></span> donations</label>
+        <label>Gift Aid donations</label>
         <div class="input-wrap"><span class="input-prefix">£</span>
           <input type="number" id="giftAid" placeholder="e.g. 0" min="0" oninput="updateTaxEstimate()">
         </div>
-        <p class="hint">Amount you donated.</p>
+        <p class="hint">Total amount donated &#8212; the charity claims basic rate relief. You claim higher rate via SA.</p>
       </div>
     </div>
 
@@ -569,18 +475,17 @@
         <div class="input-wrap"><span class="input-prefix">£</span>
           <input type="number" id="marriageAllowance" placeholder="e.g. 0" min="0" oninput="updateTaxEstimate()">
         </div>
-        <p class="hint">From a non-earning spouse.</p>
+        <p class="hint">Up to £1,260 transferred from a non-taxpaying spouse. Worth £252 tax reduction.</p>
       </div>
       <div class="field-group">
-        <label>Student loan repayments</label>
+        <label>Student loan repayments (total paid)</label>
         <div class="input-wrap"><span class="input-prefix">£</span>
           <input type="number" id="studentLoan" placeholder="e.g. 0" min="0" oninput="updateTaxEstimate()">
         </div>
-        <p class="hint">If self-employed.</p>
+        <p class="hint">Declare if self-employed or earning above your plan threshold.</p>
       </div>
     </div>
 
-    <div class="step-reassurance">Only claim what genuinely applies to you.</div>
     <div class="btn-row">
       <button class="btn-secondary" onclick="goTo(2)">&#8592; Back</button>
       <button class="btn-primary" onclick="goTo(4)">See my tax estimate &#8594;</button>
@@ -589,14 +494,13 @@
 
   <!-- STEP 4: TAX ESTIMATE -->
   <div class="card" id="step4">
-    <div class="card-title">Your tax estimate</div>
-    <p class="card-subtitle">Based on your figures. Always verify with HMRC.</p>
+    <div class="card-title">Your illustrative tax estimate</div>
+    <p class="card-subtitle">Based on what you&#8217;ve entered. This is a guide &#8212; your actual liability depends on your specific circumstances.</p>
 
     <div class="results-grid" id="taxResultGrid"></div>
     <div id="taxBreakdown"></div>
     <div id="taxGuidance"></div>
 
-    <div class="step-reassurance">This estimate uses current 2025/26 rates. Verify with HMRC before filing.</div>
     <div class="btn-row">
       <button class="btn-secondary" onclick="goTo(3)">&#8592; Back</button>
       <button class="btn-primary" onclick="goTo(5)">See next steps &#8594;</button>
@@ -624,11 +528,29 @@
 
     <div id="deadlineSection"></div>
 
+    <hr>
+
+    <div class="guidance-box">
+      <h4>What to gather before you file</h4>
+      <ul>
+        <li><strong>P60</strong> &#8212; from your employer, shows gross pay and tax paid</li>
+        <li><strong>P11D</strong> &#8212; if you have taxable benefits (company car, private medical etc.)</li>
+        <li><strong>Bank interest statements</strong> &#8212; if above your Personal Savings Allowance</li>
+        <li><strong>Rental income records</strong> &#8212; rent received and all allowable expenses</li>
+        <li><strong>Dividend vouchers / broker statements</strong> &#8212; if you received dividends</li>
+        <li><strong>Pension certificates</strong> &#8212; to claim higher rate relief on contributions</li>
+        <li><strong>Gift Aid records</strong> &#8212; to claim higher rate relief on donations</li>
+        <li><strong>UTR number</strong> &#8212; if registered, your 10-digit Unique Taxpayer Reference</li>
+      </ul>
+    </div>
+
+    <div class="guidance-box" style="margin-top:1rem;">
+      <h4>Not registered yet?</h4>
+      <p>If this is your first Self Assessment you need to register with HMRC. For the 2024/25 tax year the deadline to register is <strong>5 October 2025</strong>. You can register at gov.uk/register-for-self-assessment. You&#8217;ll receive your UTR number within 10 working days.</p>
+    </div>
+
     <div class="summary-panel" id="finalSummary"></div>
 
-    <div id="saActionPlan" style="margin-top:1.5rem;"></div>
-
-    <div class="step-reassurance">You're almost done. Take it one step at a time.</div>
     <div class="btn-row">
       <button class="btn-secondary" onclick="goTo(4)">&#8592; Back</button>
       <button class="btn-primary" onclick="window.open('https://www.gov.uk/self-assessment-tax-returns','_blank')">File on gov.uk &#8594;</button>
@@ -648,12 +570,12 @@
 </div>
 
 <div class="chat-wrap">
-  <div class="chat-divider">Ask My Pay Picture Assistant</div>
+  <div class="chat-divider">Ask MyPayPicture Assistant</div>
   <div class="chat-box">
     <div class="chat-head">
       <div class="chat-head-icon">&#10022;</div>
       <div>
-        <div class="chat-head-title">My Pay Picture Assistant</div>
+        <div class="chat-head-title">MyPayPicture Assistant</div>
         <div class="chat-head-sub">General information only &middot; Not financial advice</div>
       </div>
     </div>
@@ -675,28 +597,15 @@
   </div>
 </div>
 
-<section class="email-capture">
-  <div class="ec-inner">
-    <h3>Get free tax-year updates</h3>
-    <p>Plain-English pension &amp; tax tips for UK taxpayers. No spam, unsubscribe anytime.</p>
-    <button class="ec-btn" data-tally-open="zxZByE" data-tally-layout="modal" data-tally-emoji-animation="none">
-      Subscribe free
-    </button>
-  </div>
-</section>
-
 <footer style="background:var(--navy); border-top:3px solid var(--sa); padding:2rem 1.5rem;">
   <div style="max-width:860px; margin:0 auto; display:flex; gap:1.25rem; align-items:flex-start;">
     <div style="font-size:1.5rem; line-height:1; flex-shrink:0;">&#9888;&#65039;</div>
     <div>
-      <div style="font-family:'Playfair Display',serif; color:var(--sa-light); font-size:0.95rem; margin-bottom:0.4rem;">Important &mdash; Not Financial or Tax Advice</div>
+      <div style="font-family:''Nunito', sans-serif',serif; color:var(--sa-light); font-size:0.95rem; margin-bottom:0.4rem;">Important &mdash; Not Financial or Tax Advice</div>
       <p style="color:rgba(255,255,255,0.5); font-size:0.8rem; line-height:1.7; margin:0;">
-        This tool provides illustrative estimates based on 2025/26 UK tax rates and is not a substitute for professional tax advice. Always verify your tax position with HMRC or a qualified tax adviser before filing. No data is stored.
+        This tool provides illustrative estimates based on 2024/25 UK tax rates and is not a substitute for professional tax advice. Always verify your tax position with HMRC or a qualified tax adviser before filing. No data is stored.
       </p>
     </div>
-  </div>
-  <div style="max-width:900px; margin:0.75rem auto 0; text-align:center;">
-    <a href="#" data-tally-open="VLV7pE" data-tally-emoji-animation="wave" style="color:rgba(255,255,255,0.35); font-size:0.75rem; text-decoration:none; transition:color 0.2s;" onmouseover="this.style.color='rgba(255,255,255,0.6)'" onmouseout="this.style.color='rgba(255,255,255,0.35)'">Spotted a bug or have a suggestion? Let us know</a>
   </div>
 </footer>
 
@@ -713,7 +622,7 @@
   // ── HELPERS ────────────────────────────────────────────────────────────────
   var fmt = function(n) { return '\u00a3' + Math.round(Math.abs(n)).toLocaleString('en-GB'); };
 
-  // ── TAX CONSTANTS 2025/26 ──────────────────────────────────────────────────
+  // ── TAX CONSTANTS 2024/25 ──────────────────────────────────────────────────
   var PA        = 12570;
   var BRT       = 50270;
   var HRT       = 125140;
@@ -744,24 +653,24 @@
 
   function calcClass4NI(profit) {
     if (profit <= 12570) return 0;
-    return Math.min(profit - 12570, 50270 - 12570) * 0.06 + Math.max(0, profit - 50270) * 0.02;
+    return Math.min(profit - 12570, 50270 - 12570) * 0.09 + Math.max(0, profit - 50270) * 0.02;
   }
 
   function calcClass2NI(profit) {
-    return profit > 12570 ? 182 : 0; // 2025/26: £3.50/wk × 52 (voluntary but included for completeness)
+    return profit > 12570 ? 179.40 : 0; // 2024/25 flat rate
   }
 
   // ── STEP 1: TRIGGERS ──────────────────────────────────────────────────────
   var TRIGGERS = [
     { id: 'selfEmp',     label: 'Self-employed income',             desc: 'Any income from freelance work, a sole trader business, or a partnership.' },
     { id: 'rental',      label: 'Rental income over £2,500',        desc: 'Income from letting property. Under £2,500 can sometimes be dealt with by HMRC directly.' },
-    { id: 'dividends',   label: 'Dividends over £500',              desc: 'From shares, funds, or a limited company you own (2025/26 allowance is £500).' },
-    { id: 'highIncome',  label: 'Income over £100,000',             desc: 'Your <span class="tooltip-wrap">Personal Allowance<button class="tooltip-icon" aria-label="Help">?</button><div class="tooltip-bubble">The amount of income you can earn tax-free each year (£12,570 for 2025/26).</div></span> tapers to zero above £100,000. You must file to reconcile this.' },
-    { id: 'hicbc',       label: 'High Income Child Benefit Charge',  desc: '<span class="tooltip-wrap">Adjusted net income<button class="tooltip-icon" aria-label="Help">?</button><div class="tooltip-bubble">Your income after certain deductions but before personal allowance. This is used to calculate if you owe the Child Benefit tax charge.</div></span> over £60,000 with Child Benefit in your household.' },
+    { id: 'dividends',   label: 'Dividends over £500',              desc: 'From shares, funds, or a limited company you own (2024/25 allowance is £500).' },
+    { id: 'highIncome',  label: 'Income over £100,000',             desc: 'Your Personal Allowance tapers to zero above £100,000. You must file to reconcile this.' },
+    { id: 'hicbc',       label: 'High Income Child Benefit Charge',  desc: 'Adjusted net income over £60,000 with Child Benefit in your household.' },
     { id: 'foreignInc',  label: 'Foreign income',                   desc: 'Salary, rental, or investment income from abroad.' },
-    { id: 'higherRate',  label: 'Higher rate taxpayer with <span class="tooltip-wrap">pension<button class="tooltip-icon" aria-label="Help">?</button><div class="tooltip-bubble">Retirement savings account. Contributions often get automatic or additional tax relief.</div></span>', desc: 'Claiming higher rate relief on personal <span class="tooltip-wrap">pension contributions<button class="tooltip-icon" aria-label="Help">?</button><div class="tooltip-bubble">Money you pay into a retirement account. Basic rate relief (20%) is automatic; higher-rate taxpayers claim the extra 20% relief on their return.</div></span> not via salary sacrifice.' },
-    { id: 'giftAid',     label: 'Higher rate taxpayer with <span class="tooltip-wrap">Gift Aid<button class="tooltip-icon" aria-label="Help">?</button><div class="tooltip-bubble">A scheme where charities claim tax relief. Higher-rate taxpayers can claim additional 20% relief on their return.</div></span>', desc: 'Claiming the additional relief on Gift Aid donations.' },
-    { id: 'cg',          label: 'Capital gains over the annual exempt amount', desc: '\u00a33,000 exempt for 2025/26. Gains from selling shares, property (not main home), crypto etc.' },
+    { id: 'higherRate',  label: 'Higher rate taxpayer with pension', desc: 'Claiming higher rate relief on personal pension contributions not via salary sacrifice.' },
+    { id: 'giftAid',     label: 'Higher rate taxpayer with Gift Aid', desc: 'Claiming the additional relief on Gift Aid donations.' },
+    { id: 'cg',          label: 'Capital gains over the annual exempt amount', desc: '\u00a33,000 exempt for 2024/25. Gains from selling shares, property (not main home), crypto etc.' },
     { id: 'hmrcAsked',   label: 'HMRC has written to ask you to file', desc: 'If HMRC sends a notice to file a return, you must file even if you have no additional tax to pay.' },
   ];
 
@@ -806,7 +715,7 @@
         '<div class="filing-banner must-file">' +
           '<div class="filing-banner-icon">&#9940;</div>' +
           '<div><div class="filing-banner-title">You need to file a Self Assessment return</div>' +
-          '<div class="filing-banner-desc">Based on what you\u2019ve ticked, HMRC requires you to file a return for 2025/26. You must register by <strong>5 October 2026</strong> if you haven\u2019t already.</div></div>' +
+          '<div class="filing-banner-desc">Based on what you\u2019ve ticked, HMRC requires you to file a return for 2024/25. You must register by <strong>5 October 2025</strong> if you haven\u2019t already.</div></div>' +
         '</div>';
     } else {
       verdict.innerHTML =
@@ -924,7 +833,7 @@
       '<div class="result-box ' + owingCls + '">' +
         '<div class="r-label">' + (r.balance > 0 ? 'Amount owed to HMRC' : 'Refund due') + '</div>' +
         '<div class="r-amount">' + fmt(r.balance) + '</div>' +
-        '<div class="r-sub">' + (r.balance > 0 ? 'to pay by 31 Jan 2027' : 'HMRC will repay you') + '</div>' +
+        '<div class="r-sub">' + (r.balance > 0 ? 'to pay by 31 Jan 2026' : 'HMRC will repay you') + '</div>' +
       '</div>';
 
     // Breakdown table
@@ -969,17 +878,13 @@
     }
     if (totalIncome > 100000 && totalIncome <= 125140) {
       guidance += '<div class="alert-box warning"><h4>Personal Allowance taper applies</h4>' +
-        '<details class="breakdown-toggle"><summary>Why does this matter?</summary>' +
-        '<p>Your income is between \u00a3100,000 and \u00a3125,140. Your tax-free allowance shrinks by \u00a31 for every \u00a32 above \u00a3100,000, meaning you effectively pay 60% tax on income in this band. Putting more into your pension can bring your income back below \u00a3100,000 and restore your full allowance.</p>' +
-        '</details></div>';
+        '<p>Your income is between \u00a3100,000 and \u00a3125,140. Your Personal Allowance reduces by \u00a31 for every \u00a32 above \u00a3100,000, creating an effective 60% tax rate on income in this band. Pension contributions can reduce your adjusted net income and recover your allowance.</p></div>';
     }
     if (r.balance > 3000 && d.selfEmp > 0) {
       guidance += '<div class="alert-box warning"><h4>Payments on Account may apply</h4>' +
-        '<details class="breakdown-toggle"><summary>What does this mean for me?</summary>' +
-        '<p>If your Self Assessment tax bill is over \u00a31,000, HMRC typically requires you to make Payments on Account &#8212; advance payments towards next year\u2019s bill due 31 January and 31 July. Budget for this.</p>' +
-        '</details></div>';
+        '<p>If your Self Assessment tax bill is over \u00a31,000, HMRC typically requires you to make Payments on Account &#8212; advance payments towards next year\u2019s bill due 31 January and 31 July. Budget for this.</p></div>';
     }
-    guidance += '<p style="font-size:0.75rem;color:var(--slate-light);margin-top:1rem;font-style:italic;">This estimate is illustrative only and does not account for all reliefs or circumstances. Figures based on 2025/26 tax rates. Always verify with HMRC or a qualified tax adviser.</p>';
+    guidance += '<p style="font-size:0.75rem;color:var(--slate-light);margin-top:1rem;font-style:italic;">This estimate is illustrative only and does not account for all reliefs or circumstances. Figures based on 2024/25 tax rates. Always verify with HMRC or a qualified tax adviser.</p>';
     document.getElementById('taxGuidance').innerHTML = guidance;
 
     // Show PDF CTA
@@ -995,14 +900,14 @@
     var totalIncome = d.emp + d.selfEmp + d.rental + d.dividends + d.other;
 
     var deadlines = [
-      { date: '5 October 2026', desc: 'Register for Self Assessment (if new to SA)', dot: 'next' },
-      { date: '31 October 2026', desc: 'Deadline for paper returns (2025/26 tax year)', dot: 'next' },
-      { date: '30 December 2026', desc: 'Online filing deadline to collect tax via PAYE (if owed \u226a\u00a33,000)', dot: 'next' },
-      { date: '31 January 2027', desc: 'Online filing deadline and any tax owed must be paid', dot: 'urgent' },
-      { date: '31 July 2027', desc: 'Second Payment on Account (if applicable)', dot: 'next' },
+      { date: '5 October 2025', desc: 'Register for Self Assessment (if new to SA)', dot: 'next' },
+      { date: '31 October 2025', desc: 'Deadline for paper returns (2024/25 tax year)', dot: 'next' },
+      { date: '30 December 2025', desc: 'Online filing deadline to collect tax via PAYE (if owed \u226a\u00a33,000)', dot: 'next' },
+      { date: '31 January 2026', desc: 'Online filing deadline and any tax owed must be paid', dot: 'urgent' },
+      { date: '31 July 2026', desc: 'Second Payment on Account (if applicable)', dot: 'next' },
     ];
 
-    var html = '<div style="font-size:0.82rem;font-weight:600;color:var(--navy);margin-bottom:0.5rem;">Key deadlines &#8212; 2025/26 tax year</div><div class="deadline-list">';
+    var html = '<div style="font-size:0.82rem;font-weight:600;color:var(--navy);margin-bottom:0.5rem;">Key deadlines &#8212; 2024/25 tax year</div><div class="deadline-list">';
     deadlines.forEach(function(d) {
       html += '<div class="deadline-item"><div class="deadline-dot ' + d.dot + '"></div><div class="deadline-date">' + d.date + '</div><div class="deadline-desc">' + d.desc + '</div></div>';
     });
@@ -1018,79 +923,7 @@
       '<div class="summary-row"><span class="s-label">Already paid via PAYE</span><span class="s-val">' + fmt(r.alreadyPaid) + '</span></div>' +
       '<div class="summary-row"><span class="s-label">' + (r.balance > 0 ? 'To pay by 31 Jan 2026' : 'Refund due') + '</span><span class="s-val ' + (r.balance > 0 ? 'warn' : 'good') + '">' + fmt(r.balance) + '</span></div>' +
       (r.extraRelief > 0 ? '<div class="summary-row"><span class="s-label">Higher rate relief to claim</span><span class="s-val good">' + fmt(r.extraRelief) + '</span></div>' : '') +
-      '<div class="summary-row"><span class="s-label">Filing deadline</span><span class="s-val">31 January 2027</span></div>';
-
-    // Action plan
-    var docs = [];
-    if (d.emp > 0) docs.push('P60 from your employer');
-    if (d.emp > 0) docs.push('P11D if you received any taxable benefits');
-    if (d.selfEmp > 0) docs.push('Business income and expense records');
-    if (d.rental > 0) docs.push('Rental income records and expense receipts');
-    if (d.dividends > 0) docs.push('Dividend statements or vouchers');
-    if (d.pension > 0) docs.push('Pension contribution certificates');
-    if (d.giftAid > 0) docs.push('Gift Aid donation records');
-    docs.push('Your UTR number (10-digit taxpayer reference)');
-
-    var docItems = docs.map(function(doc, i) {
-      return '<div class="action-item">' +
-        '<input type="checkbox" id="sa_doc_' + i + '">' +
-        '<label class="action-item-text" for="sa_doc_' + i + '">' + doc + '</label>' +
-      '</div>';
-    }).join('');
-
-    var actionEl = document.getElementById('saActionPlan');
-    if (actionEl) {
-      actionEl.innerHTML =
-        '<div class="action-plan">' +
-          '<div class="action-plan-title">Your next steps</div>' +
-          '<div class="action-plan-subtitle">Work through these to get your return filed.</div>' +
-
-          '<div class="action-item">' +
-            '<input type="checkbox" id="sa_a1">' +
-            '<label class="action-item-text" for="sa_a1">Download your PDF summary using the button below' +
-              '<span class="action-hint">Keep it for your records or share with your accountant.</span>' +
-            '</label>' +
-          '</div>' +
-
-          (d.selfEmp > 0 || d.rental > 0 || d.dividends > 0 || d.other > 0 ?
-          '<div class="action-item">' +
-            '<input type="checkbox" id="sa_a1b">' +
-            '<label class="action-item-text" for="sa_a1b">Register for Self Assessment if you haven\u2019t already' +
-              '<span class="action-hint">Do this by 5 October at <a href="https://www.gov.uk/register-for-self-assessment" target="_blank" style="color:var(--sa);">gov.uk/register-for-self-assessment</a>. You\u2019ll get your UTR within 10 days.</span>' +
-            '</label>' +
-          '</div>' : '') +
-
-          '<div class="action-item">' +
-            '<input type="checkbox" id="sa_a2">' +
-            '<label class="action-item-text" for="sa_a2">Gather your documents' +
-              '<span class="action-hint">Based on what you\u2019ve told us, you\u2019ll need:</span>' +
-            '</label>' +
-          '</div>' +
-          '<div style="margin-left:2.2rem; margin-bottom:0.5rem;">' + docItems + '</div>' +
-
-          '<div class="action-item">' +
-            '<input type="checkbox" id="sa_a3">' +
-            '<label class="action-item-text" for="sa_a3">File your return online by 31 January 2027' +
-              '<span class="action-hint">Log in at <a href="https://www.gov.uk/self-assessment-tax-returns" target="_blank" style="color:var(--sa);">gov.uk/self-assessment-tax-returns</a> and follow the steps.</span>' +
-            '</label>' +
-          '</div>' +
-
-          (r.balance > 0 ?
-          '<div class="action-item">' +
-            '<input type="checkbox" id="sa_a4">' +
-            '<label class="action-item-text" for="sa_a4">Pay ' + fmt(r.balance) + ' to HMRC by 31 January 2027' +
-              '<span class="action-hint">You can pay online, by bank transfer, or set up a payment plan if needed.</span>' +
-            '</label>' +
-          '</div>' : '') +
-
-          '<div class="action-item">' +
-            '<input type="checkbox" id="sa_a5">' +
-            '<label class="action-item-text" for="sa_a5">Consider speaking to a tax adviser or accountant' +
-              '<span class="action-hint">Especially useful if your situation is complex or you want someone to file on your behalf.</span>' +
-            '</label>' +
-          '</div>' +
-        '</div>';
-    }
+      '<div class="summary-row"><span class="s-label">Filing deadline</span><span class="s-val">31 January 2026</span></div>';
   }
 
   // ── NAVIGATION ─────────────────────────────────────────────────────────────
@@ -1152,12 +985,12 @@
       doc.setFont('helvetica','bold'); doc.setFontSize(16); doc.setTextColor(...white);
       doc.text('MyPay',14,14); doc.setFont('helvetica','normal'); doc.text('Picture',33,14);
       doc.setFontSize(8); doc.setTextColor(180,180,180);
-      doc.text('My Self Assessment Report \u2014 2025/26', 14, 22);
+      doc.text('MySelfAssessment Report \u2014 2024/25', 14, 22);
       doc.text('Generated ' + new Date().toLocaleDateString('en-GB',{day:'numeric',month:'long',year:'numeric'}), 196, 22, {align:'right'});
 
       var y = 36;
       doc.setFont('helvetica','bold'); doc.setFontSize(14); doc.setTextColor(...navy);
-      doc.text('Self Assessment Estimate \u2014 2025/26', 14, y); y += 10;
+      doc.text('Self Assessment Estimate \u2014 2024/25', 14, y); y += 10;
 
       function section(title, rows) {
         doc.setFillColor(...sa); doc.rect(14,y,182,7,'F');
@@ -1195,14 +1028,14 @@
       ]);
       section('Key Deadlines', [
         ['Register for SA (if new)', '5 October 2025'],
-        ['Online filing deadline', '31 January 2027'],
-        ['Tax payment deadline', '31 January 2027'],
+        ['Online filing deadline', '31 January 2026'],
+        ['Tax payment deadline', '31 January 2026'],
       ]);
 
       var ph = doc.internal.pageSize.height;
       doc.setFillColor(...light); doc.rect(0,ph-18,210,18,'F');
       doc.setFont('helvetica','italic'); doc.setFontSize(7); doc.setTextColor(120,120,140);
-      doc.text('Illustrative only \u2014 not financial or tax advice. Based on 2025/26 UK tax rates. Verify with HMRC or a qualified tax adviser before filing.', 14, ph-10);
+      doc.text('Illustrative only \u2014 not financial or tax advice. Based on 2024/25 UK tax rates. Verify with HMRC or a qualified tax adviser before filing.', 14, ph-10);
       doc.text('mypaypicture.com', 196, ph-4, {align:'right'});
       doc.save('MyPayPicture-SelfAssessment-Report.pdf');
     });
@@ -1225,7 +1058,7 @@
 
   // ── CHAT ───────────────────────────────────────────────────────────────────
   var WORKER_URL = 'https://mypaypicture-api.proud-truth-9c88.workers.dev';
-  var SYS_PROMPT = 'You are a helpful UK tax assistant embedded in My Pay Picture\'s My Self Assessment tool. This tool helps people understand whether they need to file a Self Assessment return, estimate their tax liability, and know what to do next.\n\nKey topics: Self Assessment triggers (self-employment, rental income, dividends over \u00a3500, income over \u00a3100k, HICBC, capital gains), 2025/26 tax rates (personal allowance \u00a312,570, basic rate 20% to \u00a350,270, higher rate 40% to \u00a3125,140), Class 2 and 4 NI for self-employed, dividend tax rates (8.75% basic, 33.75% higher), higher rate pension and Gift Aid relief, Payments on Account, key deadlines (registration 5 Oct 2025, online filing 31 Jan 2026).\n\nRules:\n- UK English, 2025/26 rates\n- General information only, not personalised tax advice\n- Always recommend verifying with HMRC or a qualified accountant/tax adviser\n- Plain English, reassuring tone \u2014 Self Assessment is anxiety-inducing for many people';
+  var SYS_PROMPT = 'You are a helpful UK tax assistant embedded in MyPayPicture\'s MySelfAssessment tool. This tool helps people understand whether they need to file a Self Assessment return, estimate their tax liability, and know what to do next.\n\nKey topics: Self Assessment triggers (self-employment, rental income, dividends over \u00a3500, income over \u00a3100k, HICBC, capital gains), 2024/25 tax rates (personal allowance \u00a312,570, basic rate 20% to \u00a350,270, higher rate 40% to \u00a3125,140), Class 2 and 4 NI for self-employed, dividend tax rates (8.75% basic, 33.75% higher), higher rate pension and Gift Aid relief, Payments on Account, key deadlines (registration 5 Oct 2025, online filing 31 Jan 2026).\n\nRules:\n- UK English, 2024/25 rates\n- General information only, not personalised tax advice\n- Always recommend verifying with HMRC or a qualified accountant/tax adviser\n- Plain English, reassuring tone \u2014 Self Assessment is anxiety-inducing for many people';
 
   document.addEventListener('input', function() {
     if (typeof checkAndShowPdfCta === 'function') checkAndShowPdfCta();
@@ -1246,7 +1079,7 @@
       var formatted = text.split('\n\n').map(function(p) {
         return p.replace(/\*\*(.*?)\*\*/g,'<strong>$1</strong>');
       }).join('</p><p>');
-      bubble = '<p>'+formatted+'</p>';
+      bubble = '<p>'+formatted+' &nbsp;&middot;&nbsp; <a href="about.html" style="color:rgba(255,255,255,0.4);text-decoration:none;">About</a> &nbsp;&middot;&nbsp; <a href="privacy.html" style="color:rgba(255,255,255,0.4);text-decoration:none;">Privacy</a> &nbsp;&middot;&nbsp; <a href="mailto:hello@mypaypicture.com" style="color:rgba(255,255,255,0.4);text-decoration:none;">hello@mypaypicture.com</a></p>';
     }
     div.innerHTML = '<div class="msg-av">'+av+'</div><div class="msg-bub">'+bubble+'</div>';
     msgs.appendChild(div); msgs.scrollTop = msgs.scrollHeight;
@@ -1286,8 +1119,5 @@
     });
   }
 </script>
-
-
-<script src="https://tally.so/widgets/embed.js"></script>
 </body>
 </html>

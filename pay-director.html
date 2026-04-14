@@ -67,559 +67,252 @@
   <meta name="theme-color" content="#0f1f38">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-  <meta name="apple-mobile-web-app-title" content="My Pay Picture">
-  <link rel="apple-touch-icon" href="icon-192.png">
+  <meta name="apple-mobile-web-app-title" content="MyPayPicture">
+  <link rel="icon" type="image/x-icon" href="favicon.ico">
+  <link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="favicon-16.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
   <meta name="mobile-web-app-capable" content="yes">
-<title>Director Salary & Dividend Calculator UK 2025/26 — Optimal Pay Split | My Pay Picture</title>
-<meta name="description" content="Running a limited company? Work out the best way to pay yourself — the right mix of salary and dividends to keep more of your profit. Free UK calculator, no sign-up.">
-<meta name="keywords" content="director salary dividend calculator, salary vs dividend calculator UK, limited company pay calculator, director pay calculator 2025, optimal salary dividend split, how much salary should a director take, corporation tax calculator directors">
-<link rel="canonical" href="https://mypaypicture.com/pay-director.html">
-<meta property="og:type" content="website">
-<meta property="og:url" content="https://mypaypicture.com/pay-director.html">
-<meta property="og:title" content="Director Salary & Dividend Calculator — Optimal Pay Split">
-<meta property="og:description" content="Find the most tax-efficient salary-and-dividend split for your limited company. Free, private calculator.">
-<meta property="og:image" content="https://mypaypicture.com/og-director.png">
-<meta property="og:site_name" content="My Pay Picture">
-<meta property="og:locale" content="en_GB">
-<meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="Director Salary & Dividend Calculator — Optimal Pay Split">
-<meta name="twitter:description" content="Find the most tax-efficient salary-and-dividend split for your limited company. Free, private calculator.">
-<meta name="twitter:image" content="https://mypaypicture.com/og-director.png">
-<meta name="robots" content="index, follow">
-<meta name="author" content="My Pay Picture">
-<script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "WebApplication",
-  "name": "My Pay Director — Salary & Dividend Calculator",
-  "url": "https://mypaypicture.com/pay-director.html",
-  "description": "Free UK salary vs dividend calculator for limited company directors. Find the optimal pay split to minimise tax.",
-  "applicationCategory": "FinanceApplication",
-  "operatingSystem": "Any",
-  "offers": { "@type": "Offer", "price": "0", "priceCurrency": "GBP" },
-  "author": { "@type": "Organization", "name": "My Pay Picture", "url": "https://mypaypicture.com" },
-  "inLanguage": "en-GB"
-}
-</script>
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<title>MyPayDirector — MyPayPicture</title>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,300;0,400;0,600;0,700;0,800;1,300;1,400;1,700&display=swap" rel="stylesheet">
 <style>
   :root {
-    --navy:        #0f1f38;
-    --indigo:      #4f46e5;
-    --indigo-light:#818cf8;
-    --indigo-pale: #eef2ff;
-    --cream:       #f7f5f2;
-    --slate:       #4a5568;
-    --slate-light: #718096;
-    --green:       #2d6a4f;
-    --green-light: #40916c;
-    --amber:       #b45309;
+    --ink:         #0e0d33;
+    --ink-mid:     #161544;
+    --accent:      #4338ca;
+    --accent-dark: #3730a3;
+    --accent-pale: #eef2ff;
+    --accent-light:#a5b4fc;
+    --accent-xpale:#eef2ff;
+    --yellow:      #ffdb00;
+    --sky:         #5cc3e8;
+    --slate:       #314855;
+    --slate-soft:  #5a7282;
+    --stone:       #78716c;
+    --stone-pale:  #f5f4f2;
     --red:         #b91c1c;
-    --white:       #ffffff;
-    --border:      rgba(79,70,229,0.2);
+    --amber:       #d97706;
+    --bg:          #f5f5ff;
+    --surface:     #ffffff;
+    --border:      rgba(67,56,202,0.12);
   }
 
   * { box-sizing: border-box; margin: 0; padding: 0; }
-  body { font-family: 'DM Sans', sans-serif; background: var(--cream); color: var(--navy); min-height: 100vh; }
+  body { font-family: 'Nunito', sans-serif; background: var(--bg); color: var(--ink); min-height: 100vh; }
 
   /* HEADER */
-  header { background: var(--navy); padding: 1.5rem 2rem; display: flex; align-items: center; justify-content: space-between; }
-
-
-  /* SWITCHER GROUP LABELS */
-  .switcher-group-label {
-    padding: 0.5rem 1rem 0.25rem;
-    font-size: 0.6rem;
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 0.1em;
-    color: rgba(255,255,255,0.25);
-    border-top: 1px solid rgba(255,255,255,0.06);
-    margin-top: 0.15rem;
-  }
-
-  /* APP SWITCHER */
+  .switcher-group-label { padding: 0.5rem 1rem 0.25rem; font-size: 0.6rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: rgba(255,255,255,0.3); border-top: 1px solid rgba(255,255,255,0.08); margin-top: 0.15rem; }
+  header { background: var(--ink); padding: 1.1rem 2rem; display: flex; align-items: center; justify-content: space-between; position: sticky; top: 0; z-index: 50; }
   .app-switcher { position: relative; }
-  .switcher-trigger { display: flex; align-items: center; gap: 0.5rem; cursor: pointer; padding: 0.4rem 0.75rem; border-radius: 8px; border: 1px solid rgba(255,255,255,0.15); transition: background 0.2s; user-select: none; }
-  .switcher-trigger:hover { background: rgba(255,255,255,0.07); }
-  .switcher-trigger .app-name { font-family: 'Playfair Display', serif; font-size: 1.1rem; color: var(--indigo-light); }
-  .switcher-trigger .app-name span { color: var(--white); font-weight: 300; }
-  .switcher-trigger .chevron { color: rgba(255,255,255,0.4); font-size: 0.7rem; transition: transform 0.2s; }
+  .switcher-trigger { display: flex; align-items: center; gap: 0.5rem; cursor: pointer; padding: 0.4rem 0.85rem; border-radius: 100px; border: 1px solid rgba(255,255,255,0.15); transition: all 0.18s; user-select: none; background: rgba(255,255,255,0.07); }
+  .switcher-trigger:hover { background: rgba(255,255,255,0.13); border-color: var(--accent-light); }
+  .switcher-trigger .app-name { font-family: 'Nunito', sans-serif; font-weight: 800; font-size: 1rem; color: white; }
+  .switcher-trigger .app-name span { color: var(--yellow); font-style: italic; }
+  .switcher-trigger .chevron { color: rgba(255,255,255,0.4); font-size: 0.65rem; transition: transform 0.2s; }
   .app-switcher.open .chevron { transform: rotate(180deg); }
-  .switcher-dropdown { display: none; position: absolute; top: calc(100% + 8px); left: 0; background: #1a2f4e; border: 1px solid rgba(255,255,255,0.1); border-radius: 10px; overflow: hidden; min-width: 240px; box-shadow: 0 8px 24px rgba(0,0,0,0.3); z-index: 100; }
+  .switcher-dropdown { display: none; position: absolute; top: calc(100% + 10px); left: 0; background: var(--surface); border: 1px solid var(--border); border-radius: 16px; overflow: hidden; min-width: 272px; box-shadow: 0 20px 56px rgba(0,0,0,0.12); z-index: 100; }
   .app-switcher.open .switcher-dropdown { display: block; }
-  .switcher-item { display: flex; align-items: center; gap: 0.75rem; padding: 0.85rem 1rem; cursor: pointer; transition: background 0.15s; border-bottom: 1px solid rgba(255,255,255,0.06); }
+  .switcher-item { display: flex; align-items: center; gap: 0.75rem; padding: 0.8rem 1rem; cursor: pointer; transition: background 0.12s; border-bottom: 1px solid var(--border); }
   .switcher-item:last-child { border-bottom: none; }
-  .switcher-item:hover { background: rgba(255,255,255,0.06); }
-  .switcher-item.current { background: rgba(79,70,229,0.12); }
-  .switcher-item-icon { width: 32px; height: 32px; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 1rem; flex-shrink: 0; }
-  .switcher-item-text .item-name { font-family: 'Playfair Display', serif; font-size: 0.9rem; color: white; }
-  .switcher-item-text .item-desc { font-size: 0.72rem; color: rgba(255,255,255,0.4); margin-top: 0.1rem; }
-  .switcher-item.current .item-name { color: var(--indigo-light); }
-  .disclaimer-badge { font-size: 0.7rem; color: rgba(255,255,255,0.4); border: 1px solid rgba(255,255,255,0.15); padding: 0.3rem 0.7rem; border-radius: 20px; letter-spacing: 0.05em; text-transform: uppercase; }
+  .switcher-item:hover { background: var(--accent-xpale); }
+  .switcher-item.current { background: var(--accent-pale); }
+  .switcher-item-icon { width: 32px; height: 32px; border-radius: 9px; display: flex; align-items: center; justify-content: center; font-size: 0.95rem; flex-shrink: 0; }
+  .switcher-item-text .item-name { font-size: 0.84rem; font-weight: 700; color: var(--ink); }
+  .switcher-item-text .item-desc { font-size: 0.69rem; color: var(--slate-soft); margin-top: 0.1rem; }
+  .switcher-item.current .item-name { color: var(--accent); }
+  .disclaimer-badge { font-size: 0.65rem; color: rgba(255,255,255,0.4); border: 1px solid rgba(255,255,255,0.15); padding: 0.3rem 0.85rem; border-radius: 100px; letter-spacing: 0.04em; }
 
   /* HERO */
-  .hero { background: var(--navy); padding: 3rem 2rem 4rem; text-align: center; position: relative; overflow: hidden; }
-  .hero::before { content: ''; position: absolute; top: -80px; right: -80px; width: 320px; height: 320px; border-radius: 50%; background: radial-gradient(circle, rgba(79,70,229,0.12) 0%, transparent 70%); pointer-events: none; }
-  .hero h1 { font-family: 'Playfair Display', serif; font-size: clamp(1.9rem, 5vw, 3rem); color: var(--white); line-height: 1.15; max-width: 580px; margin: 0 auto 1rem; }
-  .hero h1 em { font-style: italic; color: var(--indigo-light); }
-  .hero p { color: rgba(255,255,255,0.5); font-size: 1rem; max-width: 460px; margin: 0 auto; line-height: 1.65; }
+  .hero { background: var(--ink); padding: 5rem 2rem 6.5rem; text-align: center; position: relative; overflow: hidden; }
+  .hero::before { content: ''; position: absolute; inset: 0; background: radial-gradient(ellipse 60% 70% at 15% 50%, rgba(67,56,202,0.2) 0%, transparent 60%), radial-gradient(ellipse 50% 60% at 85% 20%, rgba(165,180,252,0.1) 0%, transparent 55%), radial-gradient(ellipse 40% 40% at 55% 90%, rgba(14,13,51,0.3) 0%, transparent 50%); pointer-events: none; }
+  .hero-eyebrow { display: inline-flex; align-items: center; gap: 0.5rem; font-size: 0.7rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.2em; color: var(--accent-light); margin-bottom: 1.75rem; padding: 0.35rem 1.1rem; border-radius: 100px; border: 1px solid rgba(149,213,178,0.25); background: rgba(149,213,178,0.08); }
+  .hero h1 { font-family: 'Nunito', sans-serif; font-size: clamp(2.6rem, 7vw, 5rem); color: white; line-height: 1.0; max-width: 780px; margin: 0 auto 1.5rem; font-weight: 800; letter-spacing: -0.03em; }
+  .hero h1 em { font-style: italic; color: var(--accent-light); font-weight: 300; display: block; }
+  .hero p { color: rgba(255,255,255,0.45); font-size: 1rem; max-width: 460px; margin: 0 auto; line-height: 1.75; }
 
   /* CONTAINER */
-  .container { max-width: 860px; margin: 0 auto; padding: 2.5rem 1.5rem 4rem; }
+  .container { max-width: 900px; margin: 0 auto; padding: 2.5rem 1.5rem 5rem; }
 
   /* STEPS */
-  .steps-nav { display: flex; border-radius: 12px 12px 0 0; overflow: hidden; border: 1px solid var(--border); border-bottom: none; background: white; }
-  .step-tab { flex: 1; padding: 0.85rem 0.4rem; text-align: center; font-size: 0.68rem; font-weight: 500; letter-spacing: 0.04em; text-transform: uppercase; color: var(--slate-light); cursor: pointer; transition: all 0.2s; border-right: 1px solid var(--border); }
+  .steps-nav { display: flex; border-radius: 14px 14px 0 0; overflow: hidden; border: 1.5px solid var(--border); border-bottom: none; background: var(--surface); }
+  .step-tab { flex: 1; padding: 0.85rem 0.4rem; text-align: center; font-size: 0.68rem; font-weight: 600; letter-spacing: 0.04em; text-transform: uppercase; color: var(--slate-soft); cursor: pointer; transition: all 0.2s; border-right: 1.5px solid var(--border); }
   .step-tab:last-child { border-right: none; }
-  .step-tab.active { background: var(--navy); color: var(--indigo-light); }
-  .step-tab.completed { color: var(--green-light); }
-  .step-tab .step-num { display: block; font-family: 'Playfair Display', serif; font-size: 1.15rem; font-weight: 700; margin-bottom: 0.15rem; color: inherit; }
-  .step-tab.completed .step-num::after { content: ' ✓'; font-size: 0.85rem; }
+  .step-tab.active { background: var(--ink); color: var(--accent-light); }
+  .step-tab.completed { color: var(--accent-dark); }
+  .step-tab .step-num { display: block; font-size: 1.1rem; font-weight: 800; margin-bottom: 0.15rem; color: inherit; }
+  .step-tab.completed .step-num::after { content: ' ✓'; font-size: 0.8rem; }
 
   /* CARD */
-  .card { background: white; border-radius: 0 0 16px 16px; padding: 2rem; border: 1px solid var(--border); border-top: none; box-shadow: 0 4px 24px rgba(15,31,56,0.06); display: none; animation: fadeIn 0.3s ease; }
+  .card { background: var(--surface); border-radius: 0 0 16px 16px; padding: 2rem; border: 1.5px solid var(--border); border-top: none; box-shadow: 0 4px 24px rgba(0,0,0,0.06); display: none; animation: fadeIn 0.3s ease; }
   .card.active { display: block; }
-  @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
-  .card-title { font-family: 'Playfair Display', serif; font-size: 1.5rem; color: var(--navy); margin-bottom: 0.4rem; }
-  .card-subtitle { color: var(--slate); font-size: 0.9rem; margin-bottom: 2rem; line-height: 1.65; max-width: 560px; }
+  @keyframes fadeIn { from { opacity:0; transform:translateY(8px); } to { opacity:1; transform:translateY(0); } }
+  .card-title { font-size: 1.5rem; font-weight: 800; color: var(--ink); margin-bottom: 0.4rem; letter-spacing: -0.02em; }
+  .card-subtitle { color: var(--slate-soft); font-size: 0.9rem; margin-bottom: 2rem; line-height: 1.65; max-width: 560px; }
 
   /* FORM */
   .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 1.25rem; }
-  @media (max-width: 560px) { .two-col { grid-template-columns: 1fr; } }
+  @media (max-width: 580px) { .two-col { grid-template-columns: 1fr; } }
   .field-group { margin-bottom: 1.5rem; }
   .field-group:last-child { margin-bottom: 0; }
-  label { display: block; font-size: 0.85rem; font-weight: 500; color: var(--navy); margin-bottom: 0.5rem; }
+  label { display: block; font-size: 0.85rem; font-weight: 700; color: var(--ink); margin-bottom: 0.5rem; }
   .input-wrap { position: relative; }
-  .input-prefix { position: absolute; left: 14px; top: 50%; transform: translateY(-50%); color: var(--slate-light); font-size: 0.95rem; pointer-events: none; }
-  .input-suffix { position: absolute; right: 14px; top: 50%; transform: translateY(-50%); color: var(--slate-light); font-size: 0.9rem; pointer-events: none; }
-  input[type="number"], select { width: 100%; padding: 0.75rem 1rem 0.75rem 2rem; border: 1.5px solid #ddd; border-radius: 8px; font-family: 'DM Sans', sans-serif; font-size: 1rem; color: var(--navy); background: white; transition: border-color 0.2s; appearance: none; }
-  input[type="number"]:focus, select:focus { outline: none; border-color: var(--indigo); box-shadow: 0 0 0 3px rgba(79,70,229,0.1); }
+  .input-prefix { position: absolute; left: 14px; top: 50%; transform: translateY(-50%); color: var(--slate-soft); font-size: 0.95rem; pointer-events: none; }
+  .input-suffix { position: absolute; right: 14px; top: 50%; transform: translateY(-50%); color: var(--slate-soft); font-size: 0.9rem; pointer-events: none; }
+  input[type="number"], select { width: 100%; padding: 0.75rem 1rem 0.75rem 2rem; border: 1.5px solid #ddd; border-radius: 10px; font-family: 'Nunito', sans-serif; font-size: 1rem; font-weight: 600; color: var(--ink); background: var(--surface); transition: border-color 0.2s; appearance: none; }
+  input[type="number"]:focus, select:focus { outline: none; border-color: var(--accent); box-shadow: 0 0 0 3px rgba(67,56,202,0.1); }
   input.no-prefix { padding-left: 1rem; }
   input.has-suffix { padding-right: 2.5rem; }
-  .hint { font-size: 0.78rem; color: var(--slate-light); margin-top: 0.4rem; line-height: 1.45; }
+  .hint { font-size: 0.76rem; color: var(--slate-soft); margin-top: 0.4rem; line-height: 1.5; }
 
   /* RADIO */
   .radio-group { display: flex; gap: 0.75rem; flex-wrap: wrap; }
-  .radio-btn { flex: 1; min-width: 100px; padding: 0.7rem 0.75rem; border: 1.5px solid #ddd; border-radius: 8px; text-align: center; cursor: pointer; font-size: 0.85rem; font-weight: 500; transition: all 0.2s; color: var(--slate); line-height: 1.3; }
-  .radio-btn:hover { border-color: var(--indigo); }
-  .radio-btn.selected { border-color: var(--indigo); background: var(--indigo-pale); color: var(--navy); }
+  .radio-btn { flex: 1; min-width: 80px; padding: 0.65rem 0.75rem; border: 1.5px solid #ddd; border-radius: 10px; text-align: center; cursor: pointer; font-size: 0.83rem; font-weight: 600; transition: all 0.18s; color: var(--slate-soft); }
+  .radio-btn:hover { border-color: var(--accent); }
+  .radio-btn.selected { border-color: var(--accent); background: var(--accent-xpale); color: var(--ink); }
 
-  /* RANGE */
-  .range-wrap { margin-top: 0.4rem; }
-  input[type="range"] { width: 100%; accent-color: var(--indigo); height: 4px; cursor: pointer; }
-  .range-labels { display: flex; justify-content: space-between; font-size: 0.72rem; color: var(--slate-light); margin-top: 0.25rem; }
+  /* TOGGLE */
+  .toggle-row { display: flex; align-items: center; justify-content: space-between; padding: 1rem 1.25rem; background: var(--stone-pale); border-radius: 10px; margin-bottom: 1rem; }
+  .toggle-label { font-size: 0.88rem; font-weight: 700; color: var(--ink); }
+  .toggle-desc { font-size: 0.76rem; color: var(--slate-soft); margin-top: 0.15rem; }
+  .toggle-switch { position: relative; width: 44px; height: 24px; flex-shrink: 0; }
+  .toggle-switch input { opacity: 0; width: 0; height: 0; }
+  .toggle-slider { position: absolute; inset: 0; background: #ddd; border-radius: 100px; cursor: pointer; transition: 0.2s; }
+  .toggle-slider::before { content: ''; position: absolute; width: 18px; height: 18px; border-radius: 50%; background: white; left: 3px; top: 3px; transition: 0.2s; }
+  input:checked + .toggle-slider { background: var(--accent); }
+  input:checked + .toggle-slider::before { transform: translateX(20px); }
 
   /* RESULTS */
   .results-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 0.85rem; margin: 1.5rem 0; }
-  .result-box { background: var(--navy); border-radius: 12px; padding: 1.1rem; text-align: center; }
-  .result-box.indigo { background: linear-gradient(135deg, var(--indigo) 0%, #6366f1 100%); }
-  .result-box.good { background: linear-gradient(135deg, var(--green) 0%, var(--green-light) 100%); }
-  .result-box.warn { background: linear-gradient(135deg, #92400e 0%, var(--amber) 100%); }
-  .result-box .r-label { font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.07em; color: rgba(255,255,255,0.55); margin-bottom: 0.4rem; }
-  .result-box .r-amount { font-family: 'Playfair Display', serif; font-size: 1.65rem; font-weight: 700; color: white; line-height: 1; }
-  .result-box .r-sub { font-size: 0.68rem; color: rgba(255,255,255,0.4); margin-top: 0.25rem; }
+  .result-box { background: var(--ink); border-radius: 14px; padding: 1.1rem; text-align: center; }
+  .result-box.forest { background: linear-gradient(135deg, var(--accent) 0%, var(--accent-dark) 100%); }
+  .result-box.sky    { background: linear-gradient(135deg, #2a7a9a 0%, var(--sky) 100%); }
+  .result-box.warn   { background: linear-gradient(135deg, #92400e 0%, var(--amber) 100%); }
+  .result-box.good   { background: linear-gradient(135deg, #065f46 0%, #059669 100%); }
+  .result-box.highlight { background: linear-gradient(135deg, #374151 0%, var(--ink) 100%); border: 1px solid rgba(149,213,178,0.2); }
+  .result-box.danger { background: linear-gradient(135deg, #7f1d1d 0%, var(--red) 100%); }
+  .r-label { font-size: 0.65rem; text-transform: uppercase; letter-spacing: 0.08em; color: rgba(255,255,255,0.55); margin-bottom: 0.4rem; font-weight: 700; }
+  .r-amount { font-size: 1.55rem; font-weight: 800; color: white; line-height: 1; letter-spacing: -0.02em; }
+  .r-sub { font-size: 0.67rem; color: rgba(255,255,255,0.45); margin-top: 0.25rem; }
 
-
-
-
-  /* PERIOD TOGGLE */
-  .period-toggle-wrap {
-    display: flex;
-    justify-content: center;
-    margin: 1.75rem 0 0;
-  }
-
-  .period-toggle {
-    display: flex;
-    background: var(--navy);
-    border-radius: 10px;
-    overflow: hidden;
-    border: 1px solid rgba(255,255,255,0.08);
-  }
-
-  .period-btn {
-    padding: 0.55rem 1.5rem;
-    font-family: 'DM Sans', sans-serif;
-    font-size: 0.82rem;
-    font-weight: 500;
-    color: rgba(255,255,255,0.45);
-    cursor: pointer;
-    border: none;
-    background: none;
-    transition: all 0.18s;
-    letter-spacing: 0.02em;
-  }
-
-  .period-btn.active {
-    background: #bfdbfe;
-    color: var(--navy);
-    font-weight: 700;
-    border-radius: 8px;
-    margin: 2px;
-  }
-
-  .period-btn:hover:not(.active) { color: rgba(255,255,255,0.75); }
-
-  /* DIRECTOR EXPLAINER */
-  .director-explainer {
-    background: var(--indigo-pale, #eef2ff);
-    border: 1.5px solid rgba(79,70,229,0.15);
-    border-radius: 12px;
-    padding: 1.1rem 1.25rem;
-    margin-bottom: 1.5rem;
-  }
-
-  .explainer-title {
-    font-size: 0.82rem;
-    font-weight: 700;
-    color: var(--navy);
-    margin-bottom: 0.85rem;
-  }
-
-  .explainer-body { display: flex; flex-direction: column; gap: 0.75rem; margin-bottom: 0.85rem; }
-
-  .explainer-row {
-    display: flex;
-    gap: 0.75rem;
-    align-items: flex-start;
-    font-size: 0.82rem;
-    color: var(--slate);
-    line-height: 1.6;
-  }
-
-  .explainer-dot {
-    width: 10px; height: 10px;
-    border-radius: 50%;
-    flex-shrink: 0;
-    margin-top: 5px;
-  }
-
-  .salary-dot { background: var(--indigo); }
-  .div-dot    { background: var(--indigo-light, #818cf8); }
-
-  .explainer-note {
-    font-size: 0.75rem;
-    color: var(--indigo);
-    font-weight: 500;
-    border-top: 1px solid rgba(79,70,229,0.12);
-    padding-top: 0.65rem;
-    line-height: 1.5;
-  }
-
-  /* STRATEGY CARDS */
-  .strategy-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.85rem; }
-  @media (max-width: 600px) { .strategy-grid { grid-template-columns: 1fr; } }
-
-  .strategy-card {
-    border: 1.5px solid var(--border, rgba(0,0,0,0.1));
-    border-radius: 12px;
-    padding: 1.1rem;
-    cursor: pointer;
-    transition: all 0.2s;
-    background: white;
-    position: relative;
-  }
-
-  .strategy-card:hover { border-color: var(--indigo); }
-
-  .strategy-card.selected {
-    border-color: var(--indigo);
-    background: var(--indigo-pale);
-  }
-
-  .strategy-card.selected::after {
-    content: '&#10003;';
-    position: absolute;
-    top: 0.65rem;
-    right: 0.75rem;
-    font-size: 0.75rem;
-    color: var(--indigo);
-    font-weight: 700;
-  }
-
-  .strategy-card.shortfall {
-    border-color: #fca5a5;
-    background: #fef2f2;
-  }
-
-  .strategy-label {
-    font-size: 0.62rem;
-    text-transform: uppercase;
-    letter-spacing: 0.1em;
-    font-weight: 700;
-    color: var(--indigo);
-    margin-bottom: 0.4rem;
-  }
-
-  .strategy-salary {
-    font-family: 'Playfair Display', serif;
-    font-size: 1.25rem;
-    font-weight: 700;
-    color: var(--navy);
-    margin-bottom: 0.2rem;
-    line-height: 1;
-  }
-
-  .strategy-name {
-    font-size: 0.82rem;
-    font-weight: 600;
-    color: var(--navy);
-    margin-bottom: 0.3rem;
-  }
-
-  .strategy-desc {
-    font-size: 0.73rem;
-    color: var(--slate-light);
-    line-height: 1.45;
-    margin-bottom: 0.6rem;
-  }
-
-  .strategy-metric {
-    display: flex;
-    justify-content: space-between;
-    font-size: 0.72rem;
-    padding: 0.2rem 0;
-    border-top: 1px solid rgba(0,0,0,0.06);
-    margin-top: 0.4rem;
-  }
-
-  .strategy-metric span:first-child { color: var(--slate-light); }
-  .strategy-metric span:last-child { font-weight: 600; color: var(--navy); }
-
-  .strategy-badge {
-    display: inline-block;
-    font-size: 0.62rem;
-    font-weight: 700;
-    padding: 0.15rem 0.45rem;
-    border-radius: 20px;
-    background: var(--indigo);
-    color: white;
-    margin-bottom: 0.5rem;
-  }
-
-  .strategy-badge.green { background: var(--green-light, #40916c); }
-  .strategy-badge.warn  { background: #d97706; }
-  .strategy-badge.red   { background: #dc2626; }
-
-  .shortfall-flag {
-    font-size: 0.72rem;
-    color: #dc2626;
-    font-weight: 600;
-    margin-top: 0.4rem;
-  }
-
-  /* SPLIT VISUAL */
-  .split-bar { margin: 1.5rem 0; }
-  .split-bar-track { height: 32px; border-radius: 8px; overflow: hidden; display: flex; margin-bottom: 0.6rem; }
-  .split-salary { background: var(--indigo); display: flex; align-items: center; justify-content: center; font-size: 0.72rem; font-weight: 600; color: white; transition: width 0.5s ease; min-width: 2px; }
-  .split-divs { background: var(--indigo-light); display: flex; align-items: center; justify-content: center; font-size: 0.72rem; font-weight: 600; color: var(--navy); transition: width 0.5s ease; min-width: 2px; }
-  .split-tax { background: #e2e8f0; display: flex; align-items: center; justify-content: center; font-size: 0.72rem; color: var(--slate); transition: width 0.5s ease; min-width: 2px; }
-  .split-legend { display: flex; gap: 1rem; flex-wrap: wrap; }
-  .split-legend-item { display: flex; align-items: center; gap: 0.4rem; font-size: 0.75rem; color: var(--slate); }
-  .split-legend-dot { width: 10px; height: 10px; border-radius: 2px; flex-shrink: 0; }
+  /* SCENARIO CARDS */
+  .scenario-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; margin: 1.5rem 0; }
+  @media (max-width: 640px) { .scenario-grid { grid-template-columns: 1fr; } }
+  .scenario-card { border-radius: 14px; padding: 1.5rem; border: 2px solid var(--border); background: var(--surface); transition: all 0.2s; position: relative; }
+  .scenario-card.best { border-color: var(--accent); background: var(--accent-xpale); }
+  .scenario-card.best::before { content: '★ Best financial return'; position: absolute; top: 0; left: 50%; transform: translateX(-50%) translateY(-50%); background: var(--accent); color: white; font-size: 0.65rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.06em; padding: 0.2rem 0.7rem; border-radius: 100px; white-space: nowrap; }
+  .sc-icon { font-size: 1.8rem; margin-bottom: 0.75rem; }
+  .sc-title { font-size: 0.95rem; font-weight: 800; color: var(--ink); margin-bottom: 0.25rem; }
+  .sc-subtitle { font-size: 0.75rem; color: var(--slate-soft); margin-bottom: 1rem; line-height: 1.5; }
+  .sc-metric { display: flex; justify-content: space-between; padding: 0.35rem 0; border-bottom: 1px solid rgba(0,0,0,0.06); font-size: 0.8rem; }
+  .sc-metric:last-child { border-bottom: none; }
+  .sc-metric-label { color: var(--slate-soft); }
+  .sc-metric-val { font-weight: 700; color: var(--ink); }
+  .sc-metric-val.green { color: var(--accent); }
+  .sc-metric-val.red   { color: var(--red); }
+  .sc-metric-val.amber { color: var(--amber); }
 
   /* COMPARE TABLE */
-  .compare-table { width: 100%; border-collapse: collapse; font-size: 0.85rem; margin: 1rem 0; }
-  .compare-table th { padding: 0.6rem 0.85rem; text-align: left; font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.06em; color: var(--slate-light); border-bottom: 2px solid var(--border); }
-  .compare-table th.col-b { color: var(--indigo); }
-  .compare-table td { padding: 0.7rem 0.85rem; border-bottom: 1px solid rgba(0,0,0,0.05); color: var(--slate); }
+  .compare-table { width: 100%; border-collapse: collapse; font-size: 0.84rem; margin: 1rem 0; }
+  .compare-table th { padding: 0.6rem 0.85rem; text-align: left; font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.06em; color: var(--slate-soft); border-bottom: 2px solid var(--border); font-weight: 700; }
+  .compare-table th.c1 { color: var(--accent); }
+  .compare-table th.c2 { color: #2a7a9a; }
+  .compare-table th.c3 { color: var(--amber); }
+  .compare-table td { padding: 0.65rem 0.85rem; border-bottom: 1px solid rgba(0,0,0,0.05); color: var(--slate-soft); }
   .compare-table tr:last-child td { border-bottom: none; }
-  .compare-table td:first-child { font-weight: 500; color: var(--navy); font-size: 0.82rem; }
-  .compare-table td.win { color: var(--green); font-weight: 600; }
+  .compare-table td:first-child { font-weight: 700; color: var(--ink); font-size: 0.82rem; }
+  .compare-table td.win  { color: var(--accent); font-weight: 700; }
   .compare-table td.lose { color: var(--red); }
+  .compare-table tr.total-row td { font-weight: 800; border-top: 2px solid var(--border); color: var(--ink); }
 
   /* GUIDANCE */
-  .guidance-box { border-left: 3px solid var(--indigo); background: var(--indigo-pale); border-radius: 0 8px 8px 0; padding: 1rem 1.25rem; margin: 1rem 0; }
-  .guidance-box h4 { font-size: 0.85rem; font-weight: 600; color: var(--navy); margin-bottom: 0.4rem; }
-  .guidance-box p, .guidance-box li { font-size: 0.84rem; color: var(--slate); line-height: 1.65; }
-  .guidance-box ul { padding-left: 1.1rem; margin-top: 0.3rem; }
-  .alert-box { border-left: 3px solid var(--green-light); background: rgba(64,145,108,0.06); border-radius: 0 8px 8px 0; padding: 0.9rem 1.1rem; margin: 0.75rem 0; }
+  .guidance-box { border-left: 3px solid var(--accent); background: var(--accent-xpale); border-radius: 0 10px 10px 0; padding: 1rem 1.25rem; margin: 1rem 0; }
+  .guidance-box h4 { font-size: 0.85rem; font-weight: 800; color: var(--ink); margin-bottom: 0.4rem; }
+  .guidance-box p, .guidance-box li { font-size: 0.84rem; color: var(--slate-soft); line-height: 1.65; }
+  .guidance-box ul { padding-left: 1.1rem; margin-top: 0.4rem; }
+  .guidance-box li { margin-bottom: 0.3rem; }
+  .alert-box { border-left: 3px solid var(--accent-dark); background: rgba(64,145,108,0.06); border-radius: 0 10px 10px 0; padding: 0.9rem 1.1rem; margin: 0.75rem 0; }
   .alert-box.warning { border-left-color: var(--amber); background: #fffbeb; }
-  .alert-box.danger { border-left-color: var(--red); background: #fef2f2; }
-  .alert-box h4 { font-size: 0.83rem; font-weight: 600; color: var(--navy); margin-bottom: 0.3rem; }
-  .alert-box p { font-size: 0.83rem; color: var(--slate); line-height: 1.6; }
+  .alert-box.info    { border-left-color: var(--sky); background: #f0f9ff; }
+  .alert-box h4 { font-size: 0.83rem; font-weight: 800; color: var(--ink); margin-bottom: 0.3rem; }
+  .alert-box p  { font-size: 0.83rem; color: var(--slate-soft); line-height: 1.6; }
 
   /* SUMMARY */
-  .summary-panel { background: var(--navy); border-radius: 12px; padding: 1.5rem; margin-top: 1.5rem; }
-  .summary-title { font-family: 'Playfair Display', serif; color: var(--indigo-light); font-size: 1rem; margin-bottom: 1rem; }
+  .summary-panel { background: var(--ink); border-radius: 14px; padding: 1.5rem; margin-top: 1.5rem; }
+  .summary-title { font-size: 1rem; font-weight: 800; color: var(--accent-light); margin-bottom: 1rem; }
   .summary-row { display: flex; justify-content: space-between; padding: 0.45rem 0; border-bottom: 1px solid rgba(255,255,255,0.07); font-size: 0.85rem; }
   .summary-row:last-child { border-bottom: none; }
-  .summary-row .s-label { color: rgba(255,255,255,0.5); }
-  .summary-row .s-val { color: white; font-weight: 500; }
-  .summary-row .s-val.indigo { color: var(--indigo-light); font-weight: 600; }
-  .summary-row .s-val.good { color: #6ee7b7; }
-  .summary-row .s-val.warn { color: #fbbf24; }
+  .summary-row .s-label { color: rgba(255,255,255,0.45); }
+  .summary-row .s-val   { color: white; font-weight: 700; }
+  .summary-row .s-val.green { color: var(--accent-light); }
+  .summary-row .s-val.warn  { color: #fbbf24; }
 
-  /* PDF CTA */
-  .pdf-inline-cta { display: none; margin-top: 1.5rem; background: var(--cream); border: 1.5px solid var(--border); border-radius: 12px; padding: 1.1rem 1.25rem; }
+  /* PDF & ADVISER */
+  .pdf-inline-cta { display: none; margin-top: 1.5rem; background: var(--stone-pale); border: 1.5px solid var(--border); border-radius: 14px; padding: 1.1rem 1.25rem; }
   .pdf-inline-cta.visible { display: block; }
   .pdf-inline-inner { display: flex; align-items: center; justify-content: space-between; gap: 1rem; flex-wrap: wrap; }
-  .pdf-inline-text strong { display: block; font-family: 'Playfair Display', serif; font-size: 0.95rem; color: var(--navy); margin-bottom: 0.2rem; }
-  .pdf-inline-text span { font-size: 0.75rem; color: var(--slate-light); }
+  .pdf-inline-text strong { display: block; font-size: 0.95rem; font-weight: 800; color: var(--ink); margin-bottom: 0.2rem; }
+  .pdf-inline-text span   { font-size: 0.75rem; color: var(--slate-soft); }
   .pdf-inline-right { display: flex; align-items: center; gap: 0.75rem; flex-shrink: 0; }
-  .pdf-inline-price { font-family: 'Playfair Display', serif; font-size: 1.1rem; font-weight: 700; color: var(--navy); }
-  .pdf-inline-btn { padding: 0.65rem 1.25rem; border-radius: 8px; font-family: 'DM Sans', sans-serif; font-size: 0.88rem; font-weight: 600; text-decoration: none; white-space: nowrap; transition: all 0.2s; background: var(--navy); color: white; border: none; cursor: pointer; display: inline-block; }
+  .pdf-inline-price { font-size: 1.1rem; font-weight: 800; color: var(--ink); }
+  .pdf-inline-btn { padding: 0.65rem 1.25rem; border-radius: 100px; font-family: 'Nunito', sans-serif; font-size: 0.88rem; font-weight: 700; text-decoration: none; white-space: nowrap; transition: all 0.2s; background: var(--ink); color: white; border: none; cursor: pointer; display: inline-block; }
   .pdf-inline-btn:hover { opacity: 0.85; }
-  .pdf-inline-btn.paid { background: #40916c; }
-
-  /* ADVISER CTA */
-  .adviser-cta { background: linear-gradient(135deg, var(--navy) 0%, #162d4f 100%); border-radius: 12px; padding: 1.1rem 1.5rem; margin: 0.75rem 0 0; border: 1px solid rgba(255,255,255,0.08); display: none; animation: fadeIn 0.4s ease; }
-  .adviser-cta.visible { display: block; }
+  .pdf-inline-btn.paid { background: var(--accent); }
+  .adviser-cta { background: linear-gradient(135deg, var(--ink) 0%, var(--ink-mid) 100%); border-radius: 14px; padding: 1.1rem 1.5rem; margin-top: 0.75rem; display: block; border: 1px solid rgba(255,255,255,0.07); }
   .adviser-cta-inner { display: flex; align-items: center; justify-content: space-between; gap: 1rem; flex-wrap: wrap; }
-  .adviser-cta-text { flex: 1; min-width: 180px; }
-  .adviser-cta-text strong { display: block; font-family: 'Playfair Display', serif; font-size: 0.95rem; color: white; margin-bottom: 0.2rem; }
-  .adviser-cta-text span { font-size: 0.75rem; color: rgba(255,255,255,0.45); }
-  .adviser-cta-btn { padding: 0.65rem 1.25rem; border-radius: 8px; font-family: 'DM Sans', sans-serif; font-size: 0.85rem; font-weight: 600; text-decoration: none; white-space: nowrap; transition: all 0.2s; flex-shrink: 0; background: white; color: var(--navy); }
-  .adviser-cta-btn:hover { background: rgba(255,255,255,0.9); transform: translateY(-1px); }
+  .adviser-cta-text strong { display: block; font-size: 0.95rem; font-weight: 800; color: white; margin-bottom: 0.2rem; }
+  .adviser-cta-text span   { font-size: 0.75rem; color: rgba(255,255,255,0.4); }
+  .adviser-cta-btn { padding: 0.65rem 1.25rem; border-radius: 100px; font-family: 'Nunito', sans-serif; font-size: 0.85rem; font-weight: 700; text-decoration: none; white-space: nowrap; background: var(--yellow); color: var(--ink); flex-shrink: 0; transition: all 0.2s; }
+  .adviser-cta-btn:hover { background: #e0c000; }
 
-  hr { border: none; border-top: 1px solid rgba(0,0,0,0.08); margin: 1.5rem 0; }
-
-  /* BUTTONS */
-  .btn-primary { background: var(--indigo); color: white; border: none; padding: 0.85rem 2rem; border-radius: 8px; font-family: 'DM Sans', sans-serif; font-size: 0.95rem; font-weight: 600; cursor: pointer; transition: all 0.2s; }
-  .btn-primary:hover { background: #4338ca; transform: translateY(-1px); box-shadow: 0 4px 12px rgba(79,70,229,0.3); }
-  .btn-secondary { background: transparent; color: var(--slate); border: 1.5px solid #ddd; padding: 0.85rem 1.5rem; border-radius: 8px; font-family: 'DM Sans', sans-serif; font-size: 0.9rem; font-weight: 500; cursor: pointer; transition: all 0.2s; }
-  .btn-secondary:hover { border-color: var(--navy); color: var(--navy); }
-  .btn-row { display: flex; gap: 0.75rem; margin-top: 2rem; justify-content: flex-end; flex-wrap: wrap; }
-
-  /* CHAT PANEL */
-  .chat-wrap { max-width: 860px; margin: 0 auto; padding: 0 1.5rem 2.5rem; }
-  .chat-divider { display: flex; align-items: center; gap: 0.75rem; margin-bottom: 1rem; font-size: 0.65rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--slate-light); }
-  .chat-divider::before, .chat-divider::after { content: ''; flex: 1; height: 1px; background: rgba(0,0,0,0.08); }
-  .chat-box { background: white; border-radius: 16px; border: 1px solid var(--border); box-shadow: 0 4px 24px rgba(15,31,56,0.06); overflow: hidden; }
-  .chat-head { background: var(--navy); padding: 0.9rem 1.25rem; display: flex; align-items: center; gap: 0.75rem; }
-  .chat-head-icon { width: 30px; height: 30px; border-radius: 50%; background: rgba(255,255,255,0.12); display: flex; align-items: center; justify-content: center; font-size: 0.9rem; flex-shrink: 0; }
-  .chat-head-title { font-family: 'Playfair Display', serif; font-size: 0.9rem; color: white; }
+  /* CHAT */
+  .chat-wrap { max-width: 900px; margin: 0 auto; padding: 0 1.5rem 2.5rem; }
+  .chat-divider { display: flex; align-items: center; gap: 0.75rem; margin-bottom: 1rem; font-size: 0.65rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--slate-soft); }
+  .chat-divider::before, .chat-divider::after { content: ''; flex: 1; height: 1px; background: var(--border); }
+  .chat-box { background: var(--surface); border-radius: 16px; border: 1.5px solid var(--border); box-shadow: 0 4px 24px rgba(0,0,0,0.05); overflow: hidden; }
+  .chat-head { background: var(--ink); padding: 0.9rem 1.25rem; display: flex; align-items: center; gap: 0.75rem; }
+  .chat-head-icon { width: 30px; height: 30px; border-radius: 50%; background: rgba(149,213,178,0.2); display: flex; align-items: center; justify-content: center; font-size: 0.9rem; flex-shrink: 0; }
+  .chat-head-title { font-size: 0.95rem; font-weight: 800; color: white; }
   .chat-head-sub { font-size: 0.68rem; color: rgba(255,255,255,0.4); margin-top: 0.05rem; }
-  .chat-msgs { padding: 1rem 1.25rem; max-height: 380px; overflow-y: auto; display: flex; flex-direction: column; gap: 0.85rem; scroll-behavior: smooth; }
+  .chat-msgs { padding: 1rem 1.25rem; max-height: 340px; overflow-y: auto; display: flex; flex-direction: column; gap: 0.85rem; scroll-behavior: smooth; }
   .chat-msg { display: flex; gap: 0.6rem; align-items: flex-start; animation: fadeIn 0.2s ease; }
   .chat-msg.user { flex-direction: row-reverse; }
-  .msg-av { width: 26px; height: 26px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.7rem; font-weight: 600; flex-shrink: 0; margin-top: 2px; }
-  .chat-msg.ai .msg-av { background: var(--navy); color: rgba(255,255,255,0.7); }
-  .chat-msg.user .msg-av { background: #f3f4f6; color: var(--slate); }
+  .msg-av { width: 26px; height: 26px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.7rem; font-weight: 700; flex-shrink: 0; margin-top: 2px; }
+  .chat-msg.ai   .msg-av { background: var(--ink); color: rgba(255,255,255,0.7); }
+  .chat-msg.user .msg-av { background: var(--accent); color: white; }
   .msg-bub { max-width: 80%; padding: 0.65rem 0.9rem; border-radius: 12px; font-size: 0.84rem; line-height: 1.65; }
-  .chat-msg.ai .msg-bub { background: #f3f4f6; color: var(--navy); border-radius: 4px 12px 12px 12px; }
-  .chat-msg.user .msg-bub { background: var(--navy); color: white; border-radius: 12px 4px 12px 12px; }
+  .chat-msg.ai   .msg-bub { background: var(--stone-pale); color: var(--ink); border-radius: 4px 12px 12px 12px; }
+  .chat-msg.user .msg-bub { background: var(--ink); color: white; border-radius: 12px 4px 12px 12px; }
   .msg-bub p { margin-bottom: 0.4rem; } .msg-bub p:last-child { margin-bottom: 0; }
   .chat-typing { display: flex; gap: 3px; align-items: center; padding: 0.2rem 0; }
-  .chat-typing span { width: 6px; height: 6px; border-radius: 50%; background: var(--slate-light); animation: typeBounce 1.2s infinite; }
+  .chat-typing span { width: 6px; height: 6px; border-radius: 50%; background: var(--slate-soft); animation: typeBounce 1.2s infinite; }
   .chat-typing span:nth-child(2) { animation-delay: 0.2s; }
   .chat-typing span:nth-child(3) { animation-delay: 0.4s; }
-  @keyframes typeBounce { 0%,60%,100% { transform:translateY(0); opacity:0.4; } 30% { transform:translateY(-4px); opacity:1; } }
+  @keyframes typeBounce { 0%,60%,100%{transform:translateY(0);opacity:0.4;} 30%{transform:translateY(-4px);opacity:1;} }
   .chat-chips { padding: 0 1.25rem 0.6rem; display: flex; gap: 0.4rem; flex-wrap: wrap; }
-  .chat-chip { font-size: 0.73rem; padding: 0.28rem 0.65rem; border-radius: 20px; border: 1px solid var(--border); background: white; color: var(--slate); cursor: pointer; transition: all 0.15s; white-space: nowrap; }
-  .chat-chip:hover { border-color: var(--indigo); color: var(--navy); background: var(--indigo-pale); }
-  .chat-input-wrap { display: flex; gap: 0.5rem; padding: 0.75rem 1.25rem 1rem; border-top: 1px solid rgba(0,0,0,0.07); align-items: flex-end; }
-  .chat-textarea { flex: 1; padding: 0.6rem 0.85rem; border: 1.5px solid #ddd; border-radius: 10px; font-family: 'DM Sans', sans-serif; font-size: 0.88rem; color: var(--navy); resize: none; min-height: 40px; max-height: 110px; line-height: 1.5; transition: border-color 0.2s; background: white; }
-  .chat-textarea:focus { outline: none; border-color: var(--indigo); box-shadow: 0 0 0 3px rgba(79,70,229,0.1); }
-  .chat-send { width: 40px; height: 40px; border-radius: 10px; background: var(--navy); border: none; color: white; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 1rem; flex-shrink: 0; transition: opacity 0.15s; }
-  .chat-send:hover { opacity: 0.85; } .chat-send:disabled { opacity: 0.3; cursor: not-allowed; }
-  .chat-footer-note { text-align: center; font-size: 0.68rem; color: var(--slate-light); padding: 0 1.25rem 0.85rem; line-height: 1.5; }
+  .chat-chip { font-size: 0.73rem; padding: 0.28rem 0.7rem; border-radius: 100px; border: 1.5px solid var(--border); background: var(--surface); color: var(--slate-soft); cursor: pointer; transition: all 0.15s; white-space: nowrap; font-weight: 600; }
+  .chat-chip:hover { border-color: var(--accent); color: var(--ink); background: var(--accent-xpale); }
+  .chat-input-wrap { display: flex; gap: 0.5rem; padding: 0.75rem 1.25rem 1rem; border-top: 1px solid var(--border); align-items: flex-end; }
+  .chat-textarea { flex: 1; padding: 0.6rem 0.85rem; border: 1.5px solid #ddd; border-radius: 100px; font-family: 'Nunito', sans-serif; font-size: 0.88rem; color: var(--ink); resize: none; min-height: 40px; max-height: 110px; line-height: 1.5; transition: border-color 0.2s; background: var(--stone-pale); }
+  .chat-textarea:focus { outline: none; border-color: var(--accent); }
+  .chat-send { width: 40px; height: 40px; border-radius: 100px; background: var(--yellow); border: none; color: var(--ink); cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 1rem; font-weight: 800; flex-shrink: 0; transition: all 0.15s; }
+  .chat-send:hover { background: #e0c000; transform: scale(1.08); }
+  .chat-send:disabled { opacity: 0.3; cursor: not-allowed; transform: none; }
+  .chat-footer-note { text-align: center; font-size: 0.68rem; color: var(--slate-soft); padding: 0 1.25rem 0.85rem; line-height: 1.5; }
 
-  /* ── Tooltip system ─────────────────────────────────────── */
-  .tooltip-wrap { position: relative; display: inline; }
-  .tooltip-icon {
-    display: inline-flex; align-items: center; justify-content: center;
-    width: 1.1rem; height: 1.1rem; border-radius: 50%;
-    background: var(--indigo-pale, #eef2ff); color: var(--navy);
-    font-size: 0.65rem; font-weight: 700; cursor: help;
-    vertical-align: middle; margin-left: 0.3rem; border: none;
-    font-family: 'DM Sans', sans-serif;
-  }
-  .tooltip-bubble {
-    display: none; position: absolute; bottom: calc(100% + 8px); left: 50%;
-    transform: translateX(-50%); background: var(--navy); color: #fff;
-    padding: 0.6rem 0.85rem; border-radius: 8px; font-size: 0.78rem;
-    line-height: 1.5; width: max-content; max-width: 280px;
-    box-shadow: 0 4px 16px rgba(0,0,0,0.18); z-index: 100;
-    font-family: 'DM Sans', sans-serif; font-weight: 400;
-  }
-  .tooltip-bubble::after {
-    content: ''; position: absolute; top: 100%; left: 50%;
-    transform: translateX(-50%); border: 6px solid transparent;
-    border-top-color: var(--navy);
-  }
-  .tooltip-wrap:hover .tooltip-bubble,
-  .tooltip-wrap:focus-within .tooltip-bubble { display: block; }
-
-  /* ── Privacy badge ──────────────────────────────────────── */
-  .privacy-badge {
-    display: flex; align-items: center; gap: 0.5rem;
-    background: #f0fdf4; border: 1px solid #bbf7d0;
-    border-radius: 8px; padding: 0.5rem 0.85rem;
-    font-size: 0.78rem; color: #166534; margin-bottom: 0.75rem;
-  }
-
-  /* ── Breakdown toggle (progressive disclosure) ──────────── */
-  .breakdown-toggle { margin-top: 0.75rem; }
-  .breakdown-toggle summary {
-    font-size: 0.82rem; font-weight: 500; color: var(--slate);
-    cursor: pointer; padding: 0.4rem 0; list-style: none;
-    display: flex; align-items: center; gap: 0.4rem;
-  }
-  .breakdown-toggle summary::before { content: '▸'; transition: transform 0.2s; }
-  .breakdown-toggle[open] summary::before { transform: rotate(90deg); }
-  .breakdown-toggle summary::-webkit-details-marker { display: none; }
-
-  /* ── Step reassurance ───────────────────────────────────── */
-  .step-reassurance {
-    font-size: 0.8rem; color: var(--indigo-light, #818cf8); text-align: right;
-    margin: 1rem 0 0.25rem; font-style: italic;
-  }
-
-  /* ── Plain-English summary ──────────────────────────────── */
-  .plain-summary {
-    background: var(--indigo-pale, #eef2ff); border-radius: 10px;
-    padding: 0.85rem 1rem; margin: 0.75rem 0; font-size: 0.85rem;
-    line-height: 1.6; color: var(--slate);
-  }
-
-  /* ── Softer result boxes ────────────────────────────────── */
-  .result-box {
-    background: #f8f9fa !important; border-radius: 12px;
-    padding: 1.1rem; text-align: center;
-    border: 1px solid rgba(0,0,0,0.06);
-  }
-  .result-box .r-label { color: var(--slate-light) !important; }
-  .result-box .r-amount { color: var(--navy) !important; }
-  .result-box .r-sub { color: var(--slate-light) !important; }
-  .result-box.indigo {
-    background: var(--indigo-pale, #eef2ff) !important;
-    border-color: rgba(79,70,229,0.15) !important;
-  }
-  .result-box.indigo .r-amount { color: var(--navy) !important; }
-  .result-box.good {
-    background: #f0fdf4 !important;
-    border-color: #bbf7d0 !important;
-  }
-  .result-box.good .r-amount { color: var(--green) !important; }
-
-  /* ── Active tab text fix ────────────────────────────────── */
-  .step-tab.active.completed { color: var(--indigo-light) !important; }
+  hr { border: none; border-top: 1px solid var(--border); margin: 1.5rem 0; }
+  .btn-primary { background: var(--accent); color: white; border: none; padding: 0.85rem 2rem; border-radius: 100px; font-family: 'Nunito', sans-serif; font-size: 0.95rem; font-weight: 800; cursor: pointer; transition: all 0.2s; }
+  .btn-primary:hover { background: var(--ink); transform: translateY(-1px); box-shadow: 0 4px 14px rgba(67,56,202,0.3); }
+  .btn-secondary { background: transparent; color: var(--slate-soft); border: 1.5px solid #ddd; padding: 0.85rem 1.5rem; border-radius: 100px; font-family: 'Nunito', sans-serif; font-size: 0.9rem; font-weight: 700; cursor: pointer; transition: all 0.2s; }
+  .btn-secondary:hover { border-color: var(--ink); color: var(--ink); }
+  .btn-row { display: flex; gap: 0.75rem; margin-top: 2rem; justify-content: flex-end; flex-wrap: wrap; }
 
   @media (max-width: 600px) {
-    .hero { padding: 2rem 1.25rem 3rem; }
+    header { padding: 1rem 1.25rem; }
+    .hero { padding: 3rem 1.25rem 4rem; }
+    .container { padding: 2rem 1.25rem 3rem; }
+    .step-tab { font-size: 0.58rem; padding: 0.7rem 0.2rem; }
     .card { padding: 1.5rem 1.25rem; }
-    .step-tab { font-size: 0.6rem; padding: 0.7rem 0.2rem; }
-    .btn-row { justify-content: stretch; }
-    .btn-primary, .btn-secondary { flex: 1; text-align: center; }
   }
-  .email-capture { padding: 2.5rem 1rem; text-align: center; }
-  .ec-inner { max-width: 480px; margin: 0 auto; background: rgba(255,255,255,0.85); border-radius: 16px; padding: 2rem 1.5rem; box-shadow: 0 2px 16px rgba(0,0,0,0.06); }
-  .ec-inner h3 { font-family: 'Playfair Display', serif; font-size: 1.35rem; color: #1e293b; margin: 0 0 0.5rem; }
-  .ec-inner p { font-size: 0.88rem; color: #64748b; margin: 0 0 1.25rem; line-height: 1.5; }
-  .ec-btn { display: inline-block; padding: 0.7rem 2rem; border-radius: 8px; border: none; font-family: 'DM Sans', sans-serif; font-size: 0.95rem; font-weight: 600; color: #fff; background: var(--indigo); cursor: pointer; transition: opacity 0.2s; }
-  .ec-btn:hover { opacity: 0.88; }
-
-  /* ── Action plan checklist ──────────── */
-  .action-plan { background: var(--stone-pale, #f3f4f6); border-radius: 12px; border: 1px solid rgba(0,0,0,0.06); padding: 1.25rem 1.25rem 1rem; }
-  .action-plan-title { font-family: 'Playfair Display', serif; font-size: 1rem; font-weight: 600; color: var(--navy); margin-bottom: 0.25rem; }
-  .action-plan-subtitle { font-size: 0.78rem; color: var(--slate); margin-bottom: 1rem; line-height: 1.4; }
-  .action-item { display: flex; align-items: flex-start; gap: 0.6rem; padding: 0.6rem 0; border-bottom: 1px solid rgba(0,0,0,0.06); }
-  .action-item:last-child { border-bottom: none; }
-  .action-item input[type="checkbox"] { width: 18px; height: 18px; margin-top: 2px; accent-color: var(--indigo, #6366f1); flex-shrink: 0; cursor: pointer; }
-  .action-item-text { font-size: 0.85rem; color: var(--navy); line-height: 1.45; }
-  .action-item-text .action-hint { display: block; font-size: 0.72rem; color: var(--slate); margin-top: 0.15rem; }
 </style>
 </head>
 <body>
@@ -627,26 +320,21 @@
 <header>
   <div class="app-switcher" id="appSwitcher">
     <div class="switcher-trigger" onclick="toggleSwitcher(event)">
-      <div class="app-name">My Pay <span>Director</span></div>
+      <div class="app-name">MyPay<span>Director</span></div>
       <div class="chevron">▼</div>
     </div>
     <div class="switcher-dropdown">
       <div class="switcher-item" onclick="window.location.href='index.html'">
         <div class="switcher-item-icon" style="background:rgba(255,255,255,0.06);">&#127968;</div>
-        <div class="switcher-item-text"><div class="item-name" style="color:rgba(255,255,255,0.4);font-size:0.8rem;">&#8592; My Pay Picture</div></div>
+        <div class="switcher-item-text"><div class="item-name" style="color:rgba(255,255,255,0.4);font-size:0.8rem;">&#8592; MyPayPicture</div></div>
+      </div>
+      <div class="switcher-item" onclick="window.location.href='property-decision.html'">
+        <div class="switcher-item-icon" style="background:rgba(45,106,79,0.15);">&#127968;</div>
+        <div class="switcher-item-text"><div class="item-name">MyPropertyDecision</div><div class="item-desc">Got a deposit? See where it works hardest.</div></div>
       </div>
       <div class="switcher-item current" style="cursor:default;">
         <div class="switcher-item-icon" style="background:rgba(79,70,229,0.15);">&#127962;</div>
-        <div class="switcher-item-text"><div class="item-name">My Pay Director</div><div class="item-desc">Best way to pay yourself.</div></div>
-      </div>
-      <div class="switcher-item" onclick="window.location.href='mortgage-vs-pension.html'">
-        <div class="switcher-item-icon" style="background:rgba(5,150,105,0.15);">&#127968;</div>
-        <div class="switcher-item-text"><div class="item-name">My Mortgage &amp; Pension</div><div class="item-desc">Build more wealth: mortgage or pension?</div></div>
-      </div>
-      <div class="switcher-group-label">&#8505; Info</div>
-      <div class="switcher-item" onclick="window.location.href='about.html'">
-        <div class="switcher-item-icon" style="background:rgba(255,255,255,0.06);">&#8505;</div>
-        <div class="switcher-item-text"><div class="item-name">About</div><div class="item-desc">Why we built this. How we protect your data.</div></div>
+        <div class="switcher-item-text"><div class="item-name">MyPayDirector</div><div class="item-desc">Be smart with your pay.</div></div>
       </div>
     </div>
   </div>
@@ -654,31 +342,24 @@
 </header>
 
 <div class="hero">
-<div style="position:relative;z-index:1;">
-    <div class="hero-eyebrow">My Pay Picture</div>
-    <h1>Running a limited company?<br><em>Be smart with your pay.</em></h1>
-    <p>Work out the best way to pay yourself — the right mix of salary and dividends to keep more of your profit.</p>
-  </div>
+  <div class="hero-eyebrow">MyPayPicture</div>
+  <h1>Running a limited company?<br><em>Be smart with your pay.</em></h1>
+  <p>Find the optimal salary and dividend split for your limited company.</p>
 </div>
 
 <div class="container">
-  <div class="privacy-badge">
-    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
-    <span>Your data stays on your device — nothing is sent to a server or stored in the cloud.</span>
-  </div>
-
   <div class="steps-nav">
-    <div class="step-tab active" onclick="goTo(1)" id="tab1"><span class="step-num">1</span>Company</div>
-    <div class="step-tab" onclick="goTo(2)" id="tab2"><span class="step-num">2</span>Tax</div>
-    <div class="step-tab" onclick="goTo(3)" id="tab3"><span class="step-num">3</span>Pay split</div>
+    <div class="step-tab active" onclick="goTo(1)" id="tab1"><span class="step-num">1</span>Your Company</div>
+    <div class="step-tab" onclick="goTo(2)" id="tab2"><span class="step-num">2</span>Tax Breakdown</div>
+    <div class="step-tab" onclick="goTo(3)" id="tab3"><span class="step-num">3</span>Optimise Split</div>
     <div class="step-tab" onclick="goTo(4)" id="tab4"><span class="step-num">4</span>Pension</div>
     <div class="step-tab" onclick="goTo(5)" id="tab5"><span class="step-num">5</span>Summary</div>
   </div>
 
 <!-- STEP 1 -->
   <div class="card active" id="step1">
-    <div class="card-title">Your company</div>
-    <p class="card-subtitle">Tell us about your profit and current pay setup.</p>
+    <div class="card-title">Your company details</div>
+    <p class="card-subtitle">Tell us about your limited company and how you currently pay yourself. We'll calculate the most tax-efficient approach.</p>
 
     <div class="two-col">
       <div class="field-group">
@@ -699,12 +380,12 @@
       <div class="field-group">
         <label>Your current salary from the company</label>
         <div class="input-wrap"><span class="input-prefix">£</span><input type="number" id="currentSalary" placeholder="e.g. 12570" min="0"></div>
-        <p class="hint">Most directors take salary at the <span class="tooltip-wrap">Personal Allowance<span class="tooltip-icon" tabindex="0">?</span><span class="tooltip-bubble">The amount of income you can earn each year without paying income tax. Currently £12,570 for 2025/26.</span></span> (£12,570) or <span class="tooltip-wrap">NI Secondary Threshold<span class="tooltip-icon" tabindex="0">?</span><span class="tooltip-bubble">The point above which your company must pay National Insurance on your salary. Reduced to £5,000 for 2025/26.</span></span> (£5,000).</p>
+        <p class="hint">Most directors take salary at the Personal Allowance (£12,570) or NI Secondary Threshold (£9,100).</p>
       </div>
       <div class="field-group">
         <label>Any other personal income (outside company)</label>
         <div class="input-wrap"><span class="input-prefix">£</span><input type="number" id="otherIncome" placeholder="e.g. 0" min="0"></div>
-        <p class="hint">Rental income, employment elsewhere, etc. Affects your <span class="tooltip-wrap">dividend tax bands<span class="tooltip-icon" tabindex="0">?</span><span class="tooltip-bubble">Dividend tax rates depend on your total income. The first £500 of dividends are tax-free (the Dividend Allowance), then taxed at 8.75%, 33.75%, or 39.35% depending on your tax band.</span></span>.</p>
+        <p class="hint">Rental income, employment elsewhere, etc. Affects your dividend tax bands.</p>
       </div>
     </div>
 
@@ -717,7 +398,6 @@
       <p class="hint" style="margin-top:0.5rem;">VAT status doesn't affect this calculation but helps us tailor guidance.</p>
     </div>
 
-    <p class="step-reassurance">This only takes a minute.</p>
     <div class="btn-row">
       <button class="btn-primary" onclick="goTo(2)">Calculate my tax →</button>
     </div>
@@ -725,8 +405,8 @@
 
   <!-- STEP 2 -->
   <div class="card" id="step2">
-    <div class="card-title">Your tax</div>
-    <p class="card-subtitle">How your profit splits into salary, dividends, and tax.</p>
+    <div class="card-title">Your tax breakdown</div>
+    <p class="card-subtitle">Here's exactly what happens to your company profits under your current arrangement.</p>
 
     <div class="results-grid" id="taxGrid"></div>
 
@@ -742,7 +422,6 @@
 
     <div id="taxGuidance"></div>
 
-    <p class="step-reassurance">Now let's find the best split.</p>
     <div class="btn-row">
       <button class="btn-secondary" onclick="goTo(1)">← Back</button>
       <button class="btn-primary" onclick="goTo(3)">Optimise my split →</button>
@@ -751,26 +430,24 @@
 
   <!-- STEP 3 -->
   <div class="card" id="step3">
-    <div class="card-title">Pay split</div>
-    <p class="card-subtitle">Choose a goal that fits your situation.</p>
+    <div class="card-title">How do you want to pay yourself?</div>
+    <p class="card-subtitle">As a director, you choose when and how much to pay yourself. Pick the goal that fits your situation.</p>
 
     <!-- DIVIDEND TIMING EXPLAINER -->
-    <details class="breakdown-toggle">
-      <summary>How director pay actually works</summary>
-      <div class="director-explainer">
-        <div class="explainer-body">
-          <div class="explainer-row">
-            <div class="explainer-dot salary-dot"></div>
-            <div><strong>Salary</strong> — paid monthly like any employee, processed through payroll. Fixed and predictable. Employer NI applies above £5,000.</div>
-          </div>
-          <div class="explainer-row">
-            <div class="explainer-dot div-dot"></div>
-            <div><strong>Dividends</strong> — paid from company profits <em>whenever you choose</em>. Quarterly is common, but you can take them monthly, annually, or as needed. You must have sufficient retained profits — dividends cannot exceed what the company has earned. Taxed at lower rates than salary.</div>
-          </div>
+    <div class="director-explainer">
+      <div class="explainer-title">&#128161; How director pay actually works</div>
+      <div class="explainer-body">
+        <div class="explainer-row">
+          <div class="explainer-dot salary-dot"></div>
+          <div><strong>Salary</strong> — paid monthly like any employee, processed through payroll. Fixed and predictable. Small amount of NI applies above £9,100.</div>
         </div>
-        <div class="explainer-note">Most directors take a low salary (paid monthly) plus dividends (taken quarterly or as needed). This is entirely legal and is standard practice for UK limited company directors.</div>
+        <div class="explainer-row">
+          <div class="explainer-dot div-dot"></div>
+          <div><strong>Dividends</strong> — paid from company profits <em>whenever you choose</em>. Quarterly is common, but you can take them monthly, annually, or as needed. You must have sufficient retained profits — dividends cannot exceed what the company has earned. Taxed at lower rates than salary.</div>
+        </div>
       </div>
-    </details>
+      <div class="explainer-note">Most directors take a low salary (paid monthly) plus dividends (taken quarterly or as needed). This is entirely legal and is standard practice for UK limited company directors.</div>
+    </div>
 
     <hr>
 
@@ -806,7 +483,6 @@
 
     <div id="optimiseComparison" style="margin-top:1.5rem;"></div>
 
-    <p class="step-reassurance">Nearly there — pension is optional.</p>
     <div class="btn-row">
       <button class="btn-secondary" onclick="goTo(2)">&#8592; Back</button>
       <button class="btn-primary" onclick="goTo(4)">Add pension contributions &#8594;</button>
@@ -816,8 +492,8 @@
 
   <!-- STEP 4 -->
   <div class="card" id="step4">
-    <div class="card-title">Pension</div>
-    <p class="card-subtitle">Pension contributions are a tax-efficient way to extract value. They reduce <span class="tooltip-wrap">corporation tax<span class="tooltip-icon" tabindex="0">?</span><span class="tooltip-bubble">Tax your company pays on profits. Pension contributions are deductible against this, lowering your corporation tax bill.</span></span> and avoid income tax and NI.</p>
+    <div class="card-title">Company pension contributions</div>
+    <p class="card-subtitle">Employer pension contributions from your limited company are a highly tax-efficient way to extract value — they reduce corporation tax and avoid income tax and NI entirely.</p>
 
     <div class="two-col">
       <div class="field-group">
@@ -847,7 +523,6 @@
       </ul>
     </div>
 
-    <p class="step-reassurance">Almost done.</p>
     <div class="btn-row">
       <button class="btn-secondary" onclick="goTo(3)">← Back</button>
       <button class="btn-primary" onclick="goTo(5)">See full summary →</button>
@@ -856,8 +531,8 @@
 
   <!-- STEP 5 -->
   <div class="card" id="step5">
-    <div class="card-title">Summary</div>
-    <p class="card-subtitle">Your tax position and recommended approach.</p>
+    <div class="card-title">Your director tax summary</div>
+    <p class="card-subtitle">Your complete illustrative picture — total tax paid, take-home, and recommended approach.</p>
 
     <div class="results-grid" id="summaryGrid"></div>
 
@@ -865,11 +540,9 @@
 
     <div class="summary-panel" id="finalSummary"></div>
 
-    <div id="pdActionPlan" style="margin-top:1.25rem;"></div>
-
     <div class="guidance-box" style="margin-top:1rem;">
       <h4>Important — always take professional advice</h4>
-      <p>Director remuneration strategy is one of the most impactful financial decisions for a limited company owner. These figures are illustrative. A qualified accountant can model your full position including <span class="tooltip-wrap">IR35<span class="tooltip-icon" tabindex="0">?</span><span class="tooltip-bubble">Off-payroll working rules that may apply if you work through your company. Important to check if IR35 applies to your situation.</span></span> implications, Making Tax Digital obligations, and your specific circumstances.</p>
+      <p>Director remuneration strategy is one of the most impactful financial decisions for a limited company owner. These figures are illustrative. A qualified accountant can model your full position including IR35 implications, Making Tax Digital obligations, and your specific circumstances.</p>
     </div>
 
     <div class="btn-row">
@@ -907,12 +580,12 @@
 </div>
 
 <div class="chat-wrap">
-  <div class="chat-divider">Ask My Pay Picture Assistant</div>
+  <div class="chat-divider">Ask MyPayPicture Assistant</div>
   <div class="chat-box">
     <div class="chat-head">
       <div class="chat-head-icon">✦</div>
       <div>
-        <div class="chat-head-title">My Pay Picture Assistant</div>
+        <div class="chat-head-title">MyPayPicture Assistant</div>
         <div class="chat-head-sub">General information only · Not financial advice</div>
       </div>
     </div>
@@ -934,28 +607,15 @@
   </div>
 </div>
 
-<section class="email-capture">
-  <div class="ec-inner">
-    <h3>Get free tax-year updates</h3>
-    <p>Plain-English pension &amp; tax tips for UK taxpayers. No spam, unsubscribe anytime.</p>
-    <button class="ec-btn" data-tally-open="zxZByE" data-tally-layout="modal" data-tally-emoji-animation="none">
-      Subscribe free
-    </button>
-  </div>
-</section>
-
 <footer style="background:var(--navy); border-top:3px solid var(--indigo); padding:2rem 1.5rem;">
   <div style="max-width:860px; margin:0 auto; display:flex; gap:1.25rem; align-items:flex-start;">
     <div style="font-size:1.5rem; line-height:1; flex-shrink:0;">⚠️</div>
     <div>
-      <div style="font-family:'Playfair Display',serif; color:var(--indigo-light); font-size:0.95rem; margin-bottom:0.4rem;">Important — Not Financial or Tax Advice</div>
+      <div style="font-family:''Nunito', sans-serif',serif; color:var(--indigo-light); font-size:0.95rem; margin-bottom:0.4rem;">Important — Not Financial or Tax Advice</div>
       <p style="color:rgba(255,255,255,0.5); font-size:0.8rem; line-height:1.7; margin:0;">
         This tool provides illustrative scenarios only. It does not constitute financial, tax or legal advice. Director remuneration is complex — always consult a qualified accountant before making decisions. No data is stored.
       </p>
     </div>
-  </div>
-  <div style="max-width:900px; margin:0.75rem auto 0; text-align:center;">
-    <a href="#" data-tally-open="VLV7pE" data-tally-emoji-animation="wave" style="color:rgba(255,255,255,0.35); font-size:0.75rem; text-decoration:none; transition:color 0.2s;" onmouseover="this.style.color='rgba(255,255,255,0.6)'" onmouseout="this.style.color='rgba(255,255,255,0.35)'">Spotted a bug or have a suggestion? Let us know</a>
   </div>
 </footer>
 
@@ -1013,9 +673,9 @@
 
   function periodLabel() { return period === 'monthly' ? '/mo' : '/yr'; }
 
-  // ── TAX CONSTANTS 2025/26 ──────────────────────────────────────────────────
+  // ── TAX CONSTANTS 2024/25 ──────────────────────────────────────────────────
   const PA        = 12570;   // Personal allowance
-  const NI_ST     = 5000;    // NI Secondary threshold (employer) — reduced from £9,100 in 2025/26
+  const NI_ST     = 9100;    // NI Secondary threshold (employer)
   const NI_PT     = 12570;   // NI Primary threshold (employee)
   const BRT       = 50270;   // Basic rate threshold
   const HRT       = 125140;  // Higher rate threshold
@@ -1053,7 +713,7 @@
 
   function calcEmployerNI(salary) {
     if (salary <= NI_ST) return 0;
-    return (salary - NI_ST) * 0.15;
+    return (salary - NI_ST) * 0.138;
   }
 
   function calcDividendTax(divs, otherIncome) {
@@ -1147,11 +807,11 @@
 const STRATEGIES = [
     {
       id: 'ni_threshold',
-      salary: 5000,
+      salary: 9100,
       label: 'Keep it minimal',
-      name: 'Salary of £5,000 — zero employer NI',
+      name: 'Salary of £9,100 — zero NI',
       desc: 'I want to minimise all deductions. I have other income (e.g. rental, a spouse using their allowance) or I\'m happy to draw more through dividends.',
-      badge: 'No employer NI',
+      badge: 'No NI at all',
       badgeClass: 'green',
       when: 'Best when you have income elsewhere using your Personal Allowance, or want the simplest payroll.',
     },
@@ -1163,7 +823,7 @@ const STRATEGIES = [
       desc: 'I want to use my full Personal Allowance as salary, pay no income tax on it, and take the rest as dividends.',
       badge: 'Most common',
       badgeClass: '',
-      when: 'The most common choice for directors with no other income. Employer NI applies above £5,000 but the CT deduction more than offsets it.',
+      when: 'The most common choice for directors with no other income. Small NI applies above £9,100 but the CT deduction more than offsets it.',
     },
     {
       id: 'custom',
@@ -1235,7 +895,7 @@ const STRATEGIES = [
       // Comparison table
       document.getElementById('optimiseComparison').innerHTML =
         '<table class="compare-table">' +
-        '<thead><tr><th>Item</th>' + results.map(function(s){ return '<th' + (s.id===selectedStrategy?' class="col-b"':'') + '>' + (s.id==='custom'?'Custom':s.salary===5000?'&#163;5,000':'&#163;12,570') + '</th>'; }).join('') + '</tr></thead>' +
+        '<thead><tr><th>Item</th>' + results.map(function(s){ return '<th' + (s.id===selectedStrategy?' class="col-b"':'') + '>' + (s.id==='custom'?'Custom':s.salary===9100?'&#163;9,100':'&#163;12,570') + '</th>'; }).join('') + '</tr></thead>' +
         '<tbody>' +
         [
           ['Salary', function(r){ return fmtP(r.sal); }],
@@ -1352,59 +1012,6 @@ const STRATEGIES = [
       <div class="summary-row"><span class="s-label">Take-home</span><span class="s-val indigo">${fmtP(r.takeHome)} ${periodLabel()}</span></div>
       <div class="summary-row"><span class="s-label">Into pension</span><span class="s-val good">${fmtP(d.empPension + d.persPension)}</span></div>`;
 
-    // Action plan
-    var actionEl = document.getElementById('pdActionPlan');
-    if (actionEl) {
-      actionEl.innerHTML =
-        '<div class="action-plan">' +
-          '<div class="action-plan-title">Your next steps</div>' +
-          '<div class="action-plan-subtitle">Here\u2019s what to do to put this into practice.</div>' +
-
-          '<div class="action-item">' +
-            '<input type="checkbox" id="pd_a1">' +
-            '<label class="action-item-text" for="pd_a1">Download your PDF report using the button below' +
-              '<span class="action-hint">Take it to your accountant so they can review the numbers against your full position.</span>' +
-            '</label>' +
-          '</div>' +
-
-          '<div class="action-item">' +
-            '<input type="checkbox" id="pd_a2">' +
-            '<label class="action-item-text" for="pd_a2">Discuss your salary and dividend split with your accountant' +
-              '<span class="action-hint">Share this report with them. They can factor in IR35 status, other income, and any upcoming changes to your circumstances.</span>' +
-            '</label>' +
-          '</div>' +
-
-          '<div class="action-item">' +
-            '<input type="checkbox" id="pd_a3">' +
-            '<label class="action-item-text" for="pd_a3">Update your payroll to the agreed salary of ' + fmtP(d.salary) + '/yr' +
-              '<span class="action-hint">If you use payroll software, update the director\u2019s salary there. Your accountant can help if you\u2019re not sure how.</span>' +
-            '</label>' +
-          '</div>' +
-
-          (d.empPension > 0 ?
-          '<div class="action-item">' +
-            '<input type="checkbox" id="pd_a4">' +
-            '<label class="action-item-text" for="pd_a4">Set up employer pension contributions of ' + fmtP(d.empPension) + '/yr' +
-              '<span class="action-hint">Employer contributions are a corporation tax deduction and don\u2019t attract NI. Make sure your pension scheme accepts employer contributions.</span>' +
-            '</label>' +
-          '</div>' : '') +
-
-          '<div class="action-item">' +
-            '<input type="checkbox" id="pd_a5">' +
-            '<label class="action-item-text" for="pd_a5">Plan your dividend timing for the tax year' +
-              '<span class="action-hint">Dividends are taxed when declared, not when paid. Your accountant can help you time them to stay within the right tax band.</span>' +
-            '</label>' +
-          '</div>' +
-
-          '<div class="action-item">' +
-            '<input type="checkbox" id="pd_a6">' +
-            '<label class="action-item-text" for="pd_a6">Review this at least once a year' +
-              '<span class="action-hint">Tax rates and thresholds change. Run the numbers again each April or when your circumstances change.</span>' +
-            '</label>' +
-          '</div>' +
-        '</div>';
-    }
-
     checkAndShowPdfCta();
   }
 
@@ -1462,7 +1069,7 @@ const STRATEGIES = [
       doc.setFont('helvetica','bold'); doc.setFontSize(16); doc.setTextColor(...white);
       doc.text('MyPay',14,14); doc.setFont('helvetica','normal'); doc.text('Picture',33,14);
       doc.setFontSize(8); doc.setTextColor(180,180,180);
-      doc.text('My Pay Director Report', 14, 22);
+      doc.text('MyPayDirector Report', 14, 22);
       doc.text('Generated ' + new Date().toLocaleDateString('en-GB',{day:'numeric',month:'long',year:'numeric'}), 196, 22, {align:'right'});
       let y = 36;
       doc.setFont('helvetica','bold'); doc.setFontSize(14); doc.setTextColor(...navy);
@@ -1508,7 +1115,7 @@ const STRATEGIES = [
 
   // ── CHAT ───────────────────────────────────────────────────────────────────
   const WORKER_URL = 'https://mypaypicture-api.proud-truth-9c88.workers.dev';
-  const SYS_PROMPT = 'You are a helpful UK personal finance assistant embedded in My Pay Picture\'s My Pay Director tool. This tool helps limited company directors optimise their salary and dividend split.\n\nKey topics: salary vs dividends, corporation tax (19-25% 2025/26), dividend tax rates (8.75% basic, 33.75% higher, 39.35% additional), employer pension contributions, NI Secondary Threshold (5000 from April 2025, employer NI now 15%), Personal Allowance (12570), IR35, Making Tax Digital.\n\nOptimal salary levels: 5000 (no employer NI), 12570 (full personal allowance). Both are common choices depending on whether the director has other income.\n\nRules:\n- UK English, 2025/26 rates\n- General information only, not personalised tax advice\n- Always recommend consulting a qualified accountant for director remuneration decisions\n- Plain English, practical tone';
+  const SYS_PROMPT = 'You are a helpful UK personal finance assistant embedded in MyPayPicture\'s MyPayDirector tool. This tool helps limited company directors optimise their salary and dividend split.\n\nKey topics: salary vs dividends, corporation tax (19-25% 2024/25), dividend tax rates (8.75% basic, 33.75% higher, 39.35% additional), employer pension contributions, NI Secondary Threshold (9100), Personal Allowance (12570), IR35, Making Tax Digital.\n\nOptimal salary levels: 9100 (no NI), 12570 (full personal allowance). Both are common choices depending on whether the director has other income.\n\nRules:\n- UK English, 2024/25 rates\n- General information only, not personalised tax advice\n- Always recommend consulting a qualified accountant for director remuneration decisions\n- Plain English, practical tone';
 
   let chatHist = [], chatBusy = false;
 
@@ -1522,14 +1129,14 @@ const STRATEGIES = [
     if (typing) {
       bubble = '<div class="chat-typing"><span></span><span></span><span></span></div>';
     } else {
-      const toolLinks = { 'My Pension Optimiser':'pension-optimiser.html','My Mortgage & Pension':'mortgage-vs-pension.html','My Retirement Helper':'retirement-helper.html' };
+      const toolLinks = { 'MyPensionOptimiser':'pension-optimiser.html','MyPensionReclaim':'pension-reclaim.html','MyPensionTop-Up':'pension-topup.html','MyRetirementHelper':'retirement-helper.html' };
       let formatted = text.split('\n\n').map(function(p) {
         var line = p.replace(/\*\*(.*?)\*\*/g,'<strong>$1</strong>');
         line = line.replace(/\[([^\]]+)\]\((https?:\/\/[^)]+)\)/g,'<a href="$2" target="_blank" style="color:var(--navy);font-weight:600;text-decoration:underline;">$1</a>');
         Object.keys(toolLinks).forEach(function(name) { line = line.split(name).join('<a href="'+toolLinks[name]+'" style="color:var(--navy);font-weight:600;text-decoration:underline;">'+name+'</a>'); });
         return line;
       }).join('</p><p>');
-      bubble = '<p>'+formatted+'</p>';
+      bubble = '<p>'+formatted+' &nbsp;&middot;&nbsp; <a href="about.html" style="color:rgba(255,255,255,0.4);text-decoration:none;">About</a> &nbsp;&middot;&nbsp; <a href="privacy.html" style="color:rgba(255,255,255,0.4);text-decoration:none;">Privacy</a> &nbsp;&middot;&nbsp; <a href="mailto:hello@mypaypicture.com" style="color:rgba(255,255,255,0.4);text-decoration:none;">hello@mypaypicture.com</a></p>';
     }
     div.innerHTML = '<div class="msg-av">'+av+'</div><div class="msg-bub">'+bubble+'</div>';
     msgs.appendChild(div); msgs.scrollTop = msgs.scrollHeight;
@@ -1572,8 +1179,5 @@ const STRATEGIES = [
     });
   }
 </script>
-
-
-<script src="https://tally.so/widgets/embed.js"></script>
 </body>
 </html>
