@@ -1,0 +1,57 @@
+{
+  "name": "MyPayPicture",
+  "short_name": "MyPayPicture",
+  "description": "Clarity for every pay decision. UK personal finance tools for salary, pension, and retirement.",
+  "start_url": "/index.html",
+  "display": "standalone",
+  "background_color": "#0f1f38",
+  "theme_color": "#0f1f38",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
+  "screenshots": [
+    {
+      "src": "screenshot-mobile.png",
+      "sizes": "390x844",
+      "type": "image/png",
+      "form_factor": "narrow"
+    }
+  ],
+  "categories": ["finance", "productivity"],
+  "lang": "en-GB",
+  "shortcuts": [
+    {
+      "name": "MyPayOptimiser",
+      "short_name": "Optimiser",
+      "description": "Are you paying more tax than you need to?",
+      "url": "/pay-optimiser.html",
+      "icons": [{ "src": "icon-192.png", "sizes": "192x192" }]
+    },
+    {
+      "name": "MyPayDirector",
+      "short_name": "Director",
+      "description": "Salary vs dividends for limited company directors",
+      "url": "/pay-director.html",
+      "icons": [{ "src": "icon-192.png", "sizes": "192x192" }]
+    },
+    {
+      "name": "MyRetirementHelper",
+      "short_name": "Retirement",
+      "description": "Will your money last as long as you need it to?",
+      "url": "/retirement-helper.html",
+      "icons": [{ "src": "icon-192.png", "sizes": "192x192" }]
+    }
+  ]
+}

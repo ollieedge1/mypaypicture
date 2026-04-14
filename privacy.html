@@ -2,7 +2,11 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" type="image/x-icon" href="favicon.ico">
+  <link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="favicon-16.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link rel="manifest" href="manifest.json">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="theme-color" content="#0f1f38">
@@ -17,24 +21,24 @@
     --border: rgba(0,0,0,0.08);
   }
   * { box-sizing: border-box; margin: 0; padding: 0; }
-  body { font-family: 'DM Sans', sans-serif; background: var(--cream); color: var(--navy); }
+  body { font-family: 'Nunito', sans-serif; background: var(--cream); color: var(--navy); }
 
   header { background: var(--navy); padding: 1.25rem 2rem; display: flex; align-items: center; justify-content: space-between; }
-  .logo { font-family: 'Playfair Display', serif; font-size: 1.2rem; color: white; text-decoration: none; }
+  .logo { font-family: 'Nunito', sans-serif; font-size: 1.2rem; color: white; text-decoration: none; }
   .logo em { font-style: italic; color: var(--stone-light); }
   .back-link { font-size: 0.82rem; color: rgba(255,255,255,0.5); text-decoration: none; display: flex; align-items: center; gap: 0.4rem; transition: color 0.2s; }
   .back-link:hover { color: white; }
 
   .hero { background: var(--navy); padding: 3rem 2rem 4rem; text-align: center; }
   .hero-eyebrow { font-size: 0.65rem; text-transform: uppercase; letter-spacing: 0.15em; color: rgba(255,255,255,0.3); margin-bottom: 1rem; }
-  .hero h1 { font-family: 'Playfair Display', serif; font-size: clamp(1.8rem, 4vw, 2.5rem); color: white; margin-bottom: 0.75rem; }
+  .hero h1 { font-family: 'Nunito', sans-serif; font-size: clamp(1.8rem, 4vw, 2.5rem); color: white; margin-bottom: 0.75rem; }
   .hero p { color: rgba(255,255,255,0.45); font-size: 0.88rem; }
 
   .container { max-width: 720px; margin: 0 auto; padding: 3rem 1.5rem 5rem; }
 
   .last-updated { font-size: 0.78rem; color: var(--stone); margin-bottom: 2.5rem; padding-bottom: 1.5rem; border-bottom: 1px solid var(--border); }
 
-  h2 { font-family: 'Playfair Display', serif; font-size: 1.3rem; color: var(--navy); margin: 2.5rem 0 0.75rem; }
+  h2 { font-family: 'Nunito', sans-serif; font-size: 1.3rem; color: var(--navy); margin: 2.5rem 0 0.75rem; }
   h3 { font-size: 0.95rem; font-weight: 600; color: var(--navy); margin: 1.25rem 0 0.4rem; }
   p { font-size: 0.92rem; color: var(--slate); line-height: 1.8; margin-bottom: 0.85rem; }
   ul { padding-left: 1.25rem; margin-bottom: 0.85rem; }
@@ -45,7 +49,7 @@
   .section-box { background: white; border-radius: 12px; padding: 1.5rem; border: 1px solid var(--border); margin-bottom: 1.5rem; }
 
   .contact-box { background: var(--navy); border-radius: 12px; padding: 1.5rem; margin-top: 2.5rem; }
-  .contact-box h3 { font-family: 'Playfair Display', serif; color: white; font-size: 1rem; margin-bottom: 0.4rem; margin-top: 0; }
+  .contact-box h3 { font-family: 'Nunito', sans-serif; color: white; font-size: 1rem; margin-bottom: 0.4rem; margin-top: 0; }
   .contact-box p { color: rgba(255,255,255,0.5); font-size: 0.84rem; margin-bottom: 0.4rem; }
   .contact-box a { color: white; }
 
@@ -76,7 +80,7 @@
   <h2>1. Who we are</h2>
   <div class="section-box">
     <p>MyPayPicture is a UK personal finance tool suite operated by Ollie Edge. We are not currently incorporated as a limited company.</p>
-    <p><strong>Contact:</strong> <a href="mailto:hello@mypaypicture.com">hello@mypaypicture.com</a></p>
+    <p><strong>Contact:</strong> <a href="/cdn-cgi/l/email-protection#375f525b5b58775a4e47564e475e54434245521954585a"><span class="__cf_email__" data-cfemail="8ce4e9e0e0e3cce1f5fcedf5fce5eff8f9fee9a2efe3e1">[email&#160;protected]</span></a></p>
     <p><strong>Website:</strong> mypaypicture.com</p>
   </div>
 
@@ -89,7 +93,7 @@
   <p>When you use the MyPayPicture Assistant chat feature, your messages are sent to our Cloudflare Worker backend, which forwards them to Anthropic's API (Claude) to generate a response. Messages are processed in real time and are not stored by us. Anthropic's own privacy policy applies to how they handle API requests — see <a href="https://www.anthropic.com/privacy" target="_blank">anthropic.com/privacy</a>.</p>
 
   <h3>Email address (if you submit the lead form)</h3>
-  <p>If you voluntarily submit your email address via our lead capture form, that data is collected and stored by Tally.so on our behalf. We use it to send relevant information about MyPayPicture. You can request deletion at any time by emailing <a href="mailto:hello@mypaypicture.com">hello@mypaypicture.com</a>.</p>
+  <p>If you voluntarily submit your email address via our lead capture form, that data is collected and stored by Tally.so on our behalf. We use it to send relevant information about MyPayPicture. You can request deletion at any time by emailing <a href="/cdn-cgi/l/email-protection#4028252c2c2f002d39302139302923343532256e232f2d"><span class="__cf_email__" data-cfemail="0c64696060634c61757c6d757c656f78797e69226f6361">[email&#160;protected]</span></a>.</p>
 
   <h3>Analytics data</h3>
   <p>We use Google Analytics 4 to understand how people use our tools. This collects anonymised data including:</p>
@@ -145,7 +149,7 @@
     <li><strong>Withdraw consent</strong> at any time where consent is the legal basis</li>
     <li><strong>Lodge a complaint</strong> with the ICO at <a href="https://ico.org.uk" target="_blank">ico.org.uk</a></li>
   </ul>
-  <p>To exercise any of these rights, email <a href="mailto:hello@mypaypicture.com">hello@mypaypicture.com</a>. We will respond within 30 days.</p>
+  <p>To exercise any of these rights, email <a href="/cdn-cgi/l/email-protection#3c54595050537c51454c5d454c555f48494e59125f5351"><span class="__cf_email__" data-cfemail="cda5a8a1a1a28da0b4bdacb4bda4aeb9b8bfa8e3aea2a0">[email&#160;protected]</span></a>. We will respond within 30 days.</p>
 
   <h2>7. Data retention</h2>
   <ul>
@@ -163,16 +167,4 @@
 
   <div class="contact-box">
     <h3>Questions about your privacy?</h3>
-    <p>Email us at <a href="mailto:hello@mypaypicture.com">hello@mypaypicture.com</a> and we'll respond within 30 days.</p>
-    <p>You can also contact the UK Information Commissioner's Office at <a href="https://ico.org.uk" target="_blank">ico.org.uk</a> if you have concerns about how we handle your data.</p>
-  </div>
-
-  <div class="nav-links">
-    <a href="index.html" class="nav-link">&#8592; All tools</a>
-    <a href="about.html" class="nav-link">About</a>
-    <a href="mailto:hello@mypaypicture.com" class="nav-link">Contact</a>
-  </div>
-
-</div>
-</body>
-</html>
+    <p>Email us at <a href="/cdn-cgi/l/email-protection#355d5059595a75584c45544c455c56414047501b565a58"><span class="__cf_email__" data-cfemail="d8
