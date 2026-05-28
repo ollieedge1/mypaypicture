@@ -194,20 +194,29 @@
   }
 
   /* ── USER TABS ───────────────────────────────────────────────────────────── */
-  .user-tabs {
-    display: flex; width: fit-content; max-width: 100%;
+  .tabs-wrap {
+    display: flex; justify-content: center;
     margin: 0 auto 2.75rem;
+    max-width: 100%;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    padding: 0 1rem;
+  }
+  .tabs-wrap::-webkit-scrollbar { display: none; }
+  .user-tabs {
+    display: inline-flex; flex-shrink: 0;
     background: var(--ink);
     border-radius: 100px; padding: 5px; gap: 4px;
   }
   .user-tab {
-    padding: 0.75rem 2rem;
+    padding: 0.75rem 1.25rem;
     font-size: 0.86rem; font-weight: 600;
     color: rgba(255,255,255,0.45);
     cursor: pointer; border-radius: 100px;
     transition: all 0.2s;
     display: flex; align-items: center; gap: 0.45rem;
-    white-space: nowrap;
+    white-space: nowrap; flex-shrink: 0;
   }
   .user-tab:hover { color: rgba(255,255,255,0.8); }
   .user-tab.active {
@@ -639,6 +648,12 @@
         <p class="tool-tagline">Made an extra pension contribution outside payroll? Claim your full tax relief back.</p>
         <div class="tool-cta">Open MyPensionTop-Up <span class="cta-arrow">&#8594;</span></div>
       </a>
+      <a class="tool-card c-prop" href="inheritance-tax.html">
+        <span class="tool-icon">&#127963;&#65039;</span>
+        <div class="tool-name">MyInheritanceTax</div>
+        <p class="tool-tagline">Estimate what your estate might owe, and learn the legitimate ways families reduce inheritance tax.</p>
+        <div class="tool-cta">Open MyInheritanceTax <span class="cta-arrow">&#8594;</span></div>
+      </a>
     </div>
   </div>
 
@@ -693,7 +708,7 @@
 
   // CHAT
   const WORKER_URL = 'https://mypaypicture-api.proud-truth-9c88.workers.dev';
-  const SYS_PROMPT = 'You are a helpful UK personal finance assistant for MyPayPicture, a suite of tools helping people understand their pay, pension, and benefits. Help users find the right tool and answer general UK personal finance questions.\n\nTools: MyPensionOptimiser (salary sacrifice, contributions), MyPensionReclaim (missed salary sacrifice on bonuses), MyPensionTop-Up (AVCs and tax relief), MyFamily&Benefits (Child Benefit and Tax-Free Childcare), MyRetirementHelper (State Pension, drawdown, sustainability), MyPayDirector (salary vs dividends for limited company directors).\n\nRules:\n- UK English, 2024/25 rates\n- General information only, not personalised financial advice\n- When recommending a tool, always use its exact name: MyPensionOptimiser, MyPensionReclaim, MyPensionTop-Up, MyRetirementHelper, MyPayDirector\n- Direct users to the right tool\n- Warm, clear, approachable tone';
+  const SYS_PROMPT = 'You are a helpful UK personal finance assistant for MyPayPicture, a suite of tools helping people understand their pay, pension, and benefits. Help users find the right tool and answer general UK personal finance questions.\n\nTools: MyPensionOptimiser (salary sacrifice, contributions), MyPensionReclaim (missed salary sacrifice on bonuses), MyPensionTop-Up (AVCs and tax relief), MyFamily&Benefits (Child Benefit and Tax-Free Childcare), MyRetirementHelper (State Pension, drawdown, sustainability), MyInheritanceTax (estate value, inheritance tax estimate, ways to reduce it), MyPayDirector (salary vs dividends for limited company directors).\n\nRules:\n- UK English, 2024/25 rates\n- General information only, not personalised financial advice\n- When recommending a tool, always use its exact name: MyPensionOptimiser, MyPensionReclaim, MyPensionTop-Up, MyRetirementHelper, MyInheritanceTax, MyPayDirector\n- Direct users to the right tool\n- Warm, clear, approachable tone';
 
   let chatHist = [], chatBusy = false;
 
@@ -712,6 +727,7 @@
         'MyPensionReclaim':'pension-reclaim.html',
         'MyPensionTop-Up':'pension-topup.html',
         'MyRetirementHelper':'retirement-helper.html',
+        'MyInheritanceTax':'inheritance-tax.html',
         'MyPayDirector':'pay-director.html'
       };
       let formatted = text.split('\n\n').map(function(p) {

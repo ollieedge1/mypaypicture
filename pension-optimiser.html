@@ -144,12 +144,12 @@
 
   /* STEPS */
   .steps-nav { display: flex; border-radius: 100px; background: var(--surface); margin-bottom: 1rem; padding: 6px; box-shadow: 0 1px 3px rgba(0,0,0,0.04); gap: 4px; }
-  .step-tab { flex: 1; padding: 0.7rem 0.6rem; text-align: center; font-size: 0.72rem; font-weight: 700; letter-spacing: 0.05em; text-transform: uppercase; color: var(--slate-soft); cursor: pointer; transition: all 0.2s; border-radius: 100px; white-space: nowrap; }
+  .step-tab { flex: 1 1 0; min-width: 0; padding: 0.7rem 0.5rem; text-align: center; font-size: 0.72rem; font-weight: 700; letter-spacing: 0.04em; text-transform: uppercase; color: var(--slate-soft); cursor: pointer; transition: all 0.2s; border-radius: 100px; white-space: normal; overflow-wrap: break-word; word-break: break-word; line-height: 1.2; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 0.15rem; }
   .step-tab:last-child { border-right: none; }
   .step-tab.active { background: var(--ink); color: white; }
   .step-tab:hover:not(.active) { color: var(--ink); }
   .step-tab.completed { color: var(--accent-dark); }
-  .step-tab .step-num { display: inline-block; font-size: 0.78rem; font-weight: 800; margin-right: 0.35rem; color: inherit; }
+  .step-tab .step-num { display: block; font-size: 0.82rem; font-weight: 800; margin: 0; color: inherit; }
   .step-tab.completed .step-num::after { content: ' ✓'; font-size: 0.8rem; }
 
   /* CARD */
@@ -320,7 +320,9 @@
     header { padding: 1rem 1.25rem; }
     .hero { padding: 3rem 1.25rem 4rem; }
     .container { padding: 2rem 1.25rem 3rem; }
-    .step-tab { flex: 1; padding: 0.7rem 0.6rem; text-align: center; font-size: 0.72rem; font-weight: 700; letter-spacing: 0.05em; text-transform: uppercase; color: var(--slate-soft); cursor: pointer; transition: all 0.2s; border-radius: 100px; white-space: nowrap; }
+    .step-tab { flex: 1 1 0; min-width: 0; padding: 0.6rem 0.3rem; text-align: center; font-size: 0.6rem; font-weight: 700; letter-spacing: 0.01em; text-transform: uppercase; color: var(--slate-soft); cursor: pointer; transition: all 0.2s; border-radius: 14px; white-space: normal; overflow-wrap: break-word; word-break: break-word; line-height: 1.2; }
+    .steps-nav { border-radius: 18px; padding: 5px; gap: 3px; }
+    .step-tab .step-num { font-size: 0.72rem; }
     .card { padding: 1.5rem 1.25rem; }
   }
 

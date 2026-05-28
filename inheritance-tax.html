@@ -1,0 +1,669 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MyInheritanceTax — MyPayPicture</title>
+<meta name="description" content="Understand UK inheritance tax, estimate your estate's potential liability, and learn the legitimate ways to reduce it. Educational guidance, not advice.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,300;0,400;0,600;0,700;0,800;1,300;1,400;1,700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink:         #1c1612;
+    --ink-mid:     #28201a;
+    --accent:      #57534e;
+    --accent-dark: #44403c;
+    --accent-pale: #f5f5f4;
+    --accent-light:#a8a29e;
+    --accent-xpale:#f5f5f4;
+    --yellow:      #ffdb00;
+    --sky:         #5cc3e8;
+    --slate:       #314855;
+    --slate-soft:  #5a7282;
+    --slate-light: #8a99a5;
+    --stone:       #78716c;
+    --stone-pale:  #f5f4f2;
+    --red:         #b91c1c;
+    --amber:       #d97706;
+    --green:       #15803d;
+    --navy:        #0f1f38;
+    --bg:          #f8f7f5;
+    --surface:     #ffffff;
+    --border:      rgba(87,83,78,0.12);
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Nunito', sans-serif; background: var(--bg); color: var(--ink); min-height: 100vh; }
+
+  /* HEADER */
+  header { background: var(--ink); padding: 1.1rem 2rem; display: flex; align-items: center; justify-content: space-between; position: sticky; top: 0; z-index: 50; }
+  .disclaimer-badge { font-size: 0.65rem; color: rgba(255,255,255,0.4); border: 1px solid rgba(255,255,255,0.15); padding: 0.3rem 0.85rem; border-radius: 100px; letter-spacing: 0.04em; }
+
+  /* SWITCHER */
+  .app-switcher { position: relative; }
+  .switcher-trigger {
+    display: flex; align-items: center; gap: 0.5rem;
+    cursor: pointer; padding: 0.45rem 0.9rem;
+    border-radius: 100px; border: 1px solid rgba(255,255,255,0.15);
+    transition: all 0.18s; user-select: none;
+    background: rgba(255,255,255,0.07);
+  }
+  .switcher-trigger:hover { background: rgba(255,255,255,0.13); border-color: var(--yellow); }
+  .switcher-trigger .app-name { font-family: 'Nunito', sans-serif; font-weight: 800; font-size: 1rem; color: white; }
+  .switcher-trigger .app-name em { font-style: italic; color: var(--yellow); }
+  .switcher-trigger .chevron { color: rgba(255,255,255,0.4); font-size: 0.65rem; transition: transform 0.2s; }
+  .app-switcher.open .chevron { transform: rotate(180deg); }
+  .switcher-dropdown {
+    display: none; position: absolute; top: calc(100% + 10px); left: 0;
+    background: white; border: 1px solid rgba(0,0,0,0.08);
+    border-radius: 14px; overflow: hidden; min-width: 240px;
+    box-shadow: 0 16px 48px rgba(0,0,0,0.12); z-index: 100;
+  }
+  .app-switcher.open .switcher-dropdown { display: block; }
+  .switcher-home {
+    display: flex; align-items: center; gap: 0.75rem;
+    padding: 0.9rem 1.1rem; cursor: pointer;
+    transition: background 0.12s; text-decoration: none;
+    border-bottom: 1px solid rgba(0,0,0,0.06);
+  }
+  .switcher-home:hover { background: var(--accent-pale); }
+  .switcher-home-icon {
+    width: 32px; height: 32px; border-radius: 9px;
+    background: rgba(0,0,0,0.05);
+    display: flex; align-items: center; justify-content: center; font-size: 1rem;
+  }
+  .switcher-home-label { font-size: 0.84rem; font-weight: 700; color: #314855; }
+  .switcher-home-sub   { font-size: 0.69rem; color: #8ba4b0; margin-top: 0.1rem; }
+
+  /* HERO */
+  .hero { background: var(--ink); padding: 5rem 2rem 6.5rem; text-align: center; position: relative; overflow: hidden; }
+  .hero::before { content: ''; position: absolute; inset: 0; background: radial-gradient(ellipse 60% 70% at 15% 50%, rgba(87,83,78,0.2) 0%, transparent 60%), radial-gradient(ellipse 50% 60% at 85% 20%, rgba(168,162,158,0.1) 0%, transparent 55%), radial-gradient(ellipse 40% 40% at 55% 90%, rgba(28,22,18,0.3) 0%, transparent 50%); pointer-events: none; }
+  .hero-eyebrow { display: inline-flex; align-items: center; gap: 0.5rem; font-size: 0.7rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.2em; color: var(--accent-light); margin-bottom: 1.75rem; padding: 0.35rem 1.1rem; border-radius: 100px; border: 1px solid rgba(168,162,158,0.25); background: rgba(168,162,158,0.08); position: relative; }
+  .hero h1 { font-family: 'Nunito', sans-serif; font-size: clamp(2.4rem, 6vw, 4.4rem); color: white; line-height: 1.0; max-width: 800px; margin: 0 auto 1.5rem; font-weight: 800; letter-spacing: -0.03em; position: relative; }
+  .hero h1 em { font-style: italic; color: var(--accent-light); font-weight: 300; display: block; }
+  .hero p { color: rgba(255,255,255,0.45); font-size: 1rem; max-width: 500px; margin: 0 auto; line-height: 1.75; position: relative; }
+
+  /* CONTAINER */
+  .container { max-width: 900px; margin: -4rem auto 0; padding: 0 1.5rem 5rem; position: relative; z-index: 2; }
+
+  /* STEPS */
+  .steps-nav { display: flex; border-radius: 14px 14px 0 0; overflow: hidden; border: 1.5px solid var(--border); border-bottom: none; background: var(--surface); }
+  .step-tab { flex: 1 1 0; min-width: 0; padding: 0.85rem 0.4rem; text-align: center; font-size: 0.66rem; font-weight: 700; letter-spacing: 0.03em; text-transform: uppercase; color: var(--slate-soft); cursor: pointer; transition: all 0.2s; border-right: 1.5px solid var(--border); white-space: normal; overflow-wrap: break-word; word-break: break-word; line-height: 1.2; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 0.15rem; }
+  .step-tab:last-child { border-right: none; }
+  .step-tab.active { background: var(--ink); color: var(--accent-light); }
+  .step-tab.completed { color: var(--accent-dark); }
+  .step-tab .step-num { display: block; font-size: 0.95rem; font-weight: 800; color: inherit; }
+  .step-tab.completed .step-num::after { content: ' ✓'; font-size: 0.75rem; }
+
+  /* CARD */
+  .card { background: var(--surface); border-radius: 0 0 16px 16px; padding: 2rem; border: 1.5px solid var(--border); border-top: none; box-shadow: 0 4px 24px rgba(0,0,0,0.06); display: none; animation: fadeIn 0.3s ease; }
+  .card.active { display: block; }
+  @keyframes fadeIn { from { opacity:0; transform:translateY(8px); } to { opacity:1; transform:translateY(0); } }
+  .card-title { font-size: 1.5rem; font-weight: 800; color: var(--ink); margin-bottom: 0.4rem; letter-spacing: -0.02em; }
+  .card-subtitle { color: var(--slate-soft); font-size: 0.9rem; margin-bottom: 1.75rem; line-height: 1.65; max-width: 580px; }
+
+  /* FORM */
+  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 1.25rem; }
+  @media (max-width: 580px) { .two-col { grid-template-columns: 1fr; } }
+  .field-group { margin-bottom: 1.5rem; }
+  .field-group:last-child { margin-bottom: 0; }
+  label { display: block; font-size: 0.85rem; font-weight: 700; color: var(--ink); margin-bottom: 0.5rem; }
+  .input-wrap { position: relative; }
+  .input-prefix { position: absolute; left: 14px; top: 50%; transform: translateY(-50%); color: var(--slate-soft); font-size: 0.95rem; pointer-events: none; }
+  input[type="number"] { width: 100%; padding: 0.75rem 1rem 0.75rem 2rem; border: 1.5px solid #ddd; border-radius: 10px; font-family: 'Nunito', sans-serif; font-size: 1rem; font-weight: 600; color: var(--ink); background: var(--surface); transition: border-color 0.2s; appearance: none; }
+  input[type="number"]:focus { outline: none; border-color: var(--accent); box-shadow: 0 0 0 3px rgba(87,83,78,0.1); }
+  input.no-prefix { padding-left: 1rem; }
+  .hint { font-size: 0.76rem; color: var(--slate-soft); margin-top: 0.4rem; line-height: 1.5; }
+
+  /* RADIO */
+  .radio-group { display: flex; gap: 0.75rem; flex-wrap: wrap; }
+  .radio-btn { flex: 1; min-width: 90px; padding: 0.7rem 0.75rem; border: 1.5px solid #ddd; border-radius: 10px; text-align: center; cursor: pointer; font-size: 0.83rem; font-weight: 600; transition: all 0.18s; color: var(--slate-soft); }
+  .radio-btn:hover { border-color: var(--accent); }
+  .radio-btn.selected { border-color: var(--accent); background: var(--accent-xpale); color: var(--ink); }
+
+  /* TOGGLE ROW (progressive disclosure) */
+  .disclosure-row { display: flex; align-items: center; gap: 0.85rem; padding: 1.1rem 0; border-top: 1px solid var(--border); cursor: pointer; user-select: none; transition: opacity 0.15s; }
+  .disclosure-row:hover { opacity: 0.85; }
+  .disclosure-icon { font-size: 1.1rem; flex-shrink: 0; }
+  .disclosure-label { flex: 1; font-size: 0.92rem; font-weight: 700; color: var(--ink); }
+  .disclosure-label span { font-weight: 400; color: var(--slate-soft); font-size: 0.78rem; }
+  .toggle-pill { width: 44px; height: 26px; border-radius: 100px; background: rgba(0,0,0,0.1); position: relative; flex-shrink: 0; transition: background 0.2s; }
+  .toggle-pill-dot { width: 22px; height: 22px; border-radius: 50%; background: white; position: absolute; top: 2px; left: 2px; transition: left 0.2s; box-shadow: 0 1px 3px rgba(0,0,0,0.15); }
+  .toggle-pill.on { background: var(--accent); }
+  .toggle-pill.on .toggle-pill-dot { left: 20px; }
+
+  /* ANSWER HERO */
+  .answer-hero { border-radius: 18px; padding: 1.85rem 1.35rem; text-align: center; margin-bottom: 1.25rem; background: var(--accent-pale); transition: background 0.3s; }
+  .answer-hero.liable { background: #fef2f2; }
+  .answer-hero.clear  { background: #f0fdf4; }
+  .answer-hero-label { font-size: 0.72rem; font-weight: 700; color: var(--slate-soft); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 0.75rem; }
+  .answer-hero-amount { font-size: 3rem; font-weight: 800; color: var(--accent); letter-spacing: -0.03em; line-height: 1; margin-bottom: 0.85rem; }
+  .answer-hero.liable .answer-hero-amount { color: var(--red); }
+  .answer-hero.clear  .answer-hero-amount { color: var(--green); }
+  .answer-hero-explain { font-size: 0.92rem; color: var(--slate); line-height: 1.55; max-width: 520px; margin: 0 auto; }
+
+  /* WATERFALL */
+  .waterfall { margin: 1.25rem 0; }
+  .wf-row { display: flex; justify-content: space-between; align-items: center; gap: 1rem; padding: 0.7rem 0; border-bottom: 1px solid var(--border); font-size: 0.9rem; }
+  .wf-row:last-child { border-bottom: none; }
+  .wf-label { color: var(--slate); font-weight: 600; }
+  .wf-label small { display: block; font-size: 0.72rem; color: var(--slate-soft); font-weight: 400; margin-top: 0.1rem; }
+  .wf-val { font-weight: 800; color: var(--ink); white-space: nowrap; font-variant-numeric: tabular-nums; }
+  .wf-val.minus { color: var(--green); }
+  .wf-row.total { border-top: 2px solid var(--ink); border-bottom: none; margin-top: 0.25rem; padding-top: 0.85rem; }
+  .wf-row.total .wf-label { font-weight: 800; color: var(--ink); }
+  .wf-row.total .wf-val { font-size: 1.15rem; }
+
+  /* TILES */
+  .tiles-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 0.85rem; margin: 1.25rem 0; }
+  .tile { background: var(--stone-pale); border-radius: 14px; padding: 1.1rem; text-align: center; }
+  .tile-label { font-size: 0.68rem; font-weight: 700; color: var(--slate-soft); text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 0.5rem; }
+  .tile-val { font-size: 1.4rem; font-weight: 800; color: var(--ink); letter-spacing: -0.02em; }
+  .tile-sub { font-size: 0.72rem; color: var(--slate-soft); margin-top: 0.3rem; line-height: 1.4; }
+
+  /* DRILL-DOWN */
+  .drill-head { display: flex; align-items: center; gap: 0.6rem; cursor: pointer; user-select: none; transition: opacity 0.15s; }
+  .drill-head:hover { opacity: 0.85; }
+  .drill-icon { width: 28px; height: 28px; flex-shrink: 0; display: flex; align-items: center; justify-content: center; color: var(--accent); font-size: 1.1rem; }
+  .drill-title { font-size: 1.05rem; font-weight: 800; color: var(--ink); flex: 1; }
+  .drill-chevron { color: var(--slate-soft); font-size: 1.4rem; line-height: 1; transition: transform 0.2s; }
+  .drill-chevron.open { transform: rotate(90deg); }
+
+  /* LEVER CARDS */
+  .lever { border: 1.5px solid var(--border); border-radius: 14px; padding: 1.1rem 1.25rem; margin-bottom: 0.85rem; }
+  .lever-head { display: flex; align-items: baseline; justify-content: space-between; gap: 1rem; margin-bottom: 0.5rem; }
+  .lever-title { font-size: 0.98rem; font-weight: 800; color: var(--ink); }
+  .lever-tag { font-size: 0.68rem; font-weight: 700; padding: 0.2rem 0.6rem; border-radius: 100px; white-space: nowrap; }
+  .lever-tag.diy { background: #f0fdf4; color: var(--green); }
+  .lever-tag.adviser { background: #fffbeb; color: var(--amber); }
+  .lever-body { font-size: 0.84rem; color: var(--slate); line-height: 1.6; }
+
+  /* ALERTS */
+  .alert-box { border-radius: 12px; padding: 1rem 1.25rem; margin: 1rem 0; }
+  .alert-box.info { background: #eff6ff; border: 1.5px solid #bfdbfe; }
+  .alert-box.warning { background: #fffbeb; border: 1.5px solid #fde68a; }
+  .alert-box h4 { font-size: 0.92rem; font-weight: 800; color: var(--ink); margin-bottom: 0.35rem; }
+  .alert-box p { font-size: 0.82rem; color: var(--slate); line-height: 1.6; }
+
+  /* GUIDANCE / ADVISER / PDF */
+  .guidance-box { background: var(--stone-pale); border-radius: 12px; padding: 1.25rem 1.5rem; }
+  .guidance-box h4 { font-size: 0.95rem; font-weight: 800; color: var(--ink); margin-bottom: 0.5rem; }
+  .guidance-box p, .guidance-box li { font-size: 0.83rem; color: var(--slate); line-height: 1.65; }
+  .guidance-box ul { padding-left: 1.2rem; }
+
+  .adviser-cta { background: linear-gradient(135deg, var(--accent) 0%, var(--accent-dark) 100%); border-radius: 14px; padding: 1.25rem 1.5rem; }
+  .adviser-cta-inner { display: flex; align-items: center; justify-content: space-between; gap: 1rem; flex-wrap: wrap; }
+  .adviser-cta-text strong { display: block; color: white; font-size: 0.98rem; font-weight: 800; margin-bottom: 0.2rem; }
+  .adviser-cta-text span { color: rgba(255,255,255,0.7); font-size: 0.8rem; line-height: 1.5; }
+  .adviser-cta-btn { background: var(--yellow); color: var(--ink); padding: 0.7rem 1.4rem; border-radius: 100px; font-weight: 800; font-size: 0.88rem; text-decoration: none; white-space: nowrap; flex-shrink: 0; transition: all 0.2s; }
+  .adviser-cta-btn:hover { transform: translateY(-1px); box-shadow: 0 4px 14px rgba(0,0,0,0.2); }
+
+  .pdf-inline-cta { border: 1.5px dashed var(--accent-light); border-radius: 14px; padding: 1.1rem 1.35rem; }
+  .pdf-inline-inner { display: flex; align-items: center; justify-content: space-between; gap: 1rem; flex-wrap: wrap; }
+  .pdf-inline-text strong { display: block; font-size: 0.92rem; font-weight: 800; color: var(--ink); margin-bottom: 0.15rem; }
+  .pdf-inline-text span { font-size: 0.78rem; color: var(--slate-soft); line-height: 1.5; }
+  .pdf-inline-right { display: flex; align-items: center; gap: 0.75rem; }
+  .pdf-inline-price { font-weight: 800; color: var(--ink); font-size: 1rem; }
+  .pdf-inline-btn { padding: 0.65rem 1.25rem; border-radius: 100px; font-family: 'Nunito', sans-serif; font-size: 0.85rem; font-weight: 700; text-decoration: none; white-space: nowrap; transition: all 0.2s; background: var(--accent); color: white; border: none; cursor: pointer; }
+  .pdf-inline-btn:hover { background: var(--ink); }
+
+  hr { border: none; border-top: 1px solid var(--border); margin: 1.5rem 0; }
+  .btn-primary { background: var(--accent); color: white; border: none; padding: 0.85rem 2rem; border-radius: 100px; font-family: 'Nunito', sans-serif; font-size: 0.95rem; font-weight: 800; cursor: pointer; transition: all 0.2s; }
+  .btn-primary:hover { background: var(--ink); transform: translateY(-1px); box-shadow: 0 4px 14px rgba(87,83,78,0.3); }
+  .btn-full { width: 100%; }
+  .btn-secondary { background: transparent; color: var(--slate-soft); border: 1.5px solid #ddd; padding: 0.85rem 1.5rem; border-radius: 100px; font-family: 'Nunito', sans-serif; font-size: 0.9rem; font-weight: 700; cursor: pointer; transition: all 0.2s; }
+  .btn-secondary:hover { border-color: var(--ink); color: var(--ink); }
+  .btn-row { display: flex; gap: 0.75rem; margin-top: 1.75rem; justify-content: space-between; flex-wrap: wrap; }
+
+  .legal-note { font-size: 0.72rem; color: var(--slate-light); line-height: 1.6; margin-top: 1.25rem; }
+
+  @media (max-width: 600px) {
+    header { padding: 1rem 1.25rem; }
+    .hero { padding: 3rem 1.25rem 5rem; }
+    .container { padding: 0 1.25rem 3rem; }
+    .steps-nav { border-radius: 12px 12px 0 0; }
+    .step-tab { font-size: 0.58rem; padding: 0.7rem 0.25rem; }
+    .card { padding: 1.5rem 1.25rem; }
+    .answer-hero-amount { font-size: 2.4rem; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="app-switcher" id="appSwitcher">
+    <div class="switcher-trigger" onclick="toggleSwitcher(event)">
+      <div class="app-name">MyInheritance<em>Tax</em></div>
+      <div class="chevron">&#9660;</div>
+    </div>
+    <div class="switcher-dropdown">
+      <a class="switcher-home" href="index.html">
+        <div class="switcher-home-icon">&#127968;</div>
+        <div>
+          <div class="switcher-home-label">&#8592; MyPayPicture</div>
+          <div class="switcher-home-sub">Back to all tools</div>
+        </div>
+      </a>
+    </div>
+  </div>
+  <div class="disclaimer-badge">Not financial advice</div>
+</header>
+
+<div class="hero">
+  <div class="hero-eyebrow">MyPayPicture</div>
+  <h1>What might your estate owe?<br><em>Let's make inheritance tax clear.</em></h1>
+  <p>Estimate your potential inheritance tax, understand how the allowances work, and learn the legitimate ways families reduce it.</p>
+</div>
+
+<div class="container">
+  <div class="steps-nav">
+    <div class="step-tab active" onclick="goTo(1)" id="tab1"><span class="step-num">1</span>Your Estate</div>
+    <div class="step-tab" onclick="goTo(2)" id="tab2"><span class="step-num">2</span>Your Estimate</div>
+    <div class="step-tab" onclick="goTo(3)" id="tab3"><span class="step-num">3</span>Reduce It</div>
+  </div>
+
+  <!-- STEP 1: ESTATE -->
+  <div class="card active" id="step1">
+    <div class="card-title">What's in your estate?</div>
+    <p class="card-subtitle">Add up roughly what you own. We'll apply the 2025/26 allowances and show what, if anything, might be taxable. Estimates only &mdash; nothing is stored.</p>
+
+    <div class="field-group">
+      <label>Are you married or in a civil partnership?</label>
+      <div class="radio-group">
+        <div class="radio-btn selected" id="ms_single" onclick="selectMarital('single')">No / single</div>
+        <div class="radio-btn" id="ms_married" onclick="selectMarital('married')">Yes</div>
+      </div>
+      <p class="hint" id="maritalHint">Couples can pass everything to each other tax-free, and combine their allowances &mdash; effectively up to &pound;1m together.</p>
+    </div>
+
+    <div class="two-col">
+      <div class="field-group">
+        <label>Your home</label>
+        <div class="input-wrap"><span class="input-prefix">£</span>
+          <input type="number" id="homeValue" placeholder="e.g. 450000" min="0" oninput="recalc()">
+        </div>
+        <p class="hint">Your main residence. Leave blank if you rent.</p>
+      </div>
+      <div class="field-group">
+        <label>Savings &amp; cash</label>
+        <div class="input-wrap"><span class="input-prefix">£</span>
+          <input type="number" id="savings" placeholder="e.g. 80000" min="0" oninput="recalc()">
+        </div>
+        <p class="hint">Bank accounts, ISAs, premium bonds.</p>
+      </div>
+    </div>
+
+    <div class="two-col">
+      <div class="field-group">
+        <label>Investments</label>
+        <div class="input-wrap"><span class="input-prefix">£</span>
+          <input type="number" id="investments" placeholder="e.g. 120000" min="0" oninput="recalc()">
+        </div>
+        <p class="hint">Shares, funds, GIAs. Not pensions.</p>
+      </div>
+      <div class="field-group">
+        <label>Other assets</label>
+        <div class="input-wrap"><span class="input-prefix">£</span>
+          <input type="number" id="otherAssets" placeholder="e.g. 30000" min="0" oninput="recalc()">
+        </div>
+        <p class="hint">Cars, valuables, second properties, business assets.</p>
+      </div>
+    </div>
+
+    <div class="two-col">
+      <div class="field-group">
+        <label>Debts &amp; mortgage</label>
+        <div class="input-wrap"><span class="input-prefix">£</span>
+          <input type="number" id="debts" placeholder="e.g. 100000" min="0" oninput="recalc()">
+        </div>
+        <p class="hint">Outstanding mortgage, loans, credit cards. Reduces the estate.</p>
+      </div>
+      <div class="field-group">
+        <label>Pensions (defined contribution)</label>
+        <div class="input-wrap"><span class="input-prefix">£</span>
+          <input type="number" id="pensions" placeholder="e.g. 0" min="0" oninput="recalc()">
+        </div>
+        <p class="hint">See the note below before filling this in.</p>
+      </div>
+    </div>
+
+    <div class="alert-box info" style="margin-top:0.5rem;">
+      <h4>&#9432; Pensions and the 2027 change</h4>
+      <p>Today, most defined-contribution pensions sit <em>outside</em> your estate for inheritance tax. From <strong>6 April 2027</strong>, unused pension funds are expected to be brought into the estate. Use the toggle below to see both scenarios.</p>
+    </div>
+
+    <div class="disclosure-row" onclick="togglePensionInScope()" style="border-top:none; padding-top:0.5rem;">
+      <div class="disclosure-icon">&#128337;</div>
+      <div class="disclosure-label">Include pension in my estate <span>(models the April 2027 rules)</span></div>
+      <div class="toggle-pill" id="pensionScopePill"><div class="toggle-pill-dot"></div></div>
+    </div>
+
+    <div class="btn-row" style="margin-top:1.5rem;">
+      <span></span>
+      <button class="btn-primary" onclick="goTo(2)">See my estimate &rarr;</button>
+    </div>
+  </div>
+
+  <!-- STEP 2: ESTIMATE -->
+  <div class="card" id="step2">
+    <div class="card-title">Your inheritance tax estimate</div>
+    <p class="card-subtitle">Based on 2025/26 allowances. Illustrative only &mdash; the real figure depends on your full circumstances and the rules at the time.</p>
+
+    <div class="answer-hero" id="ihtHero">
+      <div class="answer-hero-label" id="ihtHeroLabel">Estimated inheritance tax</div>
+      <div class="answer-hero-amount" id="ihtHeroAmount">&pound;0</div>
+      <div class="answer-hero-explain" id="ihtHeroExplain">Enter your estate on the previous step to see your estimate.</div>
+    </div>
+
+    <div class="tiles-grid" id="ihtTiles"></div>
+
+    <div class="btn-row">
+      <button class="btn-secondary" onclick="goTo(1)">&larr; Back</button>
+      <button class="btn-primary" onclick="goTo(3)">How can I reduce it? &rarr;</button>
+    </div>
+  </div>
+
+  <!-- STEP 2 drill-down: how the maths works -->
+  <div class="card" id="step2Maths">
+    <div class="drill-head" onclick="toggleMaths()">
+      <div class="drill-icon">&#128202;</div>
+      <div class="drill-title">See how this is calculated</div>
+      <div class="drill-chevron" id="mathsChevron">&rsaquo;</div>
+    </div>
+    <div id="mathsContent" style="display:none; margin-top:1rem;">
+      <div class="waterfall" id="ihtWaterfall"></div>
+      <p class="legal-note" id="mathsNotes"></p>
+    </div>
+  </div>
+
+  <!-- STEP 2 PDF -->
+  <div class="card" id="step2Pdf">
+    <div class="pdf-inline-cta">
+      <div class="pdf-inline-inner">
+        <div class="pdf-inline-text">
+          <strong>&#128196; Download your estate summary</strong>
+          <span>A clear breakdown to take to a solicitor or financial adviser.</span>
+        </div>
+        <div class="pdf-inline-right">
+          <div class="pdf-inline-price">&pound;4.99</div>
+          <a class="pdf-inline-btn" href="https://buy.stripe.com/4gM8wP2IV4l0gPn9D353O00" target="_blank">Buy report &rarr;</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- STEP 3: REDUCE -->
+  <div class="card" id="step3">
+    <div class="card-title">Ways families reduce inheritance tax</div>
+    <p class="card-subtitle">These are the legitimate, widely-used levers. They range from simple things you can do yourself to strategies that genuinely need professional advice. None of this is a recommendation &mdash; it's a map of the territory.</p>
+
+    <div id="leverList"></div>
+
+    <div class="alert-box warning">
+      <h4>&#9888;&#65039; A word of caution on "schemes"</h4>
+      <p>Aggressive inheritance tax avoidance schemes are routinely challenged by HMRC and can leave your family worse off. The levers above are mainstream and well-established. Anything promising to make a large estate disappear from tax overnight deserves deep scepticism and independent advice.</p>
+    </div>
+
+    <hr>
+
+    <div class="adviser-cta">
+      <div class="adviser-cta-inner">
+        <div class="adviser-cta-text">
+          <strong>This is where advice really pays for itself</strong>
+          <span>Estate planning is one of the highest-value areas to get professional help. A STEP-qualified solicitor or chartered financial planner can model your situation properly.</span>
+        </div>
+        <a class="adviser-cta-btn" href="https://tally.so/r/xX2YP5" target="_blank">Find an adviser &rarr;</a>
+      </div>
+    </div>
+
+    <div class="btn-row">
+      <button class="btn-secondary" onclick="goTo(2)">&larr; Back</button>
+    </div>
+
+    <p class="legal-note">
+      This tool provides general information about UK inheritance tax, not personal financial, tax or legal advice. Figures use 2025/26 rates and allowances (nil-rate band &pound;325,000; residence nil-rate band &pound;175,000; both frozen to April 2031). It does not account for business or agricultural relief, trusts, lifetime gifts already made, the residence nil-rate band taper interaction with large estates in every case, or your full circumstances. Inheritance tax rules are changing &mdash; pensions are expected to enter scope from April 2027 and business/agricultural reliefs are being reformed from April 2026. Always confirm with HMRC, a solicitor, or a qualified adviser before acting. Source: GOV.UK / HMRC.
+    </p>
+  </div>
+</div>
+
+<script>
+  // ── STATE ──────────────────────────────────────────────────────────────────
+  var marital = 'single';
+  var pensionInScope = false;
+
+  // 2025/26 allowances
+  var NRB = 325000;
+  var RNRB = 175000;
+  var RNRB_TAPER_START = 2000000;
+  var IHT_RATE = 0.40;
+  var CHARITY_RATE = 0.36;
+
+  var fmt = function(n) {
+    var neg = n < 0;
+    var s = '\u00a3' + Math.round(Math.abs(n)).toLocaleString('en-GB');
+    return neg ? '\u2212' + s : s;
+  };
+
+  // ── HEADER SWITCHER ──────────────────────────────────────────────────────
+  function toggleSwitcher(e) {
+    e.stopPropagation();
+    document.getElementById('appSwitcher').classList.toggle('open');
+  }
+  document.addEventListener('click', function() {
+    document.getElementById('appSwitcher').classList.remove('open');
+  });
+
+  // ── STEP 1 INPUTS ──────────────────────────────────────────────────────────
+  function selectMarital(type) {
+    marital = type;
+    document.getElementById('ms_single').classList.toggle('selected', type === 'single');
+    document.getElementById('ms_married').classList.toggle('selected', type === 'married');
+    var hint = document.getElementById('maritalHint');
+    if (type === 'married') {
+      hint.textContent = 'Couples can pass everything to each other tax-free and combine allowances \u2014 effectively up to \u00a31m together. This estimate models the second death (when the estate passes to the next generation).';
+    } else {
+      hint.textContent = 'As a single person your estate has one set of allowances \u2014 up to \u00a3500,000 tax-free if you leave a home to your children.';
+    }
+    recalc();
+  }
+
+  function togglePensionInScope() {
+    pensionInScope = !pensionInScope;
+    document.getElementById('pensionScopePill').classList.toggle('on', pensionInScope);
+    recalc();
+  }
+
+  function getInputs() {
+    return {
+      home:        parseFloat(document.getElementById('homeValue').value) || 0,
+      savings:     parseFloat(document.getElementById('savings').value) || 0,
+      investments: parseFloat(document.getElementById('investments').value) || 0,
+      other:       parseFloat(document.getElementById('otherAssets').value) || 0,
+      debts:       parseFloat(document.getElementById('debts').value) || 0,
+      pensions:    parseFloat(document.getElementById('pensions').value) || 0,
+    };
+  }
+
+  // ── CORE CALCULATION ─────────────────────────────────────────────────────
+  function calcIHT() {
+    var d = getInputs();
+
+    var pensionCounted = pensionInScope ? d.pensions : 0;
+    var grossEstate = d.home + d.savings + d.investments + d.other + pensionCounted;
+    var netEstate = Math.max(0, grossEstate - d.debts);
+
+    // Allowances: doubled for married/civil (assumes full transfer on second death)
+    var multiplier = marital === 'married' ? 2 : 1;
+    var nrb = NRB * multiplier;
+
+    // RNRB only if there is a home, capped at home value, and tapered for large estates
+    var rnrbFull = RNRB * multiplier;
+    var rnrbAvailable = d.home > 0 ? Math.min(rnrbFull, d.home) : 0;
+    // Taper: reduce £1 for every £2 over £2m (taper threshold is NOT doubled for couples under current rules,
+    // but each individual's RNRB tapers against the estate passing on their death; we apply a single taper
+    // against the net estate as a reasonable simplification for this estimate)
+    var taperThreshold = RNRB_TAPER_START * multiplier;
+    if (netEstate > taperThreshold) {
+      var reduction = Math.floor((netEstate - taperThreshold) / 2);
+      rnrbAvailable = Math.max(0, rnrbAvailable - reduction);
+    }
+
+    var totalAllowance = nrb + rnrbAvailable;
+    var taxable = Math.max(0, netEstate - totalAllowance);
+    var iht = taxable * IHT_RATE;
+
+    return {
+      grossEstate: grossEstate,
+      netEstate: netEstate,
+      debts: d.debts,
+      nrb: nrb,
+      rnrbAvailable: rnrbAvailable,
+      rnrbFull: rnrbFull,
+      totalAllowance: totalAllowance,
+      taxable: taxable,
+      iht: iht,
+      hasHome: d.home > 0,
+      multiplier: multiplier,
+      pensionCounted: pensionCounted,
+      passesToHeirs: netEstate - iht
+    };
+  }
+
+  function recalc() {
+    if (document.getElementById('step2').classList.contains('active') ||
+        document.getElementById('step2Maths').classList.contains('active')) {
+      renderEstimate();
+    }
+  }
+
+  // ── STEP 2 RENDER ──────────────────────────────────────────────────────────
+  function renderEstimate() {
+    var r = calcIHT();
+    var hero = document.getElementById('ihtHero');
+    var label = document.getElementById('ihtHeroLabel');
+    var amount = document.getElementById('ihtHeroAmount');
+    var explain = document.getElementById('ihtHeroExplain');
+
+    hero.classList.remove('liable', 'clear');
+
+    if (r.netEstate === 0) {
+      label.textContent = 'Estimated inheritance tax';
+      amount.textContent = fmt(0);
+      explain.textContent = 'Enter your estate on the previous step to see your estimate.';
+    } else if (r.iht > 0) {
+      hero.classList.add('liable');
+      label.textContent = 'Estimated inheritance tax';
+      amount.textContent = fmt(r.iht);
+      explain.innerHTML = 'Your estate of ' + fmt(r.netEstate) + ' is above your tax-free allowance of ' +
+        fmt(r.totalAllowance) + '. The ' + fmt(r.taxable) + ' above it is taxed at 40%. Your heirs would receive about ' +
+        '<strong>' + fmt(r.passesToHeirs) + '</strong>.';
+    } else {
+      hero.classList.add('clear');
+      label.textContent = 'Estimated inheritance tax';
+      amount.textContent = fmt(0);
+      explain.innerHTML = 'Good news \u2014 your estate of ' + fmt(r.netEstate) + ' is within your tax-free allowance of ' +
+        fmt(r.totalAllowance) + ', so there would be no inheritance tax to pay on these figures.';
+    }
+
+    // Tiles
+    document.getElementById('ihtTiles').innerHTML =
+      '<div class="tile"><div class="tile-label">Net estate</div><div class="tile-val">' + fmt(r.netEstate) + '</div><div class="tile-sub">after debts</div></div>' +
+      '<div class="tile"><div class="tile-label">Tax-free allowance</div><div class="tile-val">' + fmt(r.totalAllowance) + '</div><div class="tile-sub">' + (r.multiplier === 2 ? 'combined (couple)' : 'single person') + '</div></div>' +
+      '<div class="tile"><div class="tile-label">Taxable amount</div><div class="tile-val">' + fmt(r.taxable) + '</div><div class="tile-sub">charged at 40%</div></div>';
+
+    // Waterfall
+    var wf = '';
+    wf += '<div class="wf-row"><div class="wf-label">Gross estate' + (r.pensionCounted > 0 ? '<small>includes pension (2027 rules)</small>' : '') + '</div><div class="wf-val">' + fmt(r.grossEstate) + '</div></div>';
+    if (r.debts > 0) wf += '<div class="wf-row"><div class="wf-label">Less: debts &amp; mortgage</div><div class="wf-val minus">\u2212 ' + fmt(r.debts) + '</div></div>';
+    wf += '<div class="wf-row"><div class="wf-label">Net estate</div><div class="wf-val">' + fmt(r.netEstate) + '</div></div>';
+    wf += '<div class="wf-row"><div class="wf-label">Less: nil-rate band' + (r.multiplier === 2 ? '<small>doubled for couple</small>' : '') + '</div><div class="wf-val minus">\u2212 ' + fmt(r.nrb) + '</div></div>';
+    if (r.rnrbAvailable > 0) {
+      wf += '<div class="wf-row"><div class="wf-label">Less: residence nil-rate band' + (r.rnrbAvailable < r.rnrbFull ? '<small>reduced (capped at home value or tapered)</small>' : (r.multiplier === 2 ? '<small>doubled for couple</small>' : '')) + '</div><div class="wf-val minus">\u2212 ' + fmt(r.rnrbAvailable) + '</div></div>';
+    } else if (r.hasHome) {
+      wf += '<div class="wf-row"><div class="wf-label">Residence nil-rate band<small>tapered away (estate over \u00a32m)</small></div><div class="wf-val">\u00a30</div></div>';
+    }
+    wf += '<div class="wf-row total"><div class="wf-label">Taxable estate</div><div class="wf-val">' + fmt(r.taxable) + '</div></div>';
+    wf += '<div class="wf-row total"><div class="wf-label">Inheritance tax at 40%</div><div class="wf-val">' + fmt(r.iht) + '</div></div>';
+    document.getElementById('ihtWaterfall').innerHTML = wf;
+
+    // Notes
+    var notes = [];
+    if (!r.hasHome) notes.push('No home entered, so the residence nil-rate band (\u00a3175,000) is not applied. It only counts when a main home passes to direct descendants.');
+    if (r.rnrbAvailable > 0 && r.rnrbAvailable < r.rnrbFull) notes.push('Your residence nil-rate band is reduced \u2014 either because the home is worth less than the full allowance, or because the estate is over \u00a32m and the band tapers away.');
+    if (r.multiplier === 2) notes.push('Couple figures assume the full nil-rate band and residence nil-rate band transfer to the survivor on the first death, and tax falls due on the second death. This is the most common but not the only outcome.');
+    notes.push('The residence nil-rate band requires the home to pass to children, grandchildren or other direct descendants.');
+    document.getElementById('mathsNotes').innerHTML = notes.join(' ');
+  }
+
+  // ── STEP 3 LEVERS ──────────────────────────────────────────────────────────
+  var LEVERS = [
+    { title: 'Leave everything to your spouse', tag: 'diy', tagText: 'Simple', body: 'Anything passing to a UK-domiciled spouse or civil partner is completely free of inheritance tax, with no limit. Most couples pay nothing on the first death \u2014 the tax question arises on the second. It also lets the survivor inherit the unused allowances.' },
+    { title: 'Use the \u00a33,000 annual gift exemption', tag: 'diy', tagText: 'Simple', body: 'You can give away \u00a33,000 each tax year completely free of inheritance tax, with no seven-year wait. If you didn\'t use last year\'s, you can carry it forward once \u2014 so up to \u00a36,000 in one year. Small gifts of up to \u00a3250 per person and normal wedding gifts are also exempt.' },
+    { title: 'The 7-year rule on larger gifts', tag: 'diy', tagText: 'Know the rules', body: 'Larger gifts to individuals fall out of your estate entirely if you survive seven years. Die within three years and the full 40% applies; between three and seven years a sliding "taper relief" reduces the tax. The clock starts the day you make the gift, so earlier is better.' },
+    { title: 'Gifts out of normal income', tag: 'adviser', tagText: 'Get advice', body: 'Regular gifts made from surplus income (not capital) can be immediately exempt with no seven-year wait \u2014 for example, funding a grandchild\'s school fees from your monthly income. The rules on what counts are strict and you must keep records, so it\'s worth getting this set up properly.' },
+    { title: 'Leave 10% or more to charity', tag: 'diy', tagText: 'Know the rules', body: 'If you leave at least 10% of your net estate to charity, the inheritance tax rate on the rest drops from 40% to 36%. The charitable gift itself is also tax-free. For some estates this means giving more to charity costs the other beneficiaries very little.' },
+    { title: 'Whole-of-life insurance in trust', tag: 'adviser', tagText: 'Get advice', body: 'A life policy written in trust pays out to your family outside your estate, giving them the cash to settle the inheritance tax bill without selling the family home. It doesn\'t reduce the tax, but it makes it payable. Needs to be set up correctly in trust to work.' },
+    { title: 'Trusts and family investment companies', tag: 'adviser', tagText: 'Specialist advice', body: 'Trusts can move assets out of your estate while keeping some control over how they\'re used. They\'re powerful but complex, with their own tax rules and ongoing administration. This is firmly specialist solicitor and adviser territory \u2014 never DIY.' },
+    { title: 'Spend it, or take pension income', tag: 'diy', tagText: 'Worth considering', body: 'With pensions expected to enter the estate from April 2027, drawing pension income during retirement (rather than leaving the pot untouched) may become part of planning for some people. Enjoying your money is a legitimate strategy too.' },
+  ];
+
+  function renderLevers() {
+    var html = '';
+    LEVERS.forEach(function(l) {
+      html += '<div class="lever">' +
+        '<div class="lever-head">' +
+          '<div class="lever-title">' + l.title + '</div>' +
+          '<div class="lever-tag ' + l.tag + '">' + l.tagText + '</div>' +
+        '</div>' +
+        '<div class="lever-body">' + l.body + '</div>' +
+      '</div>';
+    });
+    document.getElementById('leverList').innerHTML = html;
+  }
+
+  // ── DRILL-DOWN ───────────────────────────────────────────────────────────
+  function toggleMaths() {
+    var content = document.getElementById('mathsContent');
+    var chev = document.getElementById('mathsChevron');
+    var open = content.style.display === 'none';
+    content.style.display = open ? 'block' : 'none';
+    chev.classList.toggle('open', open);
+  }
+
+  // ── NAVIGATION ─────────────────────────────────────────────────────────────
+  function goTo(step) {
+    var groups = [
+      ['step1'],
+      ['step2', 'step2Maths', 'step2Pdf'],
+      ['step3']
+    ];
+    groups.forEach(function(group, idx) {
+      var stepNum = idx + 1;
+      group.forEach(function(id) {
+        var el = document.getElementById(id);
+        if (el) el.classList.toggle('active', stepNum === step);
+      });
+      var tab = document.getElementById('tab' + stepNum);
+      if (tab) {
+        tab.classList.toggle('active', stepNum === step);
+        if (stepNum < step) tab.classList.add('completed');
+        else if (stepNum > step) tab.classList.remove('completed');
+      }
+    });
+    if (step === 2) renderEstimate();
+    if (step === 3) renderLevers();
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+</script>
+
+<!-- canonical footer -->
+<footer style="background:#314855; padding:2.5rem; border-top:3px solid #ffdb00; margin-top:2rem;">
+  <div style="max-width:920px; margin:0 auto; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:1rem;">
+    <div style="font-family:'Nunito', sans-serif; font-size:1.3rem; color:white; font-weight:800;">MyPay<em style="font-style:italic; color:#ffdb00;">Picture</em></div>
+    <p style="color:rgba(255,255,255,0.3); font-size:0.78rem; max-width:520px; line-height:1.6; margin:0;">Illustrative scenarios only &mdash; not financial, tax or legal advice. Always consult a qualified adviser before making decisions. No data is stored. &copy; MyPayPicture 2025.</p>
+  </div>
+</footer>
+<!-- /canonical footer -->
+
+</body>
+</html>

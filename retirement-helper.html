@@ -103,6 +103,8 @@
     --bg:          #f8f7f5;
     --surface:     #ffffff;
     --border:      rgba(87,83,78,0.12);
+    --navy:        #0f1f38;
+    --slate-light: #8a99a5;
   }
 
   * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -380,10 +382,18 @@
   .card-head-title { font-size: 1.05rem; font-weight: 800; color: #314855; letter-spacing: -0.01em; }
   /* Steps nav as pill bar */
   .steps-nav { display: flex; border-radius: 100px; background: #ffffff; margin-bottom: 1rem; padding: 6px; box-shadow: 0 1px 3px rgba(0,0,0,0.04); gap: 4px; border: none !important; overflow: visible !important; }
-  .step-tab { flex: 1; padding: 0.7rem 0.6rem; text-align: center; font-size: 0.72rem; font-weight: 700; letter-spacing: 0.05em; text-transform: uppercase; color: rgba(49,72,85,0.5); cursor: pointer; transition: all 0.2s; border-radius: 100px !important; white-space: nowrap; border: none !important; }
+  .step-tab { flex: 1 1 0; min-width: 0; padding: 0.7rem 0.5rem; text-align: center; font-size: 0.72rem; font-weight: 700; letter-spacing: 0.04em; text-transform: uppercase; color: rgba(49,72,85,0.5); cursor: pointer; transition: all 0.2s; border-radius: 100px !important; white-space: normal; overflow-wrap: break-word; word-break: break-word; line-height: 1.2; border: none !important; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 0.15rem; }
   .step-tab.active { background: #314855 !important; color: white !important; }
   .step-tab:hover:not(.active) { color: #314855; }
-  .step-num { display: inline-block; font-size: 0.78rem; font-weight: 800; margin-right: 0.35rem; color: inherit; }
+  .step-num { display: block; font-size: 0.82rem; font-weight: 800; margin: 0; color: inherit; }
+  @media (max-width: 640px) {
+    .steps-nav { border-radius: 18px; padding: 5px; gap: 3px; }
+    .step-tab { font-size: 0.6rem; letter-spacing: 0.01em; padding: 0.6rem 0.3rem; border-radius: 14px !important; }
+    .step-num { font-size: 0.72rem; }
+  }
+  @media (max-width: 380px) {
+    .step-tab { font-size: 0.54rem; padding: 0.55rem 0.2rem; }
+  }
   /* Sliders consistent across tools */
   .slider-field { margin-bottom: 1.5rem; }
   .slider-field-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.6rem; }
@@ -407,6 +417,74 @@
   /* Btn full */
   .btn-full { width: 100%; }
   /* ========== end canonical card system ========== */
+
+
+  /* ===== Retirement Living Standards section ===== */
+  .rls-section { margin-top: 0.5rem; }
+  .rls-toggle {
+    display: inline-flex; gap: 4px; padding: 4px;
+    background: var(--stone-pale); border-radius: 100px;
+    margin-bottom: 1rem;
+  }
+  .rls-toggle-btn {
+    padding: 0.5rem 1.1rem; border: none; background: transparent;
+    font-family: 'Nunito', sans-serif; font-size: 0.82rem; font-weight: 700;
+    color: var(--slate-soft); cursor: pointer; border-radius: 100px;
+    transition: all 0.18s;
+  }
+  .rls-toggle-btn.active { background: var(--surface); color: var(--ink); box-shadow: 0 1px 3px rgba(0,0,0,0.08); }
+
+  .rls-grid {
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.75rem;
+  }
+  .rls-card {
+    border: 1.5px solid var(--border); border-radius: 14px;
+    padding: 1rem; cursor: pointer; transition: all 0.18s;
+    background: var(--surface);
+  }
+  .rls-card:hover { border-color: var(--accent-light); transform: translateY(-2px); }
+  .rls-card.selected { border-color: var(--accent); background: var(--accent-pale); box-shadow: 0 2px 10px rgba(0,0,0,0.06); }
+  .rls-card-level {
+    font-size: 0.78rem; font-weight: 800; text-transform: uppercase;
+    letter-spacing: 0.05em; margin-bottom: 0.5rem;
+  }
+  .rls-card-level.min { color: #b45309; }
+  .rls-card-level.mod { color: #0369a1; }
+  .rls-card-level.com { color: #15803d; }
+  .rls-card-amount { font-size: 1.5rem; font-weight: 800; color: var(--ink); letter-spacing: -0.02em; margin-bottom: 0.4rem; }
+  .rls-card-desc { font-size: 0.74rem; color: var(--slate-soft); line-height: 1.45; }
+
+  .rls-breakdown {
+    display: none; margin-top: 0.6rem; padding: 0.85rem 1rem;
+    background: var(--stone-pale); border-radius: 10px;
+  }
+  .rls-breakdown.open { display: block; }
+  .rls-breakdown-row {
+    display: flex; justify-content: space-between; gap: 1rem;
+    font-size: 0.78rem; color: var(--slate); padding: 0.25rem 0;
+    line-height: 1.4;
+  }
+  .rls-breakdown-row span:last-child { font-weight: 700; white-space: nowrap; color: var(--ink); }
+
+  /* Result-page position banner */
+  .rls-position {
+    border-radius: 14px; padding: 1.1rem 1.25rem; margin: 1rem 0;
+    border: 1.5px solid var(--border);
+  }
+  .rls-position.min   { background: #fffbeb; border-color: #fde68a; }
+  .rls-position.mod   { background: #eff6ff; border-color: #bfdbfe; }
+  .rls-position.com   { background: #f0fdf4; border-color: #bbf7d0; }
+  .rls-position.below { background: #fef2f2; border-color: #fecaca; }
+  .rls-position-title { font-size: 1rem; font-weight: 800; color: var(--ink); margin-bottom: 0.3rem; }
+  .rls-position-sub { font-size: 0.82rem; color: var(--slate-soft); line-height: 1.6; }
+
+  @media (max-width: 560px) {
+    .rls-grid { grid-template-columns: 1fr; }
+    .rls-card { display: flex; align-items: baseline; gap: 0.6rem; flex-wrap: wrap; }
+    .rls-card-level { margin-bottom: 0; }
+    .rls-card-amount { font-size: 1.2rem; margin-bottom: 0; }
+    .rls-card-desc { flex-basis: 100%; }
+  }
 
 </style>
 </head>

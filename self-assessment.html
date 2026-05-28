@@ -363,6 +363,23 @@
   .verdict-box.check    .verdict-title { color: #92400e; }
   .verdict-sub { font-size: 0.84rem; color: var(--slate-soft); line-height: 1.6; }
 
+  /* FILING BANNER — used by JS verdict */
+  .filing-banner {
+    display: flex; gap: 1rem; align-items: flex-start;
+    padding: 1.25rem; border-radius: 16px;
+    border: 1.5px solid transparent;
+  }
+  .filing-banner-icon { font-size: 1.85rem; line-height: 1; flex-shrink: 0; }
+  .filing-banner-title { font-size: 1.05rem; font-weight: 800; margin-bottom: 0.35rem; color: var(--ink); letter-spacing: -0.01em; }
+  .filing-banner-desc { font-size: 0.86rem; color: var(--slate-soft); line-height: 1.55; }
+  .filing-banner.neutral { background: #f8fafc; border-color: #e2e8f0; }
+  .filing-banner.must-file { background: #fef2f2; border-color: #fecaca; }
+  .filing-banner.must-file .filing-banner-title { color: #b91c1c; }
+  .filing-banner.maybe { background: #fffbeb; border-color: #fde68a; }
+  .filing-banner.maybe .filing-banner-title { color: #92400e; }
+  .filing-banner.no-file { background: #f0fdf4; border-color: #bbf7d0; }
+  .filing-banner.no-file .filing-banner-title { color: #166534; }
+
   /* INCOME FIELDS */
   .income-row {
     display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1rem;
@@ -472,10 +489,18 @@
   .card-head-title { font-size: 1.05rem; font-weight: 800; color: #314855; letter-spacing: -0.01em; }
   /* Steps nav as pill bar */
   .steps-nav { display: flex; border-radius: 100px; background: #ffffff; margin-bottom: 1rem; padding: 6px; box-shadow: 0 1px 3px rgba(0,0,0,0.04); gap: 4px; border: none !important; overflow: visible !important; }
-  .step-tab { flex: 1; padding: 0.7rem 0.6rem; text-align: center; font-size: 0.72rem; font-weight: 700; letter-spacing: 0.05em; text-transform: uppercase; color: rgba(49,72,85,0.5); cursor: pointer; transition: all 0.2s; border-radius: 100px !important; white-space: nowrap; border: none !important; }
+  .step-tab { flex: 1 1 0; min-width: 0; padding: 0.7rem 0.5rem; text-align: center; font-size: 0.72rem; font-weight: 700; letter-spacing: 0.04em; text-transform: uppercase; color: rgba(49,72,85,0.5); cursor: pointer; transition: all 0.2s; border-radius: 100px !important; white-space: normal; overflow-wrap: break-word; word-break: break-word; line-height: 1.2; border: none !important; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 0.15rem; }
   .step-tab.active { background: #314855 !important; color: white !important; }
   .step-tab:hover:not(.active) { color: #314855; }
-  .step-num { display: inline-block; font-size: 0.78rem; font-weight: 800; margin-right: 0.35rem; color: inherit; }
+  .step-num { display: block; font-size: 0.82rem; font-weight: 800; margin: 0; color: inherit; }
+  @media (max-width: 640px) {
+    .steps-nav { border-radius: 18px; padding: 5px; gap: 3px; }
+    .step-tab { font-size: 0.6rem; letter-spacing: 0.01em; padding: 0.6rem 0.3rem; border-radius: 14px !important; }
+    .step-num { font-size: 0.72rem; }
+  }
+  @media (max-width: 380px) {
+    .step-tab { font-size: 0.54rem; padding: 0.55rem 0.2rem; }
+  }
   /* Sliders consistent across tools */
   .slider-field { margin-bottom: 1.5rem; }
   .slider-field-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.6rem; }
@@ -499,6 +524,89 @@
   /* Btn full */
   .btn-full { width: 100%; }
   /* ========== end canonical card system ========== */
+
+
+  /* KRUG REBUILD STYLES */
+  /* Toggle row (matches pension-optimiser pattern) */
+  .toggle-row {
+    display: flex; align-items: center; gap: 0.85rem;
+    padding: 1.1rem 0;
+    border-top: 1px solid rgba(0,0,0,0.07);
+    cursor: pointer; user-select: none;
+    transition: opacity 0.15s;
+  }
+  .toggle-row:hover { opacity: 0.85; }
+  .toggle-row-icon { font-size: 1.1rem; flex-shrink: 0; }
+  .toggle-row-label { flex: 1; font-size: 0.92rem; font-weight: 700; color: var(--ink); }
+  .toggle-pill {
+    width: 44px; height: 26px; border-radius: 100px;
+    background: rgba(0,0,0,0.1); position: relative; flex-shrink: 0;
+    transition: background 0.2s;
+  }
+  .toggle-pill-dot {
+    width: 22px; height: 22px; border-radius: 50%;
+    background: white; position: absolute; top: 2px; left: 2px;
+    transition: left 0.2s; box-shadow: 0 1px 3px rgba(0,0,0,0.15);
+  }
+  .toggle-pill.on { background: #0d9488; }
+  .toggle-pill.on .toggle-pill-dot { left: 20px; }
+
+  /* Tax hero (the answer) */
+  .tax-hero {
+    border-radius: 18px; padding: 1.75rem 1.25rem;
+    text-align: center; margin-bottom: 1.25rem;
+    background: rgba(13,148,136,0.08);
+    transition: background 0.3s;
+  }
+  .tax-hero.owed     { background: rgba(239,68,68,0.08); }
+  .tax-hero.refund   { background: rgba(34,197,94,0.10); }
+  .tax-hero.balanced { background: rgba(13,148,136,0.08); }
+  .tax-hero-label {
+    font-size: 0.72rem; font-weight: 700; color: var(--slate-soft);
+    text-transform: uppercase; letter-spacing: 0.08em;
+    margin-bottom: 0.85rem;
+  }
+  .tax-hero-amount {
+    font-size: 3rem; font-weight: 800;
+    color: var(--accent); letter-spacing: -0.03em;
+    line-height: 1; margin-bottom: 0.85rem;
+  }
+  .tax-hero.owed   .tax-hero-amount { color: #b91c1c; }
+  .tax-hero.refund .tax-hero-amount { color: #16a34a; }
+  .tax-hero-explain {
+    font-size: 0.92rem; color: var(--slate); line-height: 1.55;
+    max-width: 480px; margin: 0 auto;
+  }
+
+  /* Drill-down headers (matches pension-optimiser pattern) */
+  .snapshots-head { transition: opacity 0.15s; }
+  .snapshots-head:hover { opacity: 0.85; }
+
+  /* Deadline hero */
+  .deadline-hero {
+    border-radius: 18px; padding: 1.5rem 1.25rem;
+    text-align: center;
+    background: linear-gradient(135deg, #f59e0b, #d97706);
+    color: white;
+  }
+  .deadline-hero .dl-label {
+    font-size: 0.72rem; font-weight: 700;
+    text-transform: uppercase; letter-spacing: 0.08em;
+    margin-bottom: 0.5rem; opacity: 0.85;
+  }
+  .deadline-hero .dl-date {
+    font-size: 1.6rem; font-weight: 800; letter-spacing: -0.02em;
+    margin-bottom: 0.4rem;
+  }
+  .deadline-hero .dl-days {
+    font-size: 0.95rem; opacity: 0.95;
+  }
+  .deadline-hero.urgent {
+    background: linear-gradient(135deg, #dc2626, #991b1b);
+  }
+  .deadline-hero.passed {
+    background: linear-gradient(135deg, #7f1d1d, #450a0a);
+  }
 
 </style>
 </head>
@@ -541,148 +649,191 @@
 <!-- STEP 1: DO I NEED TO FILE -->
   <div class="card active" id="step1">
     <div class="card-title">Do you need to file a Self Assessment?</div>
-    <p class="card-subtitle">Tick everything that applies to your 2024/25 tax year (6 April 2024 to 5 April 2025). We&#8217;ll tell you if HMRC requires a return from you.</p>
+    <p class="card-subtitle">Tick everything that applies to your 2024/25 tax year (6 April 2024 to 5 April 2025). We&rsquo;ll tell you straight away.</p>
 
     <div class="check-list" id="triggerList"></div>
 
     <div id="filingVerdict" style="margin-top:1.5rem;"></div>
 
-    <div class="btn-row">
-      <button class="btn-primary" onclick="goTo(2)">Enter my income &#8594;</button>
-    </div>
+    <div class="btn-row" id="step1CtaRow" style="margin-top:1.25rem;"></div>
   </div>
 
   <!-- STEP 2: YOUR INCOME -->
   <div class="card" id="step2">
-    <div class="card-title">Your income sources</div>
-    <p class="card-subtitle">Enter figures for the 2024/25 tax year. Leave blank anything that doesn&#8217;t apply.</p>
+    <div class="card-title">Your income</div>
+    <p class="card-subtitle">Start with what you earned through PAYE. Add other income sources if they apply to you.</p>
 
     <div class="two-col">
       <div class="field-group">
-        <label>Employment income (gross salary)</label>
+        <label>Gross salary (2024/25)</label>
         <div class="input-wrap"><span class="input-prefix">£</span>
           <input type="number" id="empIncome" placeholder="e.g. 55000" min="0" oninput="updateTaxEstimate()">
         </div>
-        <p class="hint">Your total gross salary before tax and NI. Check your P60 or payslip.</p>
+        <p class="hint">Total gross pay before tax and NI. From your P60.</p>
       </div>
       <div class="field-group">
         <label>Tax already paid via PAYE</label>
         <div class="input-wrap"><span class="input-prefix">£</span>
           <input type="number" id="payeTax" placeholder="e.g. 12000" min="0" oninput="updateTaxEstimate()">
         </div>
-        <p class="hint">From your P60 &#8212; the income tax deducted by your employer.</p>
+        <p class="hint">The "income tax" figure on your P60.</p>
       </div>
     </div>
 
-    <div class="two-col">
-      <div class="field-group">
-        <label>Self-employment profit</label>
-        <div class="input-wrap"><span class="input-prefix">£</span>
-          <input type="number" id="selfEmpProfit" placeholder="e.g. 0" min="0" oninput="updateTaxEstimate()">
+    <!-- Other income sources toggle -->
+    <div class="toggle-row" onclick="toggleOtherIncome()" style="border-top:1px solid var(--border); margin-top:0.75rem;">
+      <div class="toggle-row-icon">&#128176;</div>
+      <div class="toggle-row-label">I have other income to declare <span style="font-weight:400; color:var(--slate-soft); font-size:0.78rem;">(self-employment, rental, dividends, etc.)</span></div>
+      <div class="toggle-pill" id="otherIncomePill"><div class="toggle-pill-dot"></div></div>
+    </div>
+
+    <div id="otherIncomeWrap" style="display:none; padding-top:1rem;">
+      <div class="two-col">
+        <div class="field-group">
+          <label>Self-employment profit</label>
+          <div class="input-wrap"><span class="input-prefix">£</span>
+            <input type="number" id="selfEmpProfit" placeholder="0" min="0" oninput="updateTaxEstimate()">
+          </div>
+          <p class="hint">Income minus allowable business expenses. Not turnover.</p>
         </div>
-        <p class="hint">Income minus allowable business expenses. Not turnover.</p>
+        <div class="field-group">
+          <label>Rental profit</label>
+          <div class="input-wrap"><span class="input-prefix">£</span>
+            <input type="number" id="rentalProfit" placeholder="0" min="0" oninput="updateTaxEstimate()">
+          </div>
+          <p class="hint">Rent received minus allowable expenses (not mortgage capital).</p>
+        </div>
       </div>
-      <div class="field-group">
-        <label>Rental income (profit after expenses)</label>
-        <div class="input-wrap"><span class="input-prefix">£</span>
-          <input type="number" id="rentalProfit" placeholder="e.g. 0" min="0" oninput="updateTaxEstimate()">
+
+      <div class="two-col">
+        <div class="field-group">
+          <label>Dividends received</label>
+          <div class="input-wrap"><span class="input-prefix">£</span>
+            <input type="number" id="dividends" placeholder="0" min="0" oninput="updateTaxEstimate()">
+          </div>
+          <p class="hint">From shares, funds, or your own limited company. First £500 is tax-free.</p>
         </div>
-        <p class="hint">Total rent received minus allowable expenses (not mortgage capital).</p>
+        <div class="field-group">
+          <label>Other taxable income</label>
+          <div class="input-wrap"><span class="input-prefix">£</span>
+            <input type="number" id="otherIncome" placeholder="0" min="0" oninput="updateTaxEstimate()">
+          </div>
+          <p class="hint">Foreign income, tips, interest above savings allowance.</p>
+        </div>
       </div>
     </div>
 
-    <div class="two-col">
-      <div class="field-group">
-        <label>Dividends received</label>
-        <div class="input-wrap"><span class="input-prefix">£</span>
-          <input type="number" id="dividends" placeholder="e.g. 0" min="0" oninput="updateTaxEstimate()">
-        </div>
-        <p class="hint">From shares, funds, or a limited company. First £500 is tax-free (2024/25).</p>
-      </div>
-      <div class="field-group">
-        <label>Other taxable income</label>
-        <div class="input-wrap"><span class="input-prefix">£</span>
-          <input type="number" id="otherIncome" placeholder="e.g. 0" min="0" oninput="updateTaxEstimate()">
-        </div>
-        <p class="hint">Foreign income, tips, interest above savings allowance, etc.</p>
-      </div>
-    </div>
-
-    <div class="btn-row">
-      <button class="btn-secondary" onclick="goTo(1)">&#8592; Back</button>
-      <button class="btn-primary" onclick="goTo(3)">Add deductions &#8594;</button>
+    <div class="btn-row" style="margin-top:1.5rem;">
+      <button class="btn-secondary" onclick="goTo(1)">&larr; Back</button>
+      <button class="btn-primary" onclick="goTo(3)">Next: deductions &rarr;</button>
     </div>
   </div>
 
   <!-- STEP 3: DEDUCTIONS -->
   <div class="card" id="step3">
-    <div class="card-title">Deductions &amp; reliefs</div>
-    <p class="card-subtitle">These reduce your taxable income or the tax you owe. Enter what applies &#8212; leave blank if not relevant.</p>
+    <div class="card-title">Deductions or reliefs to claim?</div>
+    <p class="card-subtitle">Most people don&rsquo;t have any of these. Toggle on only if one applies to you.</p>
 
-    <div class="two-col">
-      <div class="field-group">
-        <label>Personal pension contributions (gross)</label>
-        <div class="input-wrap"><span class="input-prefix">£</span>
-          <input type="number" id="pensionContribs" placeholder="e.g. 0" min="0" oninput="updateTaxEstimate()">
-        </div>
-        <p class="hint">Include relief at source top-up. Higher rate relief is claimed through SA.</p>
+    <div class="toggle-row" onclick="toggleDeduction('pension')" style="border-top:none;">
+      <div class="toggle-row-icon">&#127942;</div>
+      <div class="toggle-row-label">Personal pension contributions</div>
+      <div class="toggle-pill" id="dedPensionPill"><div class="toggle-pill-dot"></div></div>
+    </div>
+    <div id="dedPensionWrap" style="display:none; padding:0.5rem 0 1rem 0;">
+      <div class="input-wrap"><span class="input-prefix">£</span>
+        <input type="number" id="pensionContribs" placeholder="0" min="0" oninput="updateTaxEstimate()">
       </div>
-      <div class="field-group">
-        <label>Gift Aid donations</label>
-        <div class="input-wrap"><span class="input-prefix">£</span>
-          <input type="number" id="giftAid" placeholder="e.g. 0" min="0" oninput="updateTaxEstimate()">
-        </div>
-        <p class="hint">Total amount donated &#8212; the charity claims basic rate relief. You claim higher rate via SA.</p>
-      </div>
+      <p class="hint">Gross amount including basic-rate top-up. Higher-rate relief claimed via SA.</p>
     </div>
 
-    <div class="two-col">
-      <div class="field-group">
-        <label>Marriage Allowance transfer</label>
-        <div class="input-wrap"><span class="input-prefix">£</span>
-          <input type="number" id="marriageAllowance" placeholder="e.g. 0" min="0" oninput="updateTaxEstimate()">
-        </div>
-        <p class="hint">Up to £1,260 transferred from a non-taxpaying spouse. Worth £252 tax reduction.</p>
+    <div class="toggle-row" onclick="toggleDeduction('giftaid')">
+      <div class="toggle-row-icon">&#10084;&#65039;</div>
+      <div class="toggle-row-label">Gift Aid donations</div>
+      <div class="toggle-pill" id="dedGiftaidPill"><div class="toggle-pill-dot"></div></div>
+    </div>
+    <div id="dedGiftaidWrap" style="display:none; padding:0.5rem 0 1rem 0;">
+      <div class="input-wrap"><span class="input-prefix">£</span>
+        <input type="number" id="giftAid" placeholder="0" min="0" oninput="updateTaxEstimate()">
       </div>
-      <div class="field-group">
-        <label>Student loan repayments (total paid)</label>
-        <div class="input-wrap"><span class="input-prefix">£</span>
-          <input type="number" id="studentLoan" placeholder="e.g. 0" min="0" oninput="updateTaxEstimate()">
-        </div>
-        <p class="hint">Declare if self-employed or earning above your plan threshold.</p>
-      </div>
+      <p class="hint">Total amount donated. Charity claims basic rate; higher-rate relief via SA.</p>
     </div>
 
-    <div class="btn-row">
-      <button class="btn-secondary" onclick="goTo(2)">&#8592; Back</button>
-      <button class="btn-primary" onclick="goTo(4)">See my tax estimate &#8594;</button>
+    <div class="toggle-row" onclick="toggleDeduction('marriage')">
+      <div class="toggle-row-icon">&#128141;</div>
+      <div class="toggle-row-label">Marriage Allowance transfer</div>
+      <div class="toggle-pill" id="dedMarriagePill"><div class="toggle-pill-dot"></div></div>
+    </div>
+    <div id="dedMarriageWrap" style="display:none; padding:0.5rem 0 1rem 0;">
+      <div class="input-wrap"><span class="input-prefix">£</span>
+        <input type="number" id="marriageAllowance" placeholder="0" min="0" oninput="updateTaxEstimate()">
+      </div>
+      <p class="hint">Up to £1,260 transferred from a non-taxpaying spouse. Worth up to £252 off your tax bill.</p>
+    </div>
+
+    <div class="toggle-row" onclick="toggleDeduction('student')">
+      <div class="toggle-row-icon">&#127891;</div>
+      <div class="toggle-row-label">Student loan repayments</div>
+      <div class="toggle-pill" id="dedStudentPill"><div class="toggle-pill-dot"></div></div>
+    </div>
+    <div id="dedStudentWrap" style="display:none; padding:0.5rem 0 1rem 0;">
+      <div class="input-wrap"><span class="input-prefix">£</span>
+        <input type="number" id="studentLoan" placeholder="0" min="0" oninput="updateTaxEstimate()">
+      </div>
+      <p class="hint">Total repaid in the tax year. Declare if self-employed or above your plan threshold.</p>
+    </div>
+
+    <div class="btn-row" style="margin-top:1.5rem;">
+      <button class="btn-secondary" onclick="goTo(2)">&larr; Back</button>
+      <button class="btn-primary" onclick="goTo(4)">See my estimate &rarr;</button>
     </div>
   </div>
 
   <!-- STEP 4: TAX ESTIMATE -->
   <div class="card" id="step4">
-    <div class="card-title">Your illustrative tax estimate</div>
-    <p class="card-subtitle">Based on what you&#8217;ve entered. This is a guide &#8212; your actual liability depends on your specific circumstances.</p>
+    <div class="card-title">Your tax estimate</div>
+    <p class="card-subtitle">Based on what you&rsquo;ve entered. Illustrative only.</p>
 
-    <div class="results-grid" id="taxResultGrid"></div>
-    <div id="taxBreakdown"></div>
-    <div id="taxGuidance"></div>
-
-    <div class="btn-row">
-      <button class="btn-secondary" onclick="goTo(3)">&#8592; Back</button>
-      <button class="btn-primary" onclick="goTo(5)">See next steps &#8594;</button>
+    <!-- HERO ANSWER -->
+    <div id="taxHero" class="tax-hero">
+      <div class="tax-hero-label" id="taxHeroLabel">Calculating&hellip;</div>
+      <div class="tax-hero-amount" id="taxHeroAmount">&pound;0</div>
+      <div class="tax-hero-explain" id="taxHeroExplain">Enter your figures on the previous steps to see your estimate.</div>
     </div>
 
-    <div class="pdf-inline-cta" id="pdfInlineCta">
+    <!-- Quick comparison tiles -->
+    <div class="results-grid" id="taxResultGrid"></div>
+
+    <div class="btn-row" style="margin-top:1.25rem;">
+      <button class="btn-secondary" onclick="goTo(3)">&larr; Back</button>
+      <button class="btn-primary" onclick="goTo(5)">See what to do next &rarr;</button>
+    </div>
+  </div>
+
+  <!-- BREAKDOWN DRILL-DOWN -->
+  <div class="card" id="step4Breakdown">
+    <div class="snapshots-head" onclick="toggleTaxBreakdown()" style="display:flex; align-items:center; gap:0.6rem; cursor:pointer; user-select:none;">
+      <div class="card-head-icon">&#128202;</div>
+      <div class="card-head-title" style="flex:1;">See the full tax breakdown</div>
+      <div id="taxBreakdownChevron" style="color:var(--slate-soft); font-size:1.4rem; line-height:1; transition:transform 0.2s;">&rsaquo;</div>
+    </div>
+    <div id="taxBreakdownContent" style="display:none; margin-top:1rem;">
+      <div id="taxBreakdown"></div>
+      <div id="taxGuidance"></div>
+    </div>
+  </div>
+
+  <!-- PDF CTA -->
+  <div class="card" id="step4Pdf">
+    <div class="pdf-inline-cta visible" id="pdfInlineCta" style="margin:0;">
       <div class="pdf-inline-inner">
         <div class="pdf-inline-text">
           <strong>&#128196; Download your Self Assessment summary</strong>
           <span>A full breakdown to take to your accountant or keep on file.</span>
         </div>
         <div class="pdf-inline-right">
-          <div class="pdf-inline-price" id="pdfInlinePrice">&#163;4.99</div>
-          <a class="pdf-inline-btn" id="pdfInlineBuyBtn" href="https://buy.stripe.com/4gM8wP2IV4l0gPn9D353O00" target="_blank">Buy report &#8594;</a>
-          <button class="pdf-inline-btn paid" id="pdfInlineDlBtn" style="display:none;" onclick="generateReport()">&#8595; Download PDF</button>
+          <div class="pdf-inline-price" id="pdfInlinePrice">&pound;4.99</div>
+          <a class="pdf-inline-btn" id="pdfInlineBuyBtn" href="https://buy.stripe.com/4gM8wP2IV4l0gPn9D353O00" target="_blank">Buy report &rarr;</a>
+          <button class="pdf-inline-btn paid" id="pdfInlineDlBtn" style="display:none;" onclick="generateReport()">&darr; Download PDF</button>
         </div>
       </div>
     </div>
@@ -691,46 +842,55 @@
   <!-- STEP 5: NEXT STEPS -->
   <div class="card" id="step5">
     <div class="card-title">What to do next</div>
-    <p class="card-subtitle">Key deadlines, what to gather, and where to go from here.</p>
+    <p class="card-subtitle">The deadline, what you need, and where to file.</p>
 
+    <!-- Deadline hero -->
     <div id="deadlineSection"></div>
 
-    <hr>
+    <!-- Primary action -->
+    <div class="btn-row" style="margin-top:1.25rem;">
+      <button class="btn-primary btn-full" onclick="window.open('https://www.gov.uk/self-assessment-tax-returns','_blank')">File on gov.uk &rarr;</button>
+    </div>
 
-    <div class="guidance-box">
-      <h4>What to gather before you file</h4>
-      <ul>
-        <li><strong>P60</strong> &#8212; from your employer, shows gross pay and tax paid</li>
-        <li><strong>P11D</strong> &#8212; if you have taxable benefits (company car, private medical etc.)</li>
-        <li><strong>Bank interest statements</strong> &#8212; if above your Personal Savings Allowance</li>
-        <li><strong>Rental income records</strong> &#8212; rent received and all allowable expenses</li>
-        <li><strong>Dividend vouchers / broker statements</strong> &#8212; if you received dividends</li>
-        <li><strong>Pension certificates</strong> &#8212; to claim higher rate relief on contributions</li>
-        <li><strong>Gift Aid records</strong> &#8212; to claim higher rate relief on donations</li>
-        <li><strong>UTR number</strong> &#8212; if registered, your 10-digit Unique Taxpayer Reference</li>
+    <!-- Need to register first? -->
+    <div id="registerNoticeWrap"></div>
+  </div>
+
+  <!-- What to gather drill-down -->
+  <div class="card" id="step5Gather">
+    <div class="snapshots-head" onclick="toggleGather()" style="display:flex; align-items:center; gap:0.6rem; cursor:pointer; user-select:none;">
+      <div class="card-head-icon">&#128206;</div>
+      <div class="card-head-title" style="flex:1;">What to gather before you file</div>
+      <div id="gatherChevron" style="color:var(--slate-soft); font-size:1.4rem; line-height:1; transition:transform 0.2s;">&rsaquo;</div>
+    </div>
+    <div id="gatherContent" style="display:none; margin-top:1rem;">
+      <ul style="font-size:0.88rem; line-height:1.8; color:var(--slate); padding-left:1.25rem; margin:0;">
+        <li><strong>P60</strong> &mdash; from your employer, shows gross pay and tax paid</li>
+        <li><strong>P11D</strong> &mdash; if you have taxable benefits (company car, private medical etc.)</li>
+        <li><strong>Bank interest statements</strong> &mdash; if above your Personal Savings Allowance</li>
+        <li><strong>Rental income records</strong> &mdash; rent received and all allowable expenses</li>
+        <li><strong>Dividend vouchers / broker statements</strong> &mdash; if you received dividends</li>
+        <li><strong>Pension certificates</strong> &mdash; to claim higher-rate relief on contributions</li>
+        <li><strong>Gift Aid records</strong> &mdash; to claim higher-rate relief on donations</li>
+        <li><strong>UTR number</strong> &mdash; your 10-digit Unique Taxpayer Reference (HMRC sent this when you registered)</li>
       </ul>
     </div>
+  </div>
 
-    <div class="guidance-box" style="margin-top:1rem;">
-      <h4>Not registered yet?</h4>
-      <p>If this is your first Self Assessment you need to register with HMRC. For the 2024/25 tax year the deadline to register is <strong>5 October 2025</strong>. You can register at gov.uk/register-for-self-assessment. You&#8217;ll receive your UTR number within 10 working days.</p>
-    </div>
-
-    <div class="summary-panel" id="finalSummary"></div>
-
-    <div class="btn-row">
-      <button class="btn-secondary" onclick="goTo(4)">&#8592; Back</button>
-      <button class="btn-primary" onclick="window.open('https://www.gov.uk/self-assessment-tax-returns','_blank')">File on gov.uk &#8594;</button>
-    </div>
-
-    <div class="adviser-cta visible">
+  <!-- Adviser + nav -->
+  <div class="card" id="step5Adviser">
+    <div class="adviser-cta visible" style="margin:0;">
       <div class="adviser-cta-inner">
         <div class="adviser-cta-text">
           <strong>Want help with your return?</strong>
-          <span>A tax adviser or accountant can file on your behalf and ensure you don&#8217;t pay more than you need to.</span>
+          <span>A tax adviser or accountant can file on your behalf and make sure you don&rsquo;t pay more than you need to.</span>
         </div>
-        <a class="adviser-cta-btn" href="https://tally.so/r/xX2YP5" target="_blank">Get advice &#8594;</a>
+        <a class="adviser-cta-btn" href="https://tally.so/r/xX2YP5" target="_blank">Get advice &rarr;</a>
       </div>
+    </div>
+
+    <div class="btn-row" style="margin-top:1rem;">
+      <button class="btn-secondary" onclick="goTo(4)">&larr; Back</button>
     </div>
   </div>
 
@@ -853,27 +1013,46 @@
   function updateFilingVerdict() {
     var checked = Object.keys(checkedTriggers).filter(function(k) { return checkedTriggers[k]; });
     var verdict = document.getElementById('filingVerdict');
+    var ctaRow = document.getElementById('step1CtaRow');
+
     if (checked.length === 0) {
-      verdict.innerHTML = '';
+      // No selections yet — show neutral state
+      verdict.innerHTML =
+        '<div class="filing-banner neutral">' +
+          '<div class="filing-banner-icon">&#128173;</div>' +
+          '<div><div class="filing-banner-title">Tick anything that applies to your 2024/25 tax year</div>' +
+          '<div class="filing-banner-desc">We&rsquo;ll tell you straight away whether you need to file. If nothing applies, you probably don&rsquo;t need to.</div></div>' +
+        '</div>';
+      if (ctaRow) {
+        ctaRow.innerHTML =
+          '<button class="btn-secondary" onclick="goTo(2)" style="margin:0 auto; display:block;">Skip ahead and estimate my tax anyway &rarr;</button>';
+      }
       return;
     }
+
     var mustFile = checked.some(function(k) { return ['selfEmp','highIncome','hicbc','foreignInc','hmrcAsked','cg'].indexOf(k) > -1; });
-    var likelyFile = checked.length > 0;
 
     if (mustFile) {
       verdict.innerHTML =
         '<div class="filing-banner must-file">' +
           '<div class="filing-banner-icon">&#9940;</div>' +
-          '<div><div class="filing-banner-title">You need to file a Self Assessment return</div>' +
-          '<div class="filing-banner-desc">Based on what you\u2019ve ticked, HMRC requires you to file a return for 2024/25. You must register by <strong>5 October 2025</strong> if you haven\u2019t already.</div></div>' +
+          '<div><div class="filing-banner-title">Yes &mdash; you need to file a Self Assessment</div>' +
+          '<div class="filing-banner-desc">Based on what you&rsquo;ve ticked, HMRC requires a return for 2024/25. You must register by <strong>5 October 2025</strong> if you haven&rsquo;t already. The filing deadline is <strong>31 January 2026</strong>.</div></div>' +
         '</div>';
+      if (ctaRow) {
+        ctaRow.innerHTML = '<button class="btn-primary btn-full" onclick="goTo(2)">Estimate what I&rsquo;ll owe &rarr;</button>';
+      }
     } else {
+      // Has triggers but only optional ones (higher-rate pension, gift aid, rental under 2.5k, dividends 500-2k etc)
       verdict.innerHTML =
         '<div class="filing-banner maybe">' +
-          '<div class="filing-banner-icon">&#9888;</div>' +
-          '<div><div class="filing-banner-title">You may need to file</div>' +
-          '<div class="filing-banner-desc">The items you\u2019ve ticked suggest you may need to file, or that filing would allow you to claim relief you\u2019re owed. Carry on to get your estimate.</div></div>' +
+          '<div class="filing-banner-icon">&#9888;&#65039;</div>' +
+          '<div><div class="filing-banner-title">You might benefit from filing</div>' +
+          '<div class="filing-banner-desc">You may not be required to file, but the items you&rsquo;ve ticked could mean you&rsquo;re owed tax back &mdash; especially if you&rsquo;re a higher-rate taxpayer with pension contributions or Gift Aid donations. Let&rsquo;s estimate it.</div></div>' +
         '</div>';
+      if (ctaRow) {
+        ctaRow.innerHTML = '<button class="btn-primary btn-full" onclick="goTo(2)">Estimate what I could reclaim &rarr;</button>';
+      }
     }
   }
 
@@ -961,6 +1140,42 @@
     var d = getInputs();
     var r = calcTax(d);
     var totalIncome = d.emp + d.selfEmp + d.rental + d.dividends + d.other;
+
+    // HERO ANSWER (the Krug "answer-first" moment)
+    var heroEl = document.getElementById('taxHero');
+    var labelEl = document.getElementById('taxHeroLabel');
+    var amountEl = document.getElementById('taxHeroAmount');
+    var explainEl = document.getElementById('taxHeroExplain');
+
+    if (heroEl && labelEl && amountEl && explainEl) {
+      heroEl.classList.remove('owed', 'refund', 'balanced');
+      if (totalIncome === 0) {
+        labelEl.innerHTML = 'No income entered yet';
+        amountEl.textContent = '\u00a30';
+        explainEl.textContent = 'Go back to step 2 and enter your income to see your estimate.';
+      } else if (r.balance > 0) {
+        // Owe HMRC
+        heroEl.classList.add('owed');
+        labelEl.innerHTML = 'You\u2019ll owe HMRC';
+        amountEl.textContent = fmt(r.balance);
+        var why = 'Your total tax liability for 2024/25 is ' + fmt(r.totalTaxLiability) +
+                  (r.alreadyPaid > 0 ? ', and you\u2019ve already paid ' + fmt(r.alreadyPaid) + ' through PAYE' : '') +
+                  '. That leaves ' + fmt(r.balance) + ' due by 31 January 2026.';
+        explainEl.textContent = why;
+      } else if (r.balance < 0) {
+        // Refund due
+        heroEl.classList.add('refund');
+        labelEl.innerHTML = 'HMRC owes you a refund';
+        amountEl.textContent = fmt(Math.abs(r.balance));
+        var refundWhy = 'You\u2019ve paid ' + fmt(r.alreadyPaid) + ' via PAYE, but your actual tax liability for the year is only ' + fmt(r.totalTaxLiability) + '. Filing your return will trigger a refund.';
+        explainEl.textContent = refundWhy;
+      } else {
+        heroEl.classList.add('balanced');
+        labelEl.innerHTML = 'You\u2019re square with HMRC';
+        amountEl.textContent = '\u00a30';
+        explainEl.textContent = 'Based on the figures entered, your PAYE deductions cover your tax liability for the year.';
+      }
+    }
 
     // Result boxes
     var owingCls = r.balance > 0 ? 'warn' : 'good';
@@ -1082,22 +1297,138 @@
   function renderStep3() { updateTaxEstimate(); }
 
   function goTo(step) {
-    for (var i = 1; i <= 5; i++) {
-      document.getElementById('step' + i).classList.toggle('active', i === step);
-      var tab = document.getElementById('tab' + i);
-      tab.classList.toggle('active', i === step);
-      if (i < step) tab.classList.add('completed');
-      else if (i > step) tab.classList.remove('completed');
+    // Hide all step cards including siblings
+    var allCards = [
+      ['step1'],
+      ['step2'],
+      ['step3'],
+      ['step4', 'step4Breakdown', 'step4Pdf'],
+      ['step5', 'step5Gather', 'step5Adviser']
+    ];
+    allCards.forEach(function(group, idx) {
+      var stepNum = idx + 1;
+      group.forEach(function(id) {
+        var el = document.getElementById(id);
+        if (el) el.classList.toggle('active', stepNum === step);
+      });
+      var tab = document.getElementById('tab' + stepNum);
+      if (tab) {
+        tab.classList.toggle('active', stepNum === step);
+        if (stepNum < step) tab.classList.add('completed');
+        else if (stepNum > step) tab.classList.remove('completed');
+      }
+    });
+    if (step === 4) {
+      if (typeof updateTaxEstimate === 'function') updateTaxEstimate();
+      if (typeof renderStep4 === 'function') renderStep4();
+      if (typeof checkAndShowPdfCta === 'function') checkAndShowPdfCta();
     }
-    if (step === 2) renderStep2();
-    if (step === 3) renderStep3();
-    if (step === 4) { renderStep4(); checkAndShowPdfCta(); }
-    if (step === 5) { renderStep4(); renderStep5(); }
+    if (step === 5) {
+      if (typeof renderStep4 === 'function') renderStep4();
+      if (typeof renderStep5 === 'function') renderStep5();
+      renderDeadline();
+    }
+    if (step > 1) trackStart();
     window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  function toggleOtherIncome() {
+    var wrap = document.getElementById('otherIncomeWrap');
+    var pill = document.getElementById('otherIncomePill');
+    if (!wrap || !pill) return;
+    var open = wrap.style.display === 'none';
+    wrap.style.display = open ? 'block' : 'none';
+    pill.classList.toggle('on', open);
+  }
+
+  function toggleDeduction(key) {
+    var keyCap = key.charAt(0).toUpperCase() + key.slice(1);
+    var wrap = document.getElementById('ded' + keyCap + 'Wrap');
+    var pill = document.getElementById('ded' + keyCap + 'Pill');
+    if (!wrap || !pill) return;
+    var open = wrap.style.display === 'none';
+    wrap.style.display = open ? 'block' : 'none';
+    pill.classList.toggle('on', open);
+    // If toggled off, clear the value so it doesn't pollute the estimate
+    if (!open) {
+      var ids = {
+        pension: 'pensionContribs',
+        giftaid: 'giftAid',
+        marriage: 'marriageAllowance',
+        student: 'studentLoan'
+      };
+      var input = document.getElementById(ids[key]);
+      if (input) { input.value = ''; updateTaxEstimate(); }
+    }
+  }
+
+  function toggleTaxBreakdown() {
+    var content = document.getElementById('taxBreakdownContent');
+    var chev = document.getElementById('taxBreakdownChevron');
+    if (!content || !chev) return;
+    var open = content.style.display === 'none';
+    content.style.display = open ? 'block' : 'none';
+    chev.style.transform = open ? 'rotate(90deg)' : 'rotate(0deg)';
+  }
+
+  function toggleGather() {
+    var content = document.getElementById('gatherContent');
+    var chev = document.getElementById('gatherChevron');
+    if (!content || !chev) return;
+    var open = content.style.display === 'none';
+    content.style.display = open ? 'block' : 'none';
+    chev.style.transform = open ? 'rotate(90deg)' : 'rotate(0deg)';
+  }
+
+  function renderDeadline() {
+    var sec = document.getElementById('deadlineSection');
+    var notice = document.getElementById('registerNoticeWrap');
+    if (!sec) return;
+
+    var now = new Date();
+    var deadline = new Date('2026-01-31T23:59:59');
+    var registerBy = new Date('2025-10-05T23:59:59');
+    var msPerDay = 1000 * 60 * 60 * 24;
+    var daysToFile = Math.ceil((deadline - now) / msPerDay);
+    var daysToRegister = Math.ceil((registerBy - now) / msPerDay);
+
+    var urgencyClass = '';
+    if (daysToFile < 0) urgencyClass = 'passed';
+    else if (daysToFile < 30) urgencyClass = 'urgent';
+
+    var dayText;
+    if (daysToFile < 0) dayText = 'Deadline passed &mdash; file as soon as possible (penalties apply)';
+    else if (daysToFile === 0) dayText = 'Today is the deadline';
+    else if (daysToFile === 1) dayText = '1 day remaining';
+    else dayText = daysToFile + ' days remaining';
+
+    sec.innerHTML =
+      '<div class="deadline-hero ' + urgencyClass + '">' +
+        '<div class="dl-label">Filing deadline (2024/25)</div>' +
+        '<div class="dl-date">31 January 2026</div>' +
+        '<div class="dl-days">' + dayText + '</div>' +
+      '</div>';
+
+    if (notice) {
+      if (daysToRegister > 0) {
+        notice.innerHTML =
+          '<div class="guidance-box" style="margin-top:1rem;">' +
+            '<h4>Not registered yet?</h4>' +
+            '<p>If this is your first Self Assessment you need to register with HMRC by <strong>5 October 2025</strong> (' + daysToRegister + ' days). Register at <a href="https://www.gov.uk/register-for-self-assessment" target="_blank">gov.uk/register-for-self-assessment</a>. You\'ll receive your UTR within 10 working days.</p>' +
+          '</div>';
+      } else {
+        notice.innerHTML =
+          '<div class="guidance-box" style="margin-top:1rem;">' +
+            '<h4>First time filing?</h4>' +
+            '<p>The registration deadline has passed. Register at <a href="https://www.gov.uk/register-for-self-assessment" target="_blank">gov.uk/register-for-self-assessment</a> as soon as possible &mdash; late registration may incur penalties.</p>' +
+          '</div>';
+      }
+    }
   }
 
   // Initialise trigger checklist
   initTriggers();
+  updateFilingVerdict();
 
   // ── PDF REPORT ─────────────────────────────────────────────────────────────
 

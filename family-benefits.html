@@ -289,10 +289,18 @@
   .card-head-title { font-size: 1.05rem; font-weight: 800; color: #314855; letter-spacing: -0.01em; }
   /* Steps nav as pill bar */
   .steps-nav { display: flex; border-radius: 100px; background: #ffffff; margin-bottom: 1rem; padding: 6px; box-shadow: 0 1px 3px rgba(0,0,0,0.04); gap: 4px; border: none !important; overflow: visible !important; }
-  .step-tab { flex: 1; padding: 0.7rem 0.6rem; text-align: center; font-size: 0.72rem; font-weight: 700; letter-spacing: 0.05em; text-transform: uppercase; color: rgba(49,72,85,0.5); cursor: pointer; transition: all 0.2s; border-radius: 100px !important; white-space: nowrap; border: none !important; }
+  .step-tab { flex: 1 1 0; min-width: 0; padding: 0.7rem 0.5rem; text-align: center; font-size: 0.72rem; font-weight: 700; letter-spacing: 0.04em; text-transform: uppercase; color: rgba(49,72,85,0.5); cursor: pointer; transition: all 0.2s; border-radius: 100px !important; white-space: normal; overflow-wrap: break-word; word-break: break-word; line-height: 1.2; border: none !important; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 0.15rem; }
   .step-tab.active { background: #314855 !important; color: white !important; }
   .step-tab:hover:not(.active) { color: #314855; }
-  .step-num { display: inline-block; font-size: 0.78rem; font-weight: 800; margin-right: 0.35rem; color: inherit; }
+  .step-num { display: block; font-size: 0.82rem; font-weight: 800; margin: 0; color: inherit; }
+  @media (max-width: 640px) {
+    .steps-nav { border-radius: 18px; padding: 5px; gap: 3px; }
+    .step-tab { font-size: 0.6rem; letter-spacing: 0.01em; padding: 0.6rem 0.3rem; border-radius: 14px !important; }
+    .step-num { font-size: 0.72rem; }
+  }
+  @media (max-width: 380px) {
+    .step-tab { font-size: 0.54rem; padding: 0.55rem 0.2rem; }
+  }
   /* Sliders consistent across tools */
   .slider-field { margin-bottom: 1.5rem; }
   .slider-field-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.6rem; }
