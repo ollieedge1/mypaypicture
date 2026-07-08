@@ -1,0 +1,1037 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MyFinancialPlan — Where do I stand? — MyPayPicture</title>
+<link rel="canonical" href="https://mypaypicture.com/financial-plan.html">
+<meta name="description" content="Answer a few quick questions, see where you stand for retirement and a home purchase, and get a prioritised plain-English action plan. Guidance, not advice.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,300;0,400;0,600;0,700;0,800;1,300;1,400;1,700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink:        #314855;
+    --ink-deep:   #22333d;
+    --accent:     #0d9488;
+    --accent-dark:#0b7c72;
+    --accent-pale:#f0fdfa;
+    --yellow:     #ffdb00;
+    --sky:        #5cc3e8;
+    --slate-soft: #5a7282;
+    --slate-light:#8a99a5;
+    --red:        #b91c1c;
+    --amber:      #d97706;
+    --green:      #15803d;
+    --bg:         #f1f1f4;
+    --surface:    #ffffff;
+    --border:     rgba(49,72,85,0.12);
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Nunito', sans-serif; background: var(--bg); color: var(--ink); min-height: 100vh; }
+
+  header { background: var(--ink); padding: 1.1rem 2rem; display: flex; align-items: center; justify-content: space-between; position: sticky; top: 0; z-index: 50; }
+  .app-name { font-weight: 800; font-size: 1rem; color: white; }
+  .app-name em { font-style: italic; color: var(--yellow); }
+  .disclaimer-badge { font-size: 0.65rem; color: rgba(255,255,255,0.4); border: 1px solid rgba(255,255,255,0.15); padding: 0.3rem 0.85rem; border-radius: 100px; letter-spacing: 0.04em; }
+  header a { text-decoration: none; }
+
+  /* SWITCHER */
+  .app-switcher { position: relative; }
+  .switcher-trigger {
+    display: flex; align-items: center; gap: 0.5rem;
+    cursor: pointer; padding: 0.45rem 0.9rem;
+    border-radius: 100px; border: 1px solid rgba(255,255,255,0.15);
+    transition: all 0.18s; user-select: none;
+    background: rgba(255,255,255,0.07);
+  }
+  .switcher-trigger:hover { background: rgba(255,255,255,0.13); border-color: var(--yellow); }
+  .chevron { color: rgba(255,255,255,0.4); font-size: 0.65rem; transition: transform 0.2s; }
+  .app-switcher.open .chevron { transform: rotate(180deg); }
+  .switcher-dropdown {
+    display: none; position: absolute; top: calc(100% + 10px); left: 0;
+    background: white; border: 1px solid rgba(0,0,0,0.08);
+    border-radius: 14px; overflow: hidden; min-width: 240px;
+    box-shadow: 0 16px 48px rgba(0,0,0,0.12); z-index: 100;
+    max-height: 70vh; overflow-y: auto;
+  }
+  .app-switcher.open .switcher-dropdown { display: block; }
+  .switcher-home {
+    display: flex; align-items: center; gap: 0.75rem;
+    padding: 0.75rem 1.1rem; cursor: pointer;
+    transition: background 0.12s; text-decoration: none;
+  }
+  .switcher-home:hover { background: var(--accent-pale); }
+  .switcher-home-icon {
+    width: 28px; height: 28px; border-radius: 8px;
+    background: rgba(0,0,0,0.04);
+    display: flex; align-items: center; justify-content: center; font-size: 0.95rem;
+  }
+  .switcher-home-label { font-size: 0.82rem; font-weight: 700; color: var(--ink); }
+  .switcher-home-sub   { font-size: 0.66rem; color: var(--slate-light); margin-top: 0.1rem; }
+
+  .hero { background: var(--ink); padding: 4.5rem 2rem 6rem; text-align: center; position: relative; overflow: hidden; }
+  .hero::before { content: ''; position: absolute; inset: 0; background: radial-gradient(ellipse 60% 70% at 15% 50%, rgba(13,148,136,0.18) 0%, transparent 60%), radial-gradient(ellipse 50% 60% at 85% 20%, rgba(92,195,232,0.10) 0%, transparent 55%); pointer-events: none; }
+  .hero-eyebrow { display: inline-flex; font-size: 0.7rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.2em; color: var(--sky); margin-bottom: 1.5rem; padding: 0.35rem 1.1rem; border-radius: 100px; border: 1px solid rgba(92,195,232,0.3); background: rgba(92,195,232,0.08); position: relative; }
+  .hero h1 { font-size: clamp(2.2rem, 5.5vw, 3.8rem); color: white; line-height: 1.05; max-width: 760px; margin: 0 auto 1.25rem; font-weight: 800; letter-spacing: -0.03em; position: relative; }
+  .hero h1 em { font-style: italic; color: var(--sky); font-weight: 300; }
+  .hero p { color: rgba(255,255,255,0.5); font-size: 1rem; max-width: 520px; margin: 0 auto; line-height: 1.75; position: relative; }
+
+  .container { max-width: 780px; margin: -3.5rem auto 0; padding: 0 1rem 5rem; position: relative; z-index: 2; }
+
+  .steps-nav { display: flex; border-radius: 100px; background: var(--surface); margin-bottom: 1rem; padding: 6px; box-shadow: 0 1px 3px rgba(0,0,0,0.04); gap: 4px; }
+  .step-tab { flex: 1 1 0; min-width: 0; padding: 0.7rem 0.5rem; text-align: center; font-size: 0.7rem; font-weight: 700; letter-spacing: 0.03em; text-transform: uppercase; color: rgba(49,72,85,0.5); cursor: pointer; transition: all 0.2s; border-radius: 100px; white-space: normal; overflow-wrap: break-word; line-height: 1.2; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 0.15rem; }
+  .step-tab.active { background: var(--ink); color: white; }
+  .step-tab:hover:not(.active) { color: var(--ink); }
+  .step-num { display: block; font-size: 0.82rem; font-weight: 800; color: inherit; }
+  @media (max-width: 640px) {
+    .steps-nav { border-radius: 18px; padding: 5px; gap: 3px; }
+    .step-tab { font-size: 0.6rem; padding: 0.6rem 0.3rem; border-radius: 14px; }
+  }
+
+  .card { background: var(--surface); border-radius: 20px; padding: 1.75rem 1.5rem; border: none; box-shadow: 0 1px 3px rgba(0,0,0,0.04), 0 4px 20px rgba(0,0,0,0.04); margin-bottom: 1rem; display: none; animation: fadeIn 0.3s ease; }
+  .card.active { display: block; }
+  @keyframes fadeIn { from { opacity:0; transform:translateY(8px); } to { opacity:1; transform:translateY(0); } }
+  .card-title { font-size: 1.4rem; font-weight: 800; margin-bottom: 0.4rem; letter-spacing: -0.02em; }
+  .card-subtitle { color: var(--slate-soft); font-size: 0.9rem; margin-bottom: 1.5rem; line-height: 1.6; max-width: 560px; }
+
+  .section-label { font-size: 0.72rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.1em; color: var(--accent); margin: 1.75rem 0 1rem; padding-top: 1.25rem; border-top: 1px solid var(--border); }
+  .section-label:first-of-type { margin-top: 0; padding-top: 0; border-top: none; }
+
+  .field-group { margin-bottom: 1.4rem; }
+  label { display: block; font-size: 0.88rem; font-weight: 700; color: var(--ink); margin-bottom: 0.55rem; }
+  .hint { font-size: 0.76rem; color: var(--slate-soft); margin-top: 0.4rem; line-height: 1.5; }
+
+  .pill-group { display: flex; gap: 0.5rem; flex-wrap: wrap; }
+  .pill { padding: 0.6rem 1rem; border: 1.5px solid #ddd; border-radius: 100px; cursor: pointer; font-size: 0.83rem; font-weight: 600; transition: all 0.15s; color: var(--slate-soft); user-select: none; }
+  .pill:hover { border-color: var(--accent); }
+  .pill.selected { border-color: var(--accent); background: var(--accent-pale); color: var(--ink); font-weight: 700; }
+
+  .slider-field { margin-bottom: 0.25rem; }
+  .slider-row { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 0.5rem; }
+  .slider-val { font-size: 1.05rem; font-weight: 800; color: var(--accent); letter-spacing: -0.01em; font-variant-numeric: tabular-nums; }
+  input[type="range"] { width: 100%; -webkit-appearance: none; appearance: none; height: 8px; background: rgba(0,0,0,0.06); border-radius: 100px; outline: none; cursor: pointer; }
+  input[type="range"]:focus { outline: none; }
+  input[type="range"]::-webkit-slider-thumb { -webkit-appearance: none; appearance: none; width: 24px; height: 24px; background: white; border: 2px solid var(--accent); border-radius: 50%; cursor: pointer; box-shadow: 0 1px 4px rgba(0,0,0,0.15); }
+  input[type="range"]::-moz-range-thumb { width: 24px; height: 24px; background: white; border: 2px solid var(--accent); border-radius: 50%; cursor: pointer; }
+
+  .btn-primary { background: var(--accent); color: white; border: none; padding: 0.9rem 2rem; border-radius: 100px; font-family: 'Nunito', sans-serif; font-size: 0.95rem; font-weight: 800; cursor: pointer; transition: all 0.2s; }
+  .btn-primary:hover { background: var(--accent-dark); transform: translateY(-1px); }
+  .btn-secondary { background: transparent; color: var(--slate-soft); border: 1.5px solid #ddd; padding: 0.9rem 1.5rem; border-radius: 100px; font-family: 'Nunito', sans-serif; font-size: 0.9rem; font-weight: 700; cursor: pointer; }
+  .btn-secondary:hover { border-color: var(--ink); color: var(--ink); }
+  .btn-full { width: 100%; }
+  .btn-row { display: flex; gap: 0.75rem; margin-top: 1.5rem; justify-content: space-between; flex-wrap: wrap; }
+
+  /* DASHBOARD */
+  .verdict-hero { border-radius: 18px; padding: 1.75rem 1.35rem; text-align: center; margin-bottom: 1.25rem; background: var(--accent-pale); }
+  .verdict-hero.behind { background: #fffbeb; }
+  .verdict-hero.short  { background: #fef2f2; }
+  .verdict-label { font-size: 0.72rem; font-weight: 700; color: var(--slate-soft); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 0.75rem; }
+  .verdict-amount { font-size: 2.8rem; font-weight: 800; color: var(--accent); letter-spacing: -0.03em; line-height: 1; margin-bottom: 0.6rem; }
+  .verdict-hero.behind .verdict-amount { color: var(--amber); }
+  .verdict-hero.short  .verdict-amount { color: var(--red); }
+  .verdict-band { font-size: 0.95rem; font-weight: 800; margin-bottom: 0.6rem; }
+  .verdict-explain { font-size: 0.9rem; color: var(--slate-soft); line-height: 1.55; max-width: 520px; margin: 0 auto; }
+
+  .tiles-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 0.85rem; margin: 1.25rem 0; }
+  .tile { background: rgba(0,0,0,0.03); border-radius: 14px; padding: 1rem; text-align: center; }
+  .tile-label { font-size: 0.66rem; font-weight: 700; color: var(--slate-soft); text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 0.45rem; }
+  .tile-val { font-size: 1.35rem; font-weight: 800; color: var(--ink); letter-spacing: -0.02em; }
+  .tile-sub { font-size: 0.7rem; color: var(--slate-soft); margin-top: 0.25rem; }
+
+  /* Benchmark bar */
+  .bench-wrap { margin: 1.5rem 0; }
+  .bench-title { font-size: 0.85rem; font-weight: 800; margin-bottom: 0.75rem; }
+  .bench-bar { position: relative; height: 14px; border-radius: 100px; background: linear-gradient(to right, #fecaca 0%, #fecaca 22%, #fde68a 22%, #fde68a 52%, #bbf7d0 52%, #bbf7d0 74%, #86efac 74%, #86efac 100%); }
+  .bench-marker { position: absolute; top: -7px; width: 4px; height: 28px; background: var(--ink); border-radius: 2px; transform: translateX(-50%); transition: left 0.25s; }
+  .bench-target { position: absolute; top: -4px; left: 76.9%; width: 2px; height: 22px; background: rgba(49,72,85,0.55); transform: translateX(-50%); }
+  .bench-labels { display: flex; justify-content: space-between; margin-top: 0.6rem; font-size: 0.68rem; color: var(--slate-soft); font-weight: 600; }
+  .bench-you { font-size: 0.78rem; font-weight: 800; color: var(--ink); margin-top: 0.5rem; }
+
+  /* Controls */
+  .controls-block { border-top: 1px solid var(--border); padding-top: 1.4rem; margin-top: 1.4rem; }
+  .control-row { margin-bottom: 1.4rem; }
+  .netcost-note { font-size: 0.8rem; font-weight: 700; color: var(--accent); background: var(--accent-pale); border-radius: 10px; padding: 0.6rem 0.85rem; margin-top: 0.55rem; line-height: 1.5; }
+
+  canvas#projChart { width: 100%; height: 220px; display: block; }
+  .chart-legend { margin-top: 0.85rem; display: flex; gap: 1.25rem; flex-wrap: wrap; font-size: 0.76rem; color: var(--slate-soft); font-weight: 600; }
+  .chart-legend .dot { display: inline-block; width: 9px; height: 9px; border-radius: 50%; margin-right: 0.35rem; vertical-align: middle; }
+
+  /* PLAN */
+  .plan-step { display: flex; gap: 0.9rem; padding: 1.05rem 0; border-bottom: 1px solid var(--border); align-items: flex-start; }
+  .plan-step:last-child { border-bottom: none; }
+  .plan-check { width: 26px; height: 26px; border-radius: 8px; border: 2px solid #ddd; flex-shrink: 0; cursor: pointer; display: flex; align-items: center; justify-content: center; color: transparent; font-weight: 800; transition: all 0.15s; margin-top: 0.1rem; }
+  .plan-step.done .plan-check { background: var(--accent); border-color: var(--accent); color: white; }
+  .plan-step.done .plan-title { text-decoration: line-through; opacity: 0.55; }
+  .plan-body { flex: 1; }
+  .plan-title { font-size: 0.95rem; font-weight: 800; margin-bottom: 0.25rem; }
+  .plan-why { font-size: 0.8rem; color: var(--slate-soft); line-height: 1.55; }
+  .plan-num { flex-shrink: 0; width: 24px; font-size: 0.85rem; font-weight: 800; color: var(--accent); margin-top: 0.15rem; }
+
+  .flag-box { border-radius: 12px; padding: 1rem 1.2rem; margin: 0.85rem 0; font-size: 0.82rem; line-height: 1.6; }
+  .flag-box strong { display: block; font-size: 0.88rem; margin-bottom: 0.2rem; }
+  .flag-box.warn { background: #fffbeb; border: 1.5px solid #fde68a; color: #78350f; }
+  .flag-box.info { background: #eff6ff; border: 1.5px solid #bfdbfe; color: #1e3a8a; }
+
+  .adviser-cta { background: linear-gradient(135deg, var(--ink) 0%, var(--ink-deep) 100%); border-radius: 14px; padding: 1.25rem 1.5rem; margin-top: 1.5rem; }
+  .adviser-cta-inner { display: flex; align-items: center; justify-content: space-between; gap: 1rem; flex-wrap: wrap; }
+  .adviser-cta-text strong { display: block; color: white; font-size: 0.98rem; font-weight: 800; margin-bottom: 0.2rem; }
+  .adviser-cta-text span { color: rgba(255,255,255,0.6); font-size: 0.8rem; line-height: 1.5; }
+  .adviser-cta-btn { background: var(--yellow); color: var(--ink); padding: 0.7rem 1.4rem; border-radius: 100px; font-weight: 800; font-size: 0.88rem; text-decoration: none; white-space: nowrap; flex-shrink: 0; }
+
+  .assumptions { font-size: 0.72rem; color: var(--slate-light); line-height: 1.65; margin-top: 1.25rem; }
+  .assumptions strong { color: var(--slate-soft); }
+
+  @media (max-width: 600px) {
+    header { padding: 1rem 1.25rem; }
+    .hero { padding: 3rem 1.25rem 4.5rem; }
+    .card { padding: 1.5rem 1.25rem; }
+    .verdict-amount { font-size: 2.2rem; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="app-switcher" id="appSwitcher">
+    <div class="switcher-trigger" onclick="toggleSwitcher(event)">
+      <div class="app-name">MyFinancial<em>Plan</em></div>
+      <div class="chevron">&#9660;</div>
+    </div>
+    <div class="switcher-dropdown">
+      <a class="switcher-home" href="index.html" style="border-bottom:1px solid rgba(0,0,0,0.06);">
+        <div class="switcher-home-icon">&#127968;</div>
+        <div>
+          <div class="switcher-home-label">&#8592; MyPayPicture</div>
+          <div class="switcher-home-sub">Back to all tools</div>
+        </div>
+      </a>
+      <a class="switcher-home" href="pension-optimiser.html">
+        <div class="switcher-home-icon">&#128200;</div>
+        <div>
+          <div class="switcher-home-label">MyPensionOptimiser</div>
+          <div class="switcher-home-sub">Optimise your pension</div>
+        </div>
+      </a>
+      <a class="switcher-home" href="pension-reclaim.html">
+        <div class="switcher-home-icon">&#128176;</div>
+        <div>
+          <div class="switcher-home-label">MyPensionReclaim</div>
+          <div class="switcher-home-sub">Reclaim bonus tax</div>
+        </div>
+      </a>
+      <a class="switcher-home" href="pension-topup.html">
+        <div class="switcher-home-icon">&#10133;</div>
+        <div>
+          <div class="switcher-home-label">MyPensionTop-Up</div>
+          <div class="switcher-home-sub">Claim pension relief</div>
+        </div>
+      </a>
+      <a class="switcher-home" href="family-benefits.html">
+        <div class="switcher-home-icon">&#128118;</div>
+        <div>
+          <div class="switcher-home-label">MyFamily&amp;Benefits</div>
+          <div class="switcher-home-sub">Child Benefit &amp; childcare</div>
+        </div>
+      </a>
+      <a class="switcher-home" href="self-assessment.html">
+        <div class="switcher-home-icon">&#128196;</div>
+        <div>
+          <div class="switcher-home-label">MySelfAssessment</div>
+          <div class="switcher-home-sub">Do I need to file?</div>
+        </div>
+      </a>
+      <a class="switcher-home" href="property-decision.html">
+        <div class="switcher-home-icon">&#127968;</div>
+        <div>
+          <div class="switcher-home-label">MyPropertyDecision</div>
+          <div class="switcher-home-sub">Buy, let, or rent?</div>
+        </div>
+      </a>
+      <a class="switcher-home" href="retirement-helper.html">
+        <div class="switcher-home-icon">&#9749;</div>
+        <div>
+          <div class="switcher-home-label">MyRetirementHelper</div>
+          <div class="switcher-home-sub">Retirement readiness</div>
+        </div>
+      </a>
+      <a class="switcher-home" href="inheritance-tax.html">
+        <div class="switcher-home-icon">&#127963;</div>
+        <div>
+          <div class="switcher-home-label">MyInheritanceTax</div>
+          <div class="switcher-home-sub">Estate &amp; IHT</div>
+        </div>
+      </a>
+      <a class="switcher-home" href="pay-director.html">
+        <div class="switcher-home-icon">&#128188;</div>
+        <div>
+          <div class="switcher-home-label">MyPayDirector</div>
+          <div class="switcher-home-sub">Salary vs dividends</div>
+        </div>
+      </a>
+    </div>
+  </div>
+  <div class="disclaimer-badge">Guidance, not advice</div>
+</header>
+
+<div class="hero">
+  <div class="hero-eyebrow">MyPayPicture</div>
+  <h1>Where do I <em>stand?</em></h1>
+  <p>A few quick questions. A clear read on your retirement and home-buying position. A prioritised plan of what to do next.</p>
+</div>
+
+<div class="container">
+  <div class="steps-nav">
+    <div class="step-tab active" onclick="goTo(1)" id="tab1"><span class="step-num">1</span>Your Profile</div>
+    <div class="step-tab" onclick="goTo(2)" id="tab2"><span class="step-num">2</span>Where You Stand</div>
+    <div class="step-tab" onclick="goTo(3)" id="tab3"><span class="step-num">3</span>Your Plan</div>
+  </div>
+
+  <!-- STEP 1: INTAKE -->
+  <div class="card active" id="step1">
+    <div class="card-title">Build your picture</div>
+    <p class="card-subtitle">Rough figures are fine &mdash; you can adjust everything later. Nothing is stored or sent anywhere; it all stays in your browser.</p>
+
+    <div class="section-label">About you</div>
+
+    <div class="field-group slider-field">
+      <div class="slider-row"><label style="margin:0;">Your age</label><div class="slider-val" id="ageVal">42</div></div>
+      <input type="range" id="age" min="22" max="64" value="42" oninput="syncLabels()">
+    </div>
+
+    <div class="field-group slider-field">
+      <div class="slider-row"><label style="margin:0;">Annual income before tax</label><div class="slider-val" id="incomeVal">&pound;60,000</div></div>
+      <input type="range" id="income" min="20000" max="200000" step="2500" value="60000" oninput="syncLabels()">
+      <p class="hint">Your total gross income. This sets your tax-relief rate and borrowing estimates.</p>
+    </div>
+
+    <div class="field-group">
+      <label>Is your income steady or variable?</label>
+      <div class="pill-group" id="pg_stability">
+        <div class="pill selected" data-v="steady" onclick="pick('stability','steady',this)">Steady PAYE</div>
+        <div class="pill" data-v="bonus" onclick="pick('stability','bonus',this)">Base + bonus</div>
+        <div class="pill" data-v="self" onclick="pick('stability','self',this)">Self-employed / contract</div>
+      </div>
+    </div>
+
+    <div class="field-group">
+      <label>Does anyone depend on your income?</label>
+      <div class="pill-group" id="pg_dependents">
+        <div class="pill selected" data-v="just_me" onclick="pick('dependents','just_me',this)">Just me</div>
+        <div class="pill" data-v="partner" onclick="pick('dependents','partner',this)">Partner</div>
+        <div class="pill" data-v="children" onclick="pick('dependents','children',this)">Children</div>
+      </div>
+    </div>
+
+    <div class="section-label">Your money</div>
+
+    <div class="field-group slider-field">
+      <div class="slider-row"><label style="margin:0;">Cash savings</label><div class="slider-val" id="cashVal">&pound;20,000</div></div>
+      <input type="range" id="cash" min="0" max="300000" step="2500" value="20000" oninput="syncLabels()">
+    </div>
+
+    <div class="field-group slider-field">
+      <div class="slider-row"><label style="margin:0;">Investments outside pensions</label><div class="slider-val" id="investVal">&pound;0</div></div>
+      <input type="range" id="invest" min="0" max="300000" step="2500" value="0" oninput="syncLabels()">
+      <p class="hint">Shares, funds, GIAs. Include employer shares/RSUs here.</p>
+    </div>
+
+    <div class="field-group slider-field">
+      <div class="slider-row"><label style="margin:0;">Current pension pot(s)</label><div class="slider-val" id="potVal">&pound;30,000</div></div>
+      <input type="range" id="pot" min="0" max="750000" step="5000" value="30000" oninput="syncLabels()">
+      <p class="hint">Add up all workplace and personal pensions. &pound;0 is fine.</p>
+    </div>
+
+    <div class="field-group slider-field">
+      <div class="slider-row"><label style="margin:0;">Total monthly pension contribution</label><div class="slider-val" id="contribVal">&pound;400</div></div>
+      <input type="range" id="contrib" min="0" max="4000" step="50" value="400" oninput="syncLabels()">
+      <p class="hint">You + your employer combined, before tax relief. Check a payslip if unsure.</p>
+    </div>
+
+    <div class="field-group">
+      <label>Do you get an employer pension match &mdash; and do you take all of it?</label>
+      <div class="pill-group" id="pg_match">
+        <div class="pill" data-v="max" onclick="pick('match','max',this)">Yes, I max the match</div>
+        <div class="pill selected" data-v="partial" onclick="pick('match','partial',this)">Partly / unsure</div>
+        <div class="pill" data-v="none" onclick="pick('match','none',this)">No workplace pension</div>
+      </div>
+    </div>
+
+    <div class="field-group">
+      <label>Roughly, monthly surplus after essentials</label>
+      <div class="pill-group" id="pg_surplus">
+        <div class="pill" data-v="250" onclick="pick('surplus','250',this)">Under &pound;500</div>
+        <div class="pill selected" data-v="1000" onclick="pick('surplus','1000',this)">&pound;500&ndash;&pound;1,500</div>
+        <div class="pill" data-v="2250" onclick="pick('surplus','2250',this)">&pound;1,500&ndash;&pound;3,000</div>
+        <div class="pill" data-v="3500" onclick="pick('surplus','3500',this)">&pound;3,000+</div>
+      </div>
+    </div>
+
+    <div class="section-label">Home plans</div>
+
+    <div class="field-group">
+      <label>Your housing today</label>
+      <div class="pill-group" id="pg_housing">
+        <div class="pill selected" data-v="rent" onclick="pick('housing','rent',this)">I rent</div>
+        <div class="pill" data-v="own_mortgage" onclick="pick('housing','own_mortgage',this)">Own, with a mortgage</div>
+        <div class="pill" data-v="own_outright" onclick="pick('housing','own_outright',this)">Own outright</div>
+      </div>
+    </div>
+
+    <div id="homeFields" style="display:none;">
+      <div class="field-group slider-field">
+        <div class="slider-row"><label style="margin:0;">Your home&rsquo;s value (roughly)</label><div class="slider-val" id="homeValueVal">&pound;300,000</div></div>
+        <input type="range" id="homeValue" min="50000" max="1500000" step="10000" value="300000" oninput="syncLabels()">
+      </div>
+      <div class="field-group slider-field" id="mortgageField">
+        <div class="slider-row"><label style="margin:0;">Outstanding mortgage</label><div class="slider-val" id="mortgageOutVal">&pound;150,000</div></div>
+        <input type="range" id="mortgageOut" min="0" max="1000000" step="5000" value="150000" oninput="syncLabels()">
+        <p class="hint">Your home equity (value minus mortgage) counts toward your wealth.</p>
+      </div>
+    </div>
+
+    <div class="field-group">
+      <label>Are you hoping to buy (or move)?</label>
+      <div class="pill-group" id="pg_buy">
+        <div class="pill" data-v="soon" onclick="pick('buy','soon',this)">Within 12 months</div>
+        <div class="pill" data-v="mid" onclick="pick('buy','mid',this)">1&ndash;3 years</div>
+        <div class="pill" data-v="later" onclick="pick('buy','later',this)">3+ years</div>
+        <div class="pill selected" data-v="not" onclick="pick('buy','not',this)">No plans</div>
+      </div>
+    </div>
+
+    <div id="buyFields" style="display:none;">
+      <div class="field-group slider-field">
+        <div class="slider-row"><label style="margin:0;">Target property price</label><div class="slider-val" id="priceVal">&pound;300,000</div></div>
+        <input type="range" id="price" min="100000" max="900000" step="10000" value="300000" oninput="syncLabels()">
+      </div>
+      <div class="field-group slider-field">
+        <div class="slider-row"><label style="margin:0;">Deposit you could put down</label><div class="slider-val" id="depositVal">&pound;40,000</div></div>
+        <input type="range" id="deposit" min="0" max="400000" step="5000" value="40000" oninput="syncLabels()">
+      </div>
+      <div class="field-group">
+        <label>Have you ever owned a home anywhere?</label>
+        <div class="pill-group" id="pg_ftb">
+          <div class="pill selected" data-v="never" onclick="pick('ftb','never',this)">No, never</div>
+          <div class="pill" data-v="before" onclick="pick('ftb','before',this)">Yes, previously</div>
+          <div class="pill" data-v="own_now" onclick="pick('ftb','own_now',this)">I own one now</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="section-label">Retirement</div>
+
+    <div class="field-group">
+      <label>When would you like the option to stop working?</label>
+      <div class="pill-group" id="pg_retage">
+        <div class="pill" data-v="57" onclick="pick('retage','57',this)">57</div>
+        <div class="pill" data-v="60" onclick="pick('retage','60',this)">60</div>
+        <div class="pill" data-v="65" onclick="pick('retage','65',this)">65</div>
+        <div class="pill selected" data-v="67" onclick="pick('retage','67',this)">67</div>
+        <div class="pill" data-v="68" onclick="pick('retage','68',this)">68</div>
+      </div>
+    </div>
+
+    <div class="field-group">
+      <label>Comfort with investment ups and downs</label>
+      <div class="pill-group" id="pg_risk">
+        <div class="pill" data-v="safe" onclick="pick('risk','safe',this)">Keep it safe</div>
+        <div class="pill selected" data-v="mixed" onclick="pick('risk','mixed',this)">A bit of both</div>
+        <div class="pill" data-v="comfortable" onclick="pick('risk','comfortable',this)">Comfortable with volatility</div>
+      </div>
+    </div>
+
+    <div class="btn-row">
+      <span></span>
+      <button class="btn-primary" onclick="goTo(2)">Show me where I stand &rarr;</button>
+    </div>
+  </div>
+
+  <!-- STEP 2: DASHBOARD -->
+  <div class="card" id="step2">
+    <div class="card-title">Where you stand</div>
+    <p class="card-subtitle">Your projected position at retirement, in today&rsquo;s money. Drag the controls to see what changes it.</p>
+
+    <div class="tiles-grid" id="todayTiles" style="margin-top:0;"></div>
+    <p class="hint" id="equityStance" style="display:none; margin:-0.5rem 0 1.25rem; padding:0.65rem 0.85rem; background:rgba(0,0,0,0.03); border-radius:10px;">Your home equity counts toward your <strong>wealth</strong>, but the retirement income projection below deliberately excludes it &mdash; you live in it. It only becomes income if you downsize or use equity release, both of which need proper advice.</p>
+
+    <div class="verdict-hero" id="verdictHero">
+      <div class="verdict-label">Projected retirement income</div>
+      <div class="verdict-amount" id="verdictAmount">&pound;0/yr</div>
+      <div class="verdict-band" id="verdictBand"></div>
+      <div class="verdict-explain" id="verdictExplain"></div>
+    </div>
+
+    <div class="tiles-grid">
+      <div class="tile"><div class="tile-label">Pot at <span id="tileRetAge">67</span></div><div class="tile-val" id="tilePot">&pound;0</div><div class="tile-sub" id="tilePotSub">at balanced growth</div></div>
+      <div class="tile"><div class="tile-label">Tax-free lump sum</div><div class="tile-val" id="tileLump">&pound;0</div><div class="tile-sub">25%, capped &pound;268,275</div></div>
+      <div class="tile"><div class="tile-label">Sustainable income</div><div class="tile-val" id="tileIncome">&pound;0</div><div class="tile-sub" id="tileIncomeSub">4% drawdown + State Pension</div></div>
+    </div>
+
+    <div class="bench-wrap">
+      <div class="bench-title">Against your Target Replacement Rate <span style="font-weight:600; color:var(--slate-soft);">(UK adequacy benchmark, adjusted for your income band)</span></div>
+      <div class="bench-bar" style="background: linear-gradient(to right, #fecaca 0%, #fecaca 62%, #fde68a 62%, #fde68a 77%, #bbf7d0 77%, #bbf7d0 100%);">
+        <div class="bench-target"></div>
+        <div class="bench-marker" id="trrMarker" style="left:0%"></div>
+      </div>
+      <div class="bench-labels"><span>0%</span><span>80% of target</span><span style="font-weight:800; color:var(--ink);">Target met</span><span>130%</span></div>
+      <div class="bench-you" id="trrYou"></div>
+    </div>
+
+    <div class="bench-wrap">
+      <div class="bench-title">Cross-check: PLSA Retirement Living Standards <span style="font-weight:600; color:var(--slate-soft);">(single person, 2025/26)</span></div>
+      <div class="bench-bar" style="background: linear-gradient(to right, #fecaca 0%, #fecaca 24%, #fde68a 24%, #fde68a 58%, #bbf7d0 58%, #bbf7d0 80%, #86efac 80%, #86efac 100%);">
+        <div class="bench-marker" id="benchMarker" style="left:0%"></div>
+      </div>
+      <div class="bench-labels"><span>&pound;0</span><span>Min &pound;13,400</span><span>Moderate &pound;31,700</span><span>Comfortable &pound;43,900+</span></div>
+      <div class="bench-you" id="benchYou"></div>
+    </div>
+
+    <canvas id="projChart"></canvas>
+    <div class="chart-legend">
+      <span><span class="dot" style="background:var(--accent)"></span>With slider settings</span>
+      <span><span class="dot" style="background:rgba(0,0,0,0.3)"></span>Your current pace</span>
+    </div>
+
+    <div class="controls-block">
+      <div class="control-row slider-field">
+        <div class="slider-row"><label style="margin:0;">Monthly contribution</label><div class="slider-val" id="ctrlContribVal">&pound;400</div></div>
+        <input type="range" id="ctrlContrib" min="0" max="4000" step="50" value="400" oninput="renderDashboard()">
+        <div class="netcost-note" id="netCostNote"></div>
+      </div>
+
+      <div class="control-row">
+        <label>Growth scenario (real, after inflation)</label>
+        <div class="pill-group" id="pg_growth">
+          <div class="pill" data-v="0.02" onclick="pickCtrl('growth','0.02',this)">Cautious 2%</div>
+          <div class="pill selected" data-v="0.04" onclick="pickCtrl('growth','0.04',this)">Balanced 4%</div>
+          <div class="pill" data-v="0.06" onclick="pickCtrl('growth','0.06',this)">Ambitious 6%</div>
+        </div>
+      </div>
+
+      <div class="control-row">
+        <label>Retirement age</label>
+        <div class="pill-group" id="pg_ctrlret">
+          <div class="pill" data-v="57" onclick="pickCtrl('ctrlret','57',this)">57</div>
+          <div class="pill" data-v="60" onclick="pickCtrl('ctrlret','60',this)">60</div>
+          <div class="pill" data-v="65" onclick="pickCtrl('ctrlret','65',this)">65</div>
+          <div class="pill selected" data-v="67" onclick="pickCtrl('ctrlret','67',this)">67</div>
+          <div class="pill" data-v="68" onclick="pickCtrl('ctrlret','68',this)">68</div>
+        </div>
+      </div>
+    </div>
+
+    <p class="assumptions" id="dashAssumptions"></p>
+
+    <div class="btn-row">
+      <button class="btn-secondary" onclick="goTo(1)">&larr; Edit profile</button>
+      <button class="btn-primary" onclick="goTo(3)">Get my plan &rarr;</button>
+    </div>
+  </div>
+
+  <!-- STEP 3: PLAN -->
+  <div class="card" id="step3">
+    <div class="card-title">Your prioritised plan</div>
+    <p class="card-subtitle">In order. Each step says why it&rsquo;s there. Tick things off as you do them &mdash; and take the whole thing to a regulated adviser for the execution details.</p>
+
+    <div id="planFlags"></div>
+    <div id="planList"></div>
+
+    <div class="adviser-cta">
+      <div class="adviser-cta-inner">
+        <div class="adviser-cta-text">
+          <strong>Ready to act on it?</strong>
+          <span>A regulated financial adviser can turn this guidance into personal recommendations for your exact situation.</span>
+        </div>
+        <a class="adviser-cta-btn" href="https://tally.so/r/xX2YP5" target="_blank">Find an adviser &rarr;</a>
+      </div>
+    </div>
+
+    <p class="assumptions">
+      <strong>This is guidance, not regulated financial advice.</strong> Nothing here recommends a specific product, fund, or provider. Projections are illustrations in today&rsquo;s money using real (after-inflation) growth assumptions and a 4% sustainable-withdrawal rule of thumb &mdash; they are not guarantees, and capital invested is at risk. Figures use 2026/27 UK rates and allowances: State Pension &pound;11,973/yr, pension annual allowance &pound;60,000, lump-sum allowance &pound;268,275, personal allowance taper above &pound;100,000. Benchmarks: Target Replacement Rates from the Pensions Commission (2004), earnings bands uprated per PPI / Pensions UK adequacy modelling (2025), cross-checked with the approach in DWP&rsquo;s Analysis of Future Pension Incomes (2025); PLSA Retirement Living Standards (Loughborough University / Pensions UK, single person outside London, 2025/26), which assume mortgage-free homeownership. Home equity is counted in net worth but excluded from retirement income projections. Tax rules can change. Assumptions as of July 2026. For personal recommendations, consult an FCA-regulated adviser. No data is stored or transmitted &mdash; everything runs in your browser.
+    </p>
+
+    <div class="btn-row">
+      <button class="btn-secondary" onclick="goTo(2)">&larr; Back to projection</button>
+    </div>
+  </div>
+</div>
+
+<script>
+  // ── CONFIG (versioned figures — review each tax year) ─────────────────────
+  var CFG = {
+    asOf: 'July 2026',
+    statePension: 11973,
+    statePensionAge: 67,
+    swr: 0.04,
+    lumpCap: 268275,
+    // PLSA/Loughborough Retirement Living Standards, single person outside London, 2025/26
+    plsa: { min: 13400, mod: 31700, com: 43900 },
+    benchMax: 55000, // right edge of PLSA benchmark bar
+    // Target Replacement Rates: Pensions Commission (2004), income-band-adjusted.
+    // Thresholds uprated to current earnings terms per PPI / Pensions UK adequacy modelling (2025);
+    // methodology cross-checked against DWP 'Analysis of Future Pension Incomes' (2025).
+    trrBands: [
+      { max: 15000,   rate: 0.80 },
+      { max: 27500,   rate: 0.70 },
+      { max: 39300,   rate: 0.67 },
+      { max: 62800,   rate: 0.60 },
+      { max: Infinity, rate: 0.50 }
+    ],
+    paTaperStart: 100000, paGone: 125140,
+    higherRate: 50270, additionalRate: 125140,
+    sdltFtbCliff: 500000
+  };
+
+  function targetReplacementRate(income) {
+    for (var i = 0; i < CFG.trrBands.length; i++) {
+      if (income <= CFG.trrBands[i].max) return CFG.trrBands[i].rate;
+    }
+    return 0.50;
+  }
+
+  // ── HEADER SWITCHER ──────────────────────────────────────────────────────
+  function toggleSwitcher(e) {
+    e.stopPropagation();
+    document.getElementById('appSwitcher').classList.toggle('open');
+  }
+  document.addEventListener('click', function() {
+    var s = document.getElementById('appSwitcher');
+    if (s) s.classList.remove('open');
+  });
+
+  // ── STATE ──────────────────────────────────────────────────────────────────
+  var P = {
+    stability: 'steady', dependents: 'just_me', match: 'partial',
+    surplus: '1000', buy: 'not', ftb: 'never', retage: '67', risk: 'mixed',
+    growth: '0.04', ctrlret: '67', housing: 'rent'
+  };
+  var doneSteps = {};
+
+  var fmt = function(n) { return '\u00a3' + Math.round(n).toLocaleString('en-GB'); };
+  var fmtK = function(n) {
+    if (n >= 1000000) return '\u00a3' + (n/1000000).toFixed(2).replace(/0$/,'') + 'm';
+    if (n >= 1000) return '\u00a3' + Math.round(n/1000) + 'k';
+    return fmt(n);
+  };
+
+  // ── INTAKE ─────────────────────────────────────────────────────────────────
+  function pick(key, val, el) {
+    P[key] = val;
+    var group = el.parentElement;
+    Array.prototype.forEach.call(group.children, function(c) { c.classList.remove('selected'); });
+    el.classList.add('selected');
+    if (key === 'buy') {
+      document.getElementById('buyFields').style.display = (val === 'not') ? 'none' : 'block';
+    }
+    if (key === 'housing') {
+      var owns = val !== 'rent';
+      document.getElementById('homeFields').style.display = owns ? 'block' : 'none';
+      document.getElementById('mortgageField').style.display = (val === 'own_mortgage') ? 'block' : 'none';
+      // Owners aren't first-time buyers
+      if (owns) P.ftb = 'own_now';
+    }
+    if (key === 'retage') {
+      // sync the dashboard control to the stated preference
+      P.ctrlret = val;
+      var ctrlGroup = document.getElementById('pg_ctrlret');
+      Array.prototype.forEach.call(ctrlGroup.children, function(c) {
+        c.classList.toggle('selected', c.getAttribute('data-v') === val);
+      });
+    }
+  }
+
+  function pickCtrl(key, val, el) {
+    P[key] = val;
+    var group = el.parentElement;
+    Array.prototype.forEach.call(group.children, function(c) { c.classList.remove('selected'); });
+    el.classList.add('selected');
+    renderDashboard();
+  }
+
+  function syncLabels() {
+    var ids = [['age','ageVal',0],['income','incomeVal',1],['cash','cashVal',1],['invest','investVal',1],['pot','potVal',1],['contrib','contribVal',1],['price','priceVal',1],['deposit','depositVal',1],['homeValue','homeValueVal',1],['mortgageOut','mortgageOutVal',1]];
+    ids.forEach(function(x) {
+      var input = document.getElementById(x[0]);
+      var label = document.getElementById(x[1]);
+      if (!input || !label) return;
+      var v = parseFloat(input.value);
+      label.textContent = x[2] ? fmt(v) : v;
+    });
+    // keep dashboard contribution slider in sync with intake, until user diverges on step 2
+    var dash = document.getElementById('ctrlContrib');
+    if (dash && !dash.dataset.touched) dash.value = document.getElementById('contrib').value;
+  }
+
+  // ── PROJECTION ENGINE (Appendix B) ─────────────────────────────────────────
+  function project(startPot, monthly, growth, years) {
+    var mr = Math.pow(1 + growth, 1/12) - 1;
+    var m = Math.round(years * 12);
+    if (m <= 0) return startPot;
+    var fvPot = startPot * Math.pow(1 + mr, m);
+    var fvContrib = mr === 0 ? monthly * m : monthly * (Math.pow(1 + mr, m) - 1) / mr;
+    return fvPot + fvContrib;
+  }
+
+  function marginalRelief(income) {
+    if (income > CFG.paTaperStart && income <= CFG.paGone) return 0.60;
+    if (income > CFG.additionalRate) return 0.45;
+    if (income > CFG.higherRate) return 0.40;
+    return 0.20;
+  }
+
+  function compute() {
+    var age = parseFloat(document.getElementById('age').value);
+    var income = parseFloat(document.getElementById('income').value);
+    var pot0 = parseFloat(document.getElementById('pot').value);
+    var baseContrib = parseFloat(document.getElementById('contrib').value);
+    var ctrlContrib = parseFloat(document.getElementById('ctrlContrib').value);
+    var growth = parseFloat(P.growth);
+    var retAge = parseInt(P.ctrlret);
+    var years = Math.max(0.5, retAge - age);
+
+    var pot = project(pot0, ctrlContrib, growth, years);
+    var potCurrent = project(pot0, baseContrib, growth, years);
+    var lump = Math.min(pot * 0.25, CFG.lumpCap);
+    var drawdown = pot * CFG.swr;
+    var totalIncome = drawdown + CFG.statePension;
+    var preSP = retAge < CFG.statePensionAge;
+
+    // Today's position, including home equity for owners
+    var cash = parseFloat(document.getElementById('cash').value) || 0;
+    var invest = parseFloat(document.getElementById('invest').value) || 0;
+    var owns = P.housing !== 'rent';
+    var homeValue = owns ? (parseFloat(document.getElementById('homeValue').value) || 0) : 0;
+    var mortgageOut = P.housing === 'own_mortgage' ? (parseFloat(document.getElementById('mortgageOut').value) || 0) : 0;
+    var homeEquity = Math.max(0, homeValue - mortgageOut);
+    var netWorth = cash + invest + pot0 + homeEquity;
+
+    // Target Replacement Rate (income-band-adjusted, Pensions Commission basis)
+    var trr = targetReplacementRate(income);
+    var targetIncome = income * trr;
+    var replacementAchieved = income > 0 ? totalIncome / income : 0;
+    var trrRatio = targetIncome > 0 ? totalIncome / targetIncome : 0;
+
+    return {
+      age: age, income: income, pot0: pot0, baseContrib: baseContrib,
+      ctrlContrib: ctrlContrib, growth: growth, retAge: retAge, years: years,
+      pot: pot, potCurrent: potCurrent, lump: lump, drawdown: drawdown,
+      totalIncome: totalIncome, preSP: preSP,
+      relief: marginalRelief(income),
+      cash: cash, invest: invest, owns: owns, homeEquity: homeEquity,
+      mortgageOut: mortgageOut, netWorth: netWorth,
+      trr: trr, targetIncome: targetIncome,
+      replacementAchieved: replacementAchieved, trrRatio: trrRatio
+    };
+  }
+
+  // ── DASHBOARD RENDER ───────────────────────────────────────────────────────
+  function renderDashboard() {
+    var d = compute();
+    var dash = document.getElementById('ctrlContrib');
+    if (document.activeElement === dash) dash.dataset.touched = '1';
+
+    document.getElementById('ctrlContribVal').textContent = fmt(d.ctrlContrib) + '/mo';
+
+    // Verdict — primary: Target Replacement Rate; cross-check: PLSA band
+    var hero = document.getElementById('verdictHero');
+    hero.classList.remove('behind','short');
+
+    var plsaBand;
+    if (d.totalIncome >= CFG.plsa.com) plsaBand = 'Comfortable';
+    else if (d.totalIncome >= CFG.plsa.mod) plsaBand = 'Moderate';
+    else if (d.totalIncome >= CFG.plsa.min) plsaBand = 'Minimum';
+    else plsaBand = 'Below minimum';
+
+    var trrPct = Math.round(d.replacementAchieved * 100);
+    var trrTargetPct = Math.round(d.trr * 100);
+    var bandLine;
+    if (d.trrRatio >= 1) {
+      bandLine = '<span style="color:var(--green)">On track</span> \u2014 replacing ' + trrPct + '% of your income (target for your band: ' + trrTargetPct + '%)';
+    } else if (d.trrRatio >= 0.8) {
+      hero.classList.add('behind');
+      bandLine = '<span style="color:var(--amber)">Mildly under target</span> \u2014 replacing ' + trrPct + '% of your income vs a ' + trrTargetPct + '% target';
+    } else {
+      hero.classList.add('short');
+      bandLine = '<span style="color:var(--red)">Under target</span> \u2014 replacing ' + trrPct + '% of your income vs a ' + trrTargetPct + '% target';
+    }
+    document.getElementById('verdictAmount').textContent = fmt(d.totalIncome) + '/yr';
+    document.getElementById('verdictBand').innerHTML = bandLine;
+    var expl = 'A pot of ' + fmtK(d.pot) + ' at ' + d.retAge + ' supports about ' + fmt(d.drawdown) + '/yr at a 4% drawdown, plus the full State Pension of ' + fmt(CFG.statePension) + '/yr.';
+    if (d.preSP) expl += ' Note: the State Pension starts at ' + CFG.statePensionAge + ', so the years from ' + d.retAge + ' to ' + CFG.statePensionAge + ' would rely on the drawdown (' + fmt(d.drawdown) + '/yr) alone.';
+    if (!d.owns && P.buy === 'not') expl += ' One caution: the living-standard bands below assume you own your home mortgage-free by retirement \u2014 renting in retirement typically needs \u00a310k+ more per year than these bands suggest.';
+    document.getElementById('verdictExplain').textContent = expl;
+
+    // Today's position strip
+    var tt = '<div class="tile"><div class="tile-label">Net worth today</div><div class="tile-val">' + fmtK(d.netWorth) + '</div><div class="tile-sub">cash + investments + pension' + (d.owns ? ' + home equity' : '') + '</div></div>';
+    if (d.owns) {
+      tt += '<div class="tile"><div class="tile-label">Home equity</div><div class="tile-val">' + fmtK(d.homeEquity) + '</div><div class="tile-sub">' + (d.mortgageOut > 0 ? fmtK(d.mortgageOut) + ' mortgage remaining' : 'owned outright') + '</div></div>';
+    }
+    tt += '<div class="tile"><div class="tile-label">Investable assets</div><div class="tile-val">' + fmtK(d.cash + d.invest + d.pot0) + '</div><div class="tile-sub">excluding your home</div></div>';
+    document.getElementById('todayTiles').innerHTML = tt;
+    var stanceEl = document.getElementById('equityStance');
+    if (stanceEl) stanceEl.style.display = d.owns ? 'block' : 'none';
+
+    // Tiles
+    document.getElementById('tileRetAge').textContent = d.retAge;
+    document.getElementById('tilePot').textContent = fmtK(d.pot);
+    document.getElementById('tilePotSub').textContent = 'at ' + Math.round(d.growth*100) + '% real growth';
+    document.getElementById('tileLump').textContent = fmtK(d.lump);
+    document.getElementById('tileIncome').textContent = fmt(d.totalIncome);
+
+    // TRR benchmark bar (0 → 130% of target; target tick at 100%)
+    var trrLeft = Math.min(100, Math.max(0, (d.trrRatio / 1.3) * 100));
+    document.getElementById('trrMarker').style.left = trrLeft + '%';
+    document.getElementById('trrYou').textContent = 'You: ' + Math.round(d.trrRatio * 100) + '% of your ' + Math.round(d.trr * 100) + '% target (' + fmt(d.targetIncome) + '/yr needed, ' + fmt(d.totalIncome) + '/yr projected)';
+
+    // PLSA cross-check bar
+    var pct = Math.min(100, Math.max(0, (d.totalIncome / CFG.benchMax) * 100));
+    document.getElementById('benchMarker').style.left = pct + '%';
+    document.getElementById('benchYou').textContent = 'You: ' + fmt(d.totalIncome) + '/yr projected \u2014 the ' + plsaBand + ' standard';
+
+    // Net cost note
+    var extra = d.ctrlContrib - d.baseContrib;
+    var note;
+    if (extra > 0) {
+      var net = extra * (1 - d.relief);
+      note = '+' + fmt(extra) + '/mo above your current pace costs you only about <strong>' + fmt(net) + '/mo</strong> after ' + Math.round(d.relief*100) + '% tax relief' + (d.relief === 0.60 ? ' (you\u2019re in the \u00a3100k personal-allowance taper \u2014 the most tax-efficient band to shelter)' : '') + '.';
+    } else if (extra < 0) {
+      note = 'This is ' + fmt(-extra) + '/mo below your current pace \u2014 the grey line shows what staying the course would do.';
+    } else {
+      note = 'This matches your current pace. Drag right to see what more would do \u2014 at your income, tax relief covers ' + Math.round(d.relief*100) + '% of any increase.';
+    }
+    document.getElementById('netCostNote').innerHTML = note;
+
+    // Assumptions line
+    document.getElementById('dashAssumptions').innerHTML = '<strong>Assumptions & benchmarks (as of ' + CFG.asOf + '):</strong> figures in today\u2019s money; growth is real (after inflation); 4% sustainable withdrawal is a rule of thumb, not a guarantee; full new State Pension ' + fmt(CFG.statePension) + '/yr from ' + CFG.statePensionAge + ' (requires ~35 qualifying NI years); tax-free lump sum capped at ' + fmt(CFG.lumpCap) + '. <strong>Target Replacement Rate:</strong> Pensions Commission (2004) income-band-adjusted targets \u2014 80% for the lowest earners tapering to 50% for the highest \u2014 with earnings bands uprated to current terms per PPI / Pensions UK adequacy modelling (2025); the same dual TRR + PLSA approach used in DWP\u2019s Analysis of Future Pension Incomes (2025). Replacement is measured against your current gross income; DWP methodology uses average earnings from age 50, so treat this as indicative. <strong>PLSA bands:</strong> Retirement Living Standards, Loughborough University / Pensions UK, single person outside London, 2025/26 \u2014 note these assume you own your home mortgage-free. <strong>Home equity</strong> is included in your net worth but excluded from projected retirement income. Illustration only \u2014 not a promise of future returns.';
+
+    drawChart(d);
+  }
+
+  // ── CHART ──────────────────────────────────────────────────────────────────
+  function drawChart(d) {
+    var canvas = document.getElementById('projChart');
+    if (!canvas) return;
+    var ctx = canvas.getContext('2d');
+    var dpr = window.devicePixelRatio || 1;
+    var W = canvas.offsetWidth || 680, H = 220;
+    canvas.width = W * dpr; canvas.height = H * dpr;
+    ctx.scale(dpr, dpr);
+    ctx.clearRect(0, 0, W, H);
+
+    var years = Math.ceil(d.years);
+    var ptsNew = [], ptsCur = [];
+    for (var y = 0; y <= years; y++) {
+      ptsNew.push(project(d.pot0, d.ctrlContrib, d.growth, y));
+      ptsCur.push(project(d.pot0, d.baseContrib, d.growth, y));
+    }
+    var maxV = Math.max.apply(null, ptsNew.concat(ptsCur)) * 1.1 || 1;
+    var pad = { t: 14, r: 14, b: 30, l: 52 };
+    var cW = W - pad.l - pad.r, cH = H - pad.t - pad.b;
+    var xP = function(i) { return pad.l + (i / years) * cW; };
+    var yP = function(v) { return pad.t + cH - (v / maxV) * cH; };
+
+    // grid + y labels
+    ctx.strokeStyle = 'rgba(0,0,0,0.06)'; ctx.lineWidth = 1;
+    for (var g = 0; g <= 4; g++) {
+      var yl = pad.t + (g / 4) * cH;
+      ctx.beginPath(); ctx.setLineDash([3,3]);
+      ctx.moveTo(pad.l, yl); ctx.lineTo(pad.l + cW, yl); ctx.stroke(); ctx.setLineDash([]);
+      var val = maxV * (1 - g/4);
+      ctx.fillStyle = 'rgba(0,0,0,0.4)';
+      ctx.font = '10px Nunito, sans-serif'; ctx.textAlign = 'right';
+      ctx.fillText(fmtK(val), pad.l - 6, yl + 3);
+    }
+    // x labels
+    ctx.textAlign = 'center'; ctx.font = '9px Nunito, sans-serif';
+    var step = Math.max(1, Math.floor(years / 5));
+    for (var m = 0; m <= years; m += step) {
+      ctx.fillText(m === 0 ? 'Now' : 'Age ' + Math.round(d.age + m), xP(m), H - pad.b + 16);
+    }
+
+    function line(pts, colour, dashed, fill) {
+      if (fill) {
+        var grad = ctx.createLinearGradient(0, pad.t, 0, pad.t + cH);
+        grad.addColorStop(0, 'rgba(13,148,136,0.16)');
+        grad.addColorStop(1, 'rgba(13,148,136,0)');
+        ctx.beginPath();
+        ctx.moveTo(xP(0), yP(pts[0]));
+        pts.forEach(function(v, i) { ctx.lineTo(xP(i), yP(v)); });
+        ctx.lineTo(xP(pts.length - 1), pad.t + cH);
+        ctx.lineTo(xP(0), pad.t + cH);
+        ctx.closePath(); ctx.fillStyle = grad; ctx.fill();
+      }
+      ctx.beginPath();
+      ctx.strokeStyle = colour; ctx.lineWidth = 2.5;
+      if (dashed) ctx.setLineDash([5,4]);
+      pts.forEach(function(v, i) { i === 0 ? ctx.moveTo(xP(i), yP(v)) : ctx.lineTo(xP(i), yP(v)); });
+      ctx.stroke(); ctx.setLineDash([]);
+    }
+    line(ptsCur, 'rgba(0,0,0,0.3)', true, false);
+    line(ptsNew, '#0d9488', false, true);
+  }
+
+  // ── PLAN GENERATOR (Appendix C) ────────────────────────────────────────────
+  function buildPlan() {
+    var d = compute();
+    var buying = P.buy !== 'not';
+    var buyingSoon = P.buy === 'soon' || P.buy === 'mid';
+    var hasMortgage = P.housing === 'own_mortgage';
+    var ownsHome = P.housing !== 'rent';
+    var price = parseFloat(document.getElementById('price').value) || 0;
+    var deposit = parseFloat(document.getElementById('deposit').value) || 0;
+    var cash = parseFloat(document.getElementById('cash').value) || 0;
+    var invest = parseFloat(document.getElementById('invest').value) || 0;
+    var surplus = parseFloat(P.surplus);
+    var soloWithMortgage = (P.dependents === 'just_me') && (buying || hasMortgage);
+    var nearCliff = d.income >= 95000;
+
+    var steps = [];
+
+    if (buyingSoon) steps.push({
+      id: 'buy', title: 'Buy sensibly \u2014 size the deposit for a good LTV and keep a cushion',
+      why: 'Aim for around 80% loan-to-value for better mortgage rates, and don\u2019t empty the tank: keep an emergency buffer after the deposit, stamp duty and fees.'
+    });
+
+    steps.push({
+      id: 'emergency', title: 'Build (or ring-fence) an emergency fund of 3\u20136 months\u2019 outgoings',
+      why: 'Instant-access cash or a cash ISA. This is what stops a surprise turning into debt' + (buying ? ' \u2014 and what protects the house purchase if something slips.' : '.')
+    });
+
+    if (buying || hasMortgage) steps.push({
+      id: 'protection', title: 'Consider income protection' + (soloWithMortgage ? ' \u2014 especially with a mortgage on one income' : ''),
+      why: (soloWithMortgage ? 'One income, one mortgage: if you couldn\u2019t work, there\u2019s no second earner to cover it. ' : '') + 'Income protection replaces part of your salary if illness stops you working. An adviser can size it.'
+    });
+
+    if (P.match !== 'max' && P.match !== 'none') steps.push({
+      id: 'match', title: 'Capture your full employer pension match first',
+      why: 'It\u2019s an immediate 100% return on the matched amount \u2014 no other use of surplus beats it. Check your scheme\u2019s maximum match and set your contribution to hit it.'
+    });
+    if (P.match === 'none') steps.push({
+      id: 'match', title: 'Check your workplace pension situation',
+      why: 'If you\u2019re employed, auto-enrolment should apply. If you\u2019re self-employed, a personal pension gets the same tax relief \u2014 it just needs setting up.'
+    });
+
+    steps.push({
+      id: 'pension', title: 'Redirect monthly surplus into your pension' + (d.relief >= 0.4 ? ' (salary sacrifice if offered)' : ''),
+      why: 'At your income, tax relief covers ' + Math.round(d.relief*100) + '% of every extra pound in' + (nearCliff ? ' \u2014 and contributions can pull taxable income back under the \u00a3100k cliff, restoring your personal allowance' : '') + '. Salary sacrifice adds NI savings on top.'
+    });
+
+    if (surplus >= 1000) steps.push({
+      id: 'isa', title: 'Open a stocks & shares ISA for accessible growth',
+      why: (parseInt(P.retage) < 57 ? 'You want the option to stop before 57 \u2014 pensions are locked until then, so an ISA is the bridge for the early years. ' : '') + 'Up to \u00a320,000/yr grows tax-free and stays accessible, unlike a pension.'
+    });
+
+    if (P.stability === 'bonus' || P.stability === 'self') steps.push({
+      id: 'carryforward', title: 'Use carry-forward when lumps arrive',
+      why: 'Bonuses and windfalls can go into the pension using up to three prior years\u2019 unused allowance \u2014 a one-off top-up with full tax relief.'
+    });
+
+    steps.push({
+      id: 'statepension', title: 'Check your State Pension record',
+      why: 'The full amount (' + fmt(CFG.statePension) + '/yr) needs roughly 35 qualifying NI years. The gov.uk forecast takes two minutes and gaps can often be filled cheaply.'
+    });
+
+    if (hasMortgage) steps.push({
+      id: 'mortgagefree', title: 'Aim to be mortgage-free by retirement',
+      why: 'The living-standard benchmarks assume no rent or mortgage in retirement. Check your mortgage end date against your target retirement age of ' + P.retage + ' \u2014 if it runs past it, options include modest overpayments or shortening the term at your next remortgage. Whether overpaying beats investing the same money depends on your rate vs expected returns; an adviser can weigh it for you.'
+    });
+
+    if (invest >= 50000) steps.push({
+      id: 'diversify', title: 'Review concentration in your investments',
+      why: 'If a big share of that ' + fmtK(invest) + ' is one company (especially your employer), your salary and savings share the same risk. Moving chunks into an ISA over time (\u201cbed and ISA\u201d) uses the \u00a33,000 CGT exemption.'
+    });
+
+    return steps;
+  }
+
+  function buildFlags() {
+    var d = compute();
+    var flags = [];
+    var buying = P.buy !== 'not';
+    var price = parseFloat(document.getElementById('price').value) || 0;
+    var deposit = parseFloat(document.getElementById('deposit').value) || 0;
+    var cash = parseFloat(document.getElementById('cash').value) || 0;
+
+    if (d.income >= 95000 && d.income <= 135000) flags.push({
+      type: 'warn', title: 'The \u00a3100k cliff',
+      body: 'Between \u00a3100,000 and \u00a3125,140 your personal allowance tapers away, creating an effective ~60% tax band' + (P.dependents === 'children' ? ' \u2014 and free childcare entitlements can vanish at \u00a3100k too' : '') + '. Pension contributions that keep taxable income below \u00a3100k are unusually valuable here.'
+    });
+
+    if (buying && P.ftb === 'never' && price > CFG.sdltFtbCliff) flags.push({
+      type: 'warn', title: 'Stamp duty cliff at \u00a3500,000',
+      body: 'First-time-buyer relief disappears entirely above \u00a3500,000 \u2014 the whole purchase is taxed at standard rates, a jump of thousands. If your target is near the line, the price you agree matters a lot.'
+    });
+
+    if (buying && deposit > cash) flags.push({
+      type: 'warn', title: 'Deposit vs savings',
+      body: 'Your planned deposit (' + fmtK(deposit) + ') is larger than your cash savings (' + fmtK(cash) + '). Worth reconciling \u2014 either the deposit needs to come down, or other money (investments, gifts) is funding it.'
+    });
+
+    if (cash >= 20000) flags.push({
+      type: 'info', title: 'Cash ISA limit change \u2014 April 2027',
+      body: 'The cash ISA allowance for under-65s is due to drop to \u00a312,000 from April 2027 (the overall \u00a320,000 ISA allowance stays). If you\u2019re holding a lot of cash, this coming tax year is the fuller window.'
+    });
+
+    if (parseInt(P.retage) < 57) flags.push({
+      type: 'info', title: 'Pension access age',
+      body: 'You can\u2019t normally touch a pension before 57 (from April 2028). Retiring at ' + P.retage + ' means bridging the gap from ISAs or other savings \u2014 that\u2019s what the ISA step in your plan is for.'
+    });
+
+    return flags;
+  }
+
+  function renderPlan() {
+    var steps = buildPlan();
+    var flags = buildFlags();
+
+    var fh = '';
+    flags.forEach(function(f) {
+      fh += '<div class="flag-box ' + f.type + '"><strong>' + (f.type === 'warn' ? '\u26a0\ufe0f ' : '\u2139\ufe0f ') + f.title + '</strong>' + f.body + '</div>';
+    });
+    document.getElementById('planFlags').innerHTML = fh;
+
+    var h = '';
+    steps.forEach(function(s, i) {
+      var done = doneSteps[s.id] ? ' done' : '';
+      h += '<div class="plan-step' + done + '" id="ps_' + s.id + '">' +
+        '<div class="plan-num">' + (i+1) + '</div>' +
+        '<div class="plan-check" onclick="toggleDone(\'' + s.id + '\')">\u2713</div>' +
+        '<div class="plan-body"><div class="plan-title">' + s.title + '</div><div class="plan-why">' + s.why + '</div></div>' +
+      '</div>';
+    });
+    document.getElementById('planList').innerHTML = h;
+  }
+
+  function toggleDone(id) {
+    doneSteps[id] = !doneSteps[id];
+    var el = document.getElementById('ps_' + id);
+    if (el) el.classList.toggle('done', doneSteps[id]);
+  }
+
+  // ── NAVIGATION ─────────────────────────────────────────────────────────────
+  function goTo(step) {
+    for (var i = 1; i <= 3; i++) {
+      document.getElementById('step' + i).classList.toggle('active', i === step);
+      var tab = document.getElementById('tab' + i);
+      tab.classList.toggle('active', i === step);
+    }
+    if (step === 2) renderDashboard();
+    if (step === 3) renderPlan();
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  // init
+  syncLabels();
+</script>
+
+<!-- canonical footer -->
+<footer style="background:#314855; padding:2.5rem; border-top:3px solid #ffdb00; margin-top:2rem;">
+  <div style="max-width:920px; margin:0 auto; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:1rem;">
+    <div style="font-family:'Nunito', sans-serif; font-size:1.3rem; color:white; font-weight:800;">MyPay<em style="font-style:italic; color:#ffdb00;">Picture</em></div>
+    <p style="color:rgba(255,255,255,0.3); font-size:0.78rem; max-width:520px; line-height:1.6; margin:0;">Illustrative scenarios only &mdash; not financial, tax or legal advice. Always consult a qualified adviser before making decisions. No data is stored. &copy; MyPayPicture 2025.</p>
+  </div>
+</footer>
+<!-- /canonical footer -->
+
+</body>
+</html>
