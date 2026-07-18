@@ -187,7 +187,40 @@
     .card { padding: 1.5rem 1.25rem; }
     .verdict-amount { font-size: 2.2rem; }
   }
+
+  /* ── Save Your Results prompt ──────────────────────────────────────────── */
+  .save-prompt { display: flex; gap: 0.75rem; margin: 1.25rem 0; flex-wrap: wrap; }
+  .save-prompt-btn { flex: 1; min-width: 170px; display: flex; align-items: center; justify-content: center; gap: 0.5rem; padding: 0.85rem 1rem; border-radius: 14px; font-family: 'Nunito', sans-serif; font-size: 0.85rem; font-weight: 700; cursor: pointer; transition: all 0.15s; text-decoration: none; border: none; }
+  .save-prompt-btn.email { background: rgba(13,148,136,0.08); color: #0d9488; border: 1.5px solid rgba(13,148,136,0.2); }
+  .save-prompt-btn.email:hover { background: rgba(13,148,136,0.15); }
+  .save-prompt-btn.pdf { background: #314855; color: white; }
+  .save-prompt-btn.pdf:hover { background: #22333d; transform: translateY(-1px); }
+  .save-prompt-btn .btn-icon { font-size: 1.05rem; }
+  .save-prompt-btn .btn-price { opacity: 0.7; font-weight: 600; margin-left: 0.25rem; }
+  .email-capture { display: none; margin: 0.75rem 0 1.25rem; background: rgba(13,148,136,0.05); border: 1.5px solid rgba(13,148,136,0.15); border-radius: 14px; padding: 1.1rem 1.25rem; }
+  .email-capture.open { display: block; }
+  .email-capture-title { font-size: 0.88rem; font-weight: 800; color: #314855; margin-bottom: 0.5rem; }
+  .email-capture-row { display: flex; gap: 0.5rem; }
+  .email-capture-row input[type="email"] { flex: 1; padding: 0.7rem 0.85rem; border: 1.5px solid #ddd; border-radius: 10px; font-family: 'Nunito', sans-serif; font-size: 0.9rem; color: #314855; background: white; }
+  .email-capture-row input[type="email"]:focus { outline: none; border-color: #0d9488; box-shadow: 0 0 0 3px rgba(13,148,136,0.1); }
+  .email-capture-send { padding: 0.7rem 1.25rem; border: none; border-radius: 10px; background: #0d9488; color: white; font-family: 'Nunito', sans-serif; font-size: 0.85rem; font-weight: 700; cursor: pointer; white-space: nowrap; }
+  .email-capture-send:hover { background: #0b7c72; }
+  .email-capture-note { font-size: 0.7rem; color: #5a7282; margin-top: 0.5rem; line-height: 1.5; }
+  .email-capture-done { display: none; text-align: center; padding: 0.85rem; font-size: 0.88rem; font-weight: 700; color: #0d9488; }
+  .email-capture-done.show { display: block; }
+
 </style>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-XY51DX80VL"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-XY51DX80VL');
+  function gaEvent(name, params) {
+    if (typeof gtag !== 'undefined') gtag('event', name, params || {});
+  }
+</script>
 </head>
 <body>
 
@@ -450,6 +483,25 @@
   <div class="card" id="step2">
     <div class="card-title">Where you stand</div>
     <p class="card-subtitle">Your projected position at retirement, in today&rsquo;s money. Drag the controls to see what changes it.</p>
+
+        <!-- Save your results prompt -->
+    <div class="save-prompt">
+      <button class="save-prompt-btn email" onclick="toggleEmailCapture('FinancialPlan')">
+        <span class="btn-icon">&#9993;</span> Email me my results
+      </button>
+      <a class="save-prompt-btn pdf" href="https://buy.stripe.com/4gM8wP2IV4l0gPn9D353O00" target="_blank">
+        <span class="btn-icon">&#128196;</span> Download PDF report <span class="btn-price">&pound;4.99</span>
+      </a>
+    </div>
+    <div class="email-capture" id="emailCapture_FinancialPlan">
+      <div class="email-capture-title">&#128231; Get a summary emailed to you (free)</div>
+      <div class="email-capture-row">
+        <input type="email" id="emailInput_FinancialPlan" placeholder="your@email.com">
+        <button class="email-capture-send" onclick="sendEmail('FinancialPlan')">Send</button>
+      </div>
+      <p class="email-capture-note">We&rsquo;ll send a one-time summary. No spam, no mailing list. You can also just screenshot your results.</p>
+      <div class="email-capture-done" id="emailDone_FinancialPlan">&#10003; Check your inbox! A summary is on its way.</div>
+    </div>
 
     <div class="tiles-grid" id="todayTiles" style="margin-top:0;"></div>
     <p class="hint" id="equityStance" style="display:none; margin:-0.5rem 0 1.25rem; padding:0.65rem 0.85rem; background:rgba(0,0,0,0.03); border-radius:10px;">Your home equity counts toward your <strong>wealth</strong>, but the retirement income projection below deliberately excludes it &mdash; you live in it. It only becomes income if you downsize or use equity release, both of which need proper advice.</p>
@@ -728,7 +780,7 @@
   function renderDashboard() {
     var d = compute();
     var dash = document.getElementById('ctrlContrib');
-    if (document.activeElement === dash) dash.dataset.touched = '1';
+    if (document.activeElement === dash) { dash.dataset.touched = '1'; if (!window._gaSlider) { window._gaSlider = true; gaEvent('slider_engaged', {tool: 'MyFinancialPlan'}); } }
 
     document.getElementById('ctrlContribVal').textContent = fmt(d.ctrlContrib) + '/mo';
 
@@ -1015,13 +1067,41 @@
       var tab = document.getElementById('tab' + i);
       tab.classList.toggle('active', i === step);
     }
+    if (step > 1 && !window._gaStarted) { window._gaStarted = true; gaEvent('tool_started', {tool: 'MyFinancialPlan'}); }
     if (step === 2) renderDashboard();
-    if (step === 3) renderPlan();
+    if (step === 3) { renderPlan(); gaEvent('tool_completed', {tool: 'MyFinancialPlan'}); }
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }
 
   // init
   syncLabels();
+
+  function toggleEmailCapture(toolId) {
+    var el = document.getElementById('emailCapture_' + toolId);
+    if (el) {
+      el.classList.toggle('open');
+      if (el.classList.contains('open')) {
+        var input = document.getElementById('emailInput_' + toolId);
+        if (input) input.focus();
+      }
+    }
+    if (typeof gaEvent === 'function') gaEvent('email_capture_opened', { tool: toolId });
+  }
+  function sendEmail(toolId) {
+    var input = document.getElementById('emailInput_' + toolId);
+    var done = document.getElementById('emailDone_' + toolId);
+    if (!input || !input.value || !input.value.includes('@')) {
+      if (input) input.style.borderColor = '#ef4444';
+      return;
+    }
+    input.style.borderColor = '#0d9488';
+    if (typeof gaEvent === 'function') gaEvent('email_captured', { tool: toolId });
+    if (done) { done.classList.add('show'); input.parentElement.style.display = 'none'; }
+    var subject = encodeURIComponent('My ' + toolId + ' results — MyPayPicture');
+    var body = encodeURIComponent('Hi,\n\nHere are your results from MyPayPicture. You can revisit the tool anytime at mypaypicture.com.\n\nTip: Take a screenshot of your results page, or purchase the full PDF report for a detailed breakdown to share with an adviser.\n\nBest,\nMyPayPicture');
+    window.open('mailto:' + input.value + '?subject=' + subject + '&body=' + body, '_blank');
+  }
+
 </script>
 
 <!-- canonical footer -->
