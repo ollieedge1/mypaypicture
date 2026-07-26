@@ -1,0 +1,677 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MyPulse — Am I on track? — MyPayPicture</title>
+<link rel="canonical" href="https://mypaypicture.com/retirement-tracker.html">
+<meta name="description" content="Set up once, check in monthly. Track your pension, ISA, and home equity in one calm view. Guidance, not advice.">
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-XY51DX80VL"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-XY51DX80VL');
+  function gaEvent(name, params) { if (typeof gtag !== 'undefined') gtag('event', name, params || {}); }
+</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,300;0,400;0,600;0,700;0,800;1,300;1,400;1,700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #1a2e1a; --ink-soft: #4a6a4a; --ink-muted: #7a957a;
+    --accent: #2d8a4e; --accent-pale: #e8f5ec; --accent-warm: #f0f7e8;
+    --yellow: #ffdb00; --sky: #5cc3e8;
+    --gold: #c49a20; --gold-pale: #fdf8e8;
+    --amber: #b45309; --amber-pale: #fffbeb;
+    --red: #991b1b; --red-pale: #fef2f2;
+    --bg: #fafaf8; --surface: #ffffff;
+    --border: rgba(45,138,78,0.12);
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Nunito', sans-serif; background: var(--bg); color: var(--ink); min-height: 100vh; }
+
+  header { background: var(--ink); padding: 1.1rem 2rem; display: flex; align-items: center; justify-content: space-between; position: sticky; top: 0; z-index: 50; }
+  .disclaimer-badge { font-size: 0.65rem; color: rgba(255,255,255,0.4); border: 1px solid rgba(255,255,255,0.15); padding: 0.3rem 0.85rem; border-radius: 100px; }
+  .app-switcher { position: relative; }
+  .switcher-trigger { display: flex; align-items: center; gap: 0.5rem; cursor: pointer; padding: 0.45rem 0.9rem; border-radius: 100px; border: 1px solid rgba(255,255,255,0.15); background: rgba(255,255,255,0.07); user-select: none; }
+  .switcher-trigger:hover { background: rgba(255,255,255,0.13); border-color: var(--yellow); }
+  .app-name { font-weight: 800; font-size: 1rem; color: white; }
+  .app-name em { font-style: italic; color: #a8d5a0; }
+  .chevron { color: rgba(255,255,255,0.4); font-size: 0.65rem; transition: transform 0.2s; }
+  .app-switcher.open .chevron { transform: rotate(180deg); }
+  .switcher-dropdown { display: none; position: absolute; top: calc(100% + 10px); left: 0; background: white; border: 1px solid rgba(0,0,0,0.08); border-radius: 14px; overflow: hidden; min-width: 240px; box-shadow: 0 16px 48px rgba(0,0,0,0.12); z-index: 100; max-height: 70vh; overflow-y: auto; }
+  .app-switcher.open .switcher-dropdown { display: block; }
+  .switcher-home { display: flex; align-items: center; gap: 0.75rem; padding: 0.75rem 1.1rem; text-decoration: none; transition: background 0.12s; }
+  .switcher-home:hover { background: var(--accent-pale); }
+  .switcher-home-icon { width: 28px; height: 28px; border-radius: 8px; background: rgba(0,0,0,0.04); display: flex; align-items: center; justify-content: center; font-size: 0.95rem; }
+  .switcher-home-label { font-size: 0.82rem; font-weight: 700; color: #314855; }
+  .switcher-home-sub { font-size: 0.66rem; color: #8a99a5; margin-top: 0.1rem; }
+
+  .hero { background: var(--ink); padding: 4rem 2rem 5.5rem; text-align: center; position: relative; overflow: hidden; }
+  .hero::before { content: ''; position: absolute; inset: 0; background: radial-gradient(ellipse 60% 70% at 15% 50%, rgba(45,138,78,0.15) 0%, transparent 60%); pointer-events: none; }
+  .hero-eyebrow { display: inline-flex; font-size: 0.7rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.2em; color: #a8d5a0; margin-bottom: 1.25rem; padding: 0.35rem 1.1rem; border-radius: 100px; border: 1px solid rgba(168,213,160,0.3); background: rgba(168,213,160,0.08); position: relative; }
+  .hero h1 { font-size: clamp(2.2rem, 5.5vw, 3.6rem); color: white; line-height: 1.05; max-width: 680px; margin: 0 auto 1rem; font-weight: 800; letter-spacing: -0.03em; position: relative; }
+  .hero h1 em { font-style: italic; color: #a8d5a0; font-weight: 300; }
+  .hero p { color: rgba(255,255,255,0.45); font-size: 1rem; max-width: 460px; margin: 0 auto; line-height: 1.75; position: relative; }
+
+  .container { max-width: 580px; margin: -3rem auto 0; padding: 0 1rem 5rem; position: relative; z-index: 2; }
+  .card { background: var(--surface); border-radius: 20px; padding: 1.75rem 1.5rem; box-shadow: 0 1px 3px rgba(0,0,0,0.03), 0 4px 20px rgba(0,0,0,0.04); margin-bottom: 1rem; }
+  .card-title { font-size: 1.4rem; font-weight: 800; letter-spacing: -0.02em; margin-bottom: 0.3rem; }
+  .card-sub { color: var(--ink-muted); font-size: 0.9rem; margin-bottom: 1.5rem; line-height: 1.6; }
+  .section-sep { border-top: 1px solid var(--border); padding-top: 1.25rem; margin-top: 0.75rem; }
+
+  .slider-group { margin-bottom: 1.4rem; }
+  .slider-row { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 0.45rem; }
+  .slider-label { font-size: 0.85rem; font-weight: 700; }
+  .slider-val { font-size: 1.05rem; font-weight: 800; color: var(--accent); font-variant-numeric: tabular-nums; }
+  input[type="range"] { width: 100%; -webkit-appearance: none; appearance: none; height: 8px; background: rgba(0,0,0,0.06); border-radius: 100px; outline: none; cursor: pointer; }
+  input[type="range"]::-webkit-slider-thumb { -webkit-appearance: none; width: 24px; height: 24px; background: white; border: 2px solid var(--accent); border-radius: 50%; cursor: pointer; box-shadow: 0 1px 4px rgba(0,0,0,0.15); }
+  input[type="range"]::-moz-range-thumb { width: 24px; height: 24px; background: white; border: 2px solid var(--accent); border-radius: 50%; cursor: pointer; }
+  .hint { font-size: 0.74rem; color: var(--ink-muted); margin-top: 0.35rem; line-height: 1.5; }
+
+  .toggle-row { display: flex; align-items: center; gap: 0.75rem; cursor: pointer; user-select: none; padding: 0.25rem 0; }
+  .toggle-icon { font-size: 1.1rem; }
+  .toggle-label { flex: 1; font-size: 0.88rem; font-weight: 700; }
+  .toggle-pill { width: 44px; height: 26px; border-radius: 100px; background: rgba(0,0,0,0.1); position: relative; flex-shrink: 0; transition: background 0.2s; }
+  .toggle-pill.on { background: var(--accent); }
+  .toggle-pill-dot { width: 22px; height: 22px; border-radius: 50%; background: white; position: absolute; top: 2px; left: 2px; transition: left 0.2s; box-shadow: 0 1px 3px rgba(0,0,0,0.15); }
+  .toggle-pill.on .toggle-pill-dot { left: 20px; }
+
+  .pill-group { display: flex; gap: 0.4rem; flex-wrap: wrap; }
+  .pill { padding: 0.6rem 0.85rem; border: 1.5px solid #ddd; border-radius: 10px; cursor: pointer; font-size: 0.8rem; font-weight: 600; color: var(--ink-muted); font-family: 'Nunito', sans-serif; background: transparent; }
+  .pill:hover { border-color: var(--accent); }
+  .pill.sel { border-color: var(--accent); background: var(--accent-pale); color: var(--ink); font-weight: 700; }
+
+  .btn { width: 100%; padding: 0.95rem; border: none; border-radius: 100px; font-family: 'Nunito', sans-serif; font-size: 0.95rem; font-weight: 800; cursor: pointer; transition: all 0.15s; }
+  .btn-go { background: var(--accent); color: white; }
+  .btn-go:hover { background: #246e3e; transform: translateY(-1px); }
+  .btn-soft { background: transparent; color: var(--ink-soft); border: 1.5px solid var(--border); }
+  .btn-soft:hover { border-color: var(--ink); color: var(--ink); }
+  .btn-danger { background: transparent; color: var(--red); border: 1.5px solid #fecaca; font-size: 0.8rem; padding: 0.65rem; max-width: 200px; margin: 0 auto; }
+  .btn-row { display: flex; gap: 0.5rem; margin-top: 1rem; }
+
+  .tile-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.85rem; margin: 1rem 0; }
+  .tile { background: rgba(0,0,0,0.025); border-radius: 14px; padding: 0.85rem; text-align: center; }
+  .tile-lbl { font-size: 0.64rem; font-weight: 700; color: var(--ink-muted); text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 0.35rem; }
+  .tile-val { font-size: 1.25rem; font-weight: 800; color: var(--ink); letter-spacing: -0.02em; }
+  .tile-sub { font-size: 0.68rem; color: var(--ink-muted); margin-top: 0.2rem; }
+
+  .alert { border-radius: 12px; padding: 0.75rem 1rem; margin-top: 0.85rem; font-size: 0.82rem; line-height: 1.55; }
+  .alert strong { display: block; margin-bottom: 0.15rem; }
+  .alert.warn { background: #fffbeb; border: 1.5px solid #fde68a; color: #78350f; }
+  .alert.good { background: var(--accent-pale); border: 1.5px solid rgba(45,138,78,0.2); color: var(--accent); }
+  .alert.info { background: rgba(0,0,0,0.025); border: none; color: var(--ink-muted); font-size: 0.72rem; margin-top: 0.75rem; }
+
+  .calc-panel { text-align: left; margin-bottom: 1.25rem; padding: 1rem 1.1rem; border-radius: 14px; background: rgba(255,255,255,0.7); border: 1px solid rgba(0,0,0,0.08); font-size: 0.8rem; color: var(--ink-soft); line-height: 1.7; }
+  .calc-panel h4 { font-weight: 800; color: var(--ink); margin-bottom: 0.5rem; font-size: 0.88rem; }
+  .calc-step { margin-bottom: 0.6rem; }
+  .calc-step strong { color: var(--ink); }
+  .calc-sources { padding: 0.65rem 0.75rem; border-radius: 8px; background: rgba(0,0,0,0.04); font-size: 0.72rem; color: var(--ink-muted); line-height: 1.6; margin-top: 0.5rem; }
+
+  .legal { font-size: 0.7rem; color: var(--ink-muted); line-height: 1.6; text-align: center; margin-top: 1.25rem; }
+
+  /* VIEWS */
+  .view { display: none; }
+  .view.active { display: block; }
+
+  @media (max-width: 480px) {
+    header { padding: 1rem 1.25rem; }
+    .hero { padding: 3rem 1.25rem 4.5rem; }
+    .card { padding: 1.5rem 1.25rem; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="app-switcher" id="appSwitcher">
+    <div class="switcher-trigger" onclick="toggleSwitcher(event)">
+      <div class="app-name">My<em>Pulse</em></div>
+      <div class="chevron">&#9660;</div>
+    </div>
+    <div class="switcher-dropdown">
+      <a class="switcher-home" href="index.html" style="border-bottom:1px solid rgba(0,0,0,0.06);">
+        <div class="switcher-home-icon">&#127968;</div>
+        <div><div class="switcher-home-label">&#8592; MyPayPicture</div><div class="switcher-home-sub">Back to all tools</div></div>
+      </a>
+      <a class="switcher-home" href="financial-plan.html"><div class="switcher-home-icon">&#129517;</div><div><div class="switcher-home-label">MyFinancialPlan</div><div class="switcher-home-sub">Where do I stand?</div></div></a>
+      <a class="switcher-home" href="pension-optimiser.html"><div class="switcher-home-icon">&#128200;</div><div><div class="switcher-home-label">MyPensionOptimiser</div><div class="switcher-home-sub">Optimise your pension</div></div></a>
+      <a class="switcher-home" href="retirement-helper.html"><div class="switcher-home-icon">&#9749;</div><div><div class="switcher-home-label">MyRetirementHelper</div><div class="switcher-home-sub">Retirement readiness</div></div></a>
+      <a class="switcher-home" href="inheritance-tax.html"><div class="switcher-home-icon">&#127963;</div><div><div class="switcher-home-label">MyInheritanceTax</div><div class="switcher-home-sub">Estate &amp; IHT</div></div></a>
+      <a class="switcher-home" href="property-decision.html"><div class="switcher-home-icon">&#127968;</div><div><div class="switcher-home-label">MyPropertyDecision</div><div class="switcher-home-sub">Buy, let, or rent?</div></div></a>
+    </div>
+  </div>
+  <div class="disclaimer-badge">Guidance, not advice</div>
+</header>
+
+<div class="hero">
+  <div class="hero-eyebrow">MyPayPicture</div>
+  <h1>Am I <em>on track?</em></h1>
+  <p>Set up once. Check in monthly. We'll tell you if everything's alright.</p>
+</div>
+
+<div class="container">
+
+  <!-- ═══ SETUP VIEW ═══ -->
+  <div class="view" id="viewSetup">
+    <div class="card">
+      <div style="text-align:center; margin-bottom:1.5rem;">
+        <div style="font-size:2.5rem; margin-bottom:0.5rem;">&#127807;</div>
+        <div class="card-title">Set up your pulse check</div>
+        <div class="card-sub">Six numbers. 30 seconds. Then we'll tell you if everything's alright.</div>
+      </div>
+
+      <div class="slider-group">
+        <div class="slider-row"><div class="slider-label">Your age</div><div class="slider-val" id="lbl_age">35</div></div>
+        <input type="range" id="s_age" min="22" max="64" value="35" oninput="sync()">
+      </div>
+      <div class="slider-group">
+        <div class="slider-row"><div class="slider-label">Annual income</div><div class="slider-val" id="lbl_income">&#163;60,000</div></div>
+        <input type="range" id="s_income" min="20000" max="200000" step="2500" value="60000" oninput="sync()">
+        <div class="hint">Gross, before tax.</div>
+      </div>
+      <div class="slider-group">
+        <div class="slider-row"><div class="slider-label">Pension pot(s)</div><div class="slider-val" id="lbl_pot">&#163;30k</div></div>
+        <input type="range" id="s_pot" min="0" max="750000" step="5000" value="30000" oninput="sync()">
+        <div class="hint">All workplace + personal pensions combined.</div>
+      </div>
+      <div class="slider-group">
+        <div class="slider-row"><div class="slider-label">Monthly contribution (you + employer)</div><div class="slider-val" id="lbl_contrib">&#163;400/mo</div></div>
+        <input type="range" id="s_contrib" min="0" max="4000" step="50" value="400" oninput="sync()">
+      </div>
+      <div class="slider-group">
+        <div class="slider-row"><div class="slider-label">Target retirement age</div><div class="slider-val" id="lbl_retAge">67</div></div>
+        <input type="range" id="s_retAge" min="55" max="70" value="67" oninput="sync()">
+      </div>
+
+      <div class="slider-group">
+        <div class="slider-label" style="margin-bottom:0.5rem;">Growth assumption</div>
+        <div class="pill-group">
+          <button class="pill" data-g="0.02" onclick="pickGrowth(0.02)">Cautious 2%</button>
+          <button class="pill sel" data-g="0.04" onclick="pickGrowth(0.04)">Balanced 4%</button>
+          <button class="pill" data-g="0.06" onclick="pickGrowth(0.06)">Ambitious 6%</button>
+        </div>
+        <div class="hint">Real returns, after inflation.</div>
+      </div>
+
+      <!-- Home toggle -->
+      <div class="section-sep">
+        <div class="toggle-row" onclick="toggleHome()">
+          <div class="toggle-icon">&#127968;</div>
+          <div class="toggle-label">I own a home</div>
+          <div class="toggle-pill" id="homeToggle"><div class="toggle-pill-dot"></div></div>
+        </div>
+      </div>
+      <div id="homeFields" style="display:none; padding-top:0.75rem;">
+        <div class="slider-group">
+          <div class="slider-row"><div class="slider-label">Home value</div><div class="slider-val" id="lbl_homeVal">&#163;300k</div></div>
+          <input type="range" id="s_homeVal" min="50000" max="1500000" step="10000" value="300000" oninput="sync()">
+        </div>
+        <div class="slider-group">
+          <div class="slider-row"><div class="slider-label">Mortgage remaining</div><div class="slider-val" id="lbl_mortgage">&#163;200k</div></div>
+          <input type="range" id="s_mortgage" min="0" max="1000000" step="5000" value="200000" oninput="sync()">
+        </div>
+        <div class="slider-group">
+          <div class="slider-row"><div class="slider-label">Monthly payment</div><div class="slider-val" id="lbl_mortPay">&#163;1,200/mo</div></div>
+          <input type="range" id="s_mortPay" min="0" max="4000" step="50" value="1200" oninput="sync()">
+        </div>
+        <div class="slider-group">
+          <div class="slider-row"><div class="slider-label">Mortgage rate</div><div class="slider-val" id="lbl_mortRate">4.5%</div></div>
+          <input type="range" id="s_mortRate" min="1" max="8" step="0.1" value="4.5" oninput="sync()">
+        </div>
+        <div class="slider-group">
+          <div class="slider-row"><div class="slider-label">Years left</div><div class="slider-val" id="lbl_mortYrs">22 yrs</div></div>
+          <input type="range" id="s_mortYrs" min="1" max="35" value="22" oninput="sync()">
+        </div>
+      </div>
+
+      <!-- ISA toggle -->
+      <div class="section-sep">
+        <div class="toggle-row" onclick="toggleISA()">
+          <div class="toggle-icon">&#128200;</div>
+          <div class="toggle-label">I invest in a stocks &amp; shares ISA</div>
+          <div class="toggle-pill" id="isaToggle"><div class="toggle-pill-dot"></div></div>
+        </div>
+      </div>
+      <div id="isaFields" style="display:none; padding-top:0.75rem;">
+        <div class="slider-group">
+          <div class="slider-row"><div class="slider-label">Current ISA value</div><div class="slider-val" id="lbl_isaVal">&#163;0</div></div>
+          <input type="range" id="s_isaVal" min="0" max="500000" step="1000" value="0" oninput="sync()">
+        </div>
+        <div class="slider-group">
+          <div class="slider-row"><div class="slider-label">Monthly ISA contribution</div><div class="slider-val" id="lbl_isaMo">&#163;200/mo</div></div>
+          <input type="range" id="s_isaMo" min="0" max="1667" step="25" value="200" oninput="sync()">
+          <div class="hint">ISA allowance is &#163;20,000/yr (~&#163;1,667/mo max).</div>
+        </div>
+      </div>
+
+      <button class="btn btn-go" style="margin-top:1.5rem;" onclick="saveSetup()">Show me where I stand &#8594;</button>
+      <div class="legal" style="margin-top:0.75rem;">Your data stays in your browser. Nothing is sent anywhere.</div>
+    </div>
+  </div>
+
+  <!-- ═══ DASHBOARD VIEW ═══ -->
+  <div class="view" id="viewDash">
+
+    <!-- Verdict hero -->
+    <div class="card" id="verdictCard" style="text-align:center; padding:2rem 1.5rem; position:relative;">
+      <button onclick="toggleCalc()" id="calcBtn" style="position:absolute; top:1rem; right:1rem; width:32px; height:32px; border-radius:50%; border:none; background:rgba(0,0,0,0.06); color:var(--ink-muted); font-size:0.9rem; cursor:pointer; font-weight:700;">?</button>
+      <div id="calcPanel" style="display:none;"></div>
+      <div style="position:relative; width:140px; height:140px; margin:0 auto 1.25rem;">
+        <svg width="140" height="140" viewBox="0 0 140 140" style="transform:rotate(-90deg)">
+          <circle cx="70" cy="70" r="58" fill="none" stroke="rgba(0,0,0,0.06)" stroke-width="10" />
+          <circle cx="70" cy="70" r="58" fill="none" id="ringArc" stroke="#2d8a4e" stroke-width="10" stroke-dasharray="364.4" stroke-dashoffset="364.4" stroke-linecap="round" style="transition:stroke-dashoffset 0.6s ease" />
+        </svg>
+        <div style="position:absolute; inset:0; display:flex; align-items:center; justify-content:center; flex-direction:column;">
+          <div style="font-size:1.8rem;" id="ringEmoji">&#127807;</div>
+          <div style="font-size:0.75rem; font-weight:700; margin-top:0.15rem;" id="ringPct">0%</div>
+        </div>
+      </div>
+      <h2 style="font-size:1.35rem; font-weight:800; margin-bottom:0.5rem; letter-spacing:-0.02em;" id="verdictTitle"></h2>
+      <p style="font-size:0.9rem; color:var(--ink-soft); line-height:1.6; max-width:420px; margin:0 auto;" id="verdictBody"></p>
+    </div>
+
+    <!-- Key numbers -->
+    <div class="card">
+      <div class="tile-grid" id="keyTiles"></div>
+    </div>
+
+    <!-- ISA card -->
+    <div class="card" id="isaCard" style="display:none;">
+      <div style="font-size:0.85rem; font-weight:800; margin-bottom:0.85rem;">&#128200; Your stocks &amp; shares ISA</div>
+      <div class="tile-grid" id="isaTiles"></div>
+      <div id="isaAlerts"></div>
+      <div class="alert info">ISA growth is tax-free and withdrawals are tax-free. Unlike pensions, there is no age restriction &mdash; making ISAs the key tool for retiring before 57.</div>
+    </div>
+
+    <!-- Home card -->
+    <div class="card" id="homeCard" style="display:none;">
+      <div style="font-size:0.85rem; font-weight:800; margin-bottom:0.85rem;">&#127968; Your home &amp; total wealth</div>
+      <div class="tile-grid" id="homeTiles"></div>
+      <div id="homeAlerts"></div>
+      <div class="alert info">Home equity is wealth you own, but it is not spendable retirement income unless you downsize or use equity release. Your retirement income projection counts only your pension and State Pension.</div>
+    </div>
+
+    <!-- Change since last check-in -->
+    <div class="card" id="changeCard" style="display:none;"></div>
+
+    <!-- History -->
+    <div class="card" id="historyCard" style="display:none;">
+      <div style="font-size:0.85rem; font-weight:800; margin-bottom:0.85rem;">Your journey</div>
+      <canvas id="sparkCanvas" style="width:100%; height:80px; display:block;"></canvas>
+      <div style="display:flex; justify-content:space-between; margin-top:0.5rem; font-size:0.68rem; color:var(--ink-muted);">
+        <span id="histStart"></span><span id="histEnd"></span>
+      </div>
+    </div>
+
+    <!-- Check-in / edit -->
+    <div id="checkinArea"></div>
+
+    <!-- Footer -->
+    <div style="text-align:center; padding:1.5rem 0 0;">
+      <div class="legal" id="dashLegal"></div>
+      <button class="btn btn-danger" style="margin-top:1rem;" onclick="resetAll()">Reset everything</button>
+    </div>
+  </div>
+
+</div>
+
+<script>
+  // ── CONFIG ─────────────────────────────────────────────────────────────────
+  var SP = 11973, SP_AGE = 67, SWR = 0.04, LUMP_CAP = 268275;
+  var TRR = [{m:15000,r:0.80},{m:27500,r:0.70},{m:39300,r:0.67},{m:62800,r:0.60},{m:Infinity,r:0.50}];
+
+  function trr(inc){ for(var i=0;i<TRR.length;i++) if(inc<=TRR[i].m) return TRR[i].r; return 0.5; }
+  function proj(p,c,g,y){ var mr=Math.pow(1+g,1/12)-1, m=Math.round(y*12); if(m<=0) return p; return p*Math.pow(1+mr,m)+(mr===0?c*m:c*(Math.pow(1+mr,m)-1)/mr); }
+  function fmt(n){ return '\u00a3'+Math.round(n).toLocaleString('en-GB'); }
+  function fmtK(n){ return n>=1e6?'\u00a3'+(n/1e6).toFixed(1).replace(/\.0$/,'')+'m':n>=1000?'\u00a3'+Math.round(n/1000)+'k':fmt(n); }
+  function moName(d){ return new Date(d).toLocaleDateString('en-GB',{month:'short',year:'numeric'}); }
+
+  // ── STATE ──────────────────────────────────────────────────────────────────
+  var profile = null, history = [], growth = 0.04, hasHome = false, hasISA = false, editing = false, showCalc = false;
+
+  function toggleSwitcher(e){ e.stopPropagation(); document.getElementById('appSwitcher').classList.toggle('open'); }
+  document.addEventListener('click', function(){ document.getElementById('appSwitcher').classList.remove('open'); });
+
+  // ── LOAD ───────────────────────────────────────────────────────────────────
+  function load(){
+    try {
+      var p = localStorage.getItem('pulse-profile');
+      var h = localStorage.getItem('pulse-history');
+      if(p){ profile = JSON.parse(p); history = h ? JSON.parse(h) : []; hasHome = !!profile.hasHome; hasISA = !!profile.hasISA; growth = profile.growth || 0.04; showView('dash'); }
+      else { showView('setup'); }
+    } catch(e){ showView('setup'); }
+  }
+  function save(){ try{ localStorage.setItem('pulse-profile', JSON.stringify(profile)); localStorage.setItem('pulse-history', JSON.stringify(history)); }catch(e){} }
+
+  function showView(v){
+    document.getElementById('viewSetup').classList.toggle('active', v==='setup');
+    document.getElementById('viewDash').classList.toggle('active', v==='dash');
+    if(v==='setup') syncSliders();
+    if(v==='dash') renderDash();
+  }
+
+  // ── SYNC SLIDERS ───────────────────────────────────────────────────────────
+  function sync(){ syncSliders(); }
+  function syncSliders(){
+    var ids = [['s_age','lbl_age',0],['s_income','lbl_income',1],['s_pot','lbl_pot',2],['s_contrib','lbl_contrib',3],['s_retAge','lbl_retAge',0],['s_homeVal','lbl_homeVal',2],['s_mortgage','lbl_mortgage',2],['s_mortPay','lbl_mortPay',3],['s_mortRate','lbl_mortRate',4],['s_mortYrs','lbl_mortYrs',5],['s_isaVal','lbl_isaVal',2],['s_isaMo','lbl_isaMo',3]];
+    ids.forEach(function(x){
+      var el=document.getElementById(x[0]), lb=document.getElementById(x[1]);
+      if(!el||!lb) return;
+      var v=parseFloat(el.value);
+      if(x[2]===0) lb.textContent=v;
+      else if(x[2]===1) lb.textContent=fmt(v);
+      else if(x[2]===2) lb.textContent=fmtK(v);
+      else if(x[2]===3) lb.textContent=fmt(v)+'/mo';
+      else if(x[2]===4) lb.textContent=v.toFixed(1)+'%';
+      else if(x[2]===5) lb.textContent=v+' yrs';
+    });
+  }
+  function pickGrowth(g){
+    growth=g;
+    document.querySelectorAll('.pill[data-g]').forEach(function(p){ p.classList.toggle('sel', parseFloat(p.dataset.g)===g); });
+  }
+  function toggleHome(){ hasHome=!hasHome; document.getElementById('homeToggle').classList.toggle('on',hasHome); document.getElementById('homeFields').style.display=hasHome?'block':'none'; }
+  function toggleISA(){ hasISA=!hasISA; document.getElementById('isaToggle').classList.toggle('on',hasISA); document.getElementById('isaFields').style.display=hasISA?'block':'none'; }
+
+  // ── READ INPUTS ────────────────────────────────────────────────────────────
+  function readInputs(){
+    return {
+      age: parseInt(document.getElementById('s_age').value),
+      income: parseFloat(document.getElementById('s_income').value),
+      pot: parseFloat(document.getElementById('s_pot').value),
+      contrib: parseFloat(document.getElementById('s_contrib').value),
+      retAge: parseInt(document.getElementById('s_retAge').value),
+      growth: growth, hasHome: hasHome, hasISA: hasISA,
+      homeVal: hasHome ? parseFloat(document.getElementById('s_homeVal').value) : 0,
+      mortgage: hasHome ? parseFloat(document.getElementById('s_mortgage').value) : 0,
+      mortPay: hasHome ? parseFloat(document.getElementById('s_mortPay').value) : 0,
+      mortRate: hasHome ? parseFloat(document.getElementById('s_mortRate').value) : 0,
+      mortYrs: hasHome ? parseInt(document.getElementById('s_mortYrs').value) : 0,
+      isaVal: hasISA ? parseFloat(document.getElementById('s_isaVal').value) : 0,
+      isaMo: hasISA ? parseFloat(document.getElementById('s_isaMo').value) : 0
+    };
+  }
+
+  // ── COMPUTE ────────────────────────────────────────────────────────────────
+  function compute(p){
+    var yrs = Math.max(0.5, p.retAge - p.age);
+    var pot = proj(p.pot, p.contrib, p.growth, yrs);
+    var lump = Math.min(pot*0.25, LUMP_CAP);
+    var dd = pot * SWR;
+    var inc = dd + SP;
+    var rate = trr(p.income);
+    var target = p.income * rate;
+    var ratio = target>0 ? inc/target : 0;
+    // Home
+    var eq = p.hasHome ? Math.max(0, p.homeVal - p.mortgage) : 0;
+    var projHome = p.homeVal * Math.pow(1.03, yrs);
+    var mortAtRet = 0;
+    if(p.hasHome && p.mortgage>0 && p.mortPay>0){
+      var mr = (p.mortRate/100)/12;
+      var mn = Math.round(Math.min(yrs, p.mortYrs)*12);
+      if(mr>0 && mn>0){ var f=Math.pow(1+mr,mn); mortAtRet=Math.max(0, p.mortgage*f - p.mortPay*(f-1)/mr); }
+      else if(mn>0) mortAtRet=Math.max(0, p.mortgage - p.mortPay*mn);
+      else mortAtRet=p.mortgage;
+    }
+    var projEq = p.hasHome ? Math.max(0, projHome - mortAtRet) : 0;
+    var mortFree = p.hasHome && mortAtRet < 100;
+    var intNow = p.hasHome && (p.mortRate/100)/12>0 ? p.mortgage * (p.mortRate/100)/12 : 0;
+    var prinNow = p.hasHome ? Math.max(0, p.mortPay - intNow) : 0;
+    // ISA
+    var projISA = p.hasISA ? proj(p.isaVal, p.isaMo, p.growth, yrs) : 0;
+    var isaDd = projISA * SWR;
+    var isaAnn = p.isaMo * 12;
+    var isaOver = isaAnn > 20000;
+    var earlyRet = p.retAge < 57;
+    var bridgeYrs = earlyRet ? 57 - p.retAge : 0;
+    var bridgeCost = bridgeYrs > 0 ? target * bridgeYrs : 0;
+    var bridgeFunded = bridgeYrs > 0 ? projISA >= bridgeCost : true;
+    var totalInc = inc + isaDd;
+    var nw = p.pot + eq + (p.hasISA ? p.isaVal : 0);
+    var projNW = pot + projEq + projISA;
+    return { pot:pot, lump:lump, dd:dd, inc:inc, rate:rate, target:target, ratio:ratio, yrs:yrs,
+             eq:eq, projHome:projHome, projEq:projEq, mortAtRet:mortAtRet, mortFree:mortFree,
+             intNow:intNow, prinNow:prinNow,
+             projISA:projISA, isaDd:isaDd, isaAnn:isaAnn, isaOver:isaOver,
+             earlyRet:earlyRet, bridgeYrs:bridgeYrs, bridgeCost:bridgeCost, bridgeFunded:bridgeFunded,
+             totalInc:totalInc, nw:nw, projNW:projNW };
+  }
+
+  // ── VERDICTS ───────────────────────────────────────────────────────────────
+  function verdict(ratio){
+    if(ratio>=1.1) return {e:'\u2600\ufe0f',h:'You\'re ahead of target',b:'Your pension is tracking above where it needs to be. Keep doing exactly what you\'re doing.',c:'#2d8a4e',bg:'var(--accent-pale)'};
+    if(ratio>=1.0) return {e:'\ud83c\udf3f',h:'Everything is on track',b:'You\'re meeting your target. Nothing to change, nothing to worry about. Just keep going.',c:'#2d8a4e',bg:'var(--accent-warm)'};
+    if(ratio>=0.85) return {e:'\ud83c\udf24\ufe0f',h:'Nearly there \u2014 a small nudge would do it',b:'You\'re close. A modest increase would close the gap, but you\'re not in trouble.',c:'var(--gold)',bg:'var(--gold-pale)'};
+    if(ratio>=0.7) return {e:'\ud83c\udf25\ufe0f',h:'Worth a check-in',b:'You\'re behind target, but there\'s time. Increasing contributions or adjusting your timeline would help.',c:'var(--amber)',bg:'var(--amber-pale)'};
+    return {e:'\ud83c\udf27\ufe0f',h:'Needs attention',b:'Your projected income is well below target. This is fixable, but benefits from an adviser conversation.',c:'var(--red)',bg:'var(--red-pale)'};
+  }
+
+  // ── SAVE / CHECK-IN ────────────────────────────────────────────────────────
+  function saveSetup(){
+    var p = readInputs(); p.savedAt = new Date().toISOString();
+    profile = p;
+    var r = compute(p);
+    history = [{ date:p.savedAt, income:r.totalInc, ratio:r.ratio, pot:p.pot, nw:r.nw }];
+    save(); showView('dash');
+    gaEvent('tool_started',{tool:'MyPulse'});
+  }
+  function doCheckIn(){
+    var p = readInputs(); p.savedAt = new Date().toISOString();
+    profile = p;
+    var r = compute(p);
+    history.push({ date:p.savedAt, income:r.totalInc, ratio:r.ratio, pot:p.pot, nw:r.nw });
+    if(history.length>24) history = history.slice(-24);
+    save(); editing=false; renderDash();
+    gaEvent('tool_completed',{tool:'MyPulse'});
+  }
+  function resetAll(){ localStorage.removeItem('pulse-profile'); localStorage.removeItem('pulse-history'); profile=null; history=[]; hasHome=false; hasISA=false; growth=0.04; editing=false; showView('setup'); }
+
+  // ── RENDER DASHBOARD ───────────────────────────────────────────────────────
+  function renderDash(){
+    if(!profile) return;
+    var r = compute(profile);
+    var v = verdict(r.ratio);
+    var pct = Math.min(100, Math.round(r.ratio*100));
+    // Verdict
+    document.getElementById('verdictCard').style.background = v.bg;
+    document.getElementById('ringArc').setAttribute('stroke', v.c);
+    document.getElementById('ringArc').setAttribute('stroke-dashoffset', 364.4 - (pct/100)*364.4);
+    document.getElementById('ringEmoji').innerHTML = v.e;
+    document.getElementById('ringPct').textContent = pct+'%';
+    document.getElementById('ringPct').style.color = v.c;
+    document.getElementById('verdictTitle').textContent = v.h;
+    document.getElementById('verdictTitle').style.color = v.c;
+    document.getElementById('verdictBody').textContent = v.b;
+    // Calc panel
+    var cp = '<div class="calc-panel"><h4>How this is calculated</h4>';
+    cp += '<div class="calc-step"><strong>1. Pension projected forward</strong><br>Starting pot '+fmtK(profile.pot)+' + '+fmt(profile.contrib)+'/mo, at '+Math.round(profile.growth*100)+'% real growth, compounded monthly, for '+Math.round(r.yrs)+' years to age '+profile.retAge+'.<br>Projected pot: <strong>'+fmtK(r.pot)+'</strong></div>';
+    cp += '<div class="calc-step"><strong>2. Sustainable income</strong><br>4% drawdown: '+fmtK(r.pot)+' &times; 4% = <strong>'+fmt(r.dd)+'/yr</strong></div>';
+    cp += '<div class="calc-step"><strong>3. State Pension</strong><br>Full new State Pension '+fmt(SP)+'/yr (requires ~35 NI years).<br>Pension income: '+fmt(r.dd)+' + '+fmt(SP)+' = <strong>'+fmt(r.inc)+'/yr</strong></div>';
+    if(profile.hasISA) cp += '<div class="calc-step"><strong>4. ISA drawdown</strong><br>ISA projected to '+fmtK(r.projISA)+'. At 4%: <strong>'+fmt(r.isaDd)+'/yr</strong> (tax-free).<br>Total income: <strong>'+fmt(r.totalInc)+'/yr</strong></div>';
+    var stepN = profile.hasISA ? 5 : 4;
+    cp += '<div class="calc-step"><strong>'+stepN+'. Compared to your target</strong><br>Pensions Commission Target Replacement Rate for '+fmt(profile.income)+'/yr is '+Math.round(r.rate*100)+'% = <strong>'+fmt(r.target)+'/yr</strong> needed.<br>You are at <strong>'+pct+'%</strong> of target.</div>';
+    cp += '<div class="calc-sources"><strong>Sources:</strong> Target Replacement Rates from the Pensions Commission (2004), earnings bands uprated per PPI/Pensions UK (2025). 4% withdrawal is a rule of thumb. State Pension is the 2026/27 full rate. All figures in today\'s money.</div>';
+    cp += '</div>';
+    document.getElementById('calcPanel').innerHTML = cp;
+    // Key tiles
+    var kh = '';
+    kh += tile('Projected income', fmt(profile.hasISA ? r.totalInc : r.inc)+'/yr', Math.round(r.rate*100)+'% target: '+fmt(r.target)+'/yr');
+    kh += tile('Pension pot at '+profile.retAge, fmtK(r.pot), Math.round(profile.growth*100)+'% real growth');
+    kh += tile('Tax-free lump sum', fmtK(r.lump), '25%, capped \u00a3268,275');
+    kh += tile('Years to go', Math.round(r.yrs), 'retiring at '+profile.retAge);
+    document.getElementById('keyTiles').innerHTML = kh;
+    // ISA
+    document.getElementById('isaCard').style.display = profile.hasISA ? 'block' : 'none';
+    if(profile.hasISA){
+      var ih = tile('ISA value today', fmtK(profile.isaVal), fmt(profile.isaMo)+'/mo going in');
+      ih += tile('ISA at '+profile.retAge, fmtK(r.projISA), Math.round(profile.growth*100)+'% real growth');
+      ih += tile('ISA income (4%)', fmt(r.isaDd)+'/yr', 'tax-free, accessible anytime');
+      ih += tile('Total net worth', fmtK(r.nw), 'pension + ISA'+(profile.hasHome?' + home':''));
+      document.getElementById('isaTiles').innerHTML = ih;
+      var ia = '';
+      if(r.earlyRet) ia += '<div class="alert '+(r.bridgeFunded?'good':'warn')+'"><strong>'+(r.bridgeFunded?'\u2713 ':'&#9888;&#65039; ')+'Early retirement bridge ('+r.bridgeYrs+' years)</strong>Pensions are locked until 57. Your ISA needs ~'+fmtK(r.bridgeCost)+' for those years. '+(r.bridgeFunded?'Your projected ISA covers this.':'Consider increasing your ISA contribution.')+'</div>';
+      if(r.isaOver) ia += '<div class="alert warn"><strong>Heads up</strong>'+fmt(r.isaAnn)+'/yr exceeds the \u00a320,000 ISA allowance. Excess would go into a taxable GIA.</div>';
+      document.getElementById('isaAlerts').innerHTML = ia;
+    }
+    // Home
+    document.getElementById('homeCard').style.display = profile.hasHome ? 'block' : 'none';
+    if(profile.hasHome){
+      var hh = tile('Home equity today', fmtK(r.eq), fmtK(profile.homeVal)+' \u2212 '+fmtK(profile.mortgage));
+      hh += tile('Equity at '+profile.retAge, fmtK(r.projEq), r.mortFree?'\u2713 mortgage-free':fmtK(r.mortAtRet)+' still owed');
+      hh += tile('Net worth today', fmtK(r.nw), 'pension'+(profile.hasISA?' + ISA':'')+' + home');
+      hh += tile('Net worth at '+profile.retAge, fmtK(r.projNW), 'projected total wealth');
+      document.getElementById('homeTiles').innerHTML = hh;
+      var ha = '';
+      if(profile.mortgage>0 && r.intNow>0) ha += '<div class="alert info">Of your '+fmt(profile.mortPay)+'/mo at '+(profile.mortRate).toFixed(1)+'%, about <strong style="color:var(--accent)">'+fmt(r.prinNow)+'</strong> builds equity and <strong style="color:var(--amber)">'+fmt(r.intNow)+'</strong> is interest right now.</div>';
+      if(!r.mortFree) ha += '<div class="alert warn"><strong>Heads up</strong>Your mortgage runs past your target retirement age. PLSA benchmarks assume mortgage-free retirement. Consider modest overpayments or shortening the term at your next remortgage.</div>';
+      document.getElementById('homeAlerts').innerHTML = ha;
+    }
+    // Change
+    var cc = document.getElementById('changeCard');
+    if(history.length>1){
+      var prev = history[history.length-2], curr = history[history.length-1];
+      var diff = curr.income - prev.income;
+      var dpct = prev.income>0 ? (diff/prev.income)*100 : 0;
+      var icon = Math.abs(dpct)<1 ? '\u27a1\ufe0f' : diff>0 ? '\ud83d\udcc8' : '\ud83d\udcc9';
+      var txt = Math.abs(dpct)<1 ? 'Steady as she goes \u2014 no meaningful change.' : diff>0 ? 'Your projected income is up '+fmt(diff)+'/yr since last time (+'+dpct.toFixed(1)+'%). The contributions are working.' : 'Your projected income dipped '+fmt(-diff)+'/yr ('+dpct.toFixed(1)+'%). Markets move \u2014 this is normal over short periods.';
+      cc.style.display = 'block';
+      cc.innerHTML = '<div style="display:flex; align-items:flex-start; gap:0.75rem;"><div style="font-size:1.2rem;">'+icon+'</div><div><div style="font-size:0.82rem; font-weight:800; margin-bottom:0.2rem;">Since '+moName(prev.date)+'</div><div style="font-size:0.82rem; color:var(--ink-soft); line-height:1.55;">'+txt+'</div></div></div>';
+    } else { cc.style.display='none'; }
+    // History sparkline
+    var hc = document.getElementById('historyCard');
+    if(history.length>1){
+      hc.style.display='block';
+      document.getElementById('histStart').textContent = moName(history[0].date);
+      document.getElementById('histEnd').textContent = moName(history[history.length-1].date);
+      drawSpark(r.target);
+    } else { hc.style.display='none'; }
+    // Check-in area
+    var days = history.length>0 ? Math.floor((Date.now()-new Date(history[history.length-1].date).getTime())/86400000) : 0;
+    var due = days >= 25;
+    var ca = document.getElementById('checkinArea');
+    if(editing){
+      var eh = '<div class="card"><div style="font-size:0.95rem; font-weight:800; margin-bottom:1rem;">Update your numbers</div>';
+      eh += slider('s_age','lbl_age','Your age',profile.age,22,64,1,0);
+      eh += slider('s_pot','lbl_pot','Pension pot(s) now',profile.pot,0,750000,5000,2);
+      eh += slider('s_contrib','lbl_contrib','Monthly contribution',profile.contrib,0,4000,50,3);
+      if(profile.hasHome){
+        eh += '<div style="border-top:1px solid var(--border); padding-top:1rem; margin-top:0.5rem;"><div style="font-size:0.82rem; font-weight:800; margin-bottom:0.85rem;">&#127968; Home update</div>';
+        eh += slider('s_homeVal','lbl_homeVal','Home value',profile.homeVal,50000,1500000,10000,2);
+        eh += slider('s_mortgage','lbl_mortgage','Mortgage remaining',profile.mortgage,0,1000000,5000,2);
+        eh += slider('s_mortRate','lbl_mortRate','Rate',profile.mortRate,1,8,0.1,4);
+        eh += '</div>';
+      }
+      if(profile.hasISA){
+        eh += '<div style="border-top:1px solid var(--border); padding-top:1rem; margin-top:0.5rem;"><div style="font-size:0.82rem; font-weight:800; margin-bottom:0.85rem;">&#128200; ISA update</div>';
+        eh += slider('s_isaVal','lbl_isaVal','ISA value now',profile.isaVal,0,500000,1000,2);
+        eh += slider('s_isaMo','lbl_isaMo','Monthly ISA contribution',profile.isaMo,0,1667,25,3);
+        eh += '</div>';
+      }
+      eh += '<div class="btn-row"><button class="btn btn-soft" style="flex:1;" onclick="editing=false;renderDash();">Cancel</button><button class="btn btn-go" style="flex:1;" onclick="doCheckIn()">Save check-in</button></div></div>';
+      ca.innerHTML = eh;
+      syncSliders();
+    } else if(due){
+      ca.innerHTML = '<div class="card" style="background:var(--accent-pale); text-align:center; padding:1.5rem;"><div style="font-size:1.5rem; margin-bottom:0.5rem;">&#128260;</div><div style="font-size:0.95rem; font-weight:800; margin-bottom:0.35rem;">Time for a check-in</div><div style="font-size:0.82rem; color:var(--ink-soft); margin-bottom:1rem; line-height:1.5;">It\'s been '+days+' days since your last update. Check your pension app and update your pot.</div><button class="btn btn-go" style="max-width:280px; margin:0 auto;" onclick="startEdit()">Update my numbers</button></div>';
+    } else {
+      ca.innerHTML = '<div style="text-align:center; padding:0.5rem 0;"><button class="btn btn-soft" style="max-width:280px; margin:0 auto;" onclick="startEdit()">Update my numbers</button><div style="font-size:0.72rem; color:var(--ink-muted); margin-top:0.5rem;">Last updated '+(days===0?'today':days===1?'yesterday':days+' days ago')+'</div></div>';
+    }
+    // Legal
+    document.getElementById('dashLegal').textContent = 'Guidance, not financial advice. Projections use '+Math.round(profile.growth*100)+'% real growth, 4% sustainable withdrawal, and full State Pension (\u00a311,973/yr). Target based on Pensions Commission replacement rates. Capital is at risk. See an FCA-regulated adviser for personal recommendations.';
+  }
+
+  function startEdit(){
+    editing = true;
+    // Restore sliders to profile values
+    setSlider('s_age', profile.age);
+    setSlider('s_income', profile.income);
+    setSlider('s_pot', profile.pot);
+    setSlider('s_contrib', profile.contrib);
+    setSlider('s_retAge', profile.retAge);
+    if(profile.hasHome){
+      setSlider('s_homeVal', profile.homeVal);
+      setSlider('s_mortgage', profile.mortgage);
+      setSlider('s_mortPay', profile.mortPay);
+      setSlider('s_mortRate', profile.mortRate);
+      setSlider('s_mortYrs', profile.mortYrs);
+    }
+    if(profile.hasISA){
+      setSlider('s_isaVal', profile.isaVal);
+      setSlider('s_isaMo', profile.isaMo);
+    }
+    growth = profile.growth;
+    hasHome = profile.hasHome;
+    hasISA = profile.hasISA;
+    renderDash();
+  }
+  function setSlider(id,v){ var el=document.getElementById(id); if(el) el.value=v; }
+
+  function toggleCalc(){
+    showCalc = !showCalc;
+    document.getElementById('calcPanel').style.display = showCalc ? 'block' : 'none';
+  }
+
+  // ── HELPERS ────────────────────────────────────────────────────────────────
+  function tile(lbl,val,sub){ return '<div class="tile"><div class="tile-lbl">'+lbl+'</div><div class="tile-val">'+val+'</div>'+(sub?'<div class="tile-sub">'+sub+'</div>':'')+'</div>'; }
+  function slider(id,lblId,label,val,min,max,step,fmt){
+    var fmtVal;
+    if(fmt===0) fmtVal=val;
+    else if(fmt===1) fmtVal='\u00a3'+Math.round(val).toLocaleString('en-GB');
+    else if(fmt===2) fmtVal=fmtK(val);
+    else if(fmt===3) fmtVal='\u00a3'+Math.round(val).toLocaleString('en-GB')+'/mo';
+    else if(fmt===4) fmtVal=parseFloat(val).toFixed(1)+'%';
+    else fmtVal=val;
+    return '<div class="slider-group"><div class="slider-row"><div class="slider-label">'+label+'</div><div class="slider-val" id="'+lblId+'">'+fmtVal+'</div></div><input type="range" id="'+id+'" min="'+min+'" max="'+max+'" step="'+step+'" value="'+val+'" oninput="sync()"></div>';
+  }
+
+  // ── SPARKLINE ──────────────────────────────────────────────────────────────
+  function drawSpark(target){
+    var canvas = document.getElementById('sparkCanvas');
+    if(!canvas || history.length<2) return;
+    var ctx = canvas.getContext('2d');
+    var dpr = window.devicePixelRatio || 1;
+    var W = canvas.offsetWidth, H = 80;
+    canvas.width = W*dpr; canvas.height = H*dpr; ctx.scale(dpr,dpr);
+    ctx.clearRect(0,0,W,H);
+    var pad={l:4,r:4,t:8,b:8}, cW=W-pad.l-pad.r, cH=H-pad.t-pad.b;
+    var vals = history.map(function(h){return h.income;});
+    var maxV = Math.max(target*1.2, Math.max.apply(null,vals));
+    var xP=function(i){return pad.l+(i/(vals.length-1))*cW;};
+    var yP=function(v){return pad.t+cH-((v)/(maxV))*cH;};
+    // Target line
+    ctx.beginPath(); ctx.setLineDash([4,3]); ctx.strokeStyle='rgba(0,0,0,0.15)'; ctx.lineWidth=1;
+    ctx.moveTo(pad.l,yP(target)); ctx.lineTo(pad.l+cW,yP(target)); ctx.stroke(); ctx.setLineDash([]);
+    // Area
+    ctx.beginPath(); ctx.moveTo(xP(0),pad.t+cH);
+    vals.forEach(function(v,i){ctx.lineTo(xP(i),yP(v));}); ctx.lineTo(xP(vals.length-1),pad.t+cH); ctx.closePath();
+    ctx.fillStyle='rgba(45,138,78,0.08)'; ctx.fill();
+    // Line
+    ctx.beginPath(); ctx.strokeStyle='#2d8a4e'; ctx.lineWidth=2.5; ctx.lineJoin='round'; ctx.lineCap='round';
+    vals.forEach(function(v,i){ i===0?ctx.moveTo(xP(i),yP(v)):ctx.lineTo(xP(i),yP(v)); }); ctx.stroke();
+    // Dots
+    vals.forEach(function(v,i){
+      ctx.beginPath(); ctx.arc(xP(i),yP(v),i===vals.length-1?4:2.5,0,Math.PI*2);
+      ctx.fillStyle=i===vals.length-1?'#2d8a4e':'#fff'; ctx.fill();
+      ctx.strokeStyle='#2d8a4e'; ctx.lineWidth=1.5; ctx.stroke();
+    });
+    // Target label
+    ctx.fillStyle='rgba(0,0,0,0.35)'; ctx.font='8px Nunito,sans-serif'; ctx.textAlign='end';
+    ctx.fillText('target',pad.l+cW,yP(target)-4);
+  }
+
+  // ── INIT ───────────────────────────────────────────────────────────────────
+  load();
+</script>
+
+<!-- canonical footer -->
+<footer style="background:#314855; padding:2.5rem; border-top:3px solid #ffdb00; margin-top:2rem;">
+  <div style="max-width:920px; margin:0 auto; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:1rem;">
+    <div style="font-family:'Nunito', sans-serif; font-size:1.3rem; color:white; font-weight:800;">MyPay<em style="font-style:italic; color:#ffdb00;">Picture</em></div>
+    <p style="color:rgba(255,255,255,0.3); font-size:0.78rem; max-width:520px; line-height:1.6; margin:0;">Illustrative scenarios only &mdash; not financial, tax or legal advice. Always consult a qualified adviser before making decisions. No data is stored on our servers. &copy; MyPayPicture 2025.</p>
+  </div>
+</footer>
+<!-- /canonical footer -->
+
+</body>
+</html>
