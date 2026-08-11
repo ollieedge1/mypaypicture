@@ -239,38 +239,7 @@
     letter-spacing: 0.18em; color: var(--slate-light);
     text-align: center; margin-bottom: 2rem; font-weight: 600;
   }
-
-  /* MyPulse hero spotlight */
-  .pulse-spotlight {
-    display: flex; align-items: center; gap: 1.5rem;
-    background: linear-gradient(135deg, #1a2e1a 0%, #2d4a2d 50%, #1a3a2a 100%);
-    border-radius: 20px; padding: 1.5rem 1.75rem;
-    margin-bottom: 1.75rem; text-decoration: none;
-    transition: transform 0.2s, box-shadow 0.2s;
-    overflow: hidden; position: relative;
-  }
-  .pulse-spotlight:hover { transform: translateY(-2px); box-shadow: 0 8px 30px rgba(26,46,26,0.3); }
-  .pulse-spotlight::after {
-    content: ''; position: absolute; top: -50%; right: -20%;
-    width: 200px; height: 200px; border-radius: 50%;
-    background: radial-gradient(circle, rgba(45,138,78,0.15) 0%, transparent 70%);
-    pointer-events: none;
-  }
-  .pulse-ring-mini { width: 64px; height: 64px; flex-shrink: 0; position: relative; }
-  .pulse-spotlight-body { flex: 1; position: relative; z-index: 1; }
-  .pulse-spotlight-tag {
-    display: inline-block; font-size: 0.6rem; font-weight: 800;
-    letter-spacing: 0.12em; text-transform: uppercase;
-    color: #a8d5a0; background: rgba(168,213,160,0.12);
-    padding: 0.25rem 0.65rem; border-radius: 100px; margin-bottom: 0.5rem;
-  }
-  .pulse-spotlight-title { font-size: 1.15rem; font-weight: 800; color: white; margin-bottom: 0.3rem; letter-spacing: -0.02em; }
-  .pulse-spotlight-sub { font-size: 0.82rem; color: rgba(255,255,255,0.55); line-height: 1.5; }
-  .pulse-spotlight-arrow { color: rgba(255,255,255,0.3); font-size: 1.2rem; flex-shrink: 0; transition: transform 0.2s; position: relative; z-index: 1; }
-  .pulse-spotlight:hover .pulse-spotlight-arrow { transform: translateX(4px); color: #a8d5a0; }
   @media (max-width: 480px) {
-    .pulse-spotlight { flex-direction: column; text-align: center; padding: 1.5rem 1.25rem; }
-    .pulse-spotlight-arrow { display: none; }
   }
 
   /* ── USER TABS ───────────────────────────────────────────────────────────── */
@@ -613,6 +582,31 @@
     .hero { padding-left: 2rem; padding-right: 2rem; }
   }
 
+
+  /* ── Hero headline sized for the split column ─────────────────────────────── */
+  .hero-inner h1 {
+    /* container-relative: the copy column is ~48% of a 1120px shell */
+    font-size: clamp(2.1rem, 4.4vw, 3.35rem) !important;
+    line-height: 1.05 !important;
+    letter-spacing: -0.03em !important;
+    max-width: 15ch !important;      /* keeps the two-line shape intact */
+    text-wrap: balance;              /* evens the lines where supported */
+    margin: 0 0 1.25rem !important;
+    hyphens: none;
+  }
+  .hero-inner h1 em { display:block; }
+  /* Single-column (stacked) hero can breathe a little wider */
+  @media (max-width: 900px) {
+    .hero-inner h1 {
+      font-size: clamp(2.1rem, 7vw, 3.1rem) !important;
+      max-width: 18ch !important;
+      margin-left: auto !important; margin-right: auto !important;
+    }
+  }
+  @media (max-width: 480px) {
+    .hero-inner h1 { font-size: clamp(1.9rem, 8.5vw, 2.5rem) !important; max-width: 100% !important; }
+  }
+
 </style>
 </head>
 <body>
@@ -642,7 +636,7 @@
       <div class="hero-eyebrow">&#10022; Built for UK taxpayers</div>
       <h1>Know where you<br><em>actually stand.</em></h1>
       <p>Twelve free tools for pensions, property, tax and retirement. Answer a few questions, get a straight answer. No jargon, no signup, no selling.</p>
-      <a class="hero-cta" href="#tools">Start here &mdash; the calculator is free <span class="arrow">&#9662;</span></a>
+      <a class="hero-cta" href="#tools">Start here &mdash; select the tool for you <span class="arrow">&#9662;</span></a>
       <div class="hero-trust">
     <span><span class="tick">&#10003;</span> Free, no signup</span>
     <span><span class="tick">&#10003;</span> Nothing stored</span>
@@ -704,25 +698,6 @@
   <div id="tools"></div>
   <div class="suite-label">Choose your tool</div>
 
-  <!-- MyPulse spotlight -->
-  <a class="pulse-spotlight" href="retirement-tracker.html">
-    <div class="pulse-ring-mini">
-      <svg width="64" height="64" viewBox="0 0 64 64" style="transform:rotate(-90deg)">
-        <circle cx="32" cy="32" r="26" fill="none" stroke="rgba(255,255,255,0.1)" stroke-width="6" />
-        <circle cx="32" cy="32" r="26" fill="none" stroke="#4ade80" stroke-width="6" stroke-dasharray="163.4" stroke-dashoffset="32.7" stroke-linecap="round" />
-      </svg>
-      <div style="position:absolute; inset:0; display:flex; align-items:center; justify-content:center;">
-        <span style="font-size:1.5rem;">🌿</span>
-      </div>
-    </div>
-    <div class="pulse-spotlight-body">
-      <div class="pulse-spotlight-tag">New</div>
-      <div class="pulse-spotlight-title">MyPulse &mdash; Am I on track?</div>
-      <div class="pulse-spotlight-sub">Set up once, check in monthly. Track your pension, ISA, and home equity in one calm view. We'll tell you if everything's alright.</div>
-    </div>
-    <div class="pulse-spotlight-arrow">&rarr;</div>
-  </a>
-
   <div class="tabs-wrap"><div class="user-tabs">
     <div class="user-tab active" id="utab_pension" onclick="switchTab('pension')">
       <span class="tab-emoji">&#128200;</span><span>Pension</span>
@@ -749,21 +724,21 @@
     <div class="group-grid-2">
       <a class="tool-card c-indigo" href="financial-plan.html">
         <span class="tool-icon">&#129517;</span>
-        <div class="tool-name">MyFinancialPlan</div>
+        <div class="tool-name">My Financial Plan</div>
         <p class="tool-tagline">Where do you stand? A quick profile, a retirement projection, and a prioritised plan of what to do next.</p>
-        <div class="tool-cta">Open MyFinancialPlan <span class="cta-arrow">&#8594;</span></div>
+        <div class="tool-cta">Open My Financial Plan <span class="cta-arrow">&#8594;</span></div>
       </a>
       <a class="tool-card c-prop" href="rent-or-buy.html">
         <span class="tool-icon">&#129534;</span>
-        <div class="tool-name">MyRentOrBuy</div>
+        <div class="tool-name">My Rent or Buy</div>
         <p class="tool-tagline">Four questions, one clear answer. See which leaves you better off, and when buying overtakes renting.</p>
-        <div class="tool-cta">Open MyRentOrBuy <span class="cta-arrow">&#8594;</span></div>
+        <div class="tool-cta">Open My Rent or Buy <span class="cta-arrow">&#8594;</span></div>
       </a>
       <a class="tool-card c-prop" href="property-decision.html">
         <span class="tool-icon">&#127968;</span>
-        <div class="tool-name">MyPropertyDecision</div>
+        <div class="tool-name">My Property Decision</div>
         <p class="tool-tagline">Already own or ready to invest? Compare buy-to-let personally vs through a limited company, with Section 24 and corporation tax.</p>
-        <div class="tool-cta">Open MyPropertyDecision <span class="cta-arrow">&#8594;</span></div>
+        <div class="tool-cta">Open My Property Decision <span class="cta-arrow">&#8594;</span></div>
       </a>
     </div>
   </div>
@@ -773,27 +748,27 @@
     <div class="group-grid-2">
       <a class="tool-card c-indigo" href="financial-plan.html">
         <span class="tool-icon">&#129517;</span>
-        <div class="tool-name">MyFinancialPlan</div>
+        <div class="tool-name">My Financial Plan</div>
         <p class="tool-tagline">Where do you stand? A quick profile, a retirement projection, and a prioritised plan of what to do next.</p>
-        <div class="tool-cta">Open MyFinancialPlan <span class="cta-arrow">&#8594;</span></div>
+        <div class="tool-cta">Open My Financial Plan <span class="cta-arrow">&#8594;</span></div>
       </a>
       <a class="tool-card c-rose" href="family-benefits.html">
         <span class="tool-icon">&#128106;</span>
-        <div class="tool-name">MyFamily&amp;Benefits</div>
+        <div class="tool-name">My Family &amp; Benefits</div>
         <p class="tool-tagline">Paying the Child Benefit charge? See how to legally reduce or eliminate it.</p>
-        <div class="tool-cta">Open MyFamily&amp;Benefits <span class="cta-arrow">&#8594;</span></div>
+        <div class="tool-cta">Open My Family &amp; Benefits <span class="cta-arrow">&#8594;</span></div>
       </a>
       <a class="tool-card c-teal" href="pension-optimiser.html">
         <span class="tool-icon">&#128200;</span>
-        <div class="tool-name">MyPensionOptimiser</div>
+        <div class="tool-name">My Pension Optimiser</div>
         <p class="tool-tagline">Optimising your pension? We'll show you exactly what to contribute and how much tax you can save.</p>
-        <div class="tool-cta">Open MyPensionOptimiser <span class="cta-arrow">&#8594;</span></div>
+        <div class="tool-cta">Open My Pension Optimiser <span class="cta-arrow">&#8594;</span></div>
       </a>
       <a class="tool-card c-sa" href="self-assessment.html">
         <span class="tool-icon">&#128203;</span>
-        <div class="tool-name">MySelfAssessment</div>
+        <div class="tool-name">My Self Assessment</div>
         <p class="tool-tagline">First time filing a tax return? We’ll walk you through what you owe and what to do next.</p>
-        <div class="tool-cta">Open MySelfAssessment <span class="cta-arrow">&#8594;</span></div>
+        <div class="tool-cta">Open My Self Assessment <span class="cta-arrow">&#8594;</span></div>
       </a>
     </div>
   </div>
@@ -803,27 +778,27 @@
     <div class="group-grid-2">
       <a class="tool-card c-indigo" href="financial-plan.html">
         <span class="tool-icon">&#129517;</span>
-        <div class="tool-name">MyFinancialPlan</div>
+        <div class="tool-name">My Financial Plan</div>
         <p class="tool-tagline">Where do you stand? A quick profile, a retirement projection, and a prioritised plan of what to do next.</p>
-        <div class="tool-cta">Open MyFinancialPlan <span class="cta-arrow">&#8594;</span></div>
+        <div class="tool-cta">Open My Financial Plan <span class="cta-arrow">&#8594;</span></div>
       </a>
       <a class="tool-card c-teal" href="pension-optimiser.html">
         <span class="tool-icon">&#128200;</span>
-        <div class="tool-name">MyPensionOptimiser</div>
+        <div class="tool-name">My Pension Optimiser</div>
         <p class="tool-tagline">Optimising your pension? We'll show you exactly what to contribute and how much tax you can save.</p>
-        <div class="tool-cta">Open MyPensionOptimiser <span class="cta-arrow">&#8594;</span></div>
+        <div class="tool-cta">Open My Pension Optimiser <span class="cta-arrow">&#8594;</span></div>
       </a>
       <a class="tool-card c-gold" href="pension-reclaim.html">
         <span class="tool-icon">&#128176;</span>
-        <div class="tool-name">MyPensionReclaim</div>
+        <div class="tool-name">My Pension Reclaim</div>
         <p class="tool-tagline">Missed salary sacrifice on a bonus? You can still reclaim the tax through your pension.</p>
-        <div class="tool-cta">Open MyPensionReclaim <span class="cta-arrow">&#8594;</span></div>
+        <div class="tool-cta">Open My Pension Reclaim <span class="cta-arrow">&#8594;</span></div>
       </a>
       <a class="tool-card c-amber" href="pension-topup.html">
         <span class="tool-icon">&#10133;</span>
-        <div class="tool-name">MyPensionTop-Up</div>
+        <div class="tool-name">My Pension Top-Up</div>
         <p class="tool-tagline">Made an extra pension contribution outside payroll? Claim your full tax relief back.</p>
-        <div class="tool-cta">Open MyPensionTop-Up <span class="cta-arrow">&#8594;</span></div>
+        <div class="tool-cta">Open My Pension Top-Up <span class="cta-arrow">&#8594;</span></div>
       </a>
     </div>
   </div>
@@ -833,25 +808,25 @@
     <div class="group-grid-2">
       <a class="tool-card c-indigo" href="financial-plan.html">
         <span class="tool-icon">&#129517;</span>
-        <div class="tool-name">MyFinancialPlan</div>
+        <div class="tool-name">My Financial Plan</div>
         <p class="tool-tagline">Where do you stand? A quick profile, a retirement projection, and a prioritised plan of what to do next.</p>
-        <div class="tool-cta">Open MyFinancialPlan <span class="cta-arrow">&#8594;</span></div>
+        <div class="tool-cta">Open My Financial Plan <span class="cta-arrow">&#8594;</span></div>
       </a>
       <a class="tool-card c-indigo" href="pay-director.html">
         <span class="tool-icon">&#127962;</span>
-        <div class="tool-name">MyPayDirector</div>
+        <div class="tool-name">My Pay Director</div>
         <p class="tool-tagline">Running a limited company? Find the smartest way to pay yourself and keep more of what you earn.</p>
-        <div class="tool-cta">Open MyPayDirector <span class="cta-arrow">&#8594;</span></div>
+        <div class="tool-cta">Open My Pay Director <span class="cta-arrow">&#8594;</span></div>
       </a>
       <a class="tool-card c-sa" href="self-assessment.html">
         <span class="tool-icon">&#128203;</span>
-        <div class="tool-name">MySelfAssessment</div>
+        <div class="tool-name">My Self Assessment</div>
         <p class="tool-tagline">First time filing a tax return? We’ll walk you through what you owe and what to do next.</p>
-        <div class="tool-cta">Open MySelfAssessment <span class="cta-arrow">&#8594;</span></div>
+        <div class="tool-cta">Open My Self Assessment <span class="cta-arrow">&#8594;</span></div>
       </a>
       <a class="tool-card c-taxpot" href="tax-pot.html">
         <span class="tool-icon">&#128180;</span>
-        <div class="tool-name">MyTaxPot</div>
+        <div class="tool-name">My Tax Pot</div>
         <p class="tool-tagline">Self-employed? Find out exactly what HMRC will want — before they ask.</p>
         <div class="tool-cta">Open MyTaxPot <span class="cta-arrow">&#8594;</span></div>
       </a>
@@ -863,33 +838,33 @@
     <div class="group-grid-2">
       <a class="tool-card c-prop" href="retirement-tracker.html" style="--ac: #2d8a4e; --ac-pale: #e8f5ec;">
         <span class="tool-icon">&#127807;</span>
-        <div class="tool-name">MyPulse</div>
+        <div class="tool-name">My Pulse</div>
         <p class="tool-tagline">Set up once, check in monthly. Track your pension, ISA and home equity. We'll tell you if everything's alright.</p>
-        <div class="tool-cta">Open MyPulse <span class="cta-arrow">&#8594;</span></div>
+        <div class="tool-cta">Open My Pulse <span class="cta-arrow">&#8594;</span></div>
       </a>
       <a class="tool-card c-indigo" href="financial-plan.html">
         <span class="tool-icon">&#129517;</span>
-        <div class="tool-name">MyFinancialPlan</div>
+        <div class="tool-name">My Financial Plan</div>
         <p class="tool-tagline">Where do you stand? A quick profile, a retirement projection, and a prioritised plan of what to do next.</p>
-        <div class="tool-cta">Open MyFinancialPlan <span class="cta-arrow">&#8594;</span></div>
+        <div class="tool-cta">Open My Financial Plan <span class="cta-arrow">&#8594;</span></div>
       </a>
       <a class="tool-card c-stone" href="retirement-helper.html">
         <span class="tool-icon">&#127749;</span>
-        <div class="tool-name">MyRetirementHelper</div>
+        <div class="tool-name">My Retirement Helper</div>
         <p class="tool-tagline">Near or at retirement? See where you stand, how long your money lasts, and what income to expect.</p>
-        <div class="tool-cta">Open MyRetirementHelper <span class="cta-arrow">&#8594;</span></div>
+        <div class="tool-cta">Open My Retirement Helper <span class="cta-arrow">&#8594;</span></div>
       </a>
       <a class="tool-card c-amber" href="pension-topup.html">
         <span class="tool-icon">&#10133;</span>
-        <div class="tool-name">MyPensionTop-Up</div>
+        <div class="tool-name">My Pension Top-Up</div>
         <p class="tool-tagline">Made an extra pension contribution outside payroll? Claim your full tax relief back.</p>
-        <div class="tool-cta">Open MyPensionTop-Up <span class="cta-arrow">&#8594;</span></div>
+        <div class="tool-cta">Open My Pension Top-Up <span class="cta-arrow">&#8594;</span></div>
       </a>
       <a class="tool-card c-prop" href="inheritance-tax.html">
         <span class="tool-icon">&#127963;&#65039;</span>
-        <div class="tool-name">MyInheritanceTax</div>
+        <div class="tool-name">My Inheritance Tax</div>
         <p class="tool-tagline">Estimate what your estate might owe, and learn the legitimate ways families reduce inheritance tax.</p>
-        <div class="tool-cta">Open MyInheritanceTax <span class="cta-arrow">&#8594;</span></div>
+        <div class="tool-cta">Open My Inheritance Tax <span class="cta-arrow">&#8594;</span></div>
       </a>
     </div>
   </div>
@@ -945,7 +920,7 @@
 
   // CHAT
   const WORKER_URL = 'https://mypaypicture-api.proud-truth-9c88.workers.dev';
-  const SYS_PROMPT = 'You are a helpful UK personal finance assistant for MyPayPicture, a suite of tools helping people understand their pay, pension, and benefits. Help users find the right tool and answer general UK personal finance questions.\n\nTools: MyPensionOptimiser (salary sacrifice, contributions), MyPensionReclaim (missed salary sacrifice on bonuses), MyPensionTop-Up (AVCs and tax relief), MyFamily&Benefits (Child Benefit and Tax-Free Childcare), MyRetirementHelper (State Pension, drawdown, sustainability), MyInheritanceTax (estate value, inheritance tax estimate, ways to reduce it), MyFinancialPlan (holistic where-do-I-stand check: retirement projection, benchmarks, prioritised action plan), MyPulse (monthly retirement tracker: pension, ISA, home equity progress with calm verdicts), MyPayDirector (salary vs dividends for limited company directors).\n\nRules:\n- UK English, 2024/25 rates\n- General information only, not personalised financial advice\n- When recommending a tool, always use its exact name: MyPensionOptimiser, MyPensionReclaim, MyPensionTop-Up, MyRetirementHelper, MyInheritanceTax, MyPayDirector\n- Direct users to the right tool\n- Warm, clear, approachable tone';
+  const SYS_PROMPT = 'You are a helpful UK personal finance assistant for MyPayPicture, a suite of tools helping people understand their pay, pension, and benefits. Help users find the right tool and answer general UK personal finance questions.\n\nTools: My Pension Optimiser (salary sacrifice, contributions), My Pension Reclaim (missed salary sacrifice on bonuses), My Pension Top-Up (AVCs and tax relief), MyFamily&Benefits (Child Benefit and Tax-Free Childcare), My Retirement Helper (State Pension, drawdown, sustainability), My Inheritance Tax (estate value, inheritance tax estimate, ways to reduce it), My Financial Plan (holistic where-do-I-stand check: retirement projection, benchmarks, prioritised action plan), My Pulse (monthly retirement tracker: pension, ISA, home equity progress with calm verdicts), My Pay Director (salary vs dividends for limited company directors).\n\nRules:\n- UK English, 2024/25 rates\n- General information only, not personalised financial advice\n- When recommending a tool, always use its exact name: My Pension Optimiser, My Pension Reclaim, My Pension Top-Up, My Retirement Helper, My Inheritance Tax, My Pay Director\n- Direct users to the right tool\n- Warm, clear, approachable tone';
 
   let chatHist = [], chatBusy = false;
 

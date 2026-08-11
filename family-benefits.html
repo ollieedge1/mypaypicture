@@ -12,7 +12,7 @@
 <link rel="icon" type="image/png" sizes="16x16" href="favicon-16.png">
 <meta name="theme-color" content="#2e0a1a">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>MyFamily&Benefits — MyPayPicture</title>
+<title>My Family &amp; Benefits — MyPayPicture</title>
 <link rel="canonical" href="https://mypaypicture.com/family-benefits.html">
 <!-- Google tag (gtag.js) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-XY51DX80VL"></script>
@@ -411,6 +411,31 @@
     .hero { padding-left: 2rem; padding-right: 2rem; }
   }
 
+
+  /* ── Hero headline sized for the split column ─────────────────────────────── */
+  .hero-inner h1 {
+    /* container-relative: the copy column is ~48% of a 1120px shell */
+    font-size: clamp(2.1rem, 4.4vw, 3.35rem) !important;
+    line-height: 1.05 !important;
+    letter-spacing: -0.03em !important;
+    max-width: 15ch !important;      /* keeps the two-line shape intact */
+    text-wrap: balance;              /* evens the lines where supported */
+    margin: 0 0 1.25rem !important;
+    hyphens: none;
+  }
+  .hero-inner h1 em { display:block; }
+  /* Single-column (stacked) hero can breathe a little wider */
+  @media (max-width: 900px) {
+    .hero-inner h1 {
+      font-size: clamp(2.1rem, 7vw, 3.1rem) !important;
+      max-width: 18ch !important;
+      margin-left: auto !important; margin-right: auto !important;
+    }
+  }
+  @media (max-width: 480px) {
+    .hero-inner h1 { font-size: clamp(1.9rem, 8.5vw, 2.5rem) !important; max-width: 100% !important; }
+  }
+
 </style>
 </head>
 <body>
@@ -418,7 +443,7 @@
 <header>
   <div class="app-switcher" id="appSwitcher">
     <div class="switcher-trigger" onclick="toggleSwitcher(event)">
-      <div class="app-name">MyFamily<em>&amp;Benefits</em></div>
+      <div class="app-name">My Family <em>&amp; Benefits</em></div>
       <div class="chevron">&#9660;</div>
     </div>
         <div class="switcher-dropdown">
@@ -432,64 +457,64 @@
       <a class="switcher-home" href="financial-plan.html">
         <div class="switcher-home-icon">&#129517;</div>
         <div>
-          <div class="switcher-home-label">MyFinancialPlan</div>
+          <div class="switcher-home-label">My Financial Plan</div>
           <div class="switcher-home-sub">Where do I stand?</div>
         </div>
       </a>
       <a class="switcher-home" href="pension-optimiser.html">
         <div class="switcher-home-icon">&#128200;</div>
         <div>
-          <div class="switcher-home-label">MyPensionOptimiser</div>
+          <div class="switcher-home-label">My Pension Optimiser</div>
           <div class="switcher-home-sub">Optimise your pension</div>
         </div>
       </a>
       <a class="switcher-home" href="pension-reclaim.html">
         <div class="switcher-home-icon">&#128176;</div>
         <div>
-          <div class="switcher-home-label">MyPensionReclaim</div>
+          <div class="switcher-home-label">My Pension Reclaim</div>
           <div class="switcher-home-sub">Reclaim bonus tax</div>
         </div>
       </a>
       <a class="switcher-home" href="pension-topup.html">
         <div class="switcher-home-icon">&#10133;</div>
         <div>
-          <div class="switcher-home-label">MyPensionTop-Up</div>
+          <div class="switcher-home-label">My Pension Top-Up</div>
           <div class="switcher-home-sub">Claim pension relief</div>
         </div>
       </a>
       <a class="switcher-home" href="self-assessment.html">
         <div class="switcher-home-icon">&#128196;</div>
         <div>
-          <div class="switcher-home-label">MySelfAssessment</div>
+          <div class="switcher-home-label">My Self Assessment</div>
           <div class="switcher-home-sub">Do I need to file?</div>
         </div>
       </a>
-      <a class="switcher-home" href="rent-or-buy.html"><div class="switcher-home-icon">&#129534;</div><div><div class="switcher-home-label">MyRentOrBuy</div><div class="switcher-home-sub">Rent or buy?</div></div></a>
+      <a class="switcher-home" href="rent-or-buy.html"><div class="switcher-home-icon">&#129534;</div><div><div class="switcher-home-label">My Rent or Buy</div><div class="switcher-home-sub">Rent or buy?</div></div></a>
       <a class="switcher-home" href="property-decision.html">
         <div class="switcher-home-icon">&#127968;</div>
         <div>
-          <div class="switcher-home-label">MyPropertyDecision</div>
+          <div class="switcher-home-label">My Property Decision</div>
           <div class="switcher-home-sub">Buy, let, or rent?</div>
         </div>
       </a>
       <a class="switcher-home" href="retirement-helper.html">
         <div class="switcher-home-icon">&#9749;</div>
         <div>
-          <div class="switcher-home-label">MyRetirementHelper</div>
+          <div class="switcher-home-label">My Retirement Helper</div>
           <div class="switcher-home-sub">Retirement readiness</div>
         </div>
       </a>
       <a class="switcher-home" href="inheritance-tax.html">
         <div class="switcher-home-icon">&#127963;</div>
         <div>
-          <div class="switcher-home-label">MyInheritanceTax</div>
+          <div class="switcher-home-label">My Inheritance Tax</div>
           <div class="switcher-home-sub">Estate & IHT</div>
         </div>
       </a>
       <a class="switcher-home" href="pay-director.html">
         <div class="switcher-home-icon">&#128188;</div>
         <div>
-          <div class="switcher-home-label">MyPayDirector</div>
+          <div class="switcher-home-label">My Pay Director</div>
           <div class="switcher-home-sub">Salary vs dividends</div>
         </div>
       </a>

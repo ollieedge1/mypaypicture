@@ -12,7 +12,7 @@
 <link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png">
 <link rel="icon" type="image/png" sizes="16x16" href="favicon-16.png">
 <meta name="theme-color" content="#1a3a2a">
-<title>MyPropertyDecision — MyPayPicture</title>
+<title>My Property Decision — MyPayPicture</title>
 <link rel="canonical" href="https://mypaypicture.com/property-decision.html">
 <link href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,300;0,400;0,600;0,700;0,800;1,300;1,400;1,700&display=swap" rel="stylesheet">
 
@@ -540,6 +540,31 @@
     .hero { padding-left: 2rem; padding-right: 2rem; }
   }
 
+
+  /* ── Hero headline sized for the split column ─────────────────────────────── */
+  .hero-inner h1 {
+    /* container-relative: the copy column is ~48% of a 1120px shell */
+    font-size: clamp(2.1rem, 4.4vw, 3.35rem) !important;
+    line-height: 1.05 !important;
+    letter-spacing: -0.03em !important;
+    max-width: 15ch !important;      /* keeps the two-line shape intact */
+    text-wrap: balance;              /* evens the lines where supported */
+    margin: 0 0 1.25rem !important;
+    hyphens: none;
+  }
+  .hero-inner h1 em { display:block; }
+  /* Single-column (stacked) hero can breathe a little wider */
+  @media (max-width: 900px) {
+    .hero-inner h1 {
+      font-size: clamp(2.1rem, 7vw, 3.1rem) !important;
+      max-width: 18ch !important;
+      margin-left: auto !important; margin-right: auto !important;
+    }
+  }
+  @media (max-width: 480px) {
+    .hero-inner h1 { font-size: clamp(1.9rem, 8.5vw, 2.5rem) !important; max-width: 100% !important; }
+  }
+
 </style>
 </head>
 <body>
@@ -547,7 +572,7 @@
 <header>
   <div class="app-switcher" id="appSwitcher">
     <div class="switcher-trigger" onclick="toggleSwitcher(event)">
-      <div class="app-name">MyProperty<em>Decision</em></div>
+      <div class="app-name">My Property <em>Decision</em></div>
       <div class="chevron">&#9660;</div>
     </div>
         <div class="switcher-dropdown">
@@ -561,63 +586,63 @@
       <a class="switcher-home" href="financial-plan.html">
         <div class="switcher-home-icon">&#129517;</div>
         <div>
-          <div class="switcher-home-label">MyFinancialPlan</div>
+          <div class="switcher-home-label">My Financial Plan</div>
           <div class="switcher-home-sub">Where do I stand?</div>
         </div>
       </a>
       <a class="switcher-home" href="pension-optimiser.html">
         <div class="switcher-home-icon">&#128200;</div>
         <div>
-          <div class="switcher-home-label">MyPensionOptimiser</div>
+          <div class="switcher-home-label">My Pension Optimiser</div>
           <div class="switcher-home-sub">Optimise your pension</div>
         </div>
       </a>
       <a class="switcher-home" href="pension-reclaim.html">
         <div class="switcher-home-icon">&#128176;</div>
         <div>
-          <div class="switcher-home-label">MyPensionReclaim</div>
+          <div class="switcher-home-label">My Pension Reclaim</div>
           <div class="switcher-home-sub">Reclaim bonus tax</div>
         </div>
       </a>
       <a class="switcher-home" href="pension-topup.html">
         <div class="switcher-home-icon">&#10133;</div>
         <div>
-          <div class="switcher-home-label">MyPensionTop-Up</div>
+          <div class="switcher-home-label">My Pension Top-Up</div>
           <div class="switcher-home-sub">Claim pension relief</div>
         </div>
       </a>
       <a class="switcher-home" href="family-benefits.html">
         <div class="switcher-home-icon">&#128118;</div>
         <div>
-          <div class="switcher-home-label">MyFamily&Benefits</div>
+          <div class="switcher-home-label">My Family &amp; Benefits</div>
           <div class="switcher-home-sub">Child Benefit & childcare</div>
         </div>
       </a>
       <a class="switcher-home" href="self-assessment.html">
         <div class="switcher-home-icon">&#128196;</div>
         <div>
-          <div class="switcher-home-label">MySelfAssessment</div>
+          <div class="switcher-home-label">My Self Assessment</div>
           <div class="switcher-home-sub">Do I need to file?</div>
         </div>
       </a>
       <a class="switcher-home" href="retirement-helper.html">
         <div class="switcher-home-icon">&#9749;</div>
         <div>
-          <div class="switcher-home-label">MyRetirementHelper</div>
+          <div class="switcher-home-label">My Retirement Helper</div>
           <div class="switcher-home-sub">Retirement readiness</div>
         </div>
       </a>
       <a class="switcher-home" href="inheritance-tax.html">
         <div class="switcher-home-icon">&#127963;</div>
         <div>
-          <div class="switcher-home-label">MyInheritanceTax</div>
+          <div class="switcher-home-label">My Inheritance Tax</div>
           <div class="switcher-home-sub">Estate & IHT</div>
         </div>
       </a>
       <a class="switcher-home" href="pay-director.html">
         <div class="switcher-home-icon">&#128188;</div>
         <div>
-          <div class="switcher-home-label">MyPayDirector</div>
+          <div class="switcher-home-label">My Pay Director</div>
           <div class="switcher-home-sub">Salary vs dividends</div>
         </div>
       </a>
@@ -1842,7 +1867,7 @@
       doc.setFont('helvetica','bold');doc.setFontSize(16);doc.setTextColor(...white);
       doc.text('MyPay',14,14);doc.setFont('helvetica','normal');doc.text('Picture',33,14);
       doc.setFontSize(8);doc.setTextColor(180,200,180);
-      doc.text('MyPropertyDecision Report',14,22);
+      doc.text('My Property Decision Report',14,22);
       doc.text('Generated '+new Date().toLocaleDateString('en-GB',{day:'numeric',month:'long',year:'numeric'}),196,22,{align:'right'});
 
       var y=36;
@@ -1904,7 +1929,7 @@
 
   // ── CHAT ──────────────────────────────────────────────────────────────────
   var WORKER_URL='https://mypaypicture-api.proud-truth-9c88.workers.dev';
-  var SYS='You are a helpful UK personal finance assistant embedded in MyPayPicture\'s MyPropertyDecision tool. This tool helps people compare three options for their deposit: buying a home to live in, buying a property to rent out (personally or via a limited company SPV), or staying in rental and investing the deposit instead.\n\nKey topics: stamp duty (2025 rates, BTL 3% surcharge), mortgage affordability (4.5x income), buy-to-let yields, Section 24 mortgage interest restriction, limited company SPV structure, corporation tax (25%), opportunity cost, capital growth assumptions, rental income taxation.\n\nAlways: UK English, 2024/25 rates, general information only (not personalised advice), recommend a mortgage broker or financial adviser for personalised guidance.';
+  var SYS='You are a helpful UK personal finance assistant embedded in MyPayPicture\'s My Property Decision tool. This tool helps people compare three options for their deposit: buying a home to live in, buying a property to rent out (personally or via a limited company SPV), or staying in rental and investing the deposit instead.\n\nKey topics: stamp duty (2025 rates, BTL 3% surcharge), mortgage affordability (4.5x income), buy-to-let yields, Section 24 mortgage interest restriction, limited company SPV structure, corporation tax (25%), opportunity cost, capital growth assumptions, rental income taxation.\n\nAlways: UK English, 2024/25 rates, general information only (not personalised advice), recommend a mortgage broker or financial adviser for personalised guidance.';
   var chatHist=[],chatBusy=false;
 
   function chatAddMsg(role,text,typing){

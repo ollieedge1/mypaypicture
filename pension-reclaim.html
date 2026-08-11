@@ -82,7 +82,7 @@
   <link rel="icon" type="image/png" sizes="16x16" href="favicon-16.png">
   <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
   <meta name="mobile-web-app-capable" content="yes">
-<title>MyPensionReclaim — MyPayPicture</title>
+<title>My Pension Reclaim — MyPayPicture</title>
 <link rel="canonical" href="https://mypaypicture.com/pension-reclaim.html">
 <link href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,300;0,400;0,600;0,700;0,800;1,300;1,400;1,700&display=swap" rel="stylesheet">
 <style>
@@ -556,6 +556,45 @@
     .hero { padding-left: 2rem; padding-right: 2rem; }
   }
 
+
+  /* Pack component inside the results column */
+  .pack-inline { margin-top:1rem; padding:1.6rem 1.4rem; }
+  .pack-inline .pack-head { margin-bottom:1.4rem; }
+  .pack-inline .pack-head h3 { font-size:1.25rem; }
+  .pack-inline .pack-head p { font-size:0.87rem; }
+  .pack-inline .pack-grid { grid-template-columns:1fr; gap:1.6rem; }
+  .pack-inline .pack { padding:1.4rem 1.25rem; }
+  .pack-inline .pack-price { font-size:2.2rem; }
+  .pack-inline .pack-list li { font-size:0.87rem; margin-bottom:0.7rem; }
+  .pack-inline .pack-foot { font-size:0.74rem; margin-top:1.3rem; }
+  /* Results column scrolls with content rather than sticking, now it is tall */
+  @media (min-width:881px){ .calc-results { position:static; } }
+
+
+  /* ── Hero headline sized for the split column ─────────────────────────────── */
+  .hero-inner h1 {
+    /* container-relative: the copy column is ~48% of a 1120px shell */
+    font-size: clamp(2.1rem, 4.4vw, 3.35rem) !important;
+    line-height: 1.05 !important;
+    letter-spacing: -0.03em !important;
+    max-width: 15ch !important;      /* keeps the two-line shape intact */
+    text-wrap: balance;              /* evens the lines where supported */
+    margin: 0 0 1.25rem !important;
+    hyphens: none;
+  }
+  .hero-inner h1 em { display:block; }
+  /* Single-column (stacked) hero can breathe a little wider */
+  @media (max-width: 900px) {
+    .hero-inner h1 {
+      font-size: clamp(2.1rem, 7vw, 3.1rem) !important;
+      max-width: 18ch !important;
+      margin-left: auto !important; margin-right: auto !important;
+    }
+  }
+  @media (max-width: 480px) {
+    .hero-inner h1 { font-size: clamp(1.9rem, 8.5vw, 2.5rem) !important; max-width: 100% !important; }
+  }
+
 </style>
 </head>
 <body>
@@ -563,7 +602,7 @@
 <header>
   <div class="app-switcher" id="appSwitcher">
     <div class="switcher-trigger" onclick="toggleSwitcher(event)">
-      <div class="app-name">MyPension<em>Reclaim</em></div>
+      <div class="app-name">My Pension <em>Reclaim</em></div>
       <div class="chevron">&#9660;</div>
     </div>
         <div class="switcher-dropdown">
@@ -577,64 +616,64 @@
       <a class="switcher-home" href="financial-plan.html">
         <div class="switcher-home-icon">&#129517;</div>
         <div>
-          <div class="switcher-home-label">MyFinancialPlan</div>
+          <div class="switcher-home-label">My Financial Plan</div>
           <div class="switcher-home-sub">Where do I stand?</div>
         </div>
       </a>
       <a class="switcher-home" href="pension-optimiser.html">
         <div class="switcher-home-icon">&#128200;</div>
         <div>
-          <div class="switcher-home-label">MyPensionOptimiser</div>
+          <div class="switcher-home-label">My Pension Optimiser</div>
           <div class="switcher-home-sub">Optimise your pension</div>
         </div>
       </a>
       <a class="switcher-home" href="pension-topup.html">
         <div class="switcher-home-icon">&#10133;</div>
         <div>
-          <div class="switcher-home-label">MyPensionTop-Up</div>
+          <div class="switcher-home-label">My Pension Top-Up</div>
           <div class="switcher-home-sub">Claim pension relief</div>
         </div>
       </a>
       <a class="switcher-home" href="family-benefits.html">
         <div class="switcher-home-icon">&#128118;</div>
         <div>
-          <div class="switcher-home-label">MyFamily&Benefits</div>
+          <div class="switcher-home-label">My Family &amp; Benefits</div>
           <div class="switcher-home-sub">Child Benefit & childcare</div>
         </div>
       </a>
       <a class="switcher-home" href="self-assessment.html">
         <div class="switcher-home-icon">&#128196;</div>
         <div>
-          <div class="switcher-home-label">MySelfAssessment</div>
+          <div class="switcher-home-label">My Self Assessment</div>
           <div class="switcher-home-sub">Do I need to file?</div>
         </div>
       </a>
-      <a class="switcher-home" href="rent-or-buy.html"><div class="switcher-home-icon">&#129534;</div><div><div class="switcher-home-label">MyRentOrBuy</div><div class="switcher-home-sub">Rent or buy?</div></div></a>
+      <a class="switcher-home" href="rent-or-buy.html"><div class="switcher-home-icon">&#129534;</div><div><div class="switcher-home-label">My Rent or Buy</div><div class="switcher-home-sub">Rent or buy?</div></div></a>
       <a class="switcher-home" href="property-decision.html">
         <div class="switcher-home-icon">&#127968;</div>
         <div>
-          <div class="switcher-home-label">MyPropertyDecision</div>
+          <div class="switcher-home-label">My Property Decision</div>
           <div class="switcher-home-sub">Buy, let, or rent?</div>
         </div>
       </a>
       <a class="switcher-home" href="retirement-helper.html">
         <div class="switcher-home-icon">&#9749;</div>
         <div>
-          <div class="switcher-home-label">MyRetirementHelper</div>
+          <div class="switcher-home-label">My Retirement Helper</div>
           <div class="switcher-home-sub">Retirement readiness</div>
         </div>
       </a>
       <a class="switcher-home" href="inheritance-tax.html">
         <div class="switcher-home-icon">&#127963;</div>
         <div>
-          <div class="switcher-home-label">MyInheritanceTax</div>
+          <div class="switcher-home-label">My Inheritance Tax</div>
           <div class="switcher-home-sub">Estate & IHT</div>
         </div>
       </a>
       <a class="switcher-home" href="pay-director.html">
         <div class="switcher-home-icon">&#128188;</div>
         <div>
-          <div class="switcher-home-label">MyPayDirector</div>
+          <div class="switcher-home-label">My Pay Director</div>
           <div class="switcher-home-sub">Salary vs dividends</div>
         </div>
       </a>
@@ -752,15 +791,9 @@
         <div class="live-rows" id="liveRows"></div>
         <div id="liveFlags"></div>
 
-        <button class="btn-primary btn-full" style="margin-top:0.9rem;" onclick="document.getElementById('packs').scrollIntoView({behavior:'smooth'})">Save my results &darr;</button>
       </div>
-    </div>
-
-  </div>
-
-  
-  <!-- PICK YOUR PACK -->
-  <div class="pack-section" id="packs">
+    
+<div class="pack-section pack-inline" id="packs">
     <div class="pack-head">
       <h3>Nearly there &mdash; save your results</h3>
       <p>Keep your figures, or get the full breakdown to take to an accountant.</p>
@@ -809,6 +842,12 @@
 
     <div class="pack-foot">Instant download after payment &bull; Secure checkout via Stripe &bull; No account needed &bull; Nothing stored on our servers</div>
   </div>
+      </div>
+
+  </div>
+
+  
+
 
   <!-- STEP 4: SELF ASSESSMENT -->
   <div class="card active" id="step4">
@@ -869,35 +908,15 @@
     </div>
 
         <div class="btn-row">
-      <button class="btn-secondary" onclick="goTo(3)">&#8592; Back</button>
+      <button class="btn-secondary" onclick="document.getElementById('packs').scrollIntoView({behavior:'smooth'})">&#8592; Back to my results</button>
       <button class="btn-primary" onclick="window.open('https://www.gov.uk/register-for-self-assessment','_blank')">Register on gov.uk ↗</button>
     </div>
 
-    <!-- PDF INLINE CTA -->
-    <div class="pdf-inline-cta" id="pdfInlineCta">
-      <div class="pdf-inline-inner">
-        <div class="pdf-inline-text">
-          <strong>&#128196; Download your personalised PDF report</strong>
-          <span>A branded summary of your results to take to an adviser or share with a partner.</span>
-        </div>
-        <div class="pdf-inline-right">
-          <div class="pdf-inline-price" id="pdfInlinePrice">&#163;4.99</div>
-          <a class="pdf-inline-btn" id="pdfInlineBuyBtn" href="https://buy.stripe.com/4gM8wP2IV4l0gPn9D353O00" target="_blank">Buy report &#8594;</a>
-          <button class="pdf-inline-btn paid" id="pdfInlineDlBtn" style="display:none;" onclick="generateReport()">&#8595; Download PDF</button>
-        </div>
-      </div>
-    </div>
-        <button class="lead-dismiss" onclick="dismissLead()" title="Dismiss">×</button>
-      </div>
-    </div>
+    <!-- Full report available in the pack section above -->
   </div>
 
-</div>
-      </div>
-    </div>
-        </div>
-      </div>
-    </div>
+</div><!-- /container -->
+
 <div class="chat-wrap">
   <div class="chat-divider">Ask MyPayPicture Assistant</div>
   <div class="chat-box">
@@ -1381,7 +1400,7 @@
       doc.text('MyPay',14,14);
       doc.setFont('helvetica','normal'); doc.text('Picture',33,14);
       doc.setFontSize(8); doc.setTextColor(180,180,180);
-      doc.text('MyPensionReclaim Report', 14, 22);
+      doc.text('My Pension Reclaim Report', 14, 22);
       doc.text('Generated ' + new Date().toLocaleDateString('en-GB',{day:'numeric',month:'long',year:'numeric'}), 196, 22, {align:'right'});
 
       function fmtN(n) { return '\u00a3' + Math.round(n).toLocaleString('en-GB'); }
@@ -1445,7 +1464,7 @@
       doc.text('Illustrative only \u2014 not financial advice. Based on 2024/25 UK tax rates. Speak to a qualified financial adviser before making changes.', 14, ph-10);
       doc.text('mypaypicture.com', 196, ph-4, {align:'right'});
 
-      doc.save('MyPayPicture-MyPensionReclaim-Report.pdf');
+      doc.save('MyPayPicture-My Pension Reclaim-Report.pdf');
     });
   }
 
