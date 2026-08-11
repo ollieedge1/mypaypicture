@@ -1315,6 +1315,25 @@
     .hero-visual { display:none; }
   }
 
+
+  /* ── Align main content width with the hero ───────────────────────────────── */
+  .container {
+    max-width: 1120px !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+    padding-left: 1rem !important;
+    padding-right: 1rem !important;
+    width: 100% !important;
+    box-sizing: border-box;
+  }
+  /* Keep the hero copy/visual gutters identical to the container */
+  .hero { padding-left: 1rem; padding-right: 1rem; }
+  .hero-inner, .hero-stats { width: 100%; }
+  @media (min-width: 640px) {
+    .container { padding-left: 2rem !important; padding-right: 2rem !important; }
+    .hero { padding-left: 2rem; padding-right: 2rem; }
+  }
+
 </style>
 </head>
 <body>

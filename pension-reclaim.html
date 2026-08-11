@@ -2,7 +2,8 @@
 <html lang="en">
 <head>
 <!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-XY51DX80VL"></script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-XY51DX80VL">  live();
+</script>
 <script data-cfasync="false">
   function toggleSwitcher(e) {
     e.stopPropagation();
@@ -419,25 +420,6 @@
 
 
   /* ── Save Your Results prompt ──────────────────────────────────────────── */
-  .save-prompt { display: flex; gap: 0.75rem; margin: 1.25rem 0; flex-wrap: wrap; }
-  .save-prompt-btn { flex: 1; min-width: 170px; display: flex; align-items: center; justify-content: center; gap: 0.5rem; padding: 0.85rem 1rem; border-radius: 14px; font-family: 'Nunito', sans-serif; font-size: 0.85rem; font-weight: 700; cursor: pointer; transition: all 0.15s; text-decoration: none; border: none; }
-  .save-prompt-btn.email { background: rgba(13,148,136,0.08); color: #0d9488; border: 1.5px solid rgba(13,148,136,0.2); }
-  .save-prompt-btn.email:hover { background: rgba(13,148,136,0.15); }
-  .save-prompt-btn.pdf { background: #314855; color: white; }
-  .save-prompt-btn.pdf:hover { background: #22333d; transform: translateY(-1px); }
-  .save-prompt-btn .btn-icon { font-size: 1.05rem; }
-  .save-prompt-btn .btn-price { opacity: 0.7; font-weight: 600; margin-left: 0.25rem; }
-  .email-capture { display: none; margin: 0.75rem 0 1.25rem; background: rgba(13,148,136,0.05); border: 1.5px solid rgba(13,148,136,0.15); border-radius: 14px; padding: 1.1rem 1.25rem; }
-  .email-capture.open { display: block; }
-  .email-capture-title { font-size: 0.88rem; font-weight: 800; color: #314855; margin-bottom: 0.5rem; }
-  .email-capture-row { display: flex; gap: 0.5rem; }
-  .email-capture-row input[type="email"] { flex: 1; padding: 0.7rem 0.85rem; border: 1.5px solid #ddd; border-radius: 10px; font-family: 'Nunito', sans-serif; font-size: 0.9rem; color: #314855; background: white; }
-  .email-capture-row input[type="email"]:focus { outline: none; border-color: #0d9488; box-shadow: 0 0 0 3px rgba(13,148,136,0.1); }
-  .email-capture-send { padding: 0.7rem 1.25rem; border: none; border-radius: 10px; background: #0d9488; color: white; font-family: 'Nunito', sans-serif; font-size: 0.85rem; font-weight: 700; cursor: pointer; white-space: nowrap; }
-  .email-capture-send:hover { background: #0b7c72; }
-  .email-capture-note { font-size: 0.7rem; color: #5a7282; margin-top: 0.5rem; line-height: 1.5; }
-  .email-capture-done { display: none; text-align: center; padding: 0.85rem; font-size: 0.88rem; font-weight: 700; color: #0d9488; }
-  .email-capture-done.show { display: block; }
 
 
   /* ── HERO CTA + TRUST + STATS ─────────────────────────────────────────────── */
@@ -481,6 +463,97 @@
   }
   @media (max-width:600px){
     .hero-visual { display:none; }
+  }
+
+
+  /* ── LIVE SPLIT CALCULATOR ────────────────────────────────────────────────── */
+  .calc-split { display:grid; grid-template-columns:1fr 1fr; gap:1.5rem; align-items:start; }
+  .calc-results { position:sticky; top:90px; }
+  @media (max-width:880px){
+    .calc-split { grid-template-columns:1fr; gap:1rem; }
+    .calc-results { position:static; }
+  }
+  .calc-panel { background:var(--surface,#fff); border-radius:20px; padding:1.6rem 1.4rem; box-shadow:0 1px 3px rgba(0,0,0,0.04), 0 4px 20px rgba(0,0,0,0.04); }
+  .calc-panel h3 { font-size:1.15rem; font-weight:800; letter-spacing:-0.02em; margin-bottom:0.3rem; }
+  .calc-panel .panel-sub { font-size:0.84rem; color:var(--slate-soft,#5a7282); line-height:1.55; margin-bottom:1.35rem; }
+
+  .live-hero { border-radius:16px; padding:1.5rem 1.25rem; text-align:center; background:#f0fdf4; margin-bottom:1rem; transition:background 0.25s; }
+  .live-hero.empty { background:rgba(0,0,0,0.03); }
+  .live-hero-lbl { font-size:0.68rem; font-weight:700; text-transform:uppercase; letter-spacing:0.09em; color:var(--slate-soft,#5a7282); margin-bottom:0.6rem; }
+  .live-hero-amt { font-size:2.6rem; font-weight:800; letter-spacing:-0.03em; line-height:1; color:#15803d; margin-bottom:0.5rem; }
+  .live-hero.empty .live-hero-amt { color:#9aa8b2; }
+  .live-hero-sub { font-size:0.85rem; color:var(--slate-soft,#5a7282); line-height:1.5; }
+
+  .live-rows { margin-top:0.5rem; }
+  .live-row { display:flex; justify-content:space-between; align-items:center; gap:1rem; padding:0.65rem 0; border-bottom:1px solid rgba(49,72,85,0.08); font-size:0.87rem; }
+  .live-row:last-child { border-bottom:none; }
+  .live-row-lbl { color:var(--slate-soft,#5a7282); font-weight:600; }
+  .live-row-lbl small { display:block; font-size:0.72rem; color:#9aa8b2; font-weight:400; margin-top:0.1rem; }
+  .live-row-val { font-weight:800; white-space:nowrap; font-variant-numeric:tabular-nums; }
+  .live-row.total { border-top:2px solid var(--ink,#314855); border-bottom:none; margin-top:0.3rem; padding-top:0.75rem; }
+  .live-row.total .live-row-lbl { color:var(--ink,#314855); font-weight:800; }
+  .live-row.total .live-row-val { font-size:1.15rem; }
+
+  .live-flag { border-radius:11px; padding:0.75rem 0.95rem; margin-top:0.9rem; font-size:0.8rem; line-height:1.55; }
+  .live-flag.good { background:#f0fdf4; border:1.5px solid #bbf7d0; color:#15803d; }
+  .live-flag.warn { background:#fffbeb; border:1.5px solid #fde68a; color:#78350f; }
+  .live-flag strong { display:block; margin-bottom:0.15rem; }
+
+
+  /* ── PICK YOUR PACK ───────────────────────────────────────────────────────── */
+  .pack-section { background:var(--surface,#fff); border-radius:20px; padding:2.25rem 1.75rem; box-shadow:0 1px 3px rgba(0,0,0,0.04), 0 4px 20px rgba(0,0,0,0.04); margin-bottom:1rem; }
+  .pack-head { text-align:center; margin-bottom:2rem; }
+  .pack-head h3 { font-size:1.65rem; font-weight:800; letter-spacing:-0.025em; margin-bottom:0.5rem; line-height:1.15; }
+  .pack-head p { font-size:0.95rem; color:var(--slate-soft,#5a7282); line-height:1.55; }
+  .pack-grid { display:grid; grid-template-columns:1fr 1fr; gap:1.5rem; align-items:stretch; }
+  @media (max-width:720px){ .pack-grid { grid-template-columns:1fr; gap:2rem; } }
+
+  .pack { position:relative; border:1.5px solid rgba(49,72,85,0.13); border-radius:18px; padding:1.75rem 1.5rem; display:flex; flex-direction:column; background:#fff; transition:border-color 0.2s, box-shadow 0.2s; }
+  .pack.featured { border:2px solid #15803d; box-shadow:0 6px 28px rgba(21,128,61,0.13); }
+  .pack-badge { position:absolute; top:-14px; left:50%; transform:translateX(-50%); background:#15803d; color:#fff; font-size:0.66rem; font-weight:800; letter-spacing:0.09em; text-transform:uppercase; padding:0.4rem 1.1rem; border-radius:100px; white-space:nowrap; }
+  .pack-name { font-size:1.25rem; font-weight:800; letter-spacing:-0.02em; margin-bottom:0.3rem; }
+  .pack-tagline { font-size:0.9rem; color:var(--slate-soft,#5a7282); margin-bottom:1.35rem; line-height:1.45; }
+  .pack-price-row { display:flex; align-items:baseline; gap:0.75rem; flex-wrap:wrap; margin-bottom:1.5rem; }
+  .pack-price { font-size:2.75rem; font-weight:800; letter-spacing:-0.035em; line-height:1; }
+  .pack-price.free { color:#15803d; }
+  .pack-was { font-size:0.85rem; color:#9aa8b2; text-decoration:line-through; line-height:1.35; max-width:130px; }
+  .pack-list { list-style:none; padding:0; margin:0 0 1.75rem; flex:1; }
+  .pack-list li { display:flex; gap:0.7rem; align-items:flex-start; font-size:0.92rem; line-height:1.5; margin-bottom:0.85rem; color:var(--ink,#314855); }
+  .pack-list li:last-child { margin-bottom:0; }
+  .pack-tick { color:#15803d; font-weight:800; flex-shrink:0; font-size:1rem; line-height:1.35; }
+  .pack-list li strong { font-weight:800; }
+  .pack-btn { display:block; width:100%; text-align:center; padding:1rem 1.25rem; border-radius:12px; font-family:'Nunito',sans-serif; font-size:1rem; font-weight:800; text-decoration:none; cursor:pointer; border:none; transition:transform 0.15s, box-shadow 0.2s; }
+  .pack-btn.dark { background:#22333d; color:#fff; }
+  .pack-btn.dark:hover { background:#141f26; transform:translateY(-1px); }
+  .pack-btn.green { background:linear-gradient(180deg,#22a35a 0%,#15803d 100%); color:#fff; box-shadow:0 4px 14px rgba(21,128,61,0.28); }
+  .pack-btn.green:hover { transform:translateY(-1px); box-shadow:0 6px 20px rgba(21,128,61,0.36); }
+  .pack-foot { text-align:center; font-size:0.8rem; color:#9aa8b2; line-height:1.6; margin-top:1.75rem; }
+
+  /* inline email capture inside the free pack */
+  .pack-email { display:none; margin-top:0.85rem; }
+  .pack-email.open { display:block; }
+  .pack-email input { width:100%; padding:0.8rem 0.9rem; border:1.5px solid #ddd; border-radius:10px; font-family:'Nunito',sans-serif; font-size:0.92rem; margin-bottom:0.5rem; }
+  .pack-email input:focus { outline:none; border-color:#15803d; box-shadow:0 0 0 3px rgba(21,128,61,0.1); }
+  .pack-email-done { display:none; text-align:center; padding:0.9rem; font-size:0.9rem; font-weight:700; color:#15803d; }
+  .pack-email-done.show { display:block; }
+
+
+  /* ── Align main content width with the hero ───────────────────────────────── */
+  .container {
+    max-width: 1120px !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+    padding-left: 1rem !important;
+    padding-right: 1rem !important;
+    width: 100% !important;
+    box-sizing: border-box;
+  }
+  /* Keep the hero copy/visual gutters identical to the container */
+  .hero { padding-left: 1rem; padding-right: 1rem; }
+  .hero-inner, .hero-stats { width: 100%; }
+  @media (min-width: 640px) {
+    .container { padding-left: 2rem !important; padding-right: 2rem !important; }
+    .hero { padding-left: 2rem; padding-right: 2rem; }
   }
 
 </style>
@@ -607,158 +680,138 @@
 
 <div class="container">
   <div id="start"></div>
-  <div class="steps-nav">
-    <div class="step-tab active" onclick="goTo(1)" id="tab1"><span class="step-num">1</span>Your Situation</div>
-    <div class="step-tab" onclick="goTo(2)" id="tab2"><span class="step-num">2</span>Tax Calculator</div>
-    <div class="step-tab" onclick="goTo(3)" id="tab3"><span class="step-num">3</span>Pension Contribution</div>
-    <div class="step-tab" onclick="goTo(4)" id="tab4"><span class="step-num">4</span>Next Steps</div>
+  <div class="calc-split">
+
+    <!-- INPUTS -->
+    <div class="calc-panel">
+      <h3>Your bonus</h3>
+      <p class="panel-sub">Change anything and the numbers on the right update instantly.</p>
+
+      <div class="field-group">
+        <label>Gross bonus amount</label>
+        <div class="input-wrap">
+          <span class="input-prefix">&pound;</span>
+          <input type="number" id="bonusAmount" placeholder="e.g. 15000" min="0" value="15000" oninput="live()">
+        </div>
+      </div>
+
+      <div class="field-group">
+        <label>Your annual salary (excluding bonus)</label>
+        <div class="input-wrap">
+          <span class="input-prefix">&pound;</span>
+          <input type="number" id="annualSalary" placeholder="e.g. 80000" min="0" value="80000" oninput="live()">
+        </div>
+        <p class="hint">Tells us whether the bonus falls into higher-rate tax.</p>
+      </div>
+
+      <div class="field-group">
+        <label>Was payroll closed before you could elect salary sacrifice?</label>
+        <div class="radio-group">
+          <div class="radio-btn selected" id="rb_yes" onclick="selectRadio('payrollClosed','yes');live()">Yes &mdash; too late</div>
+          <div class="radio-btn" id="rb_no" onclick="selectRadio('payrollClosed','no');live()">No &mdash; still possible</div>
+        </div>
+      </div>
+
+      <div id="stillPossibleNote" style="display:none;">
+        <div class="live-flag warn">
+          <strong>You may still be able to elect salary sacrifice</strong>
+          Contact payroll or HR as soon as possible &mdash; some systems allow late amendments before the final run. That saves NI as well as tax, so it beats everything below.
+        </div>
+      </div>
+
+      <hr class="divider" style="margin:1.5rem 0;">
+
+      <div class="field-group">
+        <label>How much of your net bonus will you put into a pension?</label>
+        <div class="input-wrap">
+          <span class="input-prefix">&pound;</span>
+          <input type="number" id="contributionAmount" placeholder="e.g. 8700" min="0" oninput="live()">
+        </div>
+        <p class="hint" id="netBonusHint">Enter up to your full net bonus.</p>
+      </div>
+
+      <div class="field-group" style="margin-bottom:0;">
+        <label>Future salary sacrifice &mdash; monthly increase</label>
+        <div class="input-wrap">
+          <span class="input-prefix">&pound;</span>
+          <input type="number" id="futureSacrifice" placeholder="e.g. 200" min="0" oninput="live()">
+        </div>
+        <p class="hint">Optional &mdash; see what changing it going forward would save each year.</p>
+      </div>
+    </div>
+
+    <!-- RESULTS -->
+    <div class="calc-results">
+      <div class="calc-panel">
+        <div class="live-hero" id="liveHero">
+          <div class="live-hero-lbl">You could reclaim</div>
+          <div class="live-hero-amt" id="liveAmount">&pound;0</div>
+          <div class="live-hero-sub" id="liveSub">Enter your bonus to see what you can get back.</div>
+        </div>
+
+        <div class="live-rows" id="liveRows"></div>
+        <div id="liveFlags"></div>
+
+        <button class="btn-primary btn-full" style="margin-top:0.9rem;" onclick="document.getElementById('packs').scrollIntoView({behavior:'smooth'})">Save my results &darr;</button>
+      </div>
+    </div>
+
   </div>
 
-<!-- STEP 1: SITUATION -->
-  <div class="card active" id="step1">
-    <div class="card-title">Tell us about your bonus</div>
-    <p class="card-subtitle">We'll use this to calculate your tax position and show you what you can reclaim.</p>
+  
+  <!-- PICK YOUR PACK -->
+  <div class="pack-section" id="packs">
+    <div class="pack-head">
+      <h3>Nearly there &mdash; save your results</h3>
+      <p>Keep your figures, or get the full breakdown to take to an accountant.</p>
+    </div>
 
-    <div class="field-group">
-      <label>Gross bonus amount</label>
-      <div class="input-wrap">
-        <span class="input-prefix">£</span>
-        <input type="number" id="bonusAmount" placeholder="e.g. 5000" min="0">
+    <div class="pack-grid">
+
+      <div class="pack">
+        <div class="pack-name">Email Summary</div>
+        <div class="pack-tagline">Your key figures, sent to you</div>
+        <div class="pack-price-row">
+          <div class="pack-price free">Free</div>
+        </div>
+        <ul class="pack-list">
+          <li><span class="pack-tick">&#10003;</span><span>Your headline reclaim figure</span></li>
+          <li><span class="pack-tick">&#10003;</span><span>Tax and NI breakdown</span></li>
+          <li><span class="pack-tick">&#10003;</span><span>A link back to revisit anytime</span></li>
+        </ul>
+        <button class="pack-btn dark" onclick="openPackEmail()">Email my results &mdash; Free</button>
+        <div class="pack-email" id="packEmail">
+          <input type="email" id="packEmailInput" placeholder="your@email.com">
+          <button class="pack-btn dark" onclick="sendPackEmail()">Send it</button>
+          <div class="pack-email-done" id="packEmailDone">&#10003; On its way &mdash; check your inbox.</div>
+        </div>
       </div>
-    </div>
 
-    <div class="field-group">
-      <label>Your annual salary (excluding bonus)</label>
-      <div class="input-wrap">
-        <span class="input-prefix">£</span>
-        <input type="number" id="annualSalary" placeholder="e.g. 60000" min="0">
+      <div class="pack featured">
+        <div class="pack-badge">Recommended</div>
+        <div class="pack-name">Full PDF Report</div>
+        <div class="pack-tagline">Everything, documented and dated</div>
+        <div class="pack-price-row">
+          <div class="pack-price">&pound;4.99</div>
+          <div class="pack-was">Your accountant would charge more to work this out</div>
+        </div>
+        <ul class="pack-list">
+          <li><span class="pack-tick">&#10003;</span><span><strong>Everything in the email</strong></span></li>
+          <li><span class="pack-tick">&#10003;</span><span><strong>Every calculation shown</strong> &mdash; band by band, so the numbers can be checked</span></li>
+          <li><span class="pack-tick">&#10003;</span><span>Self Assessment reference notes &mdash; which boxes, what to enter</span></li>
+          <li><span class="pack-tick">&#10003;</span><span>Assumptions and HMRC sources cited</span></li>
+          <li><span class="pack-tick">&#10003;</span><span>Ready to hand to an accountant or adviser</span></li>
+        </ul>
+        <a class="pack-btn green" href="https://buy.stripe.com/4gM8wP2IV4l0gPn9D353O00" target="_blank" onclick="gaEvent('pdf_cta_clicked',{tool:'MyPensionReclaim'})">Get the PDF &mdash; &pound;4.99</a>
       </div>
-      <p class="hint">This helps us work out whether your bonus falls into higher rate tax.</p>
+
     </div>
 
-    <div class="field-group">
-      <label>Was payroll closed before you could elect salary sacrifice?</label>
-      <div class="radio-group">
-        <div class="radio-btn selected" id="rb_yes" onclick="selectRadio('payrollClosed','yes')">Yes — too late</div>
-        <div class="radio-btn" id="rb_no" onclick="selectRadio('payrollClosed','no')">No — still possible</div>
-      </div>
-    </div>
-
-    <div id="stillPossibleNote" style="display:none;">
-      <div class="alert-box warning">
-        <h4>You may still be able to elect salary sacrifice</h4>
-        <p>Contact your payroll or HR team as soon as possible — some payroll systems can accommodate late amendments before the final run. Use our email template if helpful.</p>
-      </div>
-    </div>
-
-    <div class="btn-row">
-      <button class="btn-primary" onclick="goTo(2)">Calculate my tax →</button>
-    </div>
-  </div>
-
-  <!-- STEP 2: CALCULATOR -->
-  <div class="card" id="step2">
-    <div class="card-title">Your tax breakdown</div>
-    <p class="card-subtitle">Here's how your bonus will be taxed, and what's potentially reclaimable.</p>
-
-        <!-- Save your results prompt -->
-    <div class="save-prompt">
-      <button class="save-prompt-btn email" onclick="toggleEmailCapture('PensionReclaim')">
-        <span class="btn-icon">&#9993;</span> Email me my results
-      </button>
-      <a class="save-prompt-btn pdf" href="https://buy.stripe.com/4gM8wP2IV4l0gPn9D353O00" target="_blank">
-        <span class="btn-icon">&#128196;</span> Download PDF report <span class="btn-price">&pound;4.99</span>
-      </a>
-    </div>
-    <div class="email-capture" id="emailCapture_PensionReclaim">
-      <div class="email-capture-title">&#128231; Get a summary emailed to you (free)</div>
-      <div class="email-capture-row">
-        <input type="email" id="emailInput_PensionReclaim" placeholder="your@email.com">
-        <button class="email-capture-send" onclick="sendEmail('PensionReclaim')">Send</button>
-      </div>
-      <p class="email-capture-note">We&rsquo;ll send a one-time summary. No spam, no mailing list. You can also just screenshot your results.</p>
-      <div class="email-capture-done" id="emailDone_PensionReclaim">&#10003; Check your inbox! A summary is on its way.</div>
-    </div>
-
-    <div class="results-grid" id="resultsGrid">
-      <!-- populated by JS -->
-    </div>
-
-    <div class="ni-note" id="niNote"></div>
-
-    <hr class="divider">
-
-    <div class="guidance-box">
-      <h4>What does this mean?</h4>
-      <p id="taxExplainer"></p>
-    </div>
-
-    <div id="higherRateGuidance" style="display:none;">
-      <div class="alert-box">
-        <h4>✓ Good news — you can reclaim the income tax</h4>
-        <p>By making a personal pension contribution equal to your net bonus, you can recover most of the income tax through Self Assessment. The NI is not reclaimable, but everything else can be.</p>
-      </div>
-    </div>
-
-    <div class="btn-row">
-      <button class="btn-secondary" onclick="goTo(1)">← Back</button>
-      <button class="btn-primary" onclick="goTo(3)">Pension contribution →</button>
-    </div>
-  </div>
-
-  <!-- STEP 3: PENSION CONTRIBUTION -->
-  <div class="card" id="step3">
-    <div class="card-title">Making a personal pension contribution</div>
-    <p class="card-subtitle">Even though you missed salary sacrifice, you can still recover the income tax through a direct pension contribution.</p>
-
-    <div class="field-group">
-      <label>How much of your net bonus do you want to contribute?</label>
-      <div class="input-wrap">
-        <span class="input-prefix">£</span>
-        <input type="number" id="contributionAmount" placeholder="e.g. 3000" min="0">
-      </div>
-      <p class="hint" id="netBonusHint">Enter up to your full net bonus amount.</p>
-    </div>
-
-    <div class="results-grid" id="pensionResultsGrid">
-      <!-- populated by JS -->
-    </div>
-
-    <hr class="divider">
-
-    <div class="guidance-box">
-      <h4>How does this work in practice?</h4>
-      <ul>
-        <li>Pay the contribution from your bank account into your pension (employer scheme if they accept AVCs, or a SIPP)</li>
-        <li>Your pension provider automatically claims 20% basic rate relief — so £800 from you becomes £1,000 in the pension</li>
-        <li>If you're a higher rate taxpayer, claim the extra 20–25% back via Self Assessment (Step 4)</li>
-      </ul>
-    </div>
-
-    <div class="field-group" style="margin-top:1.5rem;">
-      <label>Future salary sacrifice — monthly increase</label>
-      <div class="input-wrap">
-        <span class="input-prefix">£</span>
-        <input type="number" id="futureSacrifice" placeholder="e.g. 200" min="0">
-      </div>
-      <p class="hint">If you increase your salary sacrifice going forward, we'll show you the annual NI and tax saving.</p>
-    </div>
-
-    <div id="futureSavingsBox" style="display:none; margin-top:1rem;">
-      <div class="alert-box">
-        <h4 id="futureSavingsTitle"></h4>
-        <p id="futureSavingsText"></p>
-      </div>
-    </div>
-
-    <div class="btn-row">
-      <button class="btn-secondary" onclick="goTo(2)">← Back</button>
-      <button class="btn-primary" onclick="goTo(4)">Self Assessment guide →</button>
-    </div>
+    <div class="pack-foot">Instant download after payment &bull; Secure checkout via Stripe &bull; No account needed &bull; Nothing stored on our servers</div>
   </div>
 
   <!-- STEP 4: SELF ASSESSMENT -->
-  <div class="card" id="step4">
+  <div class="card active" id="step4">
     <div class="card-title">Registering for Self Assessment</div>
     <p class="card-subtitle">You're employed full-time, but you can still register to claim back higher rate pension relief. Here's exactly what to do.</p>
 
@@ -953,6 +1006,112 @@
     return { bonus, taxOnBonus, niOnBonus, totalDeductions, netBonus, effectiveRate };
   }
 
+
+  // ── LIVE SPLIT CALCULATOR ──────────────────────────────────────────────────
+  function live() {
+    var r = calcTax();
+    var contrib = parseFloat(document.getElementById('contributionAmount').value) || 0;
+    var gross = contrib > 0 ? contrib / 0.8 : 0;
+    var basicRelief = gross - contrib;
+    var higherRelief = state.isHigherRate ? gross * 0.20 : 0;
+
+    var hero = document.getElementById('liveHero');
+    var amtEl = document.getElementById('liveAmount');
+    var subEl = document.getElementById('liveSub');
+
+    document.getElementById('netBonusHint').textContent =
+      r.bonus > 0 ? 'Your net bonus is ' + fmt(r.netBonus) + '. You can contribute some or all of it.'
+                  : 'Enter up to your full net bonus.';
+    document.getElementById('contributionAmount').placeholder = r.netBonus > 0 ? Math.round(r.netBonus) : 'e.g. 8700';
+
+    if (r.bonus <= 0) {
+      hero.classList.add('empty');
+      amtEl.textContent = fmt(0);
+      subEl.textContent = 'Enter your bonus to see what you can get back.';
+    } else if (contrib <= 0) {
+      hero.classList.add('empty');
+      amtEl.textContent = fmt(r.taxOnBonus);
+      subEl.innerHTML = 'That is the income tax on your bonus. Enter a pension contribution to see how much of it you can recover.';
+    } else {
+      hero.classList.remove('empty');
+      amtEl.textContent = fmt(higherRelief);
+      subEl.innerHTML = higherRelief > 0
+        ? 'Claim this back through Self Assessment. Your ' + fmt(contrib) + ' contribution becomes <strong>' + fmt(gross) + '</strong> in your pension.'
+        : 'At your income you are a basic-rate taxpayer, so relief is claimed automatically. Your ' + fmt(contrib) + ' becomes <strong>' + fmt(gross) + '</strong> in your pension.';
+    }
+
+    var rows = '';
+    rows += row('Gross bonus', fmt(r.bonus));
+    rows += row('Income tax', '\u2212 ' + fmt(r.taxOnBonus), '#b91c1c', 'Largely recoverable');
+    rows += row('National Insurance', '\u2212 ' + fmt(r.niOnBonus), '#b91c1c', 'Not recoverable');
+    rows += rowTotal('Net bonus received', fmt(r.netBonus));
+    if (contrib > 0) {
+      rows += row('You pay into pension', fmt(contrib));
+      rows += row('Basic-rate relief added', '+ ' + fmt(basicRelief), '#15803d', 'Claimed by your provider');
+      if (higherRelief > 0) rows += row('Higher-rate relief', '+ ' + fmt(higherRelief), '#15803d', 'You claim via Self Assessment');
+      rows += rowTotal('Total in your pension', fmt(gross));
+    }
+    document.getElementById('liveRows').innerHTML = rows;
+
+    var flags = '';
+    if (r.bonus > 0 && r.niOnBonus > 0) {
+      flags += '<div class="live-flag warn"><strong>The NI is gone</strong>' + fmt(r.niOnBonus) +
+        ' in National Insurance cannot be recovered. That is the real cost of missing the salary sacrifice window &mdash; the income tax, however, is largely recoverable.</div>';
+    }
+    var monthly = parseFloat(document.getElementById('futureSacrifice').value) || 0;
+    if (monthly > 0) {
+      var annualNI = monthly * 12 * 0.08;
+      var annualTax = monthly * 12 * (state.isHigherRate ? 0.40 : 0.20);
+      flags += '<div class="live-flag good"><strong>Going forward</strong>Sacrificing ' + fmt(monthly) +
+        ' more a month would save about ' + fmt(annualNI + annualTax) + ' a year (' + fmt(annualTax) +
+        ' tax + ' + fmt(annualNI) + ' NI), so it only costs you about ' + fmt(monthly - (annualNI + annualTax) / 12) + ' a month in take-home.</div>';
+    }
+    document.getElementById('liveFlags').innerHTML = flags;
+
+    var sc = document.getElementById('summaryContent');
+    if (sc) {
+      sc.innerHTML =
+        'Gross bonus: <strong style="color:white">' + fmt(r.bonus) + '</strong><br>' +
+        'Tax &amp; NI paid: <strong style="color:white">' + fmt(r.taxOnBonus + r.niOnBonus) + '</strong><br>' +
+        'Net bonus received: <strong style="color:white">' + fmt(r.netBonus) + '</strong><br>' +
+        'Pension contribution: <strong style="color:white">' + fmt(contrib) + '</strong><br>' +
+        'Reclaimable via Self Assessment: <strong style="color:var(--gold)">' + fmt(higherRelief) + '</strong><br>' +
+        'NI lost (not reclaimable): <strong style="color:#e88;">' + fmt(r.niOnBonus) + '</strong>';
+    }
+
+    if (!window._gaStarted && r.bonus > 0) { window._gaStarted = true; gaEvent('tool_started', {tool:'MyPensionReclaim'}); }
+  }
+
+
+  function openPackEmail() {
+    var el = document.getElementById('packEmail');
+    el.classList.add('open');
+    var i = document.getElementById('packEmailInput');
+    if (i) i.focus();
+    gaEvent('email_capture_opened', {tool:'MyPensionReclaim'});
+  }
+  function sendPackEmail() {
+    var i = document.getElementById('packEmailInput');
+    if (!i || !i.value || i.value.indexOf('@') === -1) { if(i) i.style.borderColor = '#ef4444'; return; }
+    i.style.borderColor = '#15803d';
+    gaEvent('email_captured', {tool:'MyPensionReclaim'});
+    document.getElementById('packEmailDone').classList.add('show');
+    i.style.display = 'none';
+    i.nextElementSibling.style.display = 'none';
+    var sub = encodeURIComponent('My bonus reclaim results \u2014 MyPayPicture');
+    var body = encodeURIComponent('Here are your results from MyPayPicture. Revisit anytime at mypaypicture.com/pension-reclaim.html');
+    window.open('mailto:' + i.value + '?subject=' + sub + '&body=' + body, '_blank');
+  }
+
+  function row(lbl, val, colour, sub) {
+    return '<div class="live-row"><div class="live-row-lbl">' + lbl +
+      (sub ? '<small>' + sub + '</small>' : '') + '</div><div class="live-row-val"' +
+      (colour ? ' style="color:' + colour + '"' : '') + '>' + val + '</div></div>';
+  }
+  function rowTotal(lbl, val) {
+    return '<div class="live-row total"><div class="live-row-lbl">' + lbl + '</div><div class="live-row-val">' + val + '</div></div>';
+  }
+
   function renderStep2() {
     const r = calcTax();
 
@@ -1050,29 +1209,8 @@
   }
 
   function goTo(step) {
-    // Validate step 1 before proceeding
-    if (step > 1) {
-      const bonus = parseFloat(document.getElementById('bonusAmount').value) || 0;
-      const salary = parseFloat(document.getElementById('annualSalary').value) || 0;
-      if (!bonus || !salary) {
-        document.getElementById('bonusAmount').focus();
-        return;
-      }
-    }
-
-    for (let i = 1; i <= 4; i++) {
-      document.getElementById('step' + i).classList.toggle('active', i === step);
-      const tab = document.getElementById('tab' + i);
-      tab.classList.toggle('active', i === step);
-      if (i < step) tab.classList.add('completed');
-    }
-
-    if (step === 2) renderStep2();
-    if (step === 3) renderStep3();
-    if (step === 4) renderStep3();
-
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-    if (step >= 4) { checkAndShowPdfCta(); showAdviserCta(); } else if (hasEnoughData && hasEnoughData()) { showAdviserCta(); }
+    var el = document.getElementById('step' + step);
+    if (el) { el.classList.add('active'); el.scrollIntoView({behavior:'smooth'}); }
   }
 
   // Live recalculation
