@@ -1,0 +1,544 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MyRentOrBuy — Should I rent or buy? — MyPayPicture</title>
+<link rel="canonical" href="https://mypaypicture.com/rent-or-buy.html">
+<meta name="description" content="Should you rent or buy? Four questions, one clear answer. See which leaves you better off over time, including stamp duty, mortgage interest, and investing the difference.">
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-XY51DX80VL"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-XY51DX80VL');
+  function gaEvent(name, params) { if (typeof gtag !== 'undefined') gtag('event', name, params || {}); }
+</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,300;0,400;0,600;0,700;0,800;1,300;1,400;1,700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink:#314855; --ink-deep:#22333d; --slate-soft:#5a7282; --slate-light:#8a99a5;
+    --accent:#2d6a4f; --accent-dark:#1b4332; --accent-pale:#d8f3dc;
+    --yellow:#ffdb00; --sky:#5cc3e8;
+    --red:#b91c1c; --amber:#d97706; --green:#15803d;
+    --bg:#f1f1f4; --surface:#ffffff; --border:rgba(49,72,85,0.12);
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:'Nunito',sans-serif;background:var(--bg);color:var(--ink);min-height:100vh}
+
+  header{background:var(--ink);padding:1.1rem 2rem;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:50}
+  .disclaimer-badge{font-size:0.65rem;color:rgba(255,255,255,0.4);border:1px solid rgba(255,255,255,0.15);padding:0.3rem 0.85rem;border-radius:100px}
+  .app-switcher{position:relative}
+  .switcher-trigger{display:flex;align-items:center;gap:0.5rem;cursor:pointer;padding:0.45rem 0.9rem;border-radius:100px;border:1px solid rgba(255,255,255,0.15);background:rgba(255,255,255,0.07);user-select:none}
+  .switcher-trigger:hover{background:rgba(255,255,255,0.13);border-color:var(--yellow)}
+  .app-name{font-weight:800;font-size:1rem;color:white}
+  .app-name em{font-style:italic;color:var(--yellow)}
+  .chevron{color:rgba(255,255,255,0.4);font-size:0.65rem;transition:transform 0.2s}
+  .app-switcher.open .chevron{transform:rotate(180deg)}
+  .switcher-dropdown{display:none;position:absolute;top:calc(100% + 10px);left:0;background:white;border:1px solid rgba(0,0,0,0.08);border-radius:14px;overflow:hidden;min-width:240px;box-shadow:0 16px 48px rgba(0,0,0,0.12);z-index:100;max-height:70vh;overflow-y:auto}
+  .app-switcher.open .switcher-dropdown{display:block}
+  .switcher-home{display:flex;align-items:center;gap:0.75rem;padding:0.75rem 1.1rem;text-decoration:none;transition:background 0.12s}
+  .switcher-home:hover{background:var(--accent-pale)}
+  .switcher-home-icon{width:28px;height:28px;border-radius:8px;background:rgba(0,0,0,0.04);display:flex;align-items:center;justify-content:center;font-size:0.95rem}
+  .switcher-home-label{font-size:0.82rem;font-weight:700;color:var(--ink)}
+  .switcher-home-sub{font-size:0.66rem;color:var(--slate-light);margin-top:0.1rem}
+
+  .hero{background:var(--ink);padding:4rem 2rem 5.5rem;text-align:center;position:relative;overflow:hidden}
+  .hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 60% 70% at 15% 50%,rgba(45,106,79,0.2) 0%,transparent 60%);pointer-events:none}
+  .hero-eyebrow{display:inline-flex;font-size:0.7rem;font-weight:700;text-transform:uppercase;letter-spacing:0.2em;color:var(--sky);margin-bottom:1.25rem;padding:0.35rem 1.1rem;border-radius:100px;border:1px solid rgba(92,195,232,0.3);background:rgba(92,195,232,0.08);position:relative}
+  .hero h1{font-size:clamp(2.2rem,5.5vw,3.6rem);color:white;line-height:1.05;max-width:700px;margin:0 auto 1rem;font-weight:800;letter-spacing:-0.03em;position:relative}
+  .hero h1 em{font-style:italic;color:var(--sky);font-weight:300}
+  .hero p{color:rgba(255,255,255,0.5);font-size:1rem;max-width:480px;margin:0 auto;line-height:1.75;position:relative}
+
+  .container{max-width:720px;margin:-3rem auto 0;padding:0 1rem 5rem;position:relative;z-index:2}
+  .card{background:var(--surface);border-radius:20px;padding:1.75rem 1.5rem;box-shadow:0 1px 3px rgba(0,0,0,0.04),0 4px 20px rgba(0,0,0,0.04);margin-bottom:1rem}
+  .card-title{font-size:1.4rem;font-weight:800;letter-spacing:-0.02em;margin-bottom:0.3rem}
+  .card-sub{color:var(--slate-soft);font-size:0.9rem;margin-bottom:1.5rem;line-height:1.6}
+
+  .field{margin-bottom:1.4rem}
+  .field-row{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:0.45rem}
+  label{font-size:0.88rem;font-weight:700}
+  .field-val{font-size:1.05rem;font-weight:800;color:var(--accent);font-variant-numeric:tabular-nums}
+  input[type="range"]{width:100%;-webkit-appearance:none;appearance:none;height:8px;background:rgba(0,0,0,0.06);border-radius:100px;outline:none;cursor:pointer}
+  input[type="range"]::-webkit-slider-thumb{-webkit-appearance:none;width:24px;height:24px;background:white;border:2px solid var(--accent);border-radius:50%;cursor:pointer;box-shadow:0 1px 4px rgba(0,0,0,0.15)}
+  input[type="range"]::-moz-range-thumb{width:24px;height:24px;background:white;border:2px solid var(--accent);border-radius:50%;cursor:pointer}
+  .hint{font-size:0.76rem;color:var(--slate-soft);margin-top:0.35rem;line-height:1.5}
+
+  .pill-group{display:flex;gap:0.5rem;flex-wrap:wrap}
+  .pill{padding:0.6rem 1rem;border:1.5px solid #ddd;border-radius:100px;cursor:pointer;font-size:0.83rem;font-weight:600;color:var(--slate-soft);font-family:'Nunito',sans-serif;background:transparent}
+  .pill:hover{border-color:var(--accent)}
+  .pill.sel{border-color:var(--accent);background:var(--accent-pale);color:var(--accent-dark);font-weight:700}
+
+  .verdict{border-radius:18px;padding:1.85rem 1.35rem;text-align:center;margin-bottom:1.25rem;background:var(--accent-pale)}
+  .verdict.rent{background:#eff6ff}
+  .verdict.close{background:#fffbeb}
+  .verdict-label{font-size:0.72rem;font-weight:700;color:var(--slate-soft);text-transform:uppercase;letter-spacing:0.08em;margin-bottom:0.75rem}
+  .verdict-answer{font-size:1.7rem;font-weight:800;letter-spacing:-0.02em;line-height:1.15;margin-bottom:0.6rem;color:var(--accent-dark)}
+  .verdict.rent .verdict-answer{color:#1e40af}
+  .verdict.close .verdict-answer{color:#78350f}
+  .verdict-amount{font-size:2.6rem;font-weight:800;letter-spacing:-0.03em;line-height:1;margin-bottom:0.6rem;color:var(--accent)}
+  .verdict.rent .verdict-amount{color:#2563eb}
+  .verdict.close .verdict-amount{color:var(--amber)}
+  .verdict-explain{font-size:0.9rem;color:var(--slate-soft);line-height:1.6;max-width:520px;margin:0 auto}
+
+  .tiles{display:grid;grid-template-columns:1fr 1fr;gap:0.85rem;margin:1.25rem 0}
+  .tile{background:rgba(0,0,0,0.025);border-radius:14px;padding:1rem;text-align:center}
+  .tile-lbl{font-size:0.66rem;font-weight:700;color:var(--slate-soft);text-transform:uppercase;letter-spacing:0.06em;margin-bottom:0.4rem}
+  .tile-val{font-size:1.3rem;font-weight:800;letter-spacing:-0.02em}
+  .tile-sub{font-size:0.7rem;color:var(--slate-soft);margin-top:0.2rem}
+
+  canvas{width:100%;height:240px;display:block}
+  .legend{display:flex;gap:1.25rem;flex-wrap:wrap;font-size:0.78rem;color:var(--slate-soft);font-weight:600;margin-top:0.85rem;justify-content:center}
+  .dot{display:inline-block;width:10px;height:10px;border-radius:50%;margin-right:0.35rem;vertical-align:middle}
+
+  .drill-head{display:flex;align-items:center;gap:0.6rem;cursor:pointer;user-select:none}
+  .drill-head:hover{opacity:0.85}
+  .drill-title{font-size:1rem;font-weight:800;flex:1}
+  .drill-chev{color:var(--slate-soft);font-size:1.3rem;transition:transform 0.2s}
+  .drill-chev.open{transform:rotate(90deg)}
+  .drill-body{display:none;margin-top:1rem}
+  .drill-body.open{display:block}
+
+  .wf-row{display:flex;justify-content:space-between;gap:1rem;padding:0.65rem 0;border-bottom:1px solid var(--border);font-size:0.88rem}
+  .wf-row:last-child{border-bottom:none}
+  .wf-lbl{color:var(--slate-soft);font-weight:600}
+  .wf-lbl small{display:block;font-size:0.72rem;color:var(--slate-light);font-weight:400;margin-top:0.1rem}
+  .wf-val{font-weight:800;white-space:nowrap;font-variant-numeric:tabular-nums}
+
+  .note{border-radius:12px;padding:0.85rem 1.1rem;margin-top:0.85rem;font-size:0.82rem;line-height:1.6}
+  .note.info{background:#eff6ff;border:1.5px solid #bfdbfe;color:#1e3a8a}
+  .note.warn{background:#fffbeb;border:1.5px solid #fde68a;color:#78350f}
+  .note strong{display:block;margin-bottom:0.15rem}
+
+  .save-prompt{display:flex;gap:0.75rem;margin:1.25rem 0;flex-wrap:wrap}
+  .save-btn{flex:1;min-width:170px;display:flex;align-items:center;justify-content:center;gap:0.5rem;padding:0.85rem 1rem;border-radius:14px;font-family:'Nunito',sans-serif;font-size:0.85rem;font-weight:700;cursor:pointer;text-decoration:none;border:none}
+  .save-btn.email{background:rgba(45,106,79,0.08);color:var(--accent);border:1.5px solid rgba(45,106,79,0.2)}
+  .save-btn.pdf{background:var(--ink);color:white}
+
+  .adviser{background:linear-gradient(135deg,var(--accent) 0%,var(--accent-dark) 100%);border-radius:14px;padding:1.25rem 1.5rem;margin-top:1.25rem}
+  .adviser-inner{display:flex;align-items:center;justify-content:space-between;gap:1rem;flex-wrap:wrap}
+  .adviser-text strong{display:block;color:white;font-size:0.98rem;font-weight:800;margin-bottom:0.2rem}
+  .adviser-text span{color:rgba(255,255,255,0.7);font-size:0.8rem;line-height:1.5}
+  .adviser-btn{background:var(--yellow);color:var(--ink);padding:0.7rem 1.4rem;border-radius:100px;font-weight:800;font-size:0.88rem;text-decoration:none;white-space:nowrap}
+
+  .btn{padding:0.9rem 2rem;border:none;border-radius:100px;font-family:'Nunito',sans-serif;font-size:0.95rem;font-weight:800;cursor:pointer}
+  .btn-go{background:var(--accent);color:white;width:100%}
+  .btn-go:hover{background:var(--accent-dark)}
+  .legal{font-size:0.72rem;color:var(--slate-light);line-height:1.6;margin-top:1.25rem}
+
+  @media(max-width:600px){
+    header{padding:1rem 1.25rem}
+    .hero{padding:3rem 1.25rem 4.5rem}
+    .card{padding:1.5rem 1.25rem}
+    .verdict-amount{font-size:2.1rem}
+    .verdict-answer{font-size:1.4rem}
+    .tiles{grid-template-columns:1fr 1fr}
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="app-switcher" id="appSwitcher">
+    <div class="switcher-trigger" onclick="toggleSwitcher(event)">
+      <div class="app-name">MyRentOr<em>Buy</em></div>
+      <div class="chevron">&#9660;</div>
+    </div>
+    <div class="switcher-dropdown">
+      <a class="switcher-home" href="index.html" style="border-bottom:1px solid rgba(0,0,0,0.06);">
+        <div class="switcher-home-icon">&#127968;</div>
+        <div><div class="switcher-home-label">&#8592; MyPayPicture</div><div class="switcher-home-sub">Back to all tools</div></div>
+      </a>
+      <a class="switcher-home" href="property-decision.html"><div class="switcher-home-icon">&#127970;</div><div><div class="switcher-home-label">MyPropertyDecision</div><div class="switcher-home-sub">Buy-to-let &amp; company</div></div></a>
+      <a class="switcher-home" href="financial-plan.html"><div class="switcher-home-icon">&#129517;</div><div><div class="switcher-home-label">MyFinancialPlan</div><div class="switcher-home-sub">Where do I stand?</div></div></a>
+      <a class="switcher-home" href="retirement-tracker.html"><div class="switcher-home-icon">&#127807;</div><div><div class="switcher-home-label">MyPulse</div><div class="switcher-home-sub">Am I on track?</div></div></a>
+      <a class="switcher-home" href="pension-optimiser.html"><div class="switcher-home-icon">&#128200;</div><div><div class="switcher-home-label">MyPensionOptimiser</div><div class="switcher-home-sub">Optimise your pension</div></div></a>
+      <a class="switcher-home" href="self-assessment.html"><div class="switcher-home-icon">&#128196;</div><div><div class="switcher-home-label">MySelfAssessment</div><div class="switcher-home-sub">Do I need to file?</div></div></a>
+    </div>
+  </div>
+  <div class="disclaimer-badge">Not financial advice</div>
+</header>
+
+<div class="hero">
+  <div class="hero-eyebrow">MyPayPicture</div>
+  <h1>Should I rent<br><em>or buy?</em></h1>
+  <p>Four questions. One clear answer. Including the costs most calculators forget.</p>
+</div>
+
+<div class="container">
+
+  <!-- INPUTS -->
+  <div class="card">
+    <div class="card-title">Your situation</div>
+    <p class="card-sub">Rough numbers are fine. Everything updates as you drag.</p>
+
+    <div class="field">
+      <div class="field-row"><label>Property price</label><div class="field-val" id="l_price">&pound;300,000</div></div>
+      <input type="range" id="price" min="80000" max="1200000" step="5000" value="300000" oninput="calc()">
+    </div>
+
+    <div class="field">
+      <div class="field-row"><label>Deposit you have</label><div class="field-val" id="l_deposit">&pound;40,000</div></div>
+      <input type="range" id="deposit" min="0" max="500000" step="2500" value="40000" oninput="calc()">
+      <div class="hint" id="ltvHint"></div>
+    </div>
+
+    <div class="field">
+      <div class="field-row"><label>Your current rent</label><div class="field-val" id="l_rent">&pound;1,200/mo</div></div>
+      <input type="range" id="rent" min="300" max="4000" step="25" value="1200" oninput="calc()">
+      <div class="hint">What you pay now, or would pay if you keep renting.</div>
+    </div>
+
+    <div class="field" style="margin-bottom:0.5rem;">
+      <label style="display:block;margin-bottom:0.5rem;">Have you owned a home before?</label>
+      <div class="pill-group">
+        <button class="pill sel" id="ftb_yes" onclick="setFTB(true)">No, first-time buyer</button>
+        <button class="pill" id="ftb_no" onclick="setFTB(false)">Yes, owned before</button>
+      </div>
+      <div class="hint">First-time buyers pay less stamp duty.</div>
+    </div>
+  </div>
+
+  <!-- VERDICT -->
+  <div class="card">
+    <div class="verdict" id="verdict">
+      <div class="verdict-label">After <span id="vYears">10</span> years</div>
+      <div class="verdict-answer" id="vAnswer">Buying leaves you better off</div>
+      <div class="verdict-amount" id="vAmount">&pound;0</div>
+      <div class="verdict-explain" id="vExplain"></div>
+    </div>
+
+    <div class="field" style="margin-top:1.25rem;">
+      <div class="field-row"><label>How long will you stay?</label><div class="field-val" id="l_years">10 years</div></div>
+      <input type="range" id="years" min="2" max="30" value="10" oninput="calc()">
+      <div class="hint" id="breakEvenHint"></div>
+    </div>
+
+    <div class="tiles" id="tiles"></div>
+
+    <div class="save-prompt">
+      <button class="save-btn email" onclick="document.getElementById('emailCap').style.display='block'">
+        <span>&#9993;</span> Email me my results
+      </button>
+      <a class="save-btn pdf" href="https://buy.stripe.com/4gM8wP2IV4l0gPn9D353O00" target="_blank">
+        <span>&#128196;</span> Download PDF report <span style="opacity:0.7;font-weight:600;">&pound;4.99</span>
+      </a>
+    </div>
+    <div id="emailCap" style="display:none;background:rgba(45,106,79,0.05);border:1.5px solid rgba(45,106,79,0.15);border-radius:14px;padding:1.1rem;">
+      <div style="font-size:0.88rem;font-weight:800;margin-bottom:0.5rem;">&#128231; Get a summary emailed to you (free)</div>
+      <div style="display:flex;gap:0.5rem;">
+        <input type="email" id="emailIn" placeholder="your@email.com" style="flex:1;padding:0.7rem;border:1.5px solid #ddd;border-radius:10px;font-family:'Nunito',sans-serif;font-size:0.9rem;">
+        <button onclick="sendEmail()" style="padding:0.7rem 1.25rem;border:none;border-radius:10px;background:var(--accent);color:white;font-family:'Nunito',sans-serif;font-weight:700;cursor:pointer;">Send</button>
+      </div>
+      <div style="font-size:0.7rem;color:var(--slate-soft);margin-top:0.5rem;">No spam, no mailing list.</div>
+    </div>
+  </div>
+
+  <!-- CHART -->
+  <div class="card">
+    <div style="font-size:1rem;font-weight:800;margin-bottom:0.85rem;">Your wealth over time</div>
+    <canvas id="chart"></canvas>
+    <div class="legend">
+      <span><span class="dot" style="background:#2d6a4f"></span>Buying</span>
+      <span><span class="dot" style="background:#2563eb"></span>Renting &amp; investing the difference</span>
+    </div>
+    <div class="hint" style="text-align:center;margin-top:0.6rem;">Where the lines cross is your break-even point.</div>
+  </div>
+
+  <!-- BREAKDOWN -->
+  <div class="card">
+    <div class="drill-head" onclick="toggleDrill()">
+      <div style="font-size:1.1rem;">&#128202;</div>
+      <div class="drill-title">See the full breakdown</div>
+      <div class="drill-chev" id="drillChev">&rsaquo;</div>
+    </div>
+    <div class="drill-body" id="drillBody">
+      <div id="breakdown"></div>
+      <div id="notes"></div>
+    </div>
+  </div>
+
+  <!-- ADVISER -->
+  <div class="card">
+    <div class="adviser">
+      <div class="adviser-inner">
+        <div class="adviser-text">
+          <strong>Thinking about buying?</strong>
+          <span>A mortgage broker can tell you what you'd actually be offered, and an adviser can weigh this against your other goals.</span>
+        </div>
+        <a class="adviser-btn" href="https://tally.so/r/xX2YP5" target="_blank">Find an adviser &rarr;</a>
+      </div>
+    </div>
+    <p class="legal">
+      This is general information, not financial advice. Figures use 2025/26 England stamp duty rates (first-time buyer relief up to &pound;500,000; standard rates above). Assumes 4.5&times; income mortgage affordability is not checked here &mdash; a broker will confirm what you can borrow. Assumptions: 4.5% mortgage rate over 25 years, 3% annual house price growth, 5% annual investment return, 3% rent inflation, 1% of property value per year in maintenance and insurance, plus &pound;2,500 in legal and survey fees. Your actual costs will differ. Property values can fall as well as rise. Always speak to a mortgage broker and a qualified adviser before deciding. No data is stored.
+    </p>
+  </div>
+
+</div>
+
+<script>
+  var isFTB = true;
+
+  function toggleSwitcher(e){e.stopPropagation();document.getElementById('appSwitcher').classList.toggle('open');}
+  document.addEventListener('click',function(){document.getElementById('appSwitcher').classList.remove('open');});
+
+  function fmt(n){var neg=n<0;var s='\u00a3'+Math.round(Math.abs(n)).toLocaleString('en-GB');return neg?'\u2212'+s:s;}
+  function fmtK(n){var neg=n<0;var a=Math.abs(n);var s=a>=1e6?'\u00a3'+(a/1e6).toFixed(2).replace(/0$/,'')+'m':a>=1000?'\u00a3'+Math.round(a/1000)+'k':'\u00a3'+Math.round(a);return neg?'\u2212'+s:s;}
+
+  // Assumptions
+  var MORT_RATE=0.045, MORT_TERM=25, HOUSE_GROWTH=0.03, INVEST_RETURN=0.05, RENT_INFLATION=0.03, MAINT_PCT=0.01, LEGAL_FEES=2500;
+
+  function calcStampDuty(price,ftb){
+    if(ftb){
+      if(price<=300000)return 0;
+      if(price<=500000)return(price-300000)*0.05;
+    }
+    var s=[[0,125000,0],[125000,250000,0.02],[250000,925000,0.05],[925000,1500000,0.10],[1500000,Infinity,0.12]];
+    return s.reduce(function(t,x){return t+Math.max(0,Math.min(price,x[1])-x[0])*x[2];},0);
+  }
+
+  function monthlyMortgage(loan,rate,term){
+    if(loan<=0)return 0;
+    var r=rate/12,n=term*12;
+    return loan*r*Math.pow(1+r,n)/(Math.pow(1+r,n)-1);
+  }
+
+  function mortgageBalance(loan,rate,term,monthsPaid){
+    if(loan<=0)return 0;
+    var r=rate/12,n=term*12;
+    var pay=monthlyMortgage(loan,rate,term);
+    var bal=loan*Math.pow(1+r,monthsPaid)-pay*(Math.pow(1+r,monthsPaid)-1)/r;
+    return Math.max(0,bal);
+  }
+
+  function setFTB(v){
+    isFTB=v;
+    document.getElementById('ftb_yes').classList.toggle('sel',v);
+    document.getElementById('ftb_no').classList.toggle('sel',!v);
+    calc();
+  }
+
+  function toggleDrill(){
+    var b=document.getElementById('drillBody'), c=document.getElementById('drillChev');
+    b.classList.toggle('open'); c.classList.toggle('open');
+  }
+
+  function scenario(years){
+    var price=+document.getElementById('price').value;
+    var deposit=+document.getElementById('deposit').value;
+    var rent=+document.getElementById('rent').value;
+
+    var sdlt=calcStampDuty(price,isFTB);
+    var upfront=deposit+sdlt+LEGAL_FEES;
+    var loan=Math.max(0,price-deposit);
+    var monthlyPay=monthlyMortgage(loan,MORT_RATE,MORT_TERM);
+    var months=Math.round(years*12);
+
+    // BUY: equity = house value - remaining mortgage, minus running costs paid
+    var houseValue=price*Math.pow(1+HOUSE_GROWTH,years);
+    var balance=mortgageBalance(loan,MORT_RATE,MORT_TERM,Math.min(months,MORT_TERM*12));
+    var equity=houseValue-balance;
+    // Maintenance paid over the period (cash out, not recoverable)
+    var maint=0;
+    for(var y=0;y<years;y++){ maint+=price*Math.pow(1+HOUSE_GROWTH,y)*MAINT_PCT; }
+    var buyWealth=equity-maint;
+
+    // RENT: invest the deposit + monthly difference (if mortgage costs more than rent)
+    var pot=upfront; // they keep the deposit + would-be stamp duty and fees
+    var rentPaid=0;
+    for(var m=0;m<months;m++){
+      var yIdx=Math.floor(m/12);
+      var thisRent=rent*Math.pow(1+RENT_INFLATION,yIdx);
+      var thisMaint=(price*Math.pow(1+HOUSE_GROWTH,yIdx)*MAINT_PCT)/12;
+      var ownerMonthly=monthlyPay+thisMaint;
+      var diff=ownerMonthly-thisRent; // positive = owning costs more, renter invests the difference
+      pot=pot*(1+INVEST_RETURN/12)+Math.max(0,diff);
+      rentPaid+=thisRent;
+    }
+    var rentWealth=pot;
+
+    return {
+      sdlt:sdlt, upfront:upfront, loan:loan, monthlyPay:monthlyPay,
+      houseValue:houseValue, balance:balance, equity:equity, maint:maint,
+      buyWealth:buyWealth, rentWealth:rentWealth, rentPaid:rentPaid,
+      diff:buyWealth-rentWealth, price:price, deposit:deposit, rent:rent
+    };
+  }
+
+  function findBreakEven(){
+    for(var y=1;y<=30;y++){
+      var s=scenario(y);
+      if(s.buyWealth>s.rentWealth) return y;
+    }
+    return null;
+  }
+
+  function calc(){
+    var price=+document.getElementById('price').value;
+    var deposit=+document.getElementById('deposit').value;
+    var rent=+document.getElementById('rent').value;
+    var years=+document.getElementById('years').value;
+
+    document.getElementById('l_price').textContent=fmt(price);
+    document.getElementById('l_deposit').textContent=fmt(deposit);
+    document.getElementById('l_rent').textContent=fmt(rent)+'/mo';
+    document.getElementById('l_years').textContent=years+' years';
+    document.getElementById('vYears').textContent=years;
+
+    var ltv=price>0?Math.round((1-deposit/price)*100):0;
+    var ltvEl=document.getElementById('ltvHint');
+    if(deposit>=price){ ltvEl.textContent='That covers the full price \u2014 no mortgage needed.'; }
+    else { ltvEl.textContent=ltv+'% loan-to-value. '+(ltv>95?'Most lenders want 95% or below.':ltv>90?'You\'ll get better rates below 90%.':ltv>80?'Decent. Below 80% unlocks the best rates.':'Strong deposit \u2014 you\'ll access the best rates.'); }
+
+    var s=scenario(years);
+    var v=document.getElementById('verdict');
+    v.classList.remove('rent','close');
+    var pctDiff=Math.abs(s.diff)/Math.max(1,Math.abs(s.rentWealth));
+
+    if(pctDiff<0.05){
+      v.classList.add('close');
+      document.getElementById('vAnswer').textContent='It\'s close to a coin flip';
+      document.getElementById('vAmount').textContent=fmt(Math.abs(s.diff));
+      document.getElementById('vExplain').innerHTML='Over '+years+' years the two are within '+fmt(Math.abs(s.diff))+' of each other. At that margin, the decision comes down to what you want from your life, not the numbers.';
+    } else if(s.diff>0){
+      document.getElementById('vAnswer').textContent='Buying leaves you better off';
+      document.getElementById('vAmount').textContent=fmt(s.diff);
+      document.getElementById('vExplain').innerHTML='After '+years+' years you\'d have about <strong>'+fmtK(s.buyWealth)+'</strong> in home equity versus <strong>'+fmtK(s.rentWealth)+'</strong> if you rented and invested your deposit.';
+    } else {
+      v.classList.add('rent');
+      document.getElementById('vAnswer').textContent='Renting leaves you better off';
+      document.getElementById('vAmount').textContent=fmt(-s.diff);
+      document.getElementById('vExplain').innerHTML='After '+years+' years renting and investing your deposit would leave you with about <strong>'+fmtK(s.rentWealth)+'</strong> versus <strong>'+fmtK(s.buyWealth)+'</strong> in home equity.';
+    }
+
+    // Break-even
+    var be=findBreakEven();
+    var beEl=document.getElementById('breakEvenHint');
+    if(be===null){ beEl.textContent='On these figures, renting stays ahead for the full 30 years.'; }
+    else if(be<=1){ beEl.textContent='Buying is ahead from year one.'; }
+    else { beEl.textContent='Buying overtakes renting at around year '+be+'. Staying less than that and renting usually wins.'; }
+
+    // Tiles
+    document.getElementById('tiles').innerHTML=
+      '<div class="tile"><div class="tile-lbl">Monthly mortgage</div><div class="tile-val">'+fmt(s.monthlyPay)+'</div><div class="tile-sub">vs '+fmt(rent)+' rent</div></div>'+
+      '<div class="tile"><div class="tile-lbl">Upfront cost</div><div class="tile-val">'+fmtK(s.upfront)+'</div><div class="tile-sub">deposit + stamp duty + fees</div></div>'+
+      '<div class="tile"><div class="tile-lbl">Stamp duty</div><div class="tile-val">'+fmt(s.sdlt)+'</div><div class="tile-sub">'+(isFTB?'first-time buyer rate':'standard rate')+'</div></div>'+
+      '<div class="tile"><div class="tile-lbl">Rent paid over '+years+'y</div><div class="tile-val">'+fmtK(s.rentPaid)+'</div><div class="tile-sub">money you don\'t get back</div></div>';
+
+    // Breakdown
+    var bd='';
+    bd+='<div style="font-size:0.9rem;font-weight:800;margin-bottom:0.5rem;">If you buy</div>';
+    bd+='<div class="wf-row"><div class="wf-lbl">Property value after '+years+' years<small>at 3% annual growth</small></div><div class="wf-val">'+fmt(s.houseValue)+'</div></div>';
+    bd+='<div class="wf-row"><div class="wf-lbl">Less: mortgage still owed</div><div class="wf-val" style="color:var(--red)">\u2212 '+fmt(s.balance)+'</div></div>';
+    bd+='<div class="wf-row"><div class="wf-lbl">Less: maintenance &amp; insurance<small>1% of value per year</small></div><div class="wf-val" style="color:var(--red)">\u2212 '+fmt(s.maint)+'</div></div>';
+    bd+='<div class="wf-row" style="border-top:2px solid var(--ink);margin-top:0.25rem;padding-top:0.75rem;"><div class="wf-lbl" style="font-weight:800;color:var(--ink)">Your net position</div><div class="wf-val" style="font-size:1.1rem;color:var(--accent)">'+fmt(s.buyWealth)+'</div></div>';
+    bd+='<div style="font-size:0.9rem;font-weight:800;margin:1.25rem 0 0.5rem;">If you rent and invest</div>';
+    bd+='<div class="wf-row"><div class="wf-lbl">Deposit + stamp duty + fees invested<small>instead of spent on buying</small></div><div class="wf-val">'+fmt(s.upfront)+'</div></div>';
+    bd+='<div class="wf-row"><div class="wf-lbl">Plus monthly difference invested<small>when owning costs more than renting</small></div><div class="wf-val">at 5%/yr</div></div>';
+    bd+='<div class="wf-row"><div class="wf-lbl">Rent paid over the period<small>rising 3% a year</small></div><div class="wf-val" style="color:var(--red)">\u2212 '+fmt(s.rentPaid)+'</div></div>';
+    bd+='<div class="wf-row" style="border-top:2px solid var(--ink);margin-top:0.25rem;padding-top:0.75rem;"><div class="wf-lbl" style="font-weight:800;color:var(--ink)">Your net position</div><div class="wf-val" style="font-size:1.1rem;color:#2563eb">'+fmt(s.rentWealth)+'</div></div>';
+    document.getElementById('breakdown').innerHTML=bd;
+
+    // Notes
+    var n='';
+    if(isFTB && price>500000) n+='<div class="note warn"><strong>&#9888;&#65039; Stamp duty cliff</strong>Above \u00a3500,000 first-time buyer relief disappears entirely \u2014 the whole purchase is taxed at standard rates. Buying at \u00a3499,000 instead of \u00a3505,000 would save you thousands.</div>';
+    if(years<5) n+='<div class="note info"><strong>&#9432; Short stays favour renting</strong>Buying costs are heavily front-loaded (stamp duty, legal fees, and early mortgage payments that are mostly interest). Under about five years, those costs rarely get recovered.</div>';
+    n+='<div class="note info"><strong>&#9432; What this doesn\'t capture</strong>Security of tenure, freedom to decorate, the risk of a landlord selling up, the hassle of maintenance, and whether you actually want to be tied to one place. Those often matter more than the numbers.</div>';
+    document.getElementById('notes').innerHTML=n;
+
+    drawChart(years);
+  }
+
+  function drawChart(years){
+    var c=document.getElementById('chart');
+    var ctx=c.getContext('2d');
+    var dpr=window.devicePixelRatio||1;
+    var W=c.offsetWidth||660,H=240;
+    c.width=W*dpr;c.height=H*dpr;ctx.setTransform(1,0,0,1,0,0);ctx.scale(dpr,dpr);
+    ctx.clearRect(0,0,W,H);
+
+    var maxY=Math.max(years,10);
+    var buyPts=[],rentPts=[];
+    for(var y=0;y<=maxY;y++){
+      var s=scenario(Math.max(0.5,y));
+      buyPts.push(y===0?0:s.buyWealth);
+      rentPts.push(y===0?scenario(0.5).upfront:s.rentWealth);
+    }
+    var all=buyPts.concat(rentPts);
+    var maxV=Math.max.apply(null,all)*1.1;
+    var minV=Math.min(0,Math.min.apply(null,all)*1.1);
+    var pad={t:14,r:14,b:28,l:56},cW=W-pad.l-pad.r,cH=H-pad.t-pad.b;
+    var xP=function(i){return pad.l+(i/maxY)*cW;};
+    var yP=function(v){return pad.t+cH-((v-minV)/(maxV-minV))*cH;};
+
+    // grid
+    ctx.strokeStyle='rgba(0,0,0,0.06)';ctx.lineWidth=1;
+    for(var g=0;g<=4;g++){
+      var yl=pad.t+(g/4)*cH;
+      ctx.beginPath();ctx.setLineDash([3,3]);ctx.moveTo(pad.l,yl);ctx.lineTo(pad.l+cW,yl);ctx.stroke();ctx.setLineDash([]);
+      ctx.fillStyle='rgba(0,0,0,0.4)';ctx.font='10px Nunito,sans-serif';ctx.textAlign='right';
+      ctx.fillText(fmtK(maxV-(g/4)*(maxV-minV)),pad.l-6,yl+3);
+    }
+    ctx.textAlign='center';ctx.font='9px Nunito,sans-serif';
+    var step=Math.max(1,Math.floor(maxY/6));
+    for(var m=0;m<=maxY;m+=step){ ctx.fillText('Yr '+m,xP(m),H-pad.b+16); }
+
+    function line(pts,col,fill){
+      if(fill){
+        var grad=ctx.createLinearGradient(0,pad.t,0,pad.t+cH);
+        grad.addColorStop(0,col.replace('rgb','rgba').replace(')',',0.14)'));
+        grad.addColorStop(1,col.replace('rgb','rgba').replace(')',',0)'));
+        ctx.beginPath();ctx.moveTo(xP(0),yP(pts[0]));
+        pts.forEach(function(v,i){ctx.lineTo(xP(i),yP(v));});
+        ctx.lineTo(xP(pts.length-1),yP(minV));ctx.lineTo(xP(0),yP(minV));ctx.closePath();
+        ctx.fillStyle=grad;ctx.fill();
+      }
+      ctx.beginPath();ctx.strokeStyle=col;ctx.lineWidth=2.5;ctx.lineJoin='round';
+      pts.forEach(function(v,i){i===0?ctx.moveTo(xP(i),yP(v)):ctx.lineTo(xP(i),yP(v));});
+      ctx.stroke();
+    }
+    line(rentPts,'rgb(37,99,235)',false);
+    line(buyPts,'rgb(45,106,79)',true);
+
+    // marker at selected year
+    var yi=Math.min(years,maxY);
+    ctx.beginPath();ctx.setLineDash([4,4]);ctx.strokeStyle='rgba(0,0,0,0.25)';ctx.lineWidth=1;
+    ctx.moveTo(xP(yi),pad.t);ctx.lineTo(xP(yi),pad.t+cH);ctx.stroke();ctx.setLineDash([]);
+    [[buyPts[yi],'#2d6a4f'],[rentPts[yi],'#2563eb']].forEach(function(p){
+      ctx.beginPath();ctx.arc(xP(yi),yP(p[0]),5,0,Math.PI*2);
+      ctx.fillStyle=p[1];ctx.fill();ctx.strokeStyle='#fff';ctx.lineWidth=2;ctx.stroke();
+    });
+  }
+
+  function sendEmail(){
+    var i=document.getElementById('emailIn');
+    if(!i.value||!i.value.includes('@')){i.style.borderColor='#ef4444';return;}
+    gaEvent('email_captured',{tool:'MyRentOrBuy'});
+    document.getElementById('emailCap').innerHTML='<div style="text-align:center;padding:0.85rem;font-weight:700;color:var(--accent);">\u2713 Check your inbox! A summary is on its way.</div>';
+    var sub=encodeURIComponent('My rent vs buy results \u2014 MyPayPicture');
+    var body=encodeURIComponent('Here are your results from MyPayPicture. Revisit anytime at mypaypicture.com/rent-or-buy.html');
+    window.open('mailto:'+i.value+'?subject='+sub+'&body='+body,'_blank');
+  }
+
+  var started=false;
+  document.querySelectorAll('input[type=range]').forEach(function(el){
+    el.addEventListener('change',function(){
+      if(!started){started=true;gaEvent('tool_started',{tool:'MyRentOrBuy'});}
+    });
+  });
+
+  calc();
+  gaEvent('tool_completed',{tool:'MyRentOrBuy'});
+</script>
+
+<footer style="background:#314855;padding:2.5rem;border-top:3px solid #ffdb00;margin-top:2rem;">
+  <div style="max-width:920px;margin:0 auto;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1rem;">
+    <div style="font-family:'Nunito',sans-serif;font-size:1.3rem;color:white;font-weight:800;">MyPay<em style="font-style:italic;color:#ffdb00;">Picture</em></div>
+    <p style="color:rgba(255,255,255,0.3);font-size:0.78rem;max-width:520px;line-height:1.6;margin:0;">Illustrative scenarios only &mdash; not financial, tax or legal advice. Always consult a qualified adviser before making decisions. No data is stored. &copy; MyPayPicture 2025.</p>
+  </div>
+</footer>
+
+</body>
+</html>
