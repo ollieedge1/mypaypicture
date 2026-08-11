@@ -115,11 +115,88 @@
   .view { display: none; }
   .view.active { display: block; }
 
+  /* INTERSTITIAL */
+  .interstitial-backdrop {
+    position: fixed; inset: 0; z-index: 9999;
+    background: rgba(250,250,248,0.92);
+    backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
+    display: flex; align-items: center; justify-content: center;
+    animation: interFadeIn 0.3s ease;
+  }
+  @keyframes interFadeIn { from { opacity: 0; } to { opacity: 1; } }
+  .interstitial-card {
+    text-align: center; padding: 2rem;
+    animation: interCardIn 0.4s cubic-bezier(0.16,1,0.3,1);
+  }
+  @keyframes interCardIn { from { opacity: 0; transform: scale(0.95) translateY(10px); } to { opacity: 1; transform: scale(1) translateY(0); } }
+  .interstitial-ring { margin: 0 auto 1.5rem; width: 80px; height: 80px; }
+  .interstitial-spinner { transform-origin: 40px 40px; animation: spinRing 1.2s linear infinite; }
+  @keyframes spinRing { to { transform: rotate(360deg); } }
+  .interstitial-text {
+    font-size: 1rem; font-weight: 700; color: var(--ink);
+    margin-bottom: 0.75rem; letter-spacing: -0.01em;
+    min-height: 1.5em;
+    transition: opacity 0.25s;
+  }
+  .interstitial-dots { display: flex; gap: 6px; justify-content: center; }
+  .interstitial-dots .dot {
+    width: 6px; height: 6px; border-radius: 50%;
+    background: var(--accent); opacity: 0.25;
+    animation: dotPulse 1.4s ease infinite;
+  }
+  .interstitial-dots .d2 { animation-delay: 0.2s; }
+  .interstitial-dots .d3 { animation-delay: 0.4s; }
+  @keyframes dotPulse { 0%,80%,100% { opacity: 0.25; transform: scale(1); } 40% { opacity: 1; transform: scale(1.3); } }
+
   @media (max-width: 480px) {
     header { padding: 1rem 1.25rem; }
     .hero { padding: 3rem 1.25rem 4.5rem; }
     .card { padding: 1.5rem 1.25rem; }
   }
+
+  /* ── HERO CTA + TRUST + STATS ─────────────────────────────────────────────── */
+  .hero-cta { display:inline-flex; align-items:center; gap:0.6rem; background:var(--yellow,#ffdb00); color:#1c1612; padding:0.95rem 2rem; border-radius:100px; font-size:1rem; font-weight:800; text-decoration:none; margin-top:2rem; position:relative; transition:transform 0.2s, box-shadow 0.2s; border:none; cursor:pointer; font-family:'Nunito',sans-serif; }
+  .hero-cta:hover { transform:translateY(-2px); box-shadow:0 8px 28px rgba(255,219,0,0.3); }
+  .hero-cta .arrow { transition:transform 0.2s; }
+  .hero-cta:hover .arrow { transform:translateY(3px); }
+  .hero-trust { display:flex; justify-content:center; gap:1.75rem; flex-wrap:wrap; margin-top:1.5rem; position:relative; }
+  .hero-trust span { display:inline-flex; align-items:center; gap:0.4rem; font-size:0.78rem; color:rgba(255,255,255,0.4); font-weight:600; }
+  .hero-trust .tick { font-weight:800; }
+  .hero-stats { display:grid; grid-template-columns:repeat(4,1fr); max-width:720px; margin:3rem auto 0; border-top:1px solid rgba(255,255,255,0.1); padding-top:2rem; position:relative; gap:1rem; }
+  .hero-stat-num { font-size:1.9rem; font-weight:800; color:white; letter-spacing:-0.02em; line-height:1; margin-bottom:0.4rem; }
+  .hero-stat-num em { font-style:normal; font-size:0.6em; }
+  .hero-stat-lbl { font-size:0.72rem; color:rgba(255,255,255,0.35); line-height:1.45; font-weight:500; }
+  @media (max-width:640px){ .hero-stats{grid-template-columns:repeat(2,1fr);gap:1.75rem 1rem;max-width:340px;margin-top:2.5rem;} .hero-stat-num{font-size:1.5rem;} .hero-trust{gap:0.85rem 1.25rem;} .hero-trust span{font-size:0.72rem;} }
+
+
+  /* ── SPLIT HERO ───────────────────────────────────────────────────────────── */
+  .hero-inner { max-width:1120px; margin:0 auto; display:grid; grid-template-columns:1.05fr 0.95fr; gap:3.5rem; align-items:center; text-align:left; position:relative; }
+  .hero-copy { position:relative; }
+  .hero-inner h1 { margin-left:0; margin-right:0; max-width:none; }
+  .hero-inner .hero-copy > p { margin-left:0; margin-right:0; max-width:440px; }
+  .hero-trust { justify-content:flex-start; }
+  .hero-visual { position:relative; }
+  .hero-visual-frame {
+    background:rgba(255,255,255,0.04); border:1px solid rgba(255,255,255,0.09);
+    border-radius:20px; padding:1.5rem; backdrop-filter:blur(10px);
+    box-shadow:0 24px 60px rgba(0,0,0,0.28);
+  }
+  .hero-visual-frame svg { width:100%; height:auto; display:block; }
+  .hero-visual::after {
+    content:''; position:absolute; inset:-14%;
+    background:radial-gradient(ellipse at 55% 45%, rgba(92,195,232,0.14) 0%, transparent 62%);
+    z-index:-1; pointer-events:none;
+  }
+  @media (max-width:900px){
+    .hero-inner { grid-template-columns:1fr; gap:2.5rem; text-align:center; }
+    .hero-inner .hero-copy > p { margin-left:auto; margin-right:auto; }
+    .hero-trust { justify-content:center; }
+    .hero-visual { max-width:420px; margin:0 auto; }
+  }
+  @media (max-width:600px){
+    .hero-visual { display:none; }
+  }
+
 </style>
 </head>
 <body>
@@ -139,6 +216,7 @@
       <a class="switcher-home" href="pension-optimiser.html"><div class="switcher-home-icon">&#128200;</div><div><div class="switcher-home-label">MyPensionOptimiser</div><div class="switcher-home-sub">Optimise your pension</div></div></a>
       <a class="switcher-home" href="retirement-helper.html"><div class="switcher-home-icon">&#9749;</div><div><div class="switcher-home-label">MyRetirementHelper</div><div class="switcher-home-sub">Retirement readiness</div></div></a>
       <a class="switcher-home" href="inheritance-tax.html"><div class="switcher-home-icon">&#127963;</div><div><div class="switcher-home-label">MyInheritanceTax</div><div class="switcher-home-sub">Estate &amp; IHT</div></div></a>
+      <a class="switcher-home" href="rent-or-buy.html"><div class="switcher-home-icon">&#129534;</div><div><div class="switcher-home-label">MyRentOrBuy</div><div class="switcher-home-sub">Rent or buy?</div></div></a>
       <a class="switcher-home" href="property-decision.html"><div class="switcher-home-icon">&#127968;</div><div><div class="switcher-home-label">MyPropertyDecision</div><div class="switcher-home-sub">Buy, let, or rent?</div></div></a>
     </div>
   </div>
@@ -146,12 +224,39 @@
 </header>
 
 <div class="hero">
-  <div class="hero-eyebrow">MyPayPicture</div>
-  <h1>Am I <em>on track?</em></h1>
-  <p>Set up once. Check in monthly. We'll tell you if everything's alright.</p>
+  <div class="hero-inner">
+    <div class="hero-copy">
+      <div class="hero-eyebrow">Your monthly check-in</div>
+      <h1>Am I still<br><em>on track?</em></h1>
+      <p>Set up once. Check in monthly. Track your pension, ISA and home equity in one calm view that tells you if everything is alright.</p>
+      <a class="hero-cta" href="#start">Start here &mdash; the calculator is free <span class="arrow">&#9662;</span></a>
+      <div class="hero-trust"><span><span class="tick" style="color:var(--sky)">&#10003;</span> Free, no signup</span><span><span class="tick" style="color:var(--sky)">&#10003;</span> Saved in your browser</span><span><span class="tick" style="color:var(--sky)">&#10003;</span> 2025/26 rates</span></div>
+    </div>
+    <div class="hero-visual">
+      <div class="hero-visual-frame">
+<svg viewBox="0 0 320 200" xmlns="http://www.w3.org/2000/svg">
+<circle cx="80" cy="100" r="54" fill="none" stroke="rgba(255,255,255,0.08)" stroke-width="11"/>
+<circle cx="80" cy="100" r="54" fill="none" stroke="#4ade80" stroke-width="11" stroke-linecap="round"
+ stroke-dasharray="339" stroke-dashoffset="78" transform="rotate(-90 80 100)"/>
+<text x="80" y="96" text-anchor="middle" font-size="24">🌿</text>
+<text x="80" y="118" text-anchor="middle" fill="#4ade80" font-family="Nunito,sans-serif" font-size="11" font-weight="800">77%</text>
+<text x="172" y="72" fill="#fff" font-family="Nunito,sans-serif" font-size="15" font-weight="800">On track</text>
+<text x="172" y="92" fill="rgba(255,255,255,0.4)" font-family="Nunito,sans-serif" font-size="9">Nothing to change</text>
+<rect x="172" y="106" width="140" height="30" rx="8" fill="rgba(255,255,255,0.05)"/>
+<text x="182" y="118" fill="rgba(255,255,255,0.35)" font-family="Nunito,sans-serif" font-size="7" font-weight="700">INCOME</text>
+<text x="182" y="131" fill="#fff" font-family="Nunito,sans-serif" font-size="12" font-weight="800">£31,400/yr</text>
+<rect x="172" y="144" width="140" height="30" rx="8" fill="rgba(255,255,255,0.05)"/>
+<text x="182" y="156" fill="rgba(255,255,255,0.35)" font-family="Nunito,sans-serif" font-size="7" font-weight="700">NET WORTH</text>
+<text x="182" y="169" fill="#fff" font-family="Nunito,sans-serif" font-size="12" font-weight="800">£486k</text>
+</svg>
+      </div>
+    </div>
+  </div>
+  <div class="hero-stats"><div><div class="hero-stat-num">60<em style="color:var(--sky)">sec</em></div><div class="hero-stat-lbl">To set up</div></div><div><div class="hero-stat-num">90<em style="color:var(--sky)">sec</em></div><div class="hero-stat-lbl">Monthly check-in</div></div><div><div class="hero-stat-num">£0</div><div class="hero-stat-lbl">To use</div></div><div><div class="hero-stat-num">3</div><div class="hero-stat-lbl">Wealth pillars</div></div></div>
 </div>
 
 <div class="container">
+  <div id="start"></div>
 
   <!-- ═══ SETUP VIEW ═══ -->
   <div class="view" id="viewSetup">
@@ -315,6 +420,24 @@
     </div>
   </div>
 
+</div>
+
+<!-- ═══ INTERSTITIAL LOADING OVERLAY ═══ -->
+<div id="interstitial" style="display:none;">
+  <div class="interstitial-backdrop">
+    <div class="interstitial-card">
+      <div class="interstitial-ring">
+        <svg width="80" height="80" viewBox="0 0 80 80">
+          <circle cx="40" cy="40" r="32" fill="none" stroke="rgba(45,138,78,0.12)" stroke-width="6" />
+          <circle cx="40" cy="40" r="32" fill="none" stroke="#2d8a4e" stroke-width="6" stroke-dasharray="50 150" stroke-linecap="round" class="interstitial-spinner" />
+        </svg>
+      </div>
+      <div class="interstitial-text" id="interstitialText">Analysing your situation...</div>
+      <div class="interstitial-dots">
+        <span class="dot d1"></span><span class="dot d2"></span><span class="dot d3"></span>
+      </div>
+    </div>
+  </div>
 </div>
 
 <script>

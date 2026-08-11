@@ -1271,6 +1271,50 @@
   .email-capture-done { display: none; text-align: center; padding: 0.85rem; font-size: 0.88rem; font-weight: 700; color: #0d9488; }
   .email-capture-done.show { display: block; }
 
+
+  /* ── HERO CTA + TRUST + STATS ─────────────────────────────────────────────── */
+  .hero-cta { display:inline-flex; align-items:center; gap:0.6rem; background:var(--yellow,#ffdb00); color:#1c1612; padding:0.95rem 2rem; border-radius:100px; font-size:1rem; font-weight:800; text-decoration:none; margin-top:2rem; position:relative; transition:transform 0.2s, box-shadow 0.2s; border:none; cursor:pointer; font-family:'Nunito',sans-serif; }
+  .hero-cta:hover { transform:translateY(-2px); box-shadow:0 8px 28px rgba(255,219,0,0.3); }
+  .hero-cta .arrow { transition:transform 0.2s; }
+  .hero-cta:hover .arrow { transform:translateY(3px); }
+  .hero-trust { display:flex; justify-content:center; gap:1.75rem; flex-wrap:wrap; margin-top:1.5rem; position:relative; }
+  .hero-trust span { display:inline-flex; align-items:center; gap:0.4rem; font-size:0.78rem; color:rgba(255,255,255,0.4); font-weight:600; }
+  .hero-trust .tick { font-weight:800; }
+  .hero-stats { display:grid; grid-template-columns:repeat(4,1fr); max-width:720px; margin:3rem auto 0; border-top:1px solid rgba(255,255,255,0.1); padding-top:2rem; position:relative; gap:1rem; }
+  .hero-stat-num { font-size:1.9rem; font-weight:800; color:white; letter-spacing:-0.02em; line-height:1; margin-bottom:0.4rem; }
+  .hero-stat-num em { font-style:normal; font-size:0.6em; }
+  .hero-stat-lbl { font-size:0.72rem; color:rgba(255,255,255,0.35); line-height:1.45; font-weight:500; }
+  @media (max-width:640px){ .hero-stats{grid-template-columns:repeat(2,1fr);gap:1.75rem 1rem;max-width:340px;margin-top:2.5rem;} .hero-stat-num{font-size:1.5rem;} .hero-trust{gap:0.85rem 1.25rem;} .hero-trust span{font-size:0.72rem;} }
+
+
+  /* ── SPLIT HERO ───────────────────────────────────────────────────────────── */
+  .hero-inner { max-width:1120px; margin:0 auto; display:grid; grid-template-columns:1.05fr 0.95fr; gap:3.5rem; align-items:center; text-align:left; position:relative; }
+  .hero-copy { position:relative; }
+  .hero-inner h1 { margin-left:0; margin-right:0; max-width:none; }
+  .hero-inner .hero-copy > p { margin-left:0; margin-right:0; max-width:440px; }
+  .hero-trust { justify-content:flex-start; }
+  .hero-visual { position:relative; }
+  .hero-visual-frame {
+    background:rgba(255,255,255,0.04); border:1px solid rgba(255,255,255,0.09);
+    border-radius:20px; padding:1.5rem; backdrop-filter:blur(10px);
+    box-shadow:0 24px 60px rgba(0,0,0,0.28);
+  }
+  .hero-visual-frame svg { width:100%; height:auto; display:block; }
+  .hero-visual::after {
+    content:''; position:absolute; inset:-14%;
+    background:radial-gradient(ellipse at 55% 45%, rgba(92,195,232,0.14) 0%, transparent 62%);
+    z-index:-1; pointer-events:none;
+  }
+  @media (max-width:900px){
+    .hero-inner { grid-template-columns:1fr; gap:2.5rem; text-align:center; }
+    .hero-inner .hero-copy > p { margin-left:auto; margin-right:auto; }
+    .hero-trust { justify-content:center; }
+    .hero-visual { max-width:420px; margin:0 auto; }
+  }
+  @media (max-width:600px){
+    .hero-visual { display:none; }
+  }
+
 </style>
 </head>
 <body>
@@ -1324,6 +1368,7 @@
           <div class="switcher-home-sub">Do I need to file?</div>
         </div>
       </a>
+      <a class="switcher-home" href="rent-or-buy.html"><div class="switcher-home-icon">&#129534;</div><div><div class="switcher-home-label">MyRentOrBuy</div><div class="switcher-home-sub">Rent or buy?</div></div></a>
       <a class="switcher-home" href="property-decision.html">
         <div class="switcher-home-icon">&#127968;</div>
         <div>
@@ -1358,12 +1403,35 @@
 </header>
 
 <div class="hero">
-  <div class="hero-eyebrow">MyPayPicture</div>
-  <h1>Is your pension working<br><em>as hard as it could?</em></h1>
-  <p>Most people are paying more tax than they need to on their pension. Enter a few numbers and we'll show you exactly where you stand — and what to do about it.</p>
+  <div class="hero-inner">
+    <div class="hero-copy">
+      <div class="hero-eyebrow">Built for UK employees</div>
+      <h1>Pay less tax,<br><em>keep more pension.</em></h1>
+      <p>See exactly what to contribute, how much tax you save, and what your pot could be worth at retirement.</p>
+      <a class="hero-cta" href="#start">Start here &mdash; the calculator is free <span class="arrow">&#9662;</span></a>
+      <div class="hero-trust"><span><span class="tick" style="color:var(--sky)">&#10003;</span> Free, no signup</span><span><span class="tick" style="color:var(--sky)">&#10003;</span> Nothing stored</span><span><span class="tick" style="color:var(--sky)">&#10003;</span> 2025/26 rates</span></div>
+    </div>
+    <div class="hero-visual">
+      <div class="hero-visual-frame">
+<svg viewBox="0 0 320 200" xmlns="http://www.w3.org/2000/svg">
+<text x="0" y="12" fill="rgba(255,255,255,0.4)" font-family="Nunito,sans-serif" font-size="9" font-weight="700" letter-spacing="1">PROJECTED POT</text>
+<text x="0" y="38" fill="#fff" font-family="Nunito,sans-serif" font-size="26" font-weight="800">£412,800</text>
+<defs><linearGradient id="g1" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#5cc3e8" stop-opacity="0.35"/><stop offset="1" stop-color="#5cc3e8" stop-opacity="0"/></linearGradient></defs>
+<path d="M0 160 L45 150 L90 136 L135 116 L180 92 L225 66 L270 40 L315 18 L315 175 L0 175 Z" fill="url(#g1)"/>
+<path d="M0 160 L45 150 L90 136 L135 116 L180 92 L225 66 L270 40 L315 18" stroke="#5cc3e8" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+<path d="M0 168 L45 164 L90 159 L135 153 L180 146 L225 138 L270 129 L315 119" stroke="rgba(255,255,255,0.2)" stroke-width="2" fill="none" stroke-dasharray="4 4"/>
+<circle cx="315" cy="18" r="4.5" fill="#5cc3e8" stroke="#fff" stroke-width="2"/>
+<text x="0" y="194" fill="rgba(255,255,255,0.3)" font-family="Nunito,sans-serif" font-size="8">Now</text>
+<text x="290" y="194" fill="rgba(255,255,255,0.3)" font-family="Nunito,sans-serif" font-size="8">Age 67</text>
+</svg>
+      </div>
+    </div>
+  </div>
+  <div class="hero-stats"><div><div class="hero-stat-num">2<em style="color:var(--sky)">min</em></div><div class="hero-stat-lbl">To your answer</div></div><div><div class="hero-stat-num">40%</div><div class="hero-stat-lbl">Typical relief</div></div><div><div class="hero-stat-num">£0</div><div class="hero-stat-lbl">To use</div></div><div><div class="hero-stat-num">4</div><div class="hero-stat-lbl">Simple steps</div></div></div>
 </div>
 
 <div class="container">
+  <div id="start"></div>
   <div class="steps-nav">
     <div class="step-tab active" onclick="goTo(1)" id="tab1"><span class="step-num">1</span>Your Pay</div>
     <div class="step-tab" onclick="goTo(2)" id="tab2"><span class="step-num">2</span>Recommendation</div>

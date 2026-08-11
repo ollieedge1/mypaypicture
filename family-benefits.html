@@ -348,6 +348,50 @@
   .email-capture-done { display: none; text-align: center; padding: 0.85rem; font-size: 0.88rem; font-weight: 700; color: #0d9488; }
   .email-capture-done.show { display: block; }
 
+
+  .hero-cta { display:inline-flex; align-items:center; gap:0.6rem; background:#ffdb00; color:#1c1612; padding:0.95rem 2rem; border-radius:100px; font-size:1rem; font-weight:800; text-decoration:none; margin-top:2rem; position:relative; transition:transform 0.2s, box-shadow 0.2s; }
+  .hero-cta:hover { transform:translateY(-2px); box-shadow:0 8px 28px rgba(255,219,0,0.3); }
+  .hero-cta .arrow { transition:transform 0.2s; }
+  .hero-cta:hover .arrow { transform:translateY(3px); }
+  .hero-trust { display:flex; justify-content:center; gap:1.75rem; flex-wrap:wrap; margin-top:1.5rem; position:relative; }
+  .hero-trust span { display:inline-flex; align-items:center; gap:0.4rem; font-size:0.78rem; color:rgba(255,255,255,0.4); font-weight:600; }
+  .hero-trust .tick { font-weight:800; }
+  .hero-stats { display:grid; grid-template-columns:repeat(4,1fr); max-width:720px; margin:3rem auto 0; border-top:1px solid rgba(255,255,255,0.1); padding-top:2rem; position:relative; gap:1rem; }
+  .hero-stat-num { font-size:1.9rem; font-weight:800; color:white; letter-spacing:-0.02em; line-height:1; margin-bottom:0.4rem; }
+  .hero-stat-num em { font-style:normal; font-size:0.6em; }
+  .hero-stat-lbl { font-size:0.72rem; color:rgba(255,255,255,0.35); line-height:1.45; font-weight:500; }
+  .hero-eyebrow { display:inline-flex; font-size:0.7rem; font-weight:700; text-transform:uppercase; letter-spacing:0.2em; color:var(--sky); margin-bottom:1.25rem; padding:0.35rem 1.1rem; border-radius:100px; border:1px solid rgba(92,195,232,0.3); background:rgba(92,195,232,0.08); position:relative; }
+  @media (max-width:640px){ .hero-stats{grid-template-columns:repeat(2,1fr);gap:1.75rem 1rem;max-width:340px;margin-top:2.5rem;} .hero-stat-num{font-size:1.5rem;} .hero-trust{gap:0.85rem 1.25rem;} }
+
+
+  /* ── SPLIT HERO ───────────────────────────────────────────────────────────── */
+  .hero-inner { max-width:1120px; margin:0 auto; display:grid; grid-template-columns:1.05fr 0.95fr; gap:3.5rem; align-items:center; text-align:left; position:relative; }
+  .hero-copy { position:relative; }
+  .hero-inner h1 { margin-left:0; margin-right:0; max-width:none; }
+  .hero-inner .hero-copy > p { margin-left:0; margin-right:0; max-width:440px; }
+  .hero-trust { justify-content:flex-start; }
+  .hero-visual { position:relative; }
+  .hero-visual-frame {
+    background:rgba(255,255,255,0.04); border:1px solid rgba(255,255,255,0.09);
+    border-radius:20px; padding:1.5rem; backdrop-filter:blur(10px);
+    box-shadow:0 24px 60px rgba(0,0,0,0.28);
+  }
+  .hero-visual-frame svg { width:100%; height:auto; display:block; }
+  .hero-visual::after {
+    content:''; position:absolute; inset:-14%;
+    background:radial-gradient(ellipse at 55% 45%, rgba(92,195,232,0.14) 0%, transparent 62%);
+    z-index:-1; pointer-events:none;
+  }
+  @media (max-width:900px){
+    .hero-inner { grid-template-columns:1fr; gap:2.5rem; text-align:center; }
+    .hero-inner .hero-copy > p { margin-left:auto; margin-right:auto; }
+    .hero-trust { justify-content:center; }
+    .hero-visual { max-width:420px; margin:0 auto; }
+  }
+  @media (max-width:600px){
+    .hero-visual { display:none; }
+  }
+
 </style>
 </head>
 <body>
@@ -401,6 +445,7 @@
           <div class="switcher-home-sub">Do I need to file?</div>
         </div>
       </a>
+      <a class="switcher-home" href="rent-or-buy.html"><div class="switcher-home-icon">&#129534;</div><div><div class="switcher-home-label">MyRentOrBuy</div><div class="switcher-home-sub">Rent or buy?</div></div></a>
       <a class="switcher-home" href="property-decision.html">
         <div class="switcher-home-icon">&#127968;</div>
         <div>
@@ -435,11 +480,51 @@
 </header>
 
 <div class="hero" style="background:var(--ink); padding:4rem 2rem 5rem; text-align:center; position:relative; overflow:hidden;">
-  <h1>Are you losing<br><em>Child Benefit</em><br>you're entitled to?</h1>
-  <p>See exactly how much you're losing and whether pension contributions could restore it.</p>
+  <div class="hero-inner">
+    <div class="hero-copy">
+      <div class="hero-eyebrow">For UK parents</div>
+      <h1>Child Benefit,<br><em>sorted.</em></h1>
+      <p>Work out what you can claim, whether the High Income Charge applies, and whether pension contributions could restore what you're losing.</p>
+      <a class="hero-cta" href="#start">Start here &mdash; the calculator is free <span class="arrow">&#9662;</span></a>
+      <div class="hero-trust">
+    <span><span class="tick" style="color:var(--sky)">&#10003;</span> Free, no signup</span>
+    <span><span class="tick" style="color:var(--sky)">&#10003;</span> Nothing stored</span>
+    <span><span class="tick" style="color:var(--sky)">&#10003;</span> 2025/26 rates</span>
+  </div>
+    </div>
+    <div class="hero-visual">
+      <div class="hero-visual-frame">
+<svg viewBox="0 0 320 200" xmlns="http://www.w3.org/2000/svg">
+<rect x="0" y="0" width="320" height="92" rx="14" fill="rgba(255,255,255,0.05)"/>
+<text x="16" y="26" fill="rgba(255,255,255,0.4)" font-family="Nunito,sans-serif" font-size="9" font-weight="700" letter-spacing="1">CHILD BENEFIT</text>
+<text x="16" y="62" fill="#5cc3e8" font-family="Nunito,sans-serif" font-size="30" font-weight="800">£2,213</text>
+<text x="16" y="80" fill="rgba(255,255,255,0.35)" font-family="Nunito,sans-serif" font-size="9">Per year, 2 children</text>
+<rect x="0" y="104" width="152" height="44" rx="10" fill="rgba(255,255,255,0.04)"/>
+<rect x="168" y="104" width="152" height="44" rx="10" fill="rgba(255,255,255,0.04)"/>
+<rect x="0" y="158" width="152" height="44" rx="10" fill="rgba(255,255,255,0.04)"/>
+<rect x="168" y="158" width="152" height="44" rx="10" fill="rgba(255,255,255,0.04)"/>
+<rect x="12" y="116" width="46" height="6" rx="3" fill="rgba(255,255,255,0.15)"/>
+<rect x="12" y="129" width="72" height="9" rx="4" fill="rgba(255,255,255,0.3)"/>
+<rect x="180" y="116" width="46" height="6" rx="3" fill="rgba(255,255,255,0.15)"/>
+<rect x="180" y="129" width="66" height="9" rx="4" fill="rgba(255,255,255,0.3)"/>
+<rect x="12" y="170" width="46" height="6" rx="3" fill="rgba(255,255,255,0.15)"/>
+<rect x="12" y="183" width="60" height="9" rx="4" fill="rgba(255,255,255,0.3)"/>
+<rect x="180" y="170" width="46" height="6" rx="3" fill="rgba(255,255,255,0.15)"/>
+<rect x="180" y="183" width="78" height="9" rx="4" fill="#5cc3e8" fill-opacity="0.5"/>
+</svg>
+      </div>
+    </div>
+  </div>
+  <div class="hero-stats">
+    <div><div class="hero-stat-num">2<em style="color:var(--sky)">min</em></div><div class="hero-stat-lbl">To your answer</div></div>
+    <div><div class="hero-stat-num">&pound;1.3k</div><div class="hero-stat-lbl">Per child, per year</div></div>
+    <div><div class="hero-stat-num">&pound;0</div><div class="hero-stat-lbl">To use</div></div>
+    <div><div class="hero-stat-num">4</div><div class="hero-stat-lbl">Simple steps</div></div>
+  </div>
 </div>
 
 <div class="container">
+  <div id="start"></div>
 
   <div class="steps-nav">
     <div class="step-tab active" onclick="goTo(1)" id="tab1"><span class="step-num">1</span>Household</div>
